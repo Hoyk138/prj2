@@ -1,4 +1,4 @@
-package min.pcUserVO;
+package user.VO;
 
 public class UserJoinVO {
 

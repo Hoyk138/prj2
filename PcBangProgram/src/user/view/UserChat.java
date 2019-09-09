@@ -1,4 +1,4 @@
-package so.pcUserView;
+package user.view;
 
 import java.awt.Color;
 

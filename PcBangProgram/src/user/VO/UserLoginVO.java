@@ -1,4 +1,4 @@
-package min.pcUserVO;
+package user.VO;
 
 public class UserLoginVO {
 	private String id, pass;
