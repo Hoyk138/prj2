@@ -3,7 +3,7 @@ package user.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import min.pcUserView.UserLogin;
+import user.view.UserLogin;
 
 
 public class UserLoginEvt implements ActionListener{

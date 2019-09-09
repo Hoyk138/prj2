@@ -8,7 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import so.pcUserEvt.UserChatEvt;
+import user.controller.UserChatEvt;
 
 
 public class UserChat extends JFrame{

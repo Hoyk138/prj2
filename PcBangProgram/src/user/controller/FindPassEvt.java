@@ -3,7 +3,7 @@ package user.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import min.pcUserView.FindPass;
+import user.view.FindPass;
 
 
 public class FindPassEvt implements ActionListener {

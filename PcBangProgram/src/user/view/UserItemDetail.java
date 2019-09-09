@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import prj2.user.evt.UserItemDetailEvt;
+import user.controller.UserItemDetailEvt;
 
 public class UserItemDetail extends JFrame{
 	

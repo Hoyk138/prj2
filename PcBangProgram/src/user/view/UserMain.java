@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import so.pcUserEvt.UserMainEvt;
+import user.controller.UserMainEvt;
 
 
 public class UserMain extends JFrame{

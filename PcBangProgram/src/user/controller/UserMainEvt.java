@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import user.view.UserChat;
 import user.view.UserMain;
-import user.view.UserOrder;
+import user.view.UserItem;
 
 
 public class UserMainEvt implements ActionListener{
@@ -20,7 +20,7 @@ public class UserMainEvt implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==um.getJbtOrder()) { //먹거리주문버튼
-			new UserOrder();
+			new UserItem();
 		}//end if
 		
 		if(ae.getSource()==um.getJbtCounterChat()) { //카운터채팅버튼

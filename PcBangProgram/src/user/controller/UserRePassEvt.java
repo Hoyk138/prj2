@@ -3,7 +3,7 @@ package user.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import min.pcUserView.UserRePass;
+import user.view.UserRePass;
 
 
 public class UserRePassEvt implements ActionListener {

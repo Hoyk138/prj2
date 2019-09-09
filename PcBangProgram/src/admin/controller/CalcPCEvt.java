@@ -1,16 +1,10 @@
 package admin.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-import soin.admin.calc.CalcView;
+import admin.view.CalcView;
 
 public class CalcPCEvt {
 	

@@ -4,9 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import prj2.user.view.UserItem;
+import user.view.UserItem;
 
 public class UserItemEvt extends MouseAdapter implements ActionListener{
 	

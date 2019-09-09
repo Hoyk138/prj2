@@ -3,7 +3,7 @@ package user.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import min.pcUserView.FindId;
+import user.view.FindId;
 
 
 public class FindIdEvt implements ActionListener {

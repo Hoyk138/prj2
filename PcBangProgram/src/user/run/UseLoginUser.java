@@ -1,6 +1,6 @@
 package user.run;
 
-import min.pcUserView.UserLogin;
+import user.view.UserLogin;
 
 public class UseLoginUser {
 

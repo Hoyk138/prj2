@@ -3,7 +3,7 @@ package user.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import prj2.user.view.UserItemDetail;
+import user.view.UserItemDetail;
 
 public class UserItemDetailEvt implements ActionListener {
 	

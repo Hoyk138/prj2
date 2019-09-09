@@ -3,7 +3,7 @@ package user.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import min.pcUserView.UserJoin;
+import user.view.UserJoin;
 
 
 public class UserJoinEvt implements ActionListener {
