@@ -1,15 +1,15 @@
-package so.pcUserEvt;
+package user.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import so.pcUserView.UserOrderDetail;
+import prj2.user.view.UserItemDetail;
 
-public class UserOrderDetailEvt implements ActionListener {
+public class UserItemDetailEvt implements ActionListener {
 	
-	private UserOrderDetail uod;
+	private UserItemDetail uod;
 	
-	public UserOrderDetailEvt(UserOrderDetail uod) {
+	public UserItemDetailEvt(UserItemDetail uod) {
 		this.uod=uod;
 	}//UserOrderDetailEvt
 	

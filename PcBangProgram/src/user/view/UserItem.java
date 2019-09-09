@@ -1,24 +1,25 @@
-package so.pcUserView;
+package user.view;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import so.pcUserEvt.UserOrderEvt;
+import prj2.user.evt.UserItemEvt;
 
 
 /**
  * 사용자의 상품 주문 창 View
  * @author sist37
  */
-public class UserOrder extends JFrame{
+public class UserItem extends JFrame{
 	
 	private DefaultTableModel dtmFood,dtmSnack,dtmDrink;
 	private DefaultListModel<String> dlmOrderChoiceList;
@@ -29,7 +30,7 @@ public class UserOrder extends JFrame{
 	private JButton jbtOrder;
 	private JTabbedPane jtpOrder;
 	
-	public UserOrder() {
+	public UserItem() {
 		super("먹거리주문");
 		
 		String[] columnNames= {"상품명","이미지","가격"};
@@ -144,7 +145,7 @@ public class UserOrder extends JFrame{
 		add(jbtOrder);
 		
 		//이벤트
-		UserOrderEvt uoe=new UserOrderEvt(this);
+		UserItemEvt uoe=new UserItemEvt(this);
 		jtFood.addMouseListener(uoe);
 		jtSnack.addMouseListener(uoe);
 		jtDrink.addMouseListener(uoe);
@@ -206,7 +207,7 @@ public class UserOrder extends JFrame{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new UserOrder();
+		new UserItem();
 	}//main
 
 }//class

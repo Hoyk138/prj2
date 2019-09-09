@@ -1,4 +1,4 @@
-package min.pcUserView;
+package user.view;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import min.pcUserEvt.UserLoginEvt;
+import user.controller.UserLoginEvt;
 
 public class UserLogin extends JFrame {
 	

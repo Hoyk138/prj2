@@ -1,4 +1,4 @@
-package min.pcUserView;
+package user.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import min.pcUserEvt.FindPassEvt;
+import user.controller.FindPassEvt;
 
 
 public class FindPass extends JFrame {

@@ -1,11 +1,11 @@
-package so.pcUserEvt;
+package user.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import so.pcUserView.UserChat;
-import so.pcUserView.UserMain;
-import so.pcUserView.UserOrder;
+import user.view.UserChat;
+import user.view.UserMain;
+import user.view.UserOrder;
 
 
 public class UserMainEvt implements ActionListener{

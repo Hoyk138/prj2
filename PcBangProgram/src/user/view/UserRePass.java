@@ -1,11 +1,11 @@
-package min.pcUserView;
+package user.view;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import min.pcUserEvt.UserRePassEvt;
+import user.controller.UserRePassEvt;
 
 @SuppressWarnings("serial")
 public class UserRePass extends JFrame {

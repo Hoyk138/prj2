@@ -1,4 +1,4 @@
-package min.pcUserView;
+package user.view;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import min.pcUserEvt.UserJoinEvt;
+import user.controller.UserJoinEvt;
 
 public class UserJoin extends JFrame {
 	

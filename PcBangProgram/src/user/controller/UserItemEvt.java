@@ -1,17 +1,18 @@
-package so.pcUserEvt;
+package user.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import so.pcUserView.UserOrder;
+import prj2.user.view.UserItem;
 
-public class UserOrderEvt extends MouseAdapter implements ActionListener{
+public class UserItemEvt extends MouseAdapter implements ActionListener{
 	
-	private UserOrder uo;
+	private UserItem uo;
 
-	public UserOrderEvt(UserOrder uo) {
+	public UserItemEvt(UserItem uo) {
 		this.uo=uo;
 	}//UserOrderEvt
 

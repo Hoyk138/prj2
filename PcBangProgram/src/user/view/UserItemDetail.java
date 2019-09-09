@@ -1,4 +1,4 @@
-package so.pcUserView;
+package user.view;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -10,9 +10,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import so.pcUserEvt.UserOrderDetailEvt;
+import prj2.user.evt.UserItemDetailEvt;
 
-public class UserOrderDetail extends JFrame{
+public class UserItemDetail extends JFrame{
 	
 	private JLabel jlFoodDetailImg,jlFoodPrice,jlQuantity,jlFoodStrongPoint;
 	private JTextField jtfFoodName,jtfFoodPrice;
@@ -21,9 +21,9 @@ public class UserOrderDetail extends JFrame{
 	private JTextArea jtaFoodStrongPoint;
 	private JButton jbtPut, jbtClose;
 	
-	private UserOrder uo;
+	private UserItem uo;
 	
-	public UserOrderDetail(UserOrder uo){
+	public UserItemDetail(UserItem uo){
 //		super("먹거리상세보기");
 		this.uo=uo;
 		
@@ -60,7 +60,7 @@ public class UserOrderDetail extends JFrame{
 		jtaFoodStrongPoint.setBorder(new TitledBorder(""));
 		
 		//이벤트
-		UserOrderDetailEvt uode=new UserOrderDetailEvt(this);
+		UserItemDetailEvt uode=new UserItemDetailEvt(this);
 		jcbQuantity.addActionListener(uode);
 		jbtPut.addActionListener(uode);
 		jbtClose.addActionListener(uode);
@@ -129,7 +129,7 @@ public class UserOrderDetail extends JFrame{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new UserOrderDetail(new UserOrder());
+		new UserItemDetail(new UserItem());
 	}//main
 
 }//class
