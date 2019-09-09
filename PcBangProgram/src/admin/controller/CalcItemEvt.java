@@ -1,4 +1,4 @@
-package soin.admin.calc;
+package admin.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;

@@ -1,4 +1,4 @@
-package soin.admin.calc;
+package admin.view;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;

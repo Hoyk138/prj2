@@ -1,4 +1,4 @@
-package soin.admin.calc;
+package admin.VO;
 
 public class CalcPCVO {
 //번호, 이용 시간, 이용 금액, 총 계, 총 매출

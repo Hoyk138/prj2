@@ -1,4 +1,4 @@
-package soin.admin.calc;
+package admin.VO;
 
 public class CalcItemVO {
 //번호, 제품명, 개수, 일시, 가격, 총 판매 수량, 총 매출

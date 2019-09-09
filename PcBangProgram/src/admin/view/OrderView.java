@@ -1,4 +1,4 @@
-package hee.pcAdminView;
+package admin.view;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;

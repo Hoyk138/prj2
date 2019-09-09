@@ -1,4 +1,4 @@
-package hee.pcAdminView;
+package admin.view;
 
 
 

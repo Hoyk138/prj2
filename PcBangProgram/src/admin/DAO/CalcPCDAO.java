@@ -1,4 +1,4 @@
-package soin.admin.calc;
+package admin.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
