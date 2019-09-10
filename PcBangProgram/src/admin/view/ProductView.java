@@ -2,6 +2,8 @@ package admin.view;
 
 
 
+import java.awt.BorderLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,15 +12,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class ProductView extends JFrame{
+public class ProductView extends JPanel{
 	
-	private JButton jbtFoodAdd,jbtSnackAdd,jbtDrinkAdd;
+	private JButton jbtProductAdd;
 	private DefaultTableModel dtmFood,dtmSnack,dtmDrink;
 	private JTabbedPane jtp;
 	
-	public ProductView() {
-		
-		super("상품관리");
+	public ProductView() {		
 		
 		String[] columnNames= {"상품코드","상품명","이미지","설명","가격","입력일"};
 
@@ -30,11 +30,11 @@ public class ProductView extends JFrame{
 		JTable jtFood=new JTable(dtmFood);
 		
 		jtFood.getColumnModel().getColumn(0).setPreferredWidth(100);
-		jtFood.getColumnModel().getColumn(1).setPreferredWidth(130);
-		jtFood.getColumnModel().getColumn(2).setPreferredWidth(210);
-		jtFood.getColumnModel().getColumn(3).setPreferredWidth(180);
-		jtFood.getColumnModel().getColumn(4).setPreferredWidth(130);
-		jtFood.getColumnModel().getColumn(5).setPreferredWidth(130);
+		jtFood.getColumnModel().getColumn(1).setPreferredWidth(100);
+		jtFood.getColumnModel().getColumn(2).setPreferredWidth(300);
+		jtFood.getColumnModel().getColumn(3).setPreferredWidth(200);
+		jtFood.getColumnModel().getColumn(4).setPreferredWidth(100);
+		jtFood.getColumnModel().getColumn(5).setPreferredWidth(100);
 		
 		jtFood.setRowHeight(80);
 		
@@ -43,11 +43,11 @@ public class ProductView extends JFrame{
 		JTable jtSnack=new JTable(dtmSnack);
 		
 		jtSnack.getColumnModel().getColumn(0).setPreferredWidth(100);
-		jtSnack.getColumnModel().getColumn(1).setPreferredWidth(130);
-		jtSnack.getColumnModel().getColumn(2).setPreferredWidth(210);
-		jtSnack.getColumnModel().getColumn(3).setPreferredWidth(180);
-		jtSnack.getColumnModel().getColumn(4).setPreferredWidth(130);
-		jtSnack.getColumnModel().getColumn(5).setPreferredWidth(130);
+		jtSnack.getColumnModel().getColumn(1).setPreferredWidth(100);
+		jtSnack.getColumnModel().getColumn(2).setPreferredWidth(300);
+		jtSnack.getColumnModel().getColumn(3).setPreferredWidth(200);
+		jtSnack.getColumnModel().getColumn(4).setPreferredWidth(100);
+		jtSnack.getColumnModel().getColumn(5).setPreferredWidth(100);
 		
 		jtSnack.setRowHeight(80);
 		
@@ -56,57 +56,53 @@ public class ProductView extends JFrame{
 		JTable jtDrink=new JTable(dtmDrink);
 		
 		jtDrink.getColumnModel().getColumn(0).setPreferredWidth(100);
-		jtDrink.getColumnModel().getColumn(1).setPreferredWidth(130);
-		jtDrink.getColumnModel().getColumn(2).setPreferredWidth(210);
-		jtDrink.getColumnModel().getColumn(3).setPreferredWidth(180);
-		jtDrink.getColumnModel().getColumn(4).setPreferredWidth(130);
-		jtDrink.getColumnModel().getColumn(5).setPreferredWidth(130);
+		jtDrink.getColumnModel().getColumn(1).setPreferredWidth(100);
+		jtDrink.getColumnModel().getColumn(2).setPreferredWidth(300);
+		jtDrink.getColumnModel().getColumn(3).setPreferredWidth(200);
+		jtDrink.getColumnModel().getColumn(4).setPreferredWidth(100);
+		jtDrink.getColumnModel().getColumn(5).setPreferredWidth(100);
 		
 		jtDrink.setRowHeight(80);
 		
 		JScrollPane jspDrink=new JScrollPane(jtDrink);
 		//테이블3개 끝
-		jbtFoodAdd=new JButton("추가");	
-		jbtSnackAdd=new JButton("추가");	
-		jbtDrinkAdd=new JButton("추가");	
-		
-		
+		jbtProductAdd=new JButton("추가");	
+				
 		JPanel jpFood=new JPanel();
 		jpFood.setLayout(null);
-		jspFood.setBounds(0,50,1160,500);
-		jbtFoodAdd.setBounds(800,565,120,50);
+		jspFood.setBounds(0,50,900,500);
 		jpFood.add(jspFood);
-		jpFood.add(jbtFoodAdd);
 		
 		JPanel jpSnack=new JPanel();
 		jpSnack.setLayout(null);
-		jspSnack.setBounds(0,50,1160,500);
-		jbtSnackAdd.setBounds(800,565,120,50);
+		jspSnack.setBounds(0,50,900,500);
 		jpSnack.add(jspSnack);
-		jpSnack.add(jbtSnackAdd);
 		
 		JPanel jpDrink=new JPanel();
 		jpDrink.setLayout(null);
-		jspDrink.setBounds(0,50,1160,500);
-		jbtDrinkAdd.setBounds(800,565,120,50);
+		jspDrink.setBounds(0,50,900,500);
 		jpDrink.add(jspDrink);
-		jpDrink.add(jbtDrinkAdd);
 		
+
 		
 		//탭
 		jtp=new JTabbedPane();
 		
-		jtp.add("식사",jpFood);
-		jtp.add("스낵",jpSnack);
-		jtp.add("음료",jpDrink);
+		jtp.add("식사",jspFood);
+		jtp.add("스낵",jspSnack);
+		jtp.add("음료",jspDrink);
 		
-		add(jtp);
+		setLayout(new BorderLayout());
 		
-		setBounds(120,120,1160,700);
+		JPanel jpButton=new JPanel();
+		jpButton.add(jbtProductAdd);
+		
+		add("Center",jtp);
+		add("South",jpButton);
+		
 		
 		setVisible(true);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 	}//기본생성자
 	
@@ -118,23 +114,9 @@ public class ProductView extends JFrame{
 
 
 
-	public JButton getJbtFoodAdd() {
-		return jbtFoodAdd;
+	public JButton getJbtProductAdd() {
+		return jbtProductAdd;
 	}
-
-
-
-	public JButton getJbtSnackAdd() {
-		return jbtSnackAdd;
-	}
-
-
-
-	public JButton getJbtDrinkAdd() {
-		return jbtDrinkAdd;
-	}
-
-
 
 	public DefaultTableModel getDtmFood() {
 		return dtmFood;
@@ -151,11 +133,5 @@ public class ProductView extends JFrame{
 	public DefaultTableModel getDtmDrink() {
 		return dtmDrink;
 	}
-
-
-
-	public static void main(String[] args) {
-		new ProductView();
-	}//main
 
 }//class
