@@ -1,7 +1,5 @@
 package admin.view;
 
-
-
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
@@ -10,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class ProductView extends JPanel{
@@ -100,7 +99,7 @@ public class ProductView extends JPanel{
 		add("Center",jtp);
 		add("South",jpButton);
 		
-		
+		setBorder(new TitledBorder("ªÛ«∞"));
 		setVisible(true);
 		
 	

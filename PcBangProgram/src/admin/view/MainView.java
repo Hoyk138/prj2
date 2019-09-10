@@ -49,7 +49,7 @@ public class MainView extends JFrame{
 		jpCenter.add("pc", new ManagePC(this));
 		jpCenter.add("member", new ManageMember(this));
 		jpCenter.add("item", new ProductView());
-		jpCenter.add("order", new ManageOrder(this));
+		jpCenter.add("order", new OrderView());
 		jpCenter.add("payment", new ManagePayment(this));
 		
 		//¹èÄ¡
