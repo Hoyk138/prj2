@@ -2,56 +2,42 @@ package admin.VO;
 
 public class CalcItemVO {
 //번호, 제품명, 개수, 일시, 가격, 총 판매 수량, 총 매출
-	private String itemName, sellingDate;
-	private int num, cnt, price, totalCnt, totalPrice;
-	
-
-	public CalcItemVO(String itemName, String sellingDate, int num, int cnt, int price, int totalCnt, int totalPrice) {
+	private String itemName, id, pcCode, itemCode;
+	private int num, quantity, price;
+	public CalcItemVO(String itemName, String id, String pcCode, String itemCode, int num, int quantity, int price) {
+		
 		this.itemName = itemName;
-		this.sellingDate = sellingDate;
+		this.id = id;
+		this.pcCode = pcCode;
+		this.itemCode = itemCode;
 		this.num = num;
-		this.cnt = cnt;
+		this.quantity = quantity;
 		this.price = price;
-		this.totalCnt = totalCnt;
-		this.totalPrice = totalPrice;
 	} // CalcItemVO
-
-
+	
 	public String getItemName() {
 		return itemName;
 	}
-
-
-	public String getSellingDate() {
-		return sellingDate;
+	public String getId() {
+		return id;
 	}
-
-
+	public String getPcCode() {
+		return pcCode;
+	}
+	public String getItemCode() {
+		return itemCode;
+	}
 	public int getNum() {
 		return num;
 	}
-
-
-	public int getCnt() {
-		return cnt;
+	public int getQuantity() {
+		return quantity;
 	}
-
-
 	public int getPrice() {
 		return price;
 	}
-
-
-	public int getTotalCnt() {
-		return totalCnt;
-	}
-
-
-	public int getTotalPrice() {
-		return totalPrice;
-	}
 	
-	
+
 
 
 } // class
