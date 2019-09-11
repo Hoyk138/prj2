@@ -1,8 +1,11 @@
 package admin.view;
 
 import java.awt.TextArea;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -26,7 +29,12 @@ public class AdminChat extends JFrame{
 		
 		setBounds(100, 100, 500, 600);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent we) {
+				dispose();
+			}//windowClosing
+		});
 	}
 	
 }
