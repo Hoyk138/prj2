@@ -2,37 +2,38 @@ package admin.VO;
 
 public class CalcPCVO {
 //번호, 이용 시간, 이용 금액, 총 계, 총 매출
-	private String useTime;
-	private int num, totalCnt, price, totalPrice;
+	//pc_num, pc_code, id, use_time, use_fee
+	private String pcCode, id, useTime ;
+	private int pcNum, useFee;
 	
-	public CalcPCVO(String useTime, int num, int totalCnt, int price, int totalPrice) {
+	public CalcPCVO(String pcCode, String id, String useTime, int pcNum, int useFee) {
+		this.pcCode = pcCode;
+		this.id = id;
 		this.useTime = useTime;
-		this.num = num;
-		this.totalCnt = totalCnt;
-		this.price = price;
-		this.totalPrice = totalPrice;
-	} // CalcPCVO
+		this.pcNum = pcNum;
+		this.useFee = useFee;
+	}
+
+	public String getPcCode() {
+		return pcCode;
+	}
+
+	public String getId() {
+		return id;
+	}
 
 	public String getUseTime() {
 		return useTime;
 	}
 
-	public int getNum() {
-		return num;
+	public int getPcNum() {
+		return pcNum;
 	}
 
-	public int getTotalCnt() {
-		return totalCnt;
+	public int getUseFee() {
+		return useFee;
 	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public int getTotalPrice() {
-		return totalPrice;
-	}
-
+	
 
 	
 

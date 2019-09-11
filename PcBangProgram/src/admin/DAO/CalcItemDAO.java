@@ -48,9 +48,9 @@ public class CalcItemDAO {
 		} // end catch
 		
 		// 2. Connection ¾ò±â
-		String url = "jdbc:oracle:thin:@localhost:1521:orcl" ;
+		String url = "jdbc:oracle:thin:@211.63.89.132:1521:orcl" ;
 		String id = "pcbang" ;
-		String pass = "2zo" ;
+		String pass = "ezo" ;
 		
 		conn = DriverManager.getConnection(url, id, pass) ;
 		
@@ -77,7 +77,7 @@ public class CalcItemDAO {
 		//from pc_history pc, ordering ordering, item item 
 		//where (pc.id=ordering.id) and (ordering.item_code=item.item_code);
 		.append("	select ordering.order_num order_num, ordering.id id, pc.pc_code pc_code, ordering.item_code item_code, item.name item_name, ordering.quantity quantity, (item.price*ordering.quantity) price	")
-		.append("	pc_history pc, ordering ordering, item item	")
+		.append("	from pc_history pc, ordering ordering, item item	")
 		.append("	where (pc.id=ordering.id) and (ordering.item_code=item.item_code) and item.state='Y' 	") ;
 		
 		pstmt = conn.prepareStatement(selectCalcItem.toString()) ;

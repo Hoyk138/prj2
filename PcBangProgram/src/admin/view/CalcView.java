@@ -10,6 +10,9 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import admin.controller.CalcItemEvt;
+import admin.controller.CalcPCEvt;
+
 @SuppressWarnings("serial")
 public class CalcView extends JPanel {
 
@@ -97,6 +100,12 @@ public class CalcView extends JPanel {
 		jtp.addTab("매점", jpCalcItem);
 		
 		add("Center", jtp) ;
+		
+		// 이벤트
+		CalcPCEvt cpe = new CalcPCEvt(this) ;
+		jbtCalcPC.addActionListener(cpe);
+		CalcItemEvt cie = new CalcItemEvt(this) ;
+		jbtCalcItem.addActionListener(cie);
 		
 //		setBounds(400, 200, 719, 600);
 		setVisible(true);

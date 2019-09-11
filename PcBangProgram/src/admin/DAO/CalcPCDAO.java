@@ -47,9 +47,9 @@ public class CalcPCDAO {
 		} // end catch
 		
 		// 2. Connection 얻기
-		String url = "jdbc:oracle:thin:@localhost:1521:orcl" ;
+		String url = "jdbc:oracle:thin:@211.63.89.132:1521:orcl" ;
 		String id = "pcbang" ;
-		String pass = "2zo" ;
+		String pass = "ezo" ;
 		
 		conn = DriverManager.getConnection(url, id, pass) ;
 		
@@ -84,7 +84,8 @@ public class CalcPCDAO {
 		rs = pstmt.executeQuery() ;
 		CalcPCVO cv = null ;
 		while( rs.next() ) {
-			cv = new CalcPCVO(rs.getString("pc_num"), rs.getInt("pc_code"), rs.getInt("id"), rs.getInt("use_time"), rs.getInt("use_fee")) ;
+			//pc_num, pc_code, id, use_time, use_fee
+			cv = new CalcPCVO(rs.getString("pc_code"),rs.getString("id"), rs.getString("use_time"), rs.getInt("pc_num"), rs.getInt("use_fee")) ;
 			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 		} // end while
 		
