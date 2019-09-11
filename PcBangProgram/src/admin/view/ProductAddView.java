@@ -9,14 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class AddView extends JFrame{
+public class ProductAddView extends JFrame{
 	
 	private JButton jbtProductAdd,jbtProductImageAdd;
 	private JLabel jlImgAdd;
 	private JTextField jtfProductNameAdd,jtfPriceAdd;
 	private DefaultComboBoxModel<String> dcbmCategoryAdd;
 	private JTextArea jtaExplainAdd;
-	public AddView() {
+	public ProductAddView() {
 		super("메뉴 추가");
 		
 		jtaExplainAdd=new JTextArea();
@@ -113,7 +113,7 @@ public class AddView extends JFrame{
 
 
 	public static void main(String[] args) {
-		new AddView();
+		new ProductAddView();
 	}//main
 	
 }//class
