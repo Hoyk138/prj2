@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import admin.DAO.CalcItemDAO;
+import admin.VO.CalcItemReciptVO;
+import admin.VO.CalcItemVO;
+
 //import kr.co.sist.admin.vo.CalcVO;
 
 public class CalcItemDAO {
@@ -99,7 +103,7 @@ public class CalcItemDAO {
 		} // end finally
 				
 		return list ;
-	} // selectCalc
+	} // selectCalcItem
 	
 	public List<CalcItemReciptVO> selectCalcItemRecipt() throws SQLException {
 		List<CalcItemReciptVO> list = new ArrayList<CalcItemReciptVO>() ;
@@ -144,5 +148,5 @@ public class CalcItemDAO {
 		} // end finally
 		
 		return list ;
-	} // selectCalc
+	} // selectCalcItemRecipt
 }

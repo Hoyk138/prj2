@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import admin.DAO.CalcPCDAO;
+import admin.VO.CalcPCReciptVO;
+import admin.VO.CalcPCVO;
+
 
 public class CalcPCDAO {
 	
@@ -93,7 +97,7 @@ public class CalcPCDAO {
 		} // end finally
 				
 		return list ;
-	} // selectCalc
+	} // selectCalcPC
 	
 	public List<CalcPCReciptVO> selectCalcPCRecipt() throws SQLException {
 		List<CalcPCReciptVO> list = new ArrayList<CalcPCReciptVO>() ;
@@ -137,5 +141,5 @@ public class CalcPCDAO {
 		} // end finally
 		
 		return list ;
-	} // selectCalc
+	} // selectCalcPCRecipt
 }
