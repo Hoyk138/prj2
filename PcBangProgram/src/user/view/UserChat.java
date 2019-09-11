@@ -8,8 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import user.controller.UserChatEvt;
-
+import prj2.user.evt.UserChatEvt;
 
 public class UserChat extends JFrame{
 	
@@ -23,7 +22,7 @@ public class UserChat extends JFrame{
 		
 		//선언
 		jtfTalk=new JTextField(25);
-		jtaChat=new JTextArea("무엇을 도와드릴까요?");
+		jtaChat=new JTextArea();
 		jbtSend=new JButton("보내기");
 		jspChat=new JScrollPane(jtaChat);
 		
@@ -67,8 +66,12 @@ public class UserChat extends JFrame{
 	public JButton getJbtSend() {
 		return jbtSend;
 	}
-
 	
+	public JScrollPane getJspChat() {
+		return jspChat;
+	}
+
+
 	/**
 	 * 단위 테스트용
 	 * @param args

@@ -65,6 +65,8 @@ public class UserLogin extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//LoginUser		
+	
+	
 			
 
 }//class

@@ -3,14 +3,14 @@ package user.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import user.view.UserItemDetail;
+import prj2.user.view.UserItemDetail;
 
 public class UserItemDetailEvt implements ActionListener {
 	
-	private UserItemDetail uod;
+	private UserItemDetail uid;
 	
-	public UserItemDetailEvt(UserItemDetail uod) {
-		this.uod=uod;
+	public UserItemDetailEvt(UserItemDetail uid) {
+		this.uid=uid;
 	}//UserOrderDetailEvt
 	
 	private void setTotalPrice() {
@@ -22,20 +22,20 @@ public class UserItemDetailEvt implements ActionListener {
 	}//setPut
 	
 	private void close() {
-		uod.dispose();
+		uid.dispose();
 	}//close
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource()==uod.getJcbQuantity()) { //수량에서의 이벤트
+		if(ae.getSource()==uid.getJcbQuantity()) { //수량에서의 이벤트
 			setTotalPrice();
 		}//end if
 		
-		if(ae.getSource()==uod.getJbtPut()) { //주문담기 버튼
+		if(ae.getSource()==uid.getJbtPut()) { //주문담기 버튼
 			setPut();
 		}//end if
 		
-		if(ae.getSource()==uod.getJbtClose()) { //닫기버튼
+		if(ae.getSource()==uid.getJbtClose()) { //닫기버튼
 			close();
 		}//end if
 		

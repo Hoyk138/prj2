@@ -1,17 +1,20 @@
 package user.view;
 
+import java.awt.BorderLayout;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import user.controller.UserItemEvt;
+import prj2.user.evt.UserItemEvt;
 
 
 /**
@@ -49,12 +52,13 @@ public class UserItem extends JFrame{
 //				return getValueAt(0, column).getClass();
 //			}
 //			
-//			@Override
-//			public boolean isCellEditable(int row, int column) {
-//				return false;
-//			}
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};
 		JScrollPane jspFood=new JScrollPane(jtFood);
+		add(jspFood, BorderLayout.CENTER);//
 		
 		//스낵 테이블
 		jtSnack=new JTable(dtmSnack) {
@@ -64,13 +68,14 @@ public class UserItem extends JFrame{
 //				return getValueAt(0, column).getClass();
 //			}
 //			
-//			@Override
-//			public boolean isCellEditable(int row, int column) {
-//				return false;
-//			}
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 			
 		};
 		JScrollPane jspSnack=new JScrollPane(jtSnack);
+
 		
 		//음료 테이블
 		jtDrink=new JTable(dtmDrink) {
@@ -80,10 +85,10 @@ public class UserItem extends JFrame{
 //				return getValueAt(0, column).getClass();
 //			}
 //			
-//			@Override
-//			public boolean isCellEditable(int row, int column) {
-//				return false;
-//			}
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};
 		JScrollPane jspDrink=new JScrollPane(jtDrink);
 		

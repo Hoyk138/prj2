@@ -1,21 +1,32 @@
 package user.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.TileObserver;
+import java.awt.image.WritableRenderedImage;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import user.controller.UserMainEvt;
+import prj2.user.evt.UserMainEvt;
 
 
 public class UserMain extends JFrame{
 	private JLabel jlPcNum, jlID, jlStartTime, jlUsePrice, jlUseTime;
 	private JButton jbtOrder, jbtCounterChat, jbtAdImage;
 	// 
-	private String num,id,startTime,usePrice,UseTime;
+	private String id,startTime,usePrice,UseTime;
+	private int pcNum;
 	
 	public UserMain() {
 		super("E_ZO PC방");
+		
+		pcNum=10;
 		
 		//생성
 		jlPcNum=new JLabel("NO");
@@ -86,6 +97,10 @@ public class UserMain extends JFrame{
 	}
 	
 	
+	public int getPcNum() {
+		return pcNum;
+	}
+
 	/**
 	 * 단위테스트용
 	 * @param args

@@ -4,15 +4,15 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import user.controller.UserItemDetailEvt;
+import prj2.user.evt.UserItemDetailEvt;
 
-public class UserItemDetail extends JFrame{
+public class UserItemDetail extends JDialog{
 	
 	private JLabel jlFoodDetailImg,jlFoodPrice,jlQuantity,jlFoodStrongPoint;
 	private JTextField jtfFoodName,jtfFoodPrice;
@@ -21,11 +21,11 @@ public class UserItemDetail extends JFrame{
 	private JTextArea jtaFoodStrongPoint;
 	private JButton jbtPut, jbtClose;
 	
-	private UserItem uo;
+	private UserItem ui;
 	
-	public UserItemDetail(UserItem uo){
+	public UserItemDetail(UserItem ui){
 //		super("먹거리상세보기");
-		this.uo=uo;
+		this.ui=ui;
 		
 		//JLabel
 		jlFoodPrice=new JLabel("금액");
@@ -91,7 +91,7 @@ public class UserItemDetail extends JFrame{
 		add(jbtClose);
 		
 		setResizable(false);
-		setBounds(uo.getX()+300, uo.getY()+200, 600, 400);
+		setBounds(ui.getX()+300, ui.getY()+200, 600, 400);
 		setVisible(true);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	

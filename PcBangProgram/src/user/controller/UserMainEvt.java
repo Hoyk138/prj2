@@ -3,28 +3,33 @@ package user.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import user.view.UserChat;
-import user.view.UserMain;
-import user.view.UserItem;
-
+import prj2.user.view.UserChat;
+import prj2.user.view.UserItem;
+import prj2.user.view.UserMain;
 
 public class UserMainEvt implements ActionListener{
 	
 	private UserMain um;
+	private UserItem ui;
 
 	public UserMainEvt(UserMain um) {
 		this.um=um;
+		
+		
 	}//UserMainEvt
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==um.getJbtOrder()) { //먹거리주문버튼
-			new UserItem();
+			//다른 클래스가 띄어지면 다시안띄게 하기
+				new UserItem();				
 		}//end if
 		
 		if(ae.getSource()==um.getJbtCounterChat()) { //카운터채팅버튼
-			new UserChat();
+			if(um.getJbtCounterChat()==null) {
+				new UserChat();				
+			}
 		}//end if
 		
 		if(ae.getSource()==um.getJbtAdImage()) { //광고창버튼
