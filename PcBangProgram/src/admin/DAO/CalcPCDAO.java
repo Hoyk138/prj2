@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import admin.DAO.CalcPCDAO;
+import admin.VO.CalcPCReciptVO;
+import admin.VO.CalcPCVO;
+
 
 public class CalcPCDAO {
 	
@@ -18,7 +22,20 @@ public class CalcPCDAO {
 		
 	} // CalcPCDAO
 	
+	public static CalcPCDAO getInstance() {
+		if (pcDAO == null) {
+			pcDAO = new CalcPCDAO() ;
+		} // end if
+	return pcDAO ;
+	} // getInstance
 	
+	
+	/**
+	 * DBMS의 연결을 반환하는 일
+	 * 
+	 * @return 연결된 커넥션
+	 * @throws SQLException
+	 */
 	private Connection getConnection() throws SQLException {
 		Connection conn = null ;
 		// 1. 드라이버 로딩 (ojdbc8.jar
@@ -31,55 +48,98 @@ public class CalcPCDAO {
 		
 		// 2. Connection 얻기
 		String url = "jdbc:oracle:thin:@localhost:1521:orcl" ;
-		String id = "lunch" ;
-		String pass = "tiger" ;
+		String id = "pcbang" ;
+		String pass = "2zo" ;
 		
 		conn = DriverManager.getConnection(url, id, pass) ;
 		
 		return conn ;
 	} // getConnection
 	
-//	public List<CalcVO> selectCalc() throws SQLException {
-//		List<CalcVO> list = new ArrayList<CalcVO>() ;
-//		
-//		Connection conn = null ;
-//		PreparedStatement pstmt = null ;
-//		ResultSet rs = null ;
-//		
-//		// 2. Connection 얻기
-//		conn = getConnection() ;
-//		
-//
-//		try {
-//		// 3. 쿼리문 생성 객체 얻기 : lunch 테이블에서 이름, 코드, 가격, 입력일을 가장 최근에 입력된 것 부터 조회
-//		StringBuilder selectCalc = new StringBuilder() ;
-//		selectCalc
-//		.append("	select l.name, l.lunch_code, sum(o.quantity) quantity, sum(l.price*o.quantity) total_price	")
-//		.append("	from ordering o, lunch l	")
-//		.append("	where (o.lunch_code=l.lunch_code) and o.status='Y'	")
-//		.append("	group by l.name, l.lunch_code	") ;
-//		
-//		pstmt = conn.prepareStatement(selectCalc.toString()) ;
-//		
-//		// 4. bind 변수에 값 설정
-//		// 없음
-//		
-//		// 5. 쿼리 수행 후 결과 얻기
-//		rs = pstmt.executeQuery() ;
-//		CalcVO cv = null ;
-//		while( rs.next() ) {
-//			cv = new CalcVO(rs.getString("name"), rs.getString("lunch_code"), rs.getInt("quantity"), rs.getInt("total_price")) ;
-//			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
-//		} // end while
-//		
-//		} finally {
-//		// 6. 연결 끊기
-//			if ( rs != null) { rs.close(); } // end if
-//			if ( pstmt != null) { pstmt.close(); } // end if
-//			if ( conn != null) { conn.close(); } // end if
-//			
-//		} // end finally
-//				
-//		return list ;
-//	} // selectCalc
+	public List<CalcPCVO> selectCalcPC() throws SQLException {
+		List<CalcPCVO> list = new ArrayList<CalcPCVO>() ;
+		
+		Connection conn = null ;
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		
+		// 2. Connection 얻기
+		conn = getConnection() ;
+		
+
+		try {
+		// 3. 쿼리문 생성 객체 얻기 : lunch 테이블에서 이름, 코드, 가격, 입력일을 가장 최근에 입력된 것 부터 조회
+		StringBuilder selectCalcPC = new StringBuilder() ;
+		selectCalcPC
+		//select pc_num, pc_code, id, use_time, use_fee from pc_history
+		.append("	select pc_num, pc_code, id, use_time, use_fee	")
+		.append("	from pc_history	") ;
+		
+		pstmt = conn.prepareStatement(selectCalcPC.toString()) ;
+		
+		// 4. bind 변수에 값 설정
+		// 없음
+		
+		// 5. 쿼리 수행 후 결과 얻기
+		rs = pstmt.executeQuery() ;
+		CalcPCVO cv = null ;
+		while( rs.next() ) {
+			cv = new CalcPCVO(rs.getString("pc_num"), rs.getInt("pc_code"), rs.getInt("id"), rs.getInt("use_time"), rs.getInt("use_fee")) ;
+			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
+		} // end while
+		
+		} finally {
+		// 6. 연결 끊기
+			if ( rs != null) { rs.close(); } // end if
+			if ( pstmt != null) { pstmt.close(); } // end if
+			if ( conn != null) { conn.close(); } // end if
+			
+		} // end finally
+				
+		return list ;
+	} // selectCalcPC
+	
+	public List<CalcPCReciptVO> selectCalcPCRecipt() throws SQLException {
+		List<CalcPCReciptVO> list = new ArrayList<CalcPCReciptVO>() ;
+		
+		Connection conn = null ;
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		
+		// 2. Connection 얻기
+		conn = getConnection() ;
+		
+		
+		try {
+			// 3. 쿼리문 생성 객체 얻기 
+			StringBuilder selectCalcPCRecipt = new StringBuilder() ;
+			selectCalcPCRecipt
+			//select pc_code, sum(use_time) use_time, sum(use_fee) use_fee	from pc_history group by pc_code ;
+			.append("	select pc_code, sum(use_time) use_time, sum(use_fee) use_fee	")
+			.append("	from pc_history	")
+			.append("	group by pc_code	") ;
+			
+			pstmt = conn.prepareStatement(selectCalcPCRecipt.toString()) ;
+			
+			// 4. bind 변수에 값 설정
+			// 없음
+			
+			// 5. 쿼리 수행 후 결과 얻기
+			rs = pstmt.executeQuery() ;
+			CalcPCReciptVO cv = null ;
+			while( rs.next() ) {
+				cv = new CalcPCReciptVO(rs.getString("pc_code"), rs.getInt("use_time"), rs.getInt("use_fee")) ;
+				list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
+			} // end while
+			
+		} finally {
+			// 6. 연결 끊기
+			if ( rs != null) { rs.close(); } // end if
+			if ( pstmt != null) { pstmt.close(); } // end if
+			if ( conn != null) { conn.close(); } // end if
+			
+		} // end finally
+		
+		return list ;
+	} // selectCalcPCRecipt
 }

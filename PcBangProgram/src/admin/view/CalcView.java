@@ -11,16 +11,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class CalcView extends JFrame {
+public class CalcView extends JPanel {
 
 	private JTable jtCalcPC, jtCalcItem ;
 	private DefaultTableModel dtmCalcPC, dtmCalcItem;
 	private JTabbedPane jtp ;
-	private JButton jbtClosePC, jbtCalcPC, jbtCalcItem, jbtCloseItem;
+	private JButton jbtCalcPC, jbtCalcItem ;
 	
 	public CalcView() {
-
-		super("주문관리");
 
 		String[] pcColumnNames = { "번호", "PC번호", "구매자(ID)", "이용시간", "이용금액" };
 		String[] itemColumnNames = { "번호", "PC번호", "구매자(ID)", "제품명", "개수", "결제금액" };
@@ -39,8 +37,8 @@ public class CalcView extends JFrame {
 
 		jtCalcPC.setRowHeight(30);
 		
-		jbtClosePC = new JButton("종료") ;
-		jbtCloseItem = new JButton("종료") ;
+//		jbtClosePC = new JButton("종료") ;
+//		jbtCloseItem = new JButton("종료") ;
 		jbtCalcPC = new JButton("정산") ;
 		jbtCalcItem = new JButton("정산") ;
 		
@@ -56,7 +54,7 @@ public class CalcView extends JFrame {
 		jpCalcPC.setBorder(new TitledBorder("PC사용료 정산")) ;
 		
 //		jpCalcPC.add(jspCalcPC);
-		jpCalcPCSouth.add(jbtClosePC) ;
+//		jpCalcPCSouth.add(jbtClosePC) ;
 		jpCalcPCSouth.add(jbtCalcPC) ;
 		jpCalcPC.add("Center", jspCalcPC) ;
 		jpCalcPC.add("South", jpCalcPCSouth) ;
@@ -81,16 +79,18 @@ public class CalcView extends JFrame {
 		jpCalcItem.setLayout(new BorderLayout()) ;
 		jpCalcItem.setBorder(new TitledBorder("매점 정산"));
 		
-		jpCalcItemSouth.add(jbtCloseItem) ;
+//		jpCalcItemSouth.add(jbtCloseItem) ;
 		jpCalcItemSouth.add(jbtCalcItem) ;
 		jpCalcItem.add("Center", jspCalcItem) ;
 		jpCalcItem.add("South", jpCalcItemSouth) ;
 		
 		
 		jspCalcItem.setBounds(0, 0, 700, 600);
+		
+		setLayout(new BorderLayout());
 
-		add(jpCalcPC);
-		add(jpCalcItem);
+//		add(jpCalcPC);
+//		add(jpCalcItem);
 
 		jtp = new JTabbedPane() ;
 		jtp.addTab("PC", jpCalcPC);
@@ -98,9 +98,8 @@ public class CalcView extends JFrame {
 		
 		add("Center", jtp) ;
 		
-		setBounds(400, 200, 719, 600);
+//		setBounds(400, 200, 719, 600);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}// 기본생성자
 
@@ -124,9 +123,9 @@ public class CalcView extends JFrame {
 		return jtp;
 	}
 
-	public JButton getJbtClosePC() {
-		return jbtClosePC;
-	}
+//	public JButton getJbtClosePC() {
+//		return jbtClosePC;
+//	}
 
 	public JButton getJbtCalcPC() {
 		return jbtCalcPC;
@@ -136,9 +135,9 @@ public class CalcView extends JFrame {
 		return jbtCalcItem;
 	}
 
-	public JButton getJbtCloseItem() {
-		return jbtCloseItem;
-	}
+//	public JButton getJbtCloseItem() {
+//		return jbtCloseItem;
+//	}
 	
 	
 	public static void main(String[] args) {
