@@ -3,9 +3,9 @@ package user.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import prj2.user.view.UserChat;
-import prj2.user.view.UserItem;
-import prj2.user.view.UserMain;
+import user.view.UserChat;
+import user.view.UserItem;
+import user.view.UserMain;
 
 public class UserMainEvt implements ActionListener{
 	

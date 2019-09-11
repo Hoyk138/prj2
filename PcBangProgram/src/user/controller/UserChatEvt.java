@@ -14,8 +14,8 @@ import java.nio.channels.SocketChannel;
 
 import javax.swing.JOptionPane;
 
-import prj2.user.view.UserChat;
-import prj2.user.view.UserMain;
+import user.view.UserChat;
+import user.view.UserMain;
 
 public class UserChatEvt extends WindowAdapter implements ActionListener, Runnable {
 

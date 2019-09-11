@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import prj2.user.evt.UserMainEvt;
+import user.controller.UserMainEvt;
 
 
 public class UserMain extends JFrame{

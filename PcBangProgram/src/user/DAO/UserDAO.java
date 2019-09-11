@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import prj2.user.VO.PcHistoryVO;
-import prj2.user.VO.UseUserVO;
-import prj2.user.VO.UserItemDetailVO;
-import prj2.user.VO.UserItemVO;
-import prj2.user.VO.UserOrderVO;
+import user.VO.PcHistoryVO;
+import user.VO.UseUserVO;
+import user.VO.UserItemDetailVO;
+import user.VO.UserItemVO;
+import user.VO.UserOrderVO;
 
 public class UserDAO { //singleton pattern
 	private static UserDAO uDAO;

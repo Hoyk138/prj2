@@ -8,8 +8,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.table.DefaultTableModel;
 
-import prj2.user.view.UserItem;
-import prj2.user.view.UserItemDetail;
+import user.view.UserItem;
+import user.view.UserItemDetail;
 
 public class UserItemEvt extends MouseAdapter implements ActionListener{
 	

@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import prj2.user.evt.UserItemEvt;
+import user.controller.UserItemEvt;
 
 
 /**
