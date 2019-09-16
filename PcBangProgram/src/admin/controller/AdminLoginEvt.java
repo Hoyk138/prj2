@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import admin.DAO.AdminDAO;
 import admin.VO.AdminLoginVO;
 import admin.view.AdminLogin;
+import admin.view.MainView;
 import kr.co.sist.util.cipher.DataEncrypt;
 
 public class AdminLoginEvt implements ActionListener{
@@ -24,7 +25,6 @@ public class AdminLoginEvt implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		
-		//맨처음에 창뜰때 커서가 아이디에 있었으면 좋겠어
 		
 		if(ae.getSource()==al.getJtfId()) { //아이디를 입력받으면
 			if(!al.getJtfId().getText().equals("")) { // 아이디가 비어있는지 판단
@@ -34,7 +34,7 @@ public class AdminLoginEvt implements ActionListener{
 
 		if(ae.getSource()==al.getJpfPass() || ae.getSource()==al.getJbtnLogin()) { //비밀번호
 			
-			//입력한 비밀번호 가져오기 : char[]을 작업의 편의성을 위해 String에 할당
+			//입력한 비밀번호 가져오기 
 			String inputPass=new String (al.getJpfPass().getPassword()); //비번얻기 PlainText(평문) 
 			String inputld=al.getJtfId().getText(); // 아이디얻기
 			String shaPass="";
@@ -54,7 +54,7 @@ public class AdminLoginEvt implements ActionListener{
 				String name = aDAO.selectLogin(alVO);
 					
 				if( !name.isEmpty() ) { //입력된 아이디와 비밀번호에 일치하는 정보가 있다면
-					System.out.println(name);
+					new MainView();
 					al.dispose();
 				}else {
 					al.getJtfId().setText(""); //아이디 초기화

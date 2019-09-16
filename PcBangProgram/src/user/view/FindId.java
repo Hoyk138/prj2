@@ -65,11 +65,42 @@ public class FindId extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
-	
-	
-	public static void main(String[] args) {
-		new FindId();
+
+	public JComboBox<String> getJcbNum() {
+		return jcbNum;
 	}
+
+	public DefaultComboBoxModel<String> getDcbmNum() {
+		return dcbmNum;
+	}
+
+
+	public JTextField getJtfName() {
+		return jtfName;
+	}
+
+	public JTextField getJtfPhone1() {
+		return jtfPhone1;
+	}
+
+	public JTextField getJtfPhone2() {
+		return jtfPhone2;
+	}
+
+	public JTextField getJtfPhone3() {
+		return jtfPhone3;
+	}
+
+	public JButton getJbtnFindID() {
+		return jbtnFindID;
+	}
+	
+	
+	
+	
+//	public static void main(String[] args) {
+//		new FindId();
+//	}
 
 
 }

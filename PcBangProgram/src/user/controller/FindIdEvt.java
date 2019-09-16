@@ -15,7 +15,13 @@ public class FindIdEvt implements ActionListener {
 		this.fi=fi;
 	}
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent ae) {
+		
+		if(ae.getSource()==fi.getJtfName()) {
+			if(!fi.getJtfName().getText().equals("")) {
+				
+			}
+		}
 
 	}
 

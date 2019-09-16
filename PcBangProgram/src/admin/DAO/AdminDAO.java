@@ -95,7 +95,7 @@ public class AdminDAO {
 //	public static void main(String[] args) {
 //		AdminDAO ad=AdminDAO.getInstance();
 //		try {
-//			System.out.println(ad.selectLogin());  //¿Ö¾ÈµÅ
+//			System.out.println(ad.selectLogin());  
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}//end catch
