@@ -43,7 +43,7 @@ public class UserDAO { //singleton pattern
 		}//end catch
 		
 		//2.
-		String url="jdbc:oralce:thin:@211.63.89.132:1521:orcl";
+		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
 		String id="pcbang";
 		String pass="ezo";
 		
