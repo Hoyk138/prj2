@@ -1,7 +1,5 @@
 package admin.VO;
 
-import admin.controller.ProductEvt;
-
 public class ProductMDViewVO {
 	
 	private String explain,category,state,name,img;

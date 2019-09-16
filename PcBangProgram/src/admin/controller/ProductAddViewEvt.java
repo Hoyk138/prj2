@@ -16,7 +16,7 @@ import kr.co.sist.util.img.ImageResize;
 
 public class ProductAddViewEvt implements ActionListener{
 	private ProductAddView pav;
-	private boolean imgFlag=false;
+//	private boolean imgFlag=false;
 	String path,file;
 	
 	public ProductAddViewEvt(ProductAddView pav) {
@@ -45,9 +45,9 @@ public class ProductAddViewEvt implements ActionListener{
 			File writeFile=new File("C:/dev"+file);
 			ImageResize.resizeImage(writeFile.getAbsolutePath(), 100, 80);
 			pav.getJlImgAdd().setIcon(new ImageIcon(path+file));
-			imgFlag=true;
+//			imgFlag=true;
 		}else{
-			imgFlag=false;
+//			imgFlag=false;
 		}//end if
 		
 		

@@ -8,13 +8,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import admin.DAO.heeDAO;
-import admin.VO.ProductMDViewVO;
 import admin.VO.ProductViewVO;
-import admin.view.ModifyDeleteView;
 import admin.view.ProductAddView;
 import admin.view.ProductView;
 
@@ -140,25 +137,25 @@ public class ProductEvt extends MouseAdapter implements ActionListener{
 		}
 	}//setDrinkList
 	
-	private void productMDView(JTable temp) {
-		ProductMDViewVO pmdvVO=new ProductMDViewVO();
-		
-		String explain=(String)temp.getValueAt(temp.getSelectedRow(),4);
-		String name=(String)temp.getValueAt(temp.getSelectedRow(),2);
-		String img=(String)temp.getValueAt(temp.getSelectedRow(),3);
-		Integer price=(Integer)temp.getValueAt(temp.getSelectedRow(),5);
-		
-		pmdvVO.setExplain(explain);
-		pmdvVO.setName(name);
-		pmdvVO.setImg(img);
-		pmdvVO.setPrice(price);
-		
-		heeDAO hDAO=heeDAO.getInstance();
-		
-		
-		new ModifyDeleteView();
-		
-	}//productMDView
+//	private void productMDView(JTable temp) {
+//		ProductMDViewVO pmdvVO=new ProductMDViewVO();
+//		
+//		String explain=(String)temp.getValueAt(temp.getSelectedRow(),4);
+//		String name=(String)temp.getValueAt(temp.getSelectedRow(),2);
+//		String img=(String)temp.getValueAt(temp.getSelectedRow(),3);
+//		Integer price=(Integer)temp.getValueAt(temp.getSelectedRow(),5);
+//		
+//		pmdvVO.setExplain(explain);
+//		pmdvVO.setName(name);
+//		pmdvVO.setImg(img);
+//		pmdvVO.setPrice(price);
+//		
+//		heeDAO hDAO=heeDAO.getInstance();
+//		
+//		
+//		new ModifyDeleteView();
+//		
+//	}//productMDView
 	
 
 	@Override

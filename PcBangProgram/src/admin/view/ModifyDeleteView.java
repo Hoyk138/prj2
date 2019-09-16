@@ -4,6 +4,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -11,7 +12,8 @@ import javax.swing.JTextField;
 
 import admin.controller.ModifyDeleteEvt;
 
-public class ModifyDeleteView extends JFrame{
+@SuppressWarnings("serial")
+public class ModifyDeleteView extends JDialog{
 	
 	private JButton jbtProductModify,jbtProductImageModify,jbtProductDelete;
 	private JLabel jlImgModify,jlState;
@@ -19,7 +21,7 @@ public class ModifyDeleteView extends JFrame{
 	private DefaultComboBoxModel<String> dcbmCategoryModify;
 	private JTextArea jtaExplainModify;
 	public ModifyDeleteView() {
-		super("메뉴 수정 삭제");
+//		super("메뉴 수정 삭제");
 		
 		jtaExplainModify=new JTextArea();
 		JLabel jlProductName=new JLabel("상품명");
