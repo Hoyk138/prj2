@@ -1,15 +1,19 @@
 package user.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import user.controller.UserJoinEvt;
 
-public class UserJoin extends JFrame {
+public class UserJoin extends JDialog {
 	
 	private JComboBox<String> jcbNum, jcbQuestion;
 	private DefaultComboBoxModel<String> dcbmNum, dcbmQuestion ;
@@ -18,7 +22,7 @@ public class UserJoin extends JFrame {
 	private JButton jbtnOverlap, jbtnJoin;
 	
 	public UserJoin() {
-		super("회원가입");
+//		super("회원가입");
 		
 		dcbmNum=new DefaultComboBoxModel<String>(new String[] {"010","011","017","019"});
 		jcbNum=new JComboBox<String>(dcbmNum);
@@ -103,7 +107,7 @@ public class UserJoin extends JFrame {
 		setResizable(false);
 		setBounds(100, 200, 450, 470);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
 

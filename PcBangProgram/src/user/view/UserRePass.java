@@ -1,6 +1,12 @@
 package user.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -8,14 +14,14 @@ import javax.swing.JTextField;
 import user.controller.UserRePassEvt;
 
 @SuppressWarnings("serial")
-public class UserRePass extends JFrame {
+public class UserRePass extends JDialog {
 	
 	private JLabel jlblPass, jlblConfirm;
 	private JTextField jtfPass, jtfConfirm;
 	private JButton jbtnResetPass;
 	
 	public UserRePass() {
-		super("ID 찾기");
+//		super("ID 찾기");
 		
 		jlblPass=new JLabel("비밀번호");
 		jlblConfirm=new JLabel("확인");
@@ -24,7 +30,6 @@ public class UserRePass extends JFrame {
 		jtfConfirm=new JTextField();
 		
 		jbtnResetPass=new JButton("PW재설정");
-
 		
 		setLayout(null);
 		
@@ -49,7 +54,7 @@ public class UserRePass extends JFrame {
 		setResizable(false);
 		setBounds(100, 200, 450, 250);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//UserRePass
 	

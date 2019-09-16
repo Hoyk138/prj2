@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 
 import user.controller.UserLoginEvt;
 
+@SuppressWarnings("serial")
 public class UserLogin extends JFrame {
 	
 	private JLabel jlbId, jlbPass;
@@ -23,7 +24,6 @@ public class UserLogin extends JFrame {
 		
 		jtfId=new JTextField(20);
 		jpfPass=new JPasswordField(20);
-		
 		
 		jbtnLogin=new JButton("사용시작");
 		jbtnID=new JButton("ID찾기");
@@ -65,6 +65,31 @@ public class UserLogin extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//LoginUser		
+
+	public JTextField getJtfId() {
+		return jtfId;
+	}
+
+	public JPasswordField getJpfPass() {
+		return jpfPass;
+	}
+
+	public JButton getJbtnLogin() {
+		return jbtnLogin;
+	}
+
+	public JButton getJbtnID() {
+		return jbtnID;
+	}
+
+	public JButton getJbtnPass() {
+		return jbtnPass;
+	}
+
+	public JButton getJbtnJoin() {
+		return jbtnJoin;
+	}
+	
 	
 	
 			

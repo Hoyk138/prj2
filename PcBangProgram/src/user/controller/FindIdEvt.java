@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import user.view.FindId;
 
-
 public class FindIdEvt implements ActionListener {
 
 	private FindId fi;
@@ -15,13 +14,7 @@ public class FindIdEvt implements ActionListener {
 		this.fi=fi;
 	}
 	@Override
-	public void actionPerformed(ActionEvent ae) {
-		
-		if(ae.getSource()==fi.getJtfName()) {
-			if(!fi.getJtfName().getText().equals("")) {
-				
-			}
-		}
+	public void actionPerformed(ActionEvent e) {
 
 	}
 

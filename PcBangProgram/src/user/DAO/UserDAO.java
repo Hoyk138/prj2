@@ -8,11 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import user.VO.PcHistoryVO;
-import user.VO.UseUserVO;
 import user.VO.UserItemDetailVO;
 import user.VO.UserItemVO;
-import user.VO.UserOrderVO;
+import user.VO.UserLoginVO;
 
 public class UserDAO { //singleton pattern
 	private static UserDAO uDAO;
@@ -52,6 +50,54 @@ public class UserDAO { //singleton pattern
 		
 		return con;
 	}//getConn
+	
+	
+	/**
+	 * 아이디와 비밀번호를 입력받아 member 테이블에서 아이디와 비밀번호가 맞는다면 로그인에 성공하는일
+	 * 
+	 * @param ulVO 아이디와 비번을 가진 VO
+	 * @return 성공 - 이름, 실패 - empty
+	 * @throws SQLException
+	 */
+	public String selectLogin(UserLoginVO ulVO) throws SQLException { //boolean -> String 원래boolean임 바꿀꺼임
+//		boolean selectLoginFlag=false;
+		String userName="";
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConn();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder selectName=new StringBuilder();
+			selectName
+			.append("		select name		")
+			.append("		from member	")
+			.append("		where id=? and pass=?	");
+			
+			pstmt=con.prepareStatement(selectName.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setString(1, ulVO.getId());
+			pstmt.setString(2, ulVO.getPass());
+		//5. 쿼리 실행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userName=rs.getString("name");
+			}//end if
+			
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return userName;
+	}//selectLogin
+	
+	
 	
 //	/**
 //	 * 사용자 메인의 사용자정보를 띄우는 일

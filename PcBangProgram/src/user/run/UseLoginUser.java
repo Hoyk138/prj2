@@ -9,4 +9,4 @@ public class UseLoginUser {
 		new UserLogin();
 	}//main
 	
-}
+}//class

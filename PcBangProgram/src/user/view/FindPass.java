@@ -1,16 +1,19 @@
 package user.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import user.controller.FindPassEvt;
 
-
-public class FindPass extends JFrame {
+public class FindPass extends JDialog {
 	
 	private JComboBox<String> jcbNum, jcbQuestion;
 	private DefaultComboBoxModel<String> dcbmNum, dcbmQuestion ;
@@ -19,7 +22,7 @@ public class FindPass extends JFrame {
 	private JButton jbtnFindPass;
 	
 	public FindPass() {
-		super("PW 찾기");
+//		super("PW 찾기");
 		
 		dcbmNum=new DefaultComboBoxModel<String>(new String[] {"010","011","017","019"});
 		jcbNum=new JComboBox<String>(dcbmNum);
@@ -86,7 +89,7 @@ public class FindPass extends JFrame {
 		setResizable(false);
 		setBounds(100, 200, 450, 400);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
 

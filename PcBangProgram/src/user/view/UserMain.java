@@ -101,12 +101,12 @@ public class UserMain extends JFrame{
 		return pcNum;
 	}
 
-	/**
-	 * 단위테스트용
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		new UserMain();
-	}//main
+//	/**
+//	 * 단위테스트용
+//	 * @param args
+//	 */
+//	public static void main(String[] args) {
+//		new UserMain();
+//	}//main
 	
 }//class
