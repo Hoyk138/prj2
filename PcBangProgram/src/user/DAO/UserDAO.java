@@ -18,6 +18,7 @@ public class UserDAO { //singleton pattern
 	private UserDAO() {
 		
 	}//userDAO
+	//
 	
 	public static UserDAO getInstance() {
 		if(uDAO==null) {
