@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class ModifyDeleteView extends JFrame{
 	
 	private JButton jbtProductModify,jbtProductImageModify,jbtProductDelete;

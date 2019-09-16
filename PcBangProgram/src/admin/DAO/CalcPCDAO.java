@@ -47,7 +47,8 @@ public class CalcPCDAO {
 		} // end catch
 		
 		// 2. Connection 얻기
-		String url = "jdbc:oracle:thin:@211.63.89.132:1521:orcl" ;
+//		String url = "jdbc:oracle:thin:@211.63.89.132:1521:orcl" ;
+		String url = "jdbc:oracle:thin:@211.63.89.133:1521:orcl" ;
 		String id = "pcbang" ;
 		String pass = "ezo" ;
 		
@@ -72,8 +73,11 @@ public class CalcPCDAO {
 		StringBuilder selectCalcPC = new StringBuilder() ;
 		selectCalcPC
 		//select pc_num, pc_code, id, use_time, use_fee from pc_history
-		.append("	select pc_num, pc_code, id, use_time, use_fee	")
-		.append("	from pc_history	") ;
+//		.append("	select pc_num, pc_code, id, use_time, use_fee	")
+//		.append("	from pc_history	") ;
+		.append("	select pu.pc_use_code, pc_num, id, round((payment_time - login_time)*24*60,2) use_time   ")
+		.append("	from pc_use	pu, pc_payment pp   ")
+		.append("	where pp.pc_use_code = pu.pc_use_code   ");
 		
 		pstmt = conn.prepareStatement(selectCalcPC.toString()) ;
 		
@@ -85,7 +89,7 @@ public class CalcPCDAO {
 		CalcPCVO cv = null ;
 		while( rs.next() ) {
 			//pc_num, pc_code, id, use_time, use_fee
-			cv = new CalcPCVO(rs.getString("pc_code"),rs.getString("id"), rs.getString("use_time"), rs.getInt("pc_num"), rs.getInt("use_fee")) ;
+			cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getString("use_time"), rs.getInt("pc_num"), (int)(Double.parseDouble(rs.getString("use_time"))*20)) ;
 			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 		} // end while
 		

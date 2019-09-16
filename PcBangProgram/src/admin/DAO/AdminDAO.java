@@ -38,7 +38,8 @@ public class AdminDAO {
 			e.printStackTrace();
 		}//end catch
 		//2. Connection ¾ò±â
-		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
+//		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
+		String url="jdbc:oracle:thin:@211.63.89.133:1521:orcl";
 		String id="pcbang";
 		String pass="ezo";
 		
@@ -67,7 +68,7 @@ public class AdminDAO {
 			StringBuilder selectName=new StringBuilder();
 			selectName
 			.append("		select name		")
-			.append("		from admin_login	")
+			.append("		from admin_account	")
 			.append("		where id=? and pass=?	");
 			
 			pstmt=con.prepareStatement(selectName.toString());

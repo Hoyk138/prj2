@@ -45,7 +45,7 @@ public class MainView extends JFrame{
 		card = new CardLayout();
 		jpCenter = new JPanel(card);
 		
-		jpCenter.add("shop", new ManageShop(this));
+		jpCenter.add("shop", new ManageShop());
 		jpCenter.add("pc", new ManagePC(this));
 		jpCenter.add("member", new ManageMember(this));
 		jpCenter.add("item", new ProductView());

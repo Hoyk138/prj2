@@ -27,7 +27,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 //		setCalcItemList();
 	} // CalcItemEvt
 
-	private void CalcItemEvt() {
+	private void viewCalcItemRecipt() {
 		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
 		try {
 			List<CalcItemReciptVO> list = ciDAO.selectCalcItemRecipt();
@@ -71,7 +71,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 
 		if (ae.getSource() == cv.getJbtCalcItem()) {
-			CalcItemEvt();
+			viewCalcItemRecipt();
 		} // end if
 
 	}
@@ -98,8 +98,8 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 				rowData = new Object[6];
 
-				rowData[0] = cv.getNum();
-				rowData[1] = cv.getPcCode();
+				rowData[0] = cv.getOrder_code();
+				rowData[1] = cv.getPCnum();
 				rowData[2] = cv.getId();
 				rowData[3] = cv.getItemName();
 				rowData[4] = cv.getQuantity();

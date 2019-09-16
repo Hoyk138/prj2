@@ -2,6 +2,8 @@ package admin.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
@@ -40,17 +42,22 @@ public class AdminLoginEvt implements ActionListener{
 			//입력한 비밀번호 가져오기 
 			String inputPass=new String (al.getJpfPass().getPassword()); //비번얻기 PlainText(평문) 
 			String inputld=al.getJtfId().getText(); // 아이디얻기
-			String shaPass="";
+			String cipherPass="";
 			
+			// PlainText -> CipheText로 변환
 			try {
-				//PlainText -> CipheText로 변환
-				shaPass=DataEncrypt.messageDigest("MD5", inputPass);
-			} catch (NoSuchAlgorithmException e1) {
-				e1.printStackTrace();
-			}//end catch
+				DataEncrypt de = new DataEncrypt("1111111111111111");
+				cipherPass = de.encryption(inputPass);
+			} catch (UnsupportedEncodingException uee) {
+				uee.printStackTrace();
+			} catch (NoSuchAlgorithmException nsae) {
+				nsae.printStackTrace();
+			} catch (GeneralSecurityException gse) {
+				gse.printStackTrace();
+			} // end catch
 
 			//입력받은 아이디와 비밀번호를 VO에 저장
-			AdminLoginVO alVO=new AdminLoginVO(inputld, shaPass);
+			AdminLoginVO alVO=new AdminLoginVO(inputld, cipherPass);
 			//DB를 조회하기 위해 DAO객체를 얻기
 			AdminDAO aDAO=AdminDAO.getInstance(); 
 			try {

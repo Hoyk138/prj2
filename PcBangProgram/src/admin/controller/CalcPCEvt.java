@@ -2,13 +2,11 @@ package admin.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,7 +23,7 @@ public class CalcPCEvt implements ActionListener {
 		setCalcPCList();
 	} // CalcPCEvt
 	
-	private void CalcPCEvt() {
+	private void viewCalcPCRecipt() {
 		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
 		try {
 			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
@@ -37,7 +35,7 @@ public class CalcPCEvt implements ActionListener {
 			} // end if
 			
 			jta.append("------------------------------------------------------------------------------------------------------------------------\n");
-			jta.append("번호\t이용 시간\t이용 금액\n");
+			jta.append("번호\tPC 번호\t이용 시간\t이용 금액\n");
 			jta.append("=====================================================================\n");
 			
 			CalcPCVO cv = null ;
@@ -46,7 +44,7 @@ public class CalcPCEvt implements ActionListener {
 			for (int i = 0; i < list.size(); i++) {
 				cv = list.get(i) ;
 				//useTime, int num, int totalCnt, int price, int totalPrice
-				jta.append((i+1) + "\t" + cv.getPcNum() + "\t" + cv.getUseTime() + "\t" + "\n");
+				jta.append((i+1) + "\t" + cv.getPcNum() + "\t" + cv.getUseTime() + "\t" +Integer.parseInt(cv.getUseTime())*20+ "\n");
 //				totalCnt += cv.getTotalCnt() ;
 //				totalPrice += cv.getTotalPrice() ;
 			} // end for
@@ -69,7 +67,7 @@ public class CalcPCEvt implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 
 		if (ae.getSource() == cv.getJbtCalcPC()) {
-			CalcPCEvt();
+			viewCalcPCRecipt();
 		} // end if
 	}
 		
@@ -95,8 +93,8 @@ public class CalcPCEvt implements ActionListener {
 				
 				rowData = new Object[5] ;
 				
-				rowData[0] = cv.getPcNum() ;
-				rowData[1] = cv.getPcCode() ;
+				rowData[0] = cv.getPcCode() ;
+				rowData[1] = cv.getPcNum() ;
 				rowData[2] = cv.getId() ;
 				rowData[3] = cv.getUseTime() ;
 				rowData[4] = cv.getUseFee() ;

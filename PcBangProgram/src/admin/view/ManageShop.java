@@ -1,40 +1,75 @@
 package admin.view;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class ManageShop extends JPanel {
 	
-	private JPopupMenu jpm;
-	private JMenuItem[] jmiChatArr = new JMenuItem[20];
-	private JMenuItem[] jmiOrderArr = new JMenuItem[20];
-	private JMenuItem[] jmiCloseArr = new JMenuItem[20];
+//	private JPopupMenu jpm;
+//	private JMenuItem[] jmiChatArr = new JMenuItem[20];
+//	private JMenuItem[] jmiOrderArr = new JMenuItem[20];
+//	private JMenuItem[] jmiCloseArr = new JMenuItem[20];
+//	
+//	private JLabel[] jlblPCStateArr = new JLabel[4];
+//	
+//	private JPanel[] jpPCStateArr;
+//	
+//	public ManageShop(MainView mv) {
+//		setBorder(new TitledBorder("매장"));
+//		
+//		setLayout(new GridLayout(4, 5));
+//		jpPCStateArr = new JPanel[20];
+//		for (int pcNum = 1; pcNum <= 20; pcNum++) {
+//			add(jpPCStateArr[pcNum-1] = new PCState(pcNum));
+////			jpPCStateArr[pcNum-1].addMouseListener(this);
+//		}//end for
+//
+//	}//ManageShop
 	
-	private JLabel[] jlblPCStateArr = new JLabel[4];
+	private Map<Integer, PCState> pcStateMap = new HashMap<Integer, PCState>(27);
+	private JButton jbtnPCManage, jbtnLogManage;
 	
-	private JPanel[] jpPCStateArr;
-	
-	public ManageShop(MainView mv) {
+	public ManageShop() {
 		setBorder(new TitledBorder("매장"));
 		
-		setLayout(new GridLayout(4, 5));
-		jpPCStateArr = new JPanel[20];
-		for (int pcNum = 1; pcNum <= 20; pcNum++) {
-			add(jpPCStateArr[pcNum-1] = new PCState(pcNum));
-//			jpPCStateArr[pcNum-1].addMouseListener(this);
-		}//end for
+		setLayout(new BorderLayout());
+		
+		JPanel jpCenter = new JPanel();
+		jpCenter.setLayout(new GridLayout(4, 5));
+		addJpPCStateArr(jpCenter);
 
+		JPanel jpSouth = new JPanel();
+		jbtnPCManage = new JButton("PC 관리");
+		jbtnLogManage = new JButton("Log 관리");
+		jpSouth.add(jbtnPCManage);
+		jpSouth.add(jbtnLogManage);
+		
+		add("Center",jpCenter);
+		add("South",jpSouth);
+
+		//매장 관리 서버를 오픈하고 사용자 소켓을 받기 위한 thread를 실행한다.
+//		ManageShopServer mss = new ManageShopServer(this);
+//		mss.start();
+//		Thread thread = new Thread(this);
+//		thread.start();
+		
 	}//ManageShop
+
+	public void addJpPCStateArr(JPanel jpCenter) {
+		for (int pcNum = 1; pcNum <= 20; pcNum++) {
+			pcStateMap.put(pcNum, new PCState(pcNum));
+			jpCenter.add(pcStateMap.get(pcNum));
+//			jpPCStateArr[pcNum-1] = new PCState(pcNum);
+//			jpCenter.add(jpPCStateArr[pcNum-1]);
+		}//end for
+	}//setJpCenter
 	
 //	public JPanel jpPCState(int PCNum) {
 //		JPanel jpPCState = new JPanel();
@@ -109,8 +144,8 @@ public class ManageShop extends JPanel {
 //		}
 //	}
 
-	public JPanel[] getJpPCStateArr() {
-		return jpPCStateArr;
-	}
+//	public JPanel[] getJpPCStateArr() {
+//		return jpPCStateArr;
+//	}
 	
 }

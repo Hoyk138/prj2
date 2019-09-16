@@ -14,7 +14,7 @@ import admin.view.ProductAddView;
 
 public class ProductAddViewEvt implements ActionListener{
 	private ProductAddView pav;
-	private boolean imgFlag=false;
+//	private boolean imgFlag=false;
 	String path,file;
 	
 	public ProductAddViewEvt(ProductAddView pav) {
@@ -41,9 +41,9 @@ public class ProductAddViewEvt implements ActionListener{
 			
 			//이미지를 미리보기 라베엘에 설정
 			pav.getJlImgAdd().setIcon(new ImageIcon(path+file));
-			imgFlag=true;
+//			imgFlag=true;
 		}else{
-			imgFlag=false;
+//			imgFlag=false;
 		}//end if
 		
 		

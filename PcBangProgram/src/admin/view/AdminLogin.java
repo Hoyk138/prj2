@@ -1,5 +1,8 @@
 package admin.view;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,6 +50,14 @@ public class AdminLogin extends JFrame {
 		jtfId.addActionListener(ale);
 		jpfPass.addActionListener(ale);
 		jbtnLogin.addActionListener(ale);
+		
+		//Jframe 열릴 때 jtfId에 커서 두기
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent we) {
+				jtfId.requestFocus();
+			}
+		});
 		
 		setResizable(false);
 		setBounds(100, 200, 450, 250);

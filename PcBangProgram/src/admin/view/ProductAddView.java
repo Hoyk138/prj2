@@ -4,12 +4,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ProductAddView extends JFrame{
+@SuppressWarnings("serial")
+public class ProductAddView extends JDialog{
 	
 	private JButton jbtProductAdd,jbtProductImageAdd;
 	private JLabel jlImgAdd;
@@ -17,7 +19,7 @@ public class ProductAddView extends JFrame{
 	private DefaultComboBoxModel<String> dcbmCategoryAdd;
 	private JTextArea jtaExplainAdd;
 	public ProductAddView() {
-		super("메뉴 추가");
+//		super("메뉴 추가");
 		
 		jtaExplainAdd=new JTextArea();
 		JLabel jlProductName=new JLabel("상품명");

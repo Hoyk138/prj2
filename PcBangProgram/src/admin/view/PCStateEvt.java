@@ -32,7 +32,7 @@ public class PCStateEvt extends MouseAdapter implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 			if (ae.getSource() == pcs.getJmiChat()) {
-				new AdminChat();
+				new AdminChat(pcs);
 			}
 			if (ae.getSource() == pcs.getJmiOrder()) {
 				System.out.println("PC"+pcs.getPcNum()+"번 주문 확인");

@@ -1,8 +1,8 @@
 package admin.view;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -23,8 +23,8 @@ public class CalcView extends JPanel {
 	
 	public CalcView() {
 
-		String[] pcColumnNames = { "번호", "PC번호", "구매자(ID)", "이용시간", "이용금액" };
-		String[] itemColumnNames = { "번호", "PC번호", "구매자(ID)", "제품명", "개수", "결제금액" };
+		String[] pcColumnNames = { "코드", "PC번호", "사용자(ID)", "이용시간(분)", "이용금액(원)" };
+		String[] itemColumnNames = { "코드", "PC번호", "구매자(ID)", "제품명", "개수", "결제금액(원)" };
 
 		dtmCalcPC = new DefaultTableModel(pcColumnNames, 5) ;
 		dtmCalcItem = new DefaultTableModel(itemColumnNames, 5) ;
@@ -158,8 +158,8 @@ public class CalcView extends JPanel {
 	}
 
 	
-	public static void main(String[] args) {
-		new CalcView();
-	}// main
+//	public static void main(String[] args) {
+//		new CalcView();
+//	}// main
 
 } // class
