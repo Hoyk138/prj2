@@ -29,8 +29,23 @@ public class CalcView extends JPanel {
 		dtmCalcPC = new DefaultTableModel(pcColumnNames, 5) ;
 		dtmCalcItem = new DefaultTableModel(itemColumnNames, 5) ;
 		
-		JTable jtCalcPC = new JTable(dtmCalcPC);
-		JTable jtCalcItem = new JTable(dtmCalcItem);
+		JTable jtCalcPC = new JTable(dtmCalcPC) {
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+			
+		};
+		
+		JTable jtCalcItem = new JTable(dtmCalcItem) {
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false ;
+			}
+			
+		};
 
 		jtCalcPC.getColumnModel().getColumn(0).setPreferredWidth(30);
 		jtCalcPC.getColumnModel().getColumn(1).setPreferredWidth(50);
