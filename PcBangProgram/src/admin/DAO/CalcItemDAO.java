@@ -73,12 +73,12 @@ public class CalcItemDAO {
 		// 3. 쿼리문 생성 객체 얻기 : pcbang테이블에서 
 		StringBuilder selectCalcItem = new StringBuilder() ;
 		selectCalcItem
-		//select ordering.order_num, ordering.id, pc.pc_code, ordering.item_code, ordering.quantity, (item.price*ordering.quantity) price
-		//from pc_history pc, ordering ordering, item item 
-		//where (pc.id=ordering.id) and (ordering.item_code=item.item_code);
-		.append("	select ordering.order_num order_num, ordering.id id, pc.pc_code pc_code, ordering.item_code item_code, item.name item_name, ordering.quantity quantity, (item.price*ordering.quantity) price	")
-		.append("	from pc_history pc, ordering ordering, item item	")
-		.append("	where (pc.id=ordering.id) and (ordering.item_code=item.item_code) and item.state='Y' 	") ;
+//		select o.order_num order_num, h.pc_code pc_code, h.id id, i.name item_name, o.quantity quantity, (o.quantity*i.price) price
+//		from item i, ordering o, pc_history h
+//		where (i.item_code=o.item_code) and (o.id=h.id) and o.status='Y' and to_char(o.order_date, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
+		.append("	select o.order_num order_num, h.pc_code pc_code, h.id id, i.name item_name, o.quantity quantity, (o.quantity*i.price) price	")
+		.append("	from item i, ordering o, pc_history h	")
+		.append("	where (i.item_code=o.item_code) and (o.id=h.id) and o.status='Y' and to_char(o.order_date, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd') 	") ;
 		
 		pstmt = conn.prepareStatement(selectCalcItem.toString()) ;
 		
@@ -90,7 +90,7 @@ public class CalcItemDAO {
 		CalcItemVO cv = null ;
 		while( rs.next() ) {
 			//String itemName, String sellingDate,   e
-			cv = new CalcItemVO(rs.getString("id"), rs.getString("pc_code"), rs.getString("item_code"), rs.getString("item_name"), rs.getInt("order_num"), rs.getInt("quantity"), rs.getInt("price")) ;
+			cv = new CalcItemVO(rs.getString("id"), rs.getString("pc_code"), rs.getString("item_name"), rs.getInt("order_num"), rs.getInt("quantity"), rs.getInt("price")) ;
 			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 		} // end while
 		
@@ -119,11 +119,13 @@ public class CalcItemDAO {
 		try {
 			// 3. 쿼리문 생성 객체 얻기 : 
 			StringBuilder selectCalcItemRecipt = new StringBuilder() ;
-			//select item.name item_name, ordering.quantity quantity, (item.price*ordering.quantity) price, ordering.order_date order_date
-			//from ordering ordering, item item ;
 			selectCalcItemRecipt
-			.append("	select item.name item_name, ordering.quantity quantity, (item.price*ordering.quantity) price, ordering.order_date order_date	")
-			.append("	from ordering ordering, item item	") ;
+//			select i.name item_name, o.quantity quantity, (o.quantity*i.price) price
+//			from ordering o, item i
+//			where (i.item_code=o.item_code) and o.status='Y' and to_char(o.order_date, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
+			.append("	select i.name item_name, o.quantity quantity, (o.quantity*i.price) price	")
+			.append("	from ordering o, item i	")
+			.append("	where (i.item_code=o.item_code) and o.status='Y' and to_char(o.order_date, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')	");
 			
 			pstmt = conn.prepareStatement(selectCalcItemRecipt.toString()) ;
 			
@@ -134,8 +136,8 @@ public class CalcItemDAO {
 			rs = pstmt.executeQuery() ;
 			CalcItemReciptVO cv = null ;
 			while( rs.next() ) {
-				// String itemName, String sellingDate, int quantity, int price
-				cv = new CalcItemReciptVO(rs.getString("itemName"), rs.getString("sellingDate"), rs.getInt("quantity"), rs.getInt("price")) ;
+				//  String useTime, int pcNum, int usePrice
+				cv = new CalcItemReciptVO(rs.getString("itemName"), rs.getInt("quantity"), rs.getInt("price")) ;
 				list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 			} // end while
 			
