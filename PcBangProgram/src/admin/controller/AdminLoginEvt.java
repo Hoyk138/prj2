@@ -11,7 +11,9 @@ import admin.DAO.AdminDAO;
 import admin.VO.AdminLoginVO;
 import admin.view.AdminLogin;
 import admin.view.MainView;
-import kr.co.sist.util.cipher.DataEncrypt;
+
+
+
 
 public class AdminLoginEvt implements ActionListener{
 	
