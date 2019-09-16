@@ -45,7 +45,6 @@ private static heeDAO aDAO;
 		}//end catch
 		//2.Connection¾ò±â
 		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
-//		String url="jdbc:oracle:thin:@211.63.89.133:1521:orcl";
 		String id="pcbang";
 		String pass="ezo";
 		
@@ -55,7 +54,7 @@ private static heeDAO aDAO;
 	
 	}//getConnection
 	
-	public void AddProduct(ProductAddVO paVO) throws SQLException{
+	public void InsertProduct(ProductAddVO paVO) throws SQLException{
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		
@@ -93,7 +92,7 @@ private static heeDAO aDAO;
 		
 	}//AddProduct
 	
-	public List<ProductViewVO> productView() throws SQLException{
+	public List<ProductViewVO> selectProductView() throws SQLException{
 		List<ProductViewVO> list=new ArrayList<ProductViewVO>();
 		
 		Connection con=null;
@@ -105,7 +104,7 @@ private static heeDAO aDAO;
 			StringBuilder selectProduct=new StringBuilder();
 			
 			selectProduct
-			.append( " select item_code,img,name,price,description,to_char(input_date,'yyyy-mm-dd') inputdate,category " )
+			.append( " select item_code,img,name,price,description,to_char(input_date,'yyyy-mm-dd') inputdate,category,display_state " )
 			.append(	 " from item " );
 			
 			pstmt=con.prepareStatement(selectProduct.toString());
@@ -114,7 +113,7 @@ private static heeDAO aDAO;
 			ProductViewVO pvVO=null;
 			while(rs.next()) {
 				pvVO=new ProductViewVO(rs.getString("item_code"),rs.getString("name"),rs.getString("img"),rs.getString("description"),
-						rs.getString("inputdate"),rs.getString("category"),rs.getInt("price"));
+						rs.getString("inputdate"),rs.getString("category"),rs.getString("display_state"),rs.getInt("price"));
 				list.add(pvVO);
 			}//end while
 			
@@ -125,6 +124,6 @@ private static heeDAO aDAO;
 		}//end finally
 		
 		return list;
-	}
+	}//productView
 	
 }//class

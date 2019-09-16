@@ -9,11 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-@SuppressWarnings("serial")
+import admin.controller.ModifyDeleteEvt;
+
 public class ModifyDeleteView extends JFrame{
 	
 	private JButton jbtProductModify,jbtProductImageModify,jbtProductDelete;
-	private JLabel jlImgModify;
+	private JLabel jlImgModify,jlState;
 	private JTextField jtfProductNameModify,jtfPriceModify;
 	private DefaultComboBoxModel<String> dcbmCategoryModify;
 	private JTextArea jtaExplainModify;
@@ -35,6 +36,7 @@ public class ModifyDeleteView extends JFrame{
 		jlImgModify=new JLabel(new ImageIcon("C:/dev/workspace/jdbc_prj/src/kr/co/sist/user/img/슈렉.jpg"));
 		jtfProductNameModify=new JTextField();
 		jtfPriceModify=new JTextField();
+		jlState=new JLabel("판매중인 상품입니다.");
 		
 		jtaExplainModify.setLineWrap(true);
 		setLayout(null);
@@ -50,6 +52,7 @@ public class ModifyDeleteView extends JFrame{
 		jtaExplainModify.setBounds(400,225,370,300);
 		jbtProductModify.setBounds(480,540,100,30);
 		jbtProductDelete.setBounds(585,540,100,30);
+		jlState.setBounds(125,450,150,100);
 		
 		add(jlImgModify);
 		add(jbtProductImageModify);
@@ -62,7 +65,12 @@ public class ModifyDeleteView extends JFrame{
 		add(jtaExplainModify);
 		add(jbtProductModify);
 		add(jbtProductDelete);
+		add(jlState);
 		
+		ModifyDeleteEvt mde=new ModifyDeleteEvt();
+		jbtProductImageModify.addActionListener(mde);
+		jbtProductModify.addActionListener(mde);
+		jbtProductDelete.addActionListener(mde);
 		
 		setBounds(100,100,800,700);
 		
@@ -122,8 +130,8 @@ public class ModifyDeleteView extends JFrame{
 
 
 
-	public static void main(String[] args) {
-		new ModifyDeleteView();
-	}//main
+//	public static void main(String[] args) {
+//		new ModifyDeleteView();
+//	}//main
 	
 }//class

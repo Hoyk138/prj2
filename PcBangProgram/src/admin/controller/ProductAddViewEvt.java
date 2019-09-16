@@ -3,6 +3,7 @@ package admin.controller;
 import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
@@ -11,10 +12,11 @@ import javax.swing.JOptionPane;
 import admin.DAO.heeDAO;
 import admin.VO.ProductAddVO;
 import admin.view.ProductAddView;
+import kr.co.sist.util.img.ImageResize;
 
 public class ProductAddViewEvt implements ActionListener{
 	private ProductAddView pav;
-//	private boolean imgFlag=false;
+	private boolean imgFlag=false;
 	String path,file;
 	
 	public ProductAddViewEvt(ProductAddView pav) {
@@ -40,10 +42,12 @@ public class ProductAddViewEvt implements ActionListener{
 			}//end if
 			
 			//이미지를 미리보기 라베엘에 설정
+			File writeFile=new File("C:/dev"+file);
+			ImageResize.resizeImage(writeFile.getAbsolutePath(), 100, 80);
 			pav.getJlImgAdd().setIcon(new ImageIcon(path+file));
-//			imgFlag=true;
+			imgFlag=true;
 		}else{
-//			imgFlag=false;
+			imgFlag=false;
 		}//end if
 		
 		
@@ -51,7 +55,6 @@ public class ProductAddViewEvt implements ActionListener{
 
 	public void productAdd() {
 		String imgPath=path+file;
-		
 		String category = pav.getDcbmCategoryAdd().getSelectedItem().toString(); 
 		String name =pav.getJtfProductNameAdd().getText().trim();
 		String explain = pav.getJtaExplainAdd().getText().trim();
@@ -62,7 +65,7 @@ public class ProductAddViewEvt implements ActionListener{
 		heeDAO hDAO=heeDAO.getInstance();
 		
 		try {
-			hDAO.AddProduct(paVO);
+			hDAO.InsertProduct(paVO);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

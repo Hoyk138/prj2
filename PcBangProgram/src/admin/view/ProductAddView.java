@@ -4,22 +4,23 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-@SuppressWarnings("serial")
-public class ProductAddView extends JDialog{
+import admin.controller.ProductAddViewEvt;
+
+public class ProductAddView extends JFrame{
 	
 	private JButton jbtProductAdd,jbtProductImageAdd;
 	private JLabel jlImgAdd;
 	private JTextField jtfProductNameAdd,jtfPriceAdd;
 	private DefaultComboBoxModel<String> dcbmCategoryAdd;
 	private JTextArea jtaExplainAdd;
+	
 	public ProductAddView() {
-//		super("메뉴 추가");
+		super("메뉴 추가");
 		
 		jtaExplainAdd=new JTextArea();
 		JLabel jlProductName=new JLabel("상품명");
@@ -38,6 +39,7 @@ public class ProductAddView extends JDialog{
 		
 		jtaExplainAdd.setLineWrap(true);
 		setLayout(null);
+
 		
 		jlImgAdd.setBounds(30,30,350,350);
 		jbtProductImageAdd.setBounds(120,400,150,30);
@@ -49,6 +51,11 @@ public class ProductAddView extends JDialog{
 		jlExplain.setBounds(400,190,70,30);
 		jtaExplainAdd.setBounds(400,225,370,300);
 		jbtProductAdd.setBounds(530,540,100,30);
+
+		ProductAddViewEvt pave=new ProductAddViewEvt(this);
+		jbtProductImageAdd.addActionListener(pave);
+		jbtProductAdd.addActionListener(pave);
+		
 		
 		add(jlImgAdd);
 		add(jbtProductImageAdd);
@@ -112,10 +119,4 @@ public class ProductAddView extends JDialog{
 		return jtaExplainAdd;
 	}
 
-
-
-	public static void main(String[] args) {
-		new ProductAddView();
-	}//main
-	
 }//class

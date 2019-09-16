@@ -2,12 +2,11 @@ package admin.VO;
 
 public class ProductViewVO {
 
-	private String ProductCode,ProductName,
+	private String ProductCode,ProductName,state,
 				ProductImg,ProductExplain,ProductInputDate,ProductCategory;
 	private int ProductPrice;
 	public ProductViewVO(String productCode, String productName, String productImg, String productExplain,
-			String productInputDate, String productCategory, int productPrice) {
-		super();
+			String productInputDate, String productCategory,String state, int productPrice) {
 		ProductCode = productCode;
 		ProductName = productName;
 		ProductImg = productImg;
@@ -15,7 +14,13 @@ public class ProductViewVO {
 		ProductInputDate = productInputDate;
 		ProductCategory = productCategory;
 		ProductPrice = productPrice;
+		this.state=state;
 	}
+	
+	public String getState() {
+		return state;
+	}
+
 	public String getProductCode() {
 		return ProductCode;
 	}

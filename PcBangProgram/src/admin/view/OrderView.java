@@ -2,13 +2,17 @@ package admin.view;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-@SuppressWarnings("serial")
+import javafx.scene.layout.Border;
+
 public class OrderView extends JPanel{
 	
 	private DefaultTableModel dtmOrder;

@@ -5,6 +5,7 @@ package admin.view;
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -13,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 import admin.controller.ProductEvt;
 
-@SuppressWarnings("serial")
 public class ProductView extends JPanel{
 	
 	private JButton jbtProductAdd;

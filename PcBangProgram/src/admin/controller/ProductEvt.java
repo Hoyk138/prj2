@@ -8,20 +8,26 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import admin.DAO.heeDAO;
+import admin.VO.ProductMDViewVO;
 import admin.VO.ProductViewVO;
+import admin.view.ModifyDeleteView;
 import admin.view.ProductAddView;
 import admin.view.ProductView;
 
 public class ProductEvt extends MouseAdapter implements ActionListener{
 	
 	private ProductView pv;
+	private ProductViewVO pvVO;
 	
 	public ProductEvt(ProductView pv) {
 		this.pv=pv;
 		setFoodList();
+		setSnackList();
+		setDrinkList();
 	}//기본생성자
 	
 	public void setFoodList() {
@@ -33,9 +39,9 @@ public class ProductEvt extends MouseAdapter implements ActionListener{
 		heeDAO hDAO=heeDAO.getInstance();
 		
 		try {
-			List<ProductViewVO> list=hDAO.productView();
+			List<ProductViewVO> list=hDAO.selectProductView();
 			
-			ProductViewVO pvVO=null;
+			pvVO=null;
 			
 			Object cateFlag=new Object();
 			
@@ -43,14 +49,13 @@ public class ProductEvt extends MouseAdapter implements ActionListener{
 				pvVO=list.get(i);
 				rowData=new Object[6];
 				cateFlag=pvVO.getProductCategory();
-				if(cateFlag.equals("F")) {
+				if(cateFlag.equals("F")) {	
 				rowData[0]=pvVO.getProductCode();
 				rowData[1]=pvVO.getProductName();
 				rowData[2]=new ImageIcon(pvVO.getProductImg());
 				rowData[3]=pvVO.getProductExplain();
 				rowData[4]=pvVO.getProductPrice();
 				rowData[5]=pvVO.getProductInputDate();
-				
 				dtmF.addRow(rowData);
 				}
 			}//end for
@@ -70,9 +75,9 @@ public class ProductEvt extends MouseAdapter implements ActionListener{
 		heeDAO hDAO=heeDAO.getInstance();
 		
 		try {
-			List<ProductViewVO> list=hDAO.productView();
+			List<ProductViewVO> list=hDAO.selectProductView();
 			
-			ProductViewVO pvVO=null;
+			pvVO=null;
 			
 			Object cateFlag=new Object();
 			
@@ -107,9 +112,9 @@ public class ProductEvt extends MouseAdapter implements ActionListener{
 		heeDAO hDAO=heeDAO.getInstance();
 		
 		try {
-			List<ProductViewVO> list=hDAO.productView();
+			List<ProductViewVO> list=hDAO.selectProductView();
 			
-			ProductViewVO pvVO=null;
+			pvVO=null;
 			
 			Object cateFlag=new Object();
 			
@@ -135,6 +140,26 @@ public class ProductEvt extends MouseAdapter implements ActionListener{
 		}
 	}//setDrinkList
 	
+	private void productMDView(JTable temp) {
+		ProductMDViewVO pmdvVO=new ProductMDViewVO();
+		
+		String explain=(String)temp.getValueAt(temp.getSelectedRow(),4);
+		String name=(String)temp.getValueAt(temp.getSelectedRow(),2);
+		String img=(String)temp.getValueAt(temp.getSelectedRow(),3);
+		Integer price=(Integer)temp.getValueAt(temp.getSelectedRow(),5);
+		
+		pmdvVO.setExplain(explain);
+		pmdvVO.setName(name);
+		pmdvVO.setImg(img);
+		pmdvVO.setPrice(price);
+		
+		heeDAO hDAO=heeDAO.getInstance();
+		
+		
+		new ModifyDeleteView();
+		
+	}//productMDView
+	
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -148,12 +173,14 @@ public class ProductEvt extends MouseAdapter implements ActionListener{
 	@Override
 	public void mouseClicked(MouseEvent me) {
 		
-		if(me.getSource()==pv.getJtFood()) {
+		if(me.getClickCount()==2) {
 		}//end if
-		if(me.getSource()==pv.getJtSnack()) {
-		}//end if
-		if(me.getSource()==pv.getJtDrink()) {
-		}//end if
+//		if(me.getSource()==pv.getJtSnack()&&me.getClickCount()==2) {
+//			System.out.println("2");
+//		}//end if
+//		if(me.getSource()==pv.getJtDrink()&&me.getClickCount()==2) {
+//			System.out.println("3");
+//		}//end if
 
 		if(me.getSource()==pv.getJtp()) {
 			if(pv.getJtp().getSelectedIndex()==0) {
@@ -165,7 +192,6 @@ public class ProductEvt extends MouseAdapter implements ActionListener{
 			if(pv.getJtp().getSelectedIndex()==2) {
 				setDrinkList();
 			}//end if
-			
 		}//end if
 
 	}//mouseClicked
