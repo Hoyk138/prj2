@@ -5,7 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -29,6 +33,13 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 	private void viewCalcItemRecipt() {
 		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		
+		// <제품명, 개수>
+		Map<String, Integer> itemQMap = new HashMap<String, Integer>() ;
+		
+		// <제품명, 가격>
+		Map<String, Integer> itemPMap = new HashMap<String, Integer>() ;
+		
 		try {
 			List<CalcItemReciptVO> list = ciDAO.selectCalcItemRecipt();
 
@@ -45,18 +56,40 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			jta.append("번호\t제품명\t개수\t가격\n");
 			jta.append("=====================================================================\n");
 
-			CalcItemReciptVO cv = null;
-//			int totalCnt = 0 ;
-//			int totalPrice = 0 ;
+			CalcItemReciptVO cirVO = null;
+			int totalCnt = 0 ;
+			int totalPrice = 0 ;
+			
 			for (int i = 0; i < list.size(); i++) {
-				cv = list.get(i);
-				jta.append((i + 1) + "\t" + cv.getItemName() + "\t" + cv.getQuantity() + "\t" + cv.getPrice() + "\n");
-//				totalCnt += cv.getCnt() ;
-//				totalPrice += cv.getTotalPrice() ;
+				cirVO = list.get(i);
+				
+				// itemQMap
+				if (itemQMap.containsKey(cirVO.getItemName())) {
+					itemQMap.put(cirVO.getItemName(), itemQMap.get(cirVO.getItemName()) + (cirVO.getQuantity()) ) ;
+				} else {
+					itemQMap.put(cirVO.getItemName(), cirVO.getQuantity()) ;
+				} // end if
+				
+				itemPMap.put(cirVO.getItemName(), cirVO.getPrice()) ;
+				
+				totalCnt += cirVO.getQuantity() ;
+				totalPrice += cirVO.getorderedPrice() ;
 			} // end for
+			
+			Set<String> keyQ = itemQMap.keySet() ;
+			
+			Iterator<String> itaQ = keyQ.iterator() ;
+			String itemName = "" ;
+			int i = 1 ;
+			while ( itaQ. hasNext() ) {
+				itemName = itaQ.next() ;
+				jta.append(i + "\t" + itemName + "\t" + itemQMap.get(itemName) + "\t" + itemQMap.get(itemName)*itemPMap.get(itemName) + "\n");
+				i++ ;
+			} // end while
+			
 			jta.append(
 					"------------------------------------------------------------------------------------------------------------------------\n");
-//			jta.append("총 판매 수량 : " + /*totalCnt*/"\t" + "개, 총 매출 : " +  /*totalPrice*/"\t" + "원");
+			jta.append("총 판매 수량 : " + totalCnt + "개,\t총 매출 : " +  totalPrice + "원");
 
 			JOptionPane.showMessageDialog(null, jsp);
 
@@ -91,19 +124,19 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 				JOptionPane.showMessageDialog(cv, "매점 이용 내역이 없습니다.");
 			} // end if
 
-			CalcItemVO cv = null;
+			CalcItemVO ciVO = null;
 
 			for (int i = 0; i < list.size(); i++) {
-				cv = list.get(i);
+				ciVO = list.get(i);
 
 				rowData = new Object[6];
 
-				rowData[0] = cv.getOrder_code();
-				rowData[1] = cv.getPCnum();
-				rowData[2] = cv.getId();
-				rowData[3] = cv.getItemName();
-				rowData[4] = cv.getQuantity();
-				rowData[5] = cv.getPrice();
+				rowData[0] = ciVO.getOrder_code();
+				rowData[1] = ciVO.getPCnum();
+				rowData[2] = ciVO.getId();
+				rowData[3] = ciVO.getItemName();
+				rowData[4] = ciVO.getQuantity();
+				rowData[5] = ciVO.getPrice();
 
 				dtm.addRow(rowData);
 

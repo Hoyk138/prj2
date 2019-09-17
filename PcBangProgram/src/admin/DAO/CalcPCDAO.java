@@ -69,13 +69,13 @@ public class CalcPCDAO {
 		
 
 		try {
-		// 3. 쿼리문 생성 객체 얻기 : lunch 테이블에서 이름, 코드, 가격, 입력일을 가장 최근에 입력된 것 부터 조회
+		// 3. 쿼리문 생성 객체 얻기
 		StringBuilder selectCalcPC = new StringBuilder() ;
 		selectCalcPC
 		//select pc_num, pc_code, id, use_time, use_fee from pc_history
 //		.append("	select pc_num, pc_code, id, use_time, use_fee	")
 //		.append("	from pc_history	") ;
-		.append("	select pu.pc_use_code, pc_num, id, round((payment_time - login_time)*24*60,2) use_time   ")
+		.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time   ")
 		.append("	from pc_use	pu, pc_payment pp   ")
 		.append("	where pp.pc_use_code = pu.pc_use_code   ");
 		
@@ -89,7 +89,7 @@ public class CalcPCDAO {
 		CalcPCVO cv = null ;
 		while( rs.next() ) {
 			//pc_num, pc_code, id, use_time, use_fee
-			cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getString("use_time"), rs.getInt("pc_num"), (int)(Double.parseDouble(rs.getString("use_time"))*20)) ;
+			cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), (rs.getInt("use_time"))*20) ;
 			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 		} // end while
 		

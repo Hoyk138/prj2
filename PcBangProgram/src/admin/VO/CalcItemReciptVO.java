@@ -24,12 +24,13 @@ public class CalcItemReciptVO {
 //	}
 	
 	private String itemName, sellingDate;
-	private int quantity, price;
+	private int quantity, orderedPrice, price;
 	
-	public CalcItemReciptVO(String itemName, String sellingDate, int quantity, int price) {
+	public CalcItemReciptVO(String itemName, String sellingDate, int quantity, int orderedPrice, int price) {
 		this.itemName = itemName;
 		this.sellingDate = sellingDate;
 		this.quantity = quantity;
+		this.orderedPrice = orderedPrice ;
 		this.price = price;
 	} // CalcItemReciptVO
 
@@ -43,6 +44,10 @@ public class CalcItemReciptVO {
 
 	public int getQuantity() {
 		return quantity;
+	}
+	
+	public int getorderedPrice() {
+		return orderedPrice;
 	}
 
 	public int getPrice() {

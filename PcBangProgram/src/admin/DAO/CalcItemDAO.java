@@ -136,7 +136,7 @@ public class CalcItemDAO {
 //			.append("	from ordering o, item i	")
 //			.append("	where (i.item_code=o.item_code) and o.status='Y' and to_char(o.order_date, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')	");
 			
-			.append("	select i.name item_name, io.quantity quantity, (i.price*io.quantity) price, io.order_date order_date, payment_time	")
+			.append("	select i.name item_name, io.quantity quantity, (i.price*io.quantity) orderedPrice, i.price price, io.order_date order_date, payment_time	")
 			.append("	from item_payment ip, item_order io, item i	") 
 			.append("	where (ip.order_code=io.order_code)and(io.item_code=i.item_code)	")			
 			.append("	      and to_char(io.order_date, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')	")		
@@ -152,7 +152,7 @@ public class CalcItemDAO {
 			while( rs.next() ) {
 				//  String useTime, int pcNum, int usePrice
 //				cv = new CalcItemReciptVO(rs.getString("itemName"), rs.getInt("quantity"), rs.getInt("price")) ;
-				cv = new CalcItemReciptVO(rs.getString("item_name"), rs.getString("payment_time"), rs.getInt("quantity"), rs.getInt("price")) ;
+				cv = new CalcItemReciptVO(rs.getString("item_name"), rs.getString("payment_time"), rs.getInt("quantity"), rs.getInt("orderedPrice"), rs.getInt("price")) ;
 				list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 			} // end while
 			

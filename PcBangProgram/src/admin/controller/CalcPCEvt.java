@@ -3,7 +3,11 @@ package admin.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -25,6 +29,10 @@ public class CalcPCEvt implements ActionListener {
 	
 	private void viewCalcPCRecipt() {
 		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+		
+		Map<Integer, Integer> pcMap = new HashMap<Integer, Integer>() ;
+		
+		
 		try {
 			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
 			
@@ -34,22 +42,39 @@ public class CalcPCEvt implements ActionListener {
 				jta.append("정산할 수 있는 거래 목록이 없습니다.");
 			} // end if
 			
-			jta.append("------------------------------------------------------------------------------------------------------------------------\n");
-			jta.append("번호\tPC 번호\t이용 시간\t이용 금액\n");
-			jta.append("=====================================================================\n");
+			jta.append("------------------------------------------------------------------------------------------------------------\n");
+			jta.append("\tPC번호\t이용 시간(분)\t이용 금액(원)\n");
+			jta.append("==============================================================\n");
 			
 			CalcPCVO cv = null ;
-//			int totalCnt = 0 ;
-//			int totalPrice = 0 ;
+			int totalUseTime = 0 ;
+			int totalPrice = 0 ;
 			for (int i = 0; i < list.size(); i++) {
 				cv = list.get(i) ;
+				
+				if (pcMap.containsKey(cv.getPcNum())) {
+					pcMap.put(cv.getPcNum(), pcMap.get(cv.getPcNum()) + cv.getUseTime()) ;
+				} else {
+					pcMap.put(cv.getPcNum(), cv.getUseTime()) ;
+				} // end if
+				
 				//useTime, int num, int totalCnt, int price, int totalPrice
-				jta.append((i+1) + "\t" + cv.getPcNum() + "\t" + cv.getUseTime() + "\t" +Integer.parseInt(cv.getUseTime())*20+ "\n");
-//				totalCnt += cv.getTotalCnt() ;
-//				totalPrice += cv.getTotalPrice() ;
+//				jta.append((i+1) + "\t" + cv.getPcNum() + "\t" + pcMap.get(cv.getPcNum()) + "\t" + cv.getUseFee()+ "\n");
+				totalUseTime += cv.getUseTime() ;
+				totalPrice += cv.getUseFee() ;
 			} // end for
-			jta.append("------------------------------------------------------------------------------------------------------------------------\n");
-//			jta.append("총 계 : " + totalCnt + "\t, 총 매출 : " +  totalPrice +"\t원");
+			
+			Set<Integer> keys = pcMap.keySet ( ) ;
+			
+			Iterator<Integer> ita = keys . iterator ( ) ;
+			int pcNum = 0 ;
+			while ( ita . hasNext() ) {
+				pcNum = ita.next() ;
+				jta.append("\t" + pcNum + "\t" + pcMap.get(pcNum) + "\t" + pcMap.get(pcNum)*20 + "\n") ; // 각 PC 사용시간 & ita.next():PC번호
+			} // end while
+			
+			jta.append("------------------------------------------------------------------------------------------------------------\n");
+			jta.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원");
 			
 
 //			JOptionPane.showMessageDialog(cv, jsp);
