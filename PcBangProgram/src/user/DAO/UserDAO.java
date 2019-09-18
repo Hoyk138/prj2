@@ -8,9 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import user.VO.FindIdVO;
+import user.VO.FindPassVO;
 import user.VO.UserItemDetailVO;
 import user.VO.UserItemVO;
+import user.VO.UserJoinVO;
 import user.VO.UserLoginVO;
+import user.VO.UserRePassVO;
 
 public class UserDAO { //singleton pattern
 	private static UserDAO uDAO;
@@ -74,7 +78,7 @@ public class UserDAO { //singleton pattern
 			StringBuilder selectName=new StringBuilder();
 			selectName
 			.append("		select name		")
-			.append("		from member	")
+			.append("		from member_account	")
 			.append("		where id=? and pass=?	");
 			
 			pstmt=con.prepareStatement(selectName.toString());
@@ -96,6 +100,178 @@ public class UserDAO { //singleton pattern
 			if ( con != null ) { con.close(); } //end if
 		}//end finally
 		return userName;
+	}//selectLogin
+	
+	/**
+	 * 이름과 전화번호를 입력받아 member 테이블에서 일치하는 아이디를 찾아 반환하는 일
+	 * 
+	 * @param fiVO
+	 * @return 
+	 * @throws SQLException
+	 */
+	public String selectId(FindIdVO fiVO) throws SQLException { 
+		String userId="";
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConn();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder selectName=new StringBuilder();
+			selectName
+			.append("		select id		")
+			.append("		from member_account	")
+			.append("		where name=? and phone=?	");
+			
+			pstmt=con.prepareStatement(selectName.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setString(1, fiVO.getName());
+			pstmt.setString(2, fiVO.getPhone());
+		//5. 쿼리 실행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userId=rs.getString("id");
+			}//end if
+			
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return userId;
+	}//selectLogin
+	
+	
+	/**
+	 * PassWord찾기
+	 * 
+	 * @param fpVO
+	 * @return 
+	 * @throws SQLException
+	 */
+	public boolean selectPass(FindPassVO fpVO) throws SQLException { 
+		boolean selectFlag=false;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConn();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder selectName=new StringBuilder();
+			selectName
+			.append("		select pass		")   
+			.append("		from member_account	")
+			.append("		where id=? and question_verify=? and answer_verify=?	");
+			
+			pstmt=con.prepareStatement(selectName.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setString(1, fpVO.getId());
+			pstmt.setString(2, fpVO.getQuestion());
+			pstmt.setString(3, fpVO.getAnswer());
+		//5. 쿼리 실행 후 결과 얻기
+			selectFlag=pstmt.executeUpdate()==1; //1과 같으면 true;
+			
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return selectFlag;  
+	}//selectLogin
+	
+	
+	/**
+	 * 입력받은 ID와 일치하는 회원정보를 찾아 비밀번호를 변경하는 일
+	 * @param urpVO 값을 가진 객체
+	 * @return true- PW 재설정된 회원정보 존재, false- PW 재설정된 회원정보 존재X
+	 * @throws SQLException DBMS에서 문제발생
+	 */
+	public boolean updatePass(UserRePassVO urpVO) throws SQLException { 
+		boolean updateFlag=false;
+		Connection con=null;
+		PreparedStatement pstmt=null; //업데이트라서 resulset필요X
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConn();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder updatePass=new StringBuilder();
+			updatePass
+			.append("		update member_account		")
+			.append("		set pass=? 						")
+			.append("		where id=?						");
+			
+			pstmt=con.prepareStatement(updatePass.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setString(1, urpVO.getPass());
+			pstmt.setString(2, urpVO.getId());
+		//5. 쿼리 실행 후 결과 얻기
+			updateFlag=pstmt.executeUpdate()==1; //1과 같으면 true;
+			
+		}finally {
+			
+		//6. 연결끊기
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return updateFlag;
+		
+	}//selectLogin
+	
+	/**
+	 * 회원가입정보입력
+	 * 
+	 * @param ujVO
+	 * @throws SQLException
+	 */
+	public void insertMember(UserJoinVO ujVO) throws SQLException { //boolean -> String
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConn();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder insertMember=new StringBuilder();
+			insertMember
+			.append("		insert into member_account value																						")
+			.append("		where id=? and pass=? and name=? and phone=? and question_verify=? and answer_verify=?				");
+			
+			pstmt=con.prepareStatement(insertMember.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setString(1, ujVO.getId());
+			pstmt.setString(2, ujVO.getPass());
+			pstmt.setString(3, ujVO.getName());
+			pstmt.setString(4, ujVO.getPhone());
+			pstmt.setString(5, ujVO.getQuestion());
+			pstmt.setString(6, ujVO.getAnswer());
+		//5. 쿼리 실행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+
+				
+			}//end if
+			
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		
 	}//selectLogin
 	
 	

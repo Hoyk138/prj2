@@ -2,20 +2,19 @@ package user.VO;
 
 public class FindIdVO {
 	
-	private String name;
-	private int phone;
-	
-	public FindIdVO(String name, int phone) {
-		this.name=name;
-		this.phone=phone;
-		
+	private String name, phone;
+
+	public FindIdVO(String name, String phone) {
+		super();
+		this.name = name;
+		this.phone = phone;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 

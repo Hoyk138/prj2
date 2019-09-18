@@ -1,18 +1,15 @@
 package user.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import user.controller.FindIdEvt;
 
+@SuppressWarnings("serial")
 public class FindId extends JDialog {
 	
 	private JComboBox<String> jcbNum;
@@ -24,7 +21,7 @@ public class FindId extends JDialog {
 	public FindId(/* UserLogin ul */) {   //////////
 //		super("ID 찾기");
 		
-		dcbmNum=new DefaultComboBoxModel<String>(new String[] {"010","011","017","019"});
+		dcbmNum=new DefaultComboBoxModel<String>(new String[] {"010","011","016","017","018","019"});
 		jcbNum=new JComboBox<String>(dcbmNum);
 		
 		jlbName=new JLabel("이름");
@@ -58,6 +55,7 @@ public class FindId extends JDialog {
 		FindIdEvt fie=new FindIdEvt(this);
 		
 		jtfName.addActionListener(fie);
+		jcbNum.addActionListener(fie);
 		jtfPhone2.addActionListener(fie);
 		jtfPhone3.addActionListener(fie);
 		jbtnFindID.addActionListener(fie);
@@ -68,11 +66,44 @@ public class FindId extends JDialog {
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
+
+	public JComboBox<String> getJcbNum() {
+		return jcbNum;
+	}
+
+	public DefaultComboBoxModel<String> getDcbmNum() {
+		return dcbmNum;
+	}
+
+	public JLabel getJlbName() {
+		return jlbName;
+	}
+
+	public JLabel getJlbPhone() {
+		return jlbPhone;
+	}
+
+	public JTextField getJtfName() {
+		return jtfName;
+	}
+
+	public JTextField getJtfPhone1() {
+		return jtfPhone1;
+	}
+
+	public JTextField getJtfPhone2() {
+		return jtfPhone2;
+	}
+
+	public JTextField getJtfPhone3() {
+		return jtfPhone3;
+	}
+
+	public JButton getJbtnFindID() {
+		return jbtnFindID;
+	}
 	
 	
-//	public static void main(String[] args) {
-//		new FindId();
-//	}
 
 
 }

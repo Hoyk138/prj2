@@ -1,5 +1,8 @@
 package user.view;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,7 +28,7 @@ public class UserLogin extends JFrame {
 		jtfId=new JTextField(20);
 		jpfPass=new JPasswordField(20);
 		
-		jbtnLogin=new JButton("사용시작");
+		jbtnLogin=new JButton("로그인");
 		jbtnID=new JButton("ID찾기");
 		jbtnPass=new JButton("PW찾기");
 		jbtnJoin=new JButton("회원가입");
@@ -58,6 +61,14 @@ public class UserLogin extends JFrame {
 		jbtnID.addActionListener(ule);
 		jbtnPass.addActionListener(ule);
 		jbtnJoin.addActionListener(ule);
+		
+		//Jframe 열릴 때 jtfId에 커서 두기
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent we) {
+				jtfId.requestFocus();
+			}
+		});
 		
 		setResizable(false);
 		setBounds(300, 100, 450, 250);

@@ -2,23 +2,17 @@ package user.VO;
 
 public class FindPassVO {
 	
-	private String id, name, question, answer;
-	private int phone;
-	
-	public FindPassVO (String id, String name, int phone, String question, String answer) {
-		this.id=id;
-		this.name=name;
-		this.phone=phone;
-		this.question=question;
-		this.answer=answer;
+	private String id, question, answer;
+
+	public FindPassVO(String id, String question, String answer) {
+		super();
+		this.id = id;
+		this.question = question;
+		this.answer = answer;
 	}
 
 	public String getId() {
 		return id;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public String getQuestion() {
@@ -29,10 +23,9 @@ public class FindPassVO {
 		return answer;
 	}
 
-	public int getPhone() {
-		return phone;
-	}
 	
 	
-	
+
+ 
+
 }

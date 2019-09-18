@@ -1,14 +1,9 @@
 package user.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import user.controller.UserRePassEvt;
@@ -16,39 +11,48 @@ import user.controller.UserRePassEvt;
 @SuppressWarnings("serial")
 public class UserRePass extends JDialog {
 	
-	private JLabel jlblPass, jlblConfirm;
-	private JTextField jtfPass, jtfConfirm;
+	private JLabel jlblId, jlblPass, jlblConfirm;
+	private JTextField jtfId;
+	private JPasswordField jpfPass, jpfConfirm;
 	private JButton jbtnResetPass;
 	
 	public UserRePass() {
 //		super("ID 찾기");
 		
+		jlblId=new JLabel("아이디");
 		jlblPass=new JLabel("비밀번호");
-		jlblConfirm=new JLabel("확인");
+		jlblConfirm=new JLabel("비밀번호확인");
 		
-		jtfPass=new JTextField();
-		jtfConfirm=new JTextField();
+		jtfId=new JTextField(); //자릿수설정?
+		jpfPass=new JPasswordField();
+		jpfConfirm=new JPasswordField(); 
 		
 		jbtnResetPass=new JButton("PW재설정");
 		
 		setLayout(null);
 		
-		jlblPass.setBounds(40, 60, 76, 30);
-		jlblConfirm.setBounds(40, 100, 76, 30);
-		jtfPass.setBounds(150, 60, 200, 25);
-		jtfConfirm.setBounds(150, 100, 200, 25);
-		jbtnResetPass.setBounds(250, 150, 100, 30);
 		
+		jlblId.setBounds(40, 30, 76, 30);
+		jlblPass.setBounds(40, 70, 76, 30);
+		jlblConfirm.setBounds(40, 110, 100, 30);
+		jtfId.setBounds(170, 30, 200, 25);
+		jpfPass.setBounds(170, 70, 200, 25);
+		jpfConfirm.setBounds(170, 110, 200, 25);
+		jbtnResetPass.setBounds(270, 150, 100, 30);
+		
+		add(jlblId);
 		add(jlblPass);
 		add(jlblConfirm);
-		add(jtfPass);
-		add(jtfConfirm);
+		add(jtfId);
+		add(jpfPass);
+		add(jpfConfirm);
 		add(jbtnResetPass);
 		
 		UserRePassEvt urpe=new UserRePassEvt(this);
-
-		jtfPass.addActionListener(urpe);
-		jtfConfirm.addActionListener(urpe);
+		
+		jtfId.addActionListener(urpe);
+		jpfPass.addActionListener(urpe);
+		jpfConfirm.addActionListener(urpe);
 		jbtnResetPass.addActionListener(urpe);
 		
 		setResizable(false);
@@ -57,10 +61,37 @@ public class UserRePass extends JDialog {
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//UserRePass
-	
 
-	public static void main(String[] args) {
-		new UserRePass();
-	}//main
+	public JLabel getJlblId() {
+		return jlblId;
+	}
+
+	public JLabel getJlblPass() {
+		return jlblPass;
+	}
+
+	public JLabel getJlblConfirm() {
+		return jlblConfirm;
+	}
+
+	public JTextField getJtfId() {
+		return jtfId;
+	}
+
+	public JPasswordField getJpfPass() {
+		return jpfPass;
+	}
+
+	public JPasswordField getJpfConfirm() {
+		return jpfConfirm;
+	}
+
+	public JButton getJbtnResetPass() {
+		return jbtnResetPass;
+	}
+
+
+
+	
 
 }//class

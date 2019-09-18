@@ -2,10 +2,14 @@ package user.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import kr.co.sist.util.cipher.DataEncrypt;
 import user.DAO.UserDAO;
 import user.VO.UserLoginVO;
 import user.view.FindId;
@@ -29,7 +33,7 @@ public class UserLoginEvt implements ActionListener{
 		new UserJoin();
 	}
 	
-	public void findId() {
+	public void findId() {   //////////////////
 		new FindId();
 	}
 	
@@ -51,20 +55,22 @@ public class UserLoginEvt implements ActionListener{
 			
 			//입력한 비밀번호 가져오기
 			String inputPass=new String (ul.getJpfPass().getPassword()); //비번얻기 PlainText(평문) 
-			String inputld=ul.getJtfId().getText(); // 아이디얻기
-
-			//이거말고 AES로 다시
-//			String shaPass="";
-//			
-//			try {
-//				//PlainText -> CipheText로 변환
-//				shaPass=DataEncrypt.messageDigest("MD5", inputPass);
-//			} catch (NoSuchAlgorithmException e1) {
-//				e1.printStackTrace();
-//			}//end catch
+			String inputId=ul.getJtfId().getText(); // 아이디얻기
+			String cipherPass="";
+			
+			try {
+				DataEncrypt de = new DataEncrypt("1111111111111111");
+				cipherPass = de.encryption(inputPass);
+			} catch (UnsupportedEncodingException uee) {
+				uee.printStackTrace();
+			} catch (NoSuchAlgorithmException nsae) {
+				nsae.printStackTrace();
+			} catch (GeneralSecurityException gse) {
+				gse.printStackTrace();
+			} // end catch
 
 			//입력받은 아이디와 비밀번호를 VO에 저장
-			UserLoginVO ulVO=new UserLoginVO(inputld, inputPass);
+			UserLoginVO ulVO = new UserLoginVO(inputId, cipherPass);
 			//DB를 조회하기 위해 DAO객체를 얻기
 			UserDAO uDAO=UserDAO.getInstance(); 
 			try {
@@ -78,7 +84,7 @@ public class UserLoginEvt implements ActionListener{
 					ul.getJpfPass().setText(""); //비밀번호 초기화
 					JOptionPane.showMessageDialog(ul, "아이디 혹은 비밀번호를 확인해주세요");
 					ul.getJtfId().requestFocus(); //커서를 아이디에 위치
-				}//end if
+				}//end else
 				
 			} catch (SQLException e) {
 				e.printStackTrace();

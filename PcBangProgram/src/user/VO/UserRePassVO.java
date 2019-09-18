@@ -2,21 +2,23 @@ package user.VO;
 
 public class UserRePassVO {
 	
-	private String pass, passConfirm;
-	
-	public UserRePassVO(String pass, String passConfirm) {
-		this.pass=pass;
-		this.passConfirm=passConfirm;
+	private String id, pass;
+
+	public UserRePassVO(String id, String pass) {
+		super();
+		this.id = id;
+		this.pass = pass;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public String getPass() {
 		return pass;
 	}
-
-	public String getPassConfirm() {
-		return passConfirm;
-	}
-
+	
+	
 	
 	
 }

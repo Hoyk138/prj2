@@ -1,78 +1,56 @@
 package user.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import user.controller.FindPassEvt;
 
+@SuppressWarnings("serial")
 public class FindPass extends JDialog {
 	
-	private JComboBox<String> jcbNum, jcbQuestion;
-	private DefaultComboBoxModel<String> dcbmNum, dcbmQuestion ;
-	private JLabel jlbId, jlbName, jlbPhone, jlbQuestion, jlbAnswer;
-	private JTextField jtfId, jtfName, jtfPhone2, jtfPhone3, jtfAnswer ;
+	private JComboBox<String> jcbQuestion;
+	private DefaultComboBoxModel<String> dcbmQuestion ;
+	private JLabel jlbId, jlbQuestion, jlbAnswer;
+	private JTextField jtfId, jtfAnswer ;
 	private JButton jbtnFindPass;
 	
 	public FindPass() {
 //		super("PW 찾기");
 		
-		dcbmNum=new DefaultComboBoxModel<String>(new String[] {"010","011","017","019"});
-		jcbNum=new JComboBox<String>(dcbmNum);
-		
 		dcbmQuestion=new DefaultComboBoxModel<String>(new String[] 
-				{"어린시절 살던 고향의 이름은?","고양이를 키우고 싶은지?","고양시에 아는 사람이 있는지?"});
+				{"자신의 보물 제1호는?","자신의 인생 좌우명은?","유년시절 가장 생각나는 친구 이름은?",
+						"다시 태어나면 되고 싶은 것은?","내가 좋아하는 캐릭터는?","인상 깊게 읽은 책 이름은?","출신 초등학교는 어디인가요?"});
 		jcbQuestion=new JComboBox<String>(dcbmQuestion);
 		
 		jlbId=new JLabel("ID");
-		jlbName=new JLabel("이름");
-		jlbPhone=new JLabel("휴대폰번호");
 		jlbQuestion=new JLabel("본인확인질문");
 		jlbAnswer=new JLabel("답변");
 		
 		jtfId=new JTextField();
-		jtfName=new JTextField();
-		jtfPhone2=new JTextField();
-		jtfPhone3=new JTextField();
 		jtfAnswer=new JTextField();
 		
 		jbtnFindPass=new JButton("PW찾기");
 		
 		setLayout(null);
 		
-		jlbId.setBounds(50, 60, 76, 30);
-		jlbName.setBounds(50, 100, 76, 30);
-		jlbPhone.setBounds(50, 140, 100, 30);
-		jlbQuestion.setBounds(50, 180, 100, 30);
-		jlbAnswer.setBounds(50, 220, 76, 30);
+		jlbId.setBounds(50, 40, 76, 30);
+		jlbQuestion.setBounds(50, 90, 100, 30);
+		jlbAnswer.setBounds(50, 150, 76, 30);
 		
-		jtfId.setBounds(160, 60, 230, 25);
-		jtfName.setBounds(160, 100, 230, 25);
-		jcbNum.setBounds(160, 140, 60, 25);
-		jtfPhone2.setBounds(227, 140, 76, 25);
-		jtfPhone3.setBounds(310, 140, 80, 25);
-		jcbQuestion.setBounds(160, 180, 230, 25);
-		jtfAnswer.setBounds(160, 220, 230, 25);
+		jtfId.setBounds(160, 40, 230, 25);
+		jcbQuestion.setBounds(160, 90, 230, 25);
+		jtfAnswer.setBounds(160, 150, 230, 25);
 		
-		jbtnFindPass.setBounds(290, 270, 100, 40);
+		jbtnFindPass.setBounds(290, 200, 100, 40);
 		
 		add(jlbId);
-		add(jlbName);
-		add(jlbPhone);
 		add(jlbQuestion);
 		add(jlbAnswer);
 		add(jtfId);
-		add(jtfName);
-		add(jcbNum);
-		add(jtfPhone2);
-		add(jtfPhone3);
 		add(jcbQuestion);
 		add(jtfAnswer);
 		add(jbtnFindPass);
@@ -80,23 +58,47 @@ public class FindPass extends JDialog {
 		FindPassEvt fpe=new FindPassEvt(this);
 		
 		jtfId.addActionListener(fpe);
-		jtfName.addActionListener(fpe);
-		jtfPhone2.addActionListener(fpe);
-		jtfPhone3.addActionListener(fpe);
 		jtfAnswer.addActionListener(fpe);
 		jbtnFindPass.addActionListener(fpe);
 		
 		setResizable(false);
-		setBounds(100, 200, 450, 400);
+		setBounds(100, 200, 450, 300);
 		setVisible(true);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+	}//FindPass
+
+	public JComboBox<String> getJcbQuestion() {
+		return jcbQuestion;
 	}
 
+	public DefaultComboBoxModel<String> getDcbmQuestion() {
+		return dcbmQuestion;
+	}
+
+	public JLabel getJlbId() {
+		return jlbId;
+	}
+
+	public JLabel getJlbQuestion() {
+		return jlbQuestion;
+	}
+
+	public JLabel getJlbAnswer() {
+		return jlbAnswer;
+	}
+
+	public JTextField getJtfId() {
+		return jtfId;
+	}
+
+	public JTextField getJtfAnswer() {
+		return jtfAnswer;
+	}
+
+	public JButton getJbtnFindPass() {
+		return jbtnFindPass;
+	}
+	
 		
-
-	public static void main(String[] args) {
-		new FindPass();
-	}//main
-
 }//class
