@@ -189,7 +189,7 @@ public class UserDAO { //singleton pattern
 			if ( con != null ) { con.close(); } //end if
 		}//end finally
 		return selectFlag;  
-	}//selectLogin
+	}//selectPass
 	
 	
 	/**
@@ -237,10 +237,10 @@ public class UserDAO { //singleton pattern
 	 * @param ujVO
 	 * @throws SQLException
 	 */
-	public void insertMember(UserJoinVO ujVO) throws SQLException { //boolean -> String
+	public boolean insertMember(UserJoinVO ujVO) throws SQLException { 
+		boolean insertFlag=false;
 		Connection con=null;
 		PreparedStatement pstmt=null;
-		ResultSet rs=null;
 		
 		try {
 		//2. 커넥션 얻기
@@ -248,8 +248,8 @@ public class UserDAO { //singleton pattern
 		//3. 쿼리문 생성객체 얻기
 			StringBuilder insertMember=new StringBuilder();
 			insertMember
-			.append("		insert into member_account value																						")
-			.append("		where id=? and pass=? and name=? and phone=? and question_verify=? and answer_verify=?				");
+			.append("	insert into member_account(ID,PASS, NAME, PHONE, QUESTION_VERIFY,	ANSWER_VERIFY	, JOIN_DATE) values (?,?,?,?,?,?)" );
+
 			
 			pstmt=con.prepareStatement(insertMember.toString());
 			
@@ -261,22 +261,15 @@ public class UserDAO { //singleton pattern
 			pstmt.setString(5, ujVO.getQuestion());
 			pstmt.setString(6, ujVO.getAnswer());
 		//5. 쿼리 실행 후 결과 얻기
-			rs=pstmt.executeQuery();
-			
-			if(rs.next()) {
+			insertFlag=pstmt.executeUpdate()==1;
 
-				
-			}//end if
-			
 		}finally {
 		//6. 연결끊기
-			if ( rs != null ) { rs.close(); } //end if
 			if ( pstmt != null ) { pstmt.close(); } //end if
 			if ( con != null ) { con.close(); } //end if
 		}//end finally
-		
+		return insertFlag;
 	}//selectLogin
-	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	

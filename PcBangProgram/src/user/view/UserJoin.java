@@ -95,8 +95,8 @@ public class UserJoin extends JDialog {
 		add(jbtnOverlap);
 		add(jbtnJoin);
 		
-		UserJoinEvt uje=new UserJoinEvt(this);
 		
+		UserJoinEvt uje=new UserJoinEvt(this);
 		jtfId.addActionListener(uje);
 		jpfPass.addActionListener(uje);
 		jpfPassComfirm.addActionListener(uje);
@@ -106,6 +106,8 @@ public class UserJoin extends JDialog {
 		jtfPhone3.addActionListener(uje);
 		jcbQuestion.addActionListener(uje);
 		jtfAnswer.addActionListener(uje);
+		jbtnOverlap.addActionListener(uje);
+		jbtnJoin.addActionListener(uje);
 		
 		
 		setResizable(false);
