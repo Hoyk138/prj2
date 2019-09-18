@@ -10,10 +10,12 @@ import java.util.List;
 
 import user.VO.FindIdVO;
 import user.VO.FindPassVO;
+import user.VO.PcHistoryVO;
 import user.VO.UserItemDetailVO;
 import user.VO.UserItemVO;
 import user.VO.UserJoinVO;
 import user.VO.UserLoginVO;
+import user.VO.UserOrderVO;
 import user.VO.UserRePassVO;
 
 public class UserDAO { //singleton pattern
@@ -22,7 +24,6 @@ public class UserDAO { //singleton pattern
 	private UserDAO() {
 		
 	}//userDAO
-	//
 	
 	public static UserDAO getInstance() {
 		if(uDAO==null) {
@@ -32,7 +33,7 @@ public class UserDAO { //singleton pattern
 	}//getInstance
 	
 	/**
-	 * DBMS와 연동한 객체를 반환하는 일
+	 * DBMS와 연동하는 일
 	 * @return
 	 * @throws SQLException
 	 */
@@ -56,6 +57,8 @@ public class UserDAO { //singleton pattern
 		return con;
 	}//getConn
 	
+	
+	//////////////////////////////민경//////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**
 	 * 아이디와 비밀번호를 입력받아 member 테이블에서 아이디와 비밀번호가 맞는다면 로그인에 성공하는일
@@ -274,45 +277,16 @@ public class UserDAO { //singleton pattern
 		
 	}//selectLogin
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
-//	/**
-//	 * 사용자 메인의 사용자정보를 띄우는 일
-//	 * @param userId
-//	 * @return
-//	 * @throws SQLException
-//	 */
-//	public UseUserVO selectUser(String userId) throws SQLException {
-//		UseUserVO uuVO=null;
-//		
-//		Connection con=null;
-//		PreparedStatement pstmt=null;
-//		ResultSet rs=null;
-//		
-//		try {
-//		//2.
-//			con=getConn();
-//		//3.
-//			StringBuilder selectUser=new StringBuilder();
-//			selectUser
-//			.append("")
-//			.append("");
-//		
-//			pstmt=con.prepareStatement(selectUser.toString());
-//		
-//		//4.
-//		//5.
-//		}finally {
-//			if(rs!=null) {rs.close();} //end if
-//			if(pstmt!=null) {pstmt.close();} //end if
-//			if(con!=null) {con.close();} //end if
-//		}//end finally
-//		
-//		return uuVO;
-//	}//selectUser
 	
+	
+	
+	
+	////////////////////////소현///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * 사용자의 사용기록을 PcHistory테이블에 추가하는 일
+	 * 사용자의 pc기록을 pcHistory테이블에 추가하는 일
 	 * @param phVO
 	 * @return
 	 * @throws SQLException
@@ -351,7 +325,7 @@ public class UserDAO { //singleton pattern
 	
 	
 	/**
-	 * 상품 아이템을 조회하는 일
+	 * 상품을 리스트로 조회하는 일
 	 * @return
 	 * @throws SQLException
 	 */
@@ -367,20 +341,19 @@ public class UserDAO { //singleton pattern
 		
 		StringBuilder selectUserItemList=new StringBuilder();
 		selectUserItemList
-		.append("	select NAME,IMG,PRICE")
-		.append("	from item")
-		.append("	where state='Y' and category=?")
-		.append("	order by input_date desc");
+		.append("	select i.item_code, i.name, i.img, c.category_name, i.price	")
+		.append("	from item i, category c 	")
+		.append("	where (i.category=c.category_code) and display_state='Y' and category=? 	")
+		.append("	order by i.input_date desc 	");
 		
 		pstmt=con.prepareStatement(selectUserItemList.toString());
 		
 		pstmt.setString(1,category);
 		
 		rs=pstmt.executeQuery();
-		
 		UserItemVO uiv=null;
 		while(rs.next()) {
-			uiv=new UserItemVO(rs.getString("name"), rs.getString("img"), rs.getInt("price"));
+			uiv=new UserItemVO(rs.getString("item_code"),rs.getString("name"), rs.getString("img"),rs.getString("category_name"),rs.getInt("price"));
 			list.add(uiv);
 		}//end while
 		
@@ -393,7 +366,7 @@ public class UserDAO { //singleton pattern
 	}//selectUserItemList
 	
 	/**
-	 * 상품의 상세정보를 띄우는 일
+	 * itemCode로 상세보기 창에 조회하는 일
 	 * @return
 	 * @throws SQLException
 	 */
@@ -409,15 +382,16 @@ public class UserDAO { //singleton pattern
 			
 			StringBuilder selectUserItemDetail=new StringBuilder();
 			selectUserItemDetail
-			.append("select CATEGORY,IMG,NAME,PRICE,DESCRIPTION")
-			.append("from item")
-			.append("where item_code=?");
+			.append("	select i.img,c.category_name,i.NAME,i.DESCRIPTION,i.PRICE	")
+			.append("	from item i, category c	")
+			.append("	where (i.category=c.category_code) and item_code=?	");
 			
 			pstmt=con.prepareStatement(selectUserItemDetail.toString());
 			
 			pstmt.setString(1, itemCode);
+			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				uidVO=new UserItemDetailVO(rs.getString("category"), rs.getString("name"), rs.getString("img"), rs.getString("description"), rs.getInt("price"));
+				uidVO=new UserItemDetailVO(rs.getString("category_name"), rs.getString("name"), rs.getString("img"), rs.getString("description"), rs.getInt("price"));
 			}//end if
 			
 		}finally {
@@ -430,40 +404,41 @@ public class UserDAO { //singleton pattern
 	}//selectUserItemDetail
 	
 	/**
-	 * 사용자의 주문을 주문테이블에 추가하는 일
+	 * 주문목록들을 주문테이블에 추가하는 일
 	 * @param listUoVO
 	 * @throws SQLException
 	 */
-//	public void insertOrder(List<UserOrderVO> listUoVO) throws SQLException {
-//		
-//		Connection con=null;
-//		PreparedStatement pstmt=null;
-//		ResultSet rs=null;
-//		
-//		try {
-//		con=getConn();
-//		
-//		for(int i=0;i<listUoVO.size();i++) {
-//			StringBuilder insertOrder=new StringBuilder();
-//			insertOrder
-//			.append("insert into ordering(order_num,ip_addr,item_code,quantity,status,order_date,id)")
-//			.append("values(seq_ordering.nextval,?,?,?,'N',sysdate,?)");
-//			
-//			pstmt=con.prepareStatement(insertOrder.toString());
-//			
-//			pstmt.setString(1,listUoVO.get(i).getIpAddr());
-//			pstmt.setString(2,listUoVO.get(i).getItemCode());
-//			pstmt.setInt(3,listUoVO.get(i).getQuantity());
-//			pstmt.setString(4,listUoVO.get(i).getId());
-//		}//end for
-//		
-//		}finally {
-//			if(rs!=null) {rs.close();} //end if
-//			if(pstmt!=null) {pstmt.close();} //end if
-//			if(con!=null) {con.close();} //end if
-//		}//end finally
-//		
-//	}//insertOrder
+	public void insertOrder(List<UserOrderVO> listUoVO) throws SQLException {
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		con=getConn();
+		
+		for(int i=0;i<listUoVO.size();i++) {
+			StringBuilder insertOrder=new StringBuilder();
+			insertOrder
+			.append("insert into item_order(order_code,pc_use_code,item_code,quantity,order_date)")
+			.append("values(seq_order_code.nextval,?,?,?,sysdate)");
+			
+			pstmt=con.prepareStatement(insertOrder.toString());
+			
+			pstmt.setString(1,listUoVO.get(i).getPcUserCode());
+			pstmt.setString(2,listUoVO.get(i).getItemCode());
+			pstmt.setInt(3,listUoVO.get(i).getQuantity());
+			
+			pstmt.executeUpdate();
+		}//end for
+		
+		}finally {
+			if(rs!=null) {rs.close();} //end if
+			if(pstmt!=null) {pstmt.close();} //end if
+			if(con!=null) {con.close();} //end if
+		}//end finally
+		
+	}//insertOrder
 	
 
 }//class

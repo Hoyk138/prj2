@@ -1,24 +1,27 @@
 package user.view;
 
-import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import user.controller.UserItemDetailEvt;
 import user.controller.UserItemEvt;
 
 
 /**
- * 사용자의 상품 주문 창 View
+ * 먹거리주문 창 view
  * @author sist37
  */
 public class UserItem extends JFrame{
@@ -32,8 +35,13 @@ public class UserItem extends JFrame{
 	private JButton jbtOrder;
 	private JTabbedPane jtpOrder;
 	
+	private JPopupMenu jpm;
+	private JMenuItem jmCancel;
+	
+	private UserItemDetailEvt uide;
+	
 	public UserItem() {
-		super("먹거리주문");
+		super("먹거리 주문");
 		
 		String[] columnNames= {"상품명","이미지","가격"};
 
@@ -44,30 +52,29 @@ public class UserItem extends JFrame{
 		//탭
 		jtpOrder=new JTabbedPane();
 
-		//식사류 테이블
+		//식사 테이블
 		jtFood=new JTable(dtmFood) {
 			
-//			@Override
-//			public Class<?> getColumnClass(int column) {
-//				return getValueAt(0, column).getClass();
-//			}
-//			
+			@Override
+			public Class<?> getColumnClass(int column) {
+				return getValueAt(0, column).getClass();
+			}
+			
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
 		JScrollPane jspFood=new JScrollPane(jtFood);
-		add(jspFood, BorderLayout.CENTER);//
 		
 		//스낵 테이블
 		jtSnack=new JTable(dtmSnack) {
 
-//			@Override
-//			public Class<?> getColumnClass(int column) {
-//				return getValueAt(0, column).getClass();
-//			}
-//			
+			@Override
+			public Class<?> getColumnClass(int column) {
+				return getValueAt(0, column).getClass();
+			}
+			
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -80,11 +87,11 @@ public class UserItem extends JFrame{
 		//음료 테이블
 		jtDrink=new JTable(dtmDrink) {
 			
-//			@Override
-//			public Class<?> getColumnClass(int column) {
-//				return getValueAt(0, column).getClass();
-//			}
-//			
+			@Override
+			public Class<?> getColumnClass(int column) {
+				return getValueAt(0, column).getClass();
+			}
+			
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -92,7 +99,7 @@ public class UserItem extends JFrame{
 		};
 		JScrollPane jspDrink=new JScrollPane(jtDrink);
 		
-		//식사 
+		//식사
 		jtFood.getColumnModel().getColumn(0).setPreferredWidth(80);
 		jtFood.getColumnModel().getColumn(1).setPreferredWidth(100);
 		jtFood.getColumnModel().getColumn(2).setPreferredWidth(80);
@@ -115,23 +122,31 @@ public class UserItem extends JFrame{
 	
 		//////////////////////////////////////////////////////////////////////////////////////////
 		
+		//선택리스트
 		dlmOrderChoiceList=new DefaultListModel<String>();
-		dlmOrderChoiceList.addElement("사이다");
-	
 		jltOrderChoiceList=new JList<String>(dlmOrderChoiceList);
 		JScrollPane jspOrderChoiceList=new JScrollPane(jltOrderChoiceList);
 		
+		//popmenu
+		jpm=new JPopupMenu();
+		jmCancel=new JMenuItem("취소");
+		jpm.add(jmCancel);
+		
+		//선택리스트에 팝업메뉴 넣기
+		jltOrderChoiceList.setComponentPopupMenu(jpm);
+		
 		jlOrderChoiceList=new JLabel("선택목록");
 		jlTotalPrice=new JLabel("총금액");
-		jtfTotalPrice=new JTextField("10000원");
+		jtfTotalPrice=new JTextField("0");
 		jbtOrder=new JButton("주문");
 		
 		jtfTotalPrice.setEditable(false);
 		
-		//탭에 3개 스크롤 추가
+		//탭 추가
 		jtpOrder.add("식사",jspFood);
 		jtpOrder.add("스낵",jspSnack);
 		jtpOrder.add("음료",jspDrink);
+		
 		
 		setLayout(null);
 		jtpOrder.setBounds(0, 0, 550, 520);
@@ -148,12 +163,14 @@ public class UserItem extends JFrame{
 		add(jtfTotalPrice);
 		add(jbtOrder);
 		
-		//이벤트
-		UserItemEvt uoe=new UserItemEvt(this);
-		jtFood.addMouseListener(uoe);
-		jtSnack.addMouseListener(uoe);
-		jtDrink.addMouseListener(uoe);
-		jbtOrder.addActionListener(uoe);
+		//이벤트 처리
+		UserItemEvt uie=new UserItemEvt(this,uide);
+		jtFood.addMouseListener(uie);
+		jtSnack.addMouseListener(uie);
+		jtDrink.addMouseListener(uie);
+		jbtOrder.addActionListener(uie);
+		jtpOrder.addMouseListener(uie);
+		jmCancel.addActionListener(uie);
 		
 		setResizable(false);
 		setBounds(700,150,550,700);
@@ -161,7 +178,7 @@ public class UserItem extends JFrame{
 		
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-	}//기본생성자
+	}//UserItem
 	
 	
 	//getter
@@ -204,10 +221,24 @@ public class UserItem extends JFrame{
 	public JButton getJbtOrder() {
 		return jbtOrder;
 	}
+	
+
+	public JTabbedPane getJtpOrder() {
+		return jtpOrder;
+	}
+	
+	public JPopupMenu getJpm() {
+		return jpm;
+	}
+
+
+	public JMenuItem getJmCancel() {
+		return jmCancel;
+	}
 
 
 	/**
-	 * 단위테스트용
+	 * 단위 테스트용
 	 * @param args
 	 */
 	public static void main(String[] args) {

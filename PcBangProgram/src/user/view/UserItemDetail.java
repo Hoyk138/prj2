@@ -10,57 +10,63 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import user.VO.UserItemDetailVO;
 import user.controller.UserItemDetailEvt;
+import user.controller.UserItemEvt;
 
 public class UserItemDetail extends JDialog{
 	
 	private JLabel jlFoodDetailImg,jlFoodPrice,jlQuantity,jlFoodStrongPoint;
-	private JTextField jtfFoodName,jtfFoodPrice;
+	private JTextField jtfName,jtfFoodPrice;
 	private DefaultComboBoxModel<Integer> dcbmQuantity;
 	private JComboBox<Integer> jcbQuantity;
 	private JTextArea jtaFoodStrongPoint;
 	private JButton jbtPut, jbtClose;
 	
 	private UserItem ui;
+	private UserItemEvt uie;
+	private String itemName;
 	
-	public UserItemDetail(UserItem ui){
-//		super("먹거리상세보기");
+	
+	public UserItemDetail(UserItem ui, UserItemEvt uie, UserItemDetailVO uidVO){
 		this.ui=ui;
+		this.uie=uie;
+		itemName=uidVO.getItemName();
 		
 		//JLabel
-		jlFoodPrice=new JLabel("금액");
+		jlFoodPrice=new JLabel("가격");
 		jlFoodStrongPoint=new JLabel("!! 먹거리 POINT !!");
 		jlQuantity=new JLabel("수량");
 		//VO
-		jlFoodDetailImg=new JLabel(new ImageIcon("C:\\dev\\workspace\\Team2_prj2\\src\\prj2\\user\\img\\JMTGR_HOT_CREAM_PORK_COTELETTE.jpg"));
+		jlFoodDetailImg=new JLabel(new ImageIcon(uidVO.getItemImg()));
 		
 		//JTextField,TextArea  //VO
-		jtfFoodName=new JTextField("라면"); 
-		jtfFoodPrice=new JTextField("2000"+"원");
-		jtaFoodStrongPoint=new JTextArea("라면면면면면면");
+		jtfName=new JTextField("["+uidVO.getCategoryName()+"]"+uidVO.getItemName()); 
+		jtfFoodPrice=new JTextField(String.valueOf(uidVO.getItemPrice()));
+		jtaFoodStrongPoint=new JTextArea(uidVO.getItemDescription());
 		
-		jtfFoodName.setEditable(false);
+		jtfName.setEditable(false);
 		jtfFoodPrice.setEditable(false);
 		jtaFoodStrongPoint.setEditable(false);
 		
 		//JComBox (수량)
 		dcbmQuantity=new DefaultComboBoxModel<Integer>();
 		for(int i=1; i<=10; i++) {
-			dcbmQuantity.addElement(new Integer(i)); //오토박싱..?
+			dcbmQuantity.addElement(new Integer(i)); //unboxing..?
 		}//end for
 		jcbQuantity=new JComboBox<Integer>(dcbmQuantity);
 		
 		jbtPut=new JButton("주문목록에 담기");
 		jbtClose=new JButton("닫기");
 		
-		jtfFoodName.setEditable(false);
+		jtfName.setEditable(false);
 		jtfFoodPrice.setEditable(false);
 		jtaFoodStrongPoint.setEditable(false);
 		
 		jtaFoodStrongPoint.setBorder(new TitledBorder(""));
 		
-		//이벤트
-		UserItemDetailEvt uode=new UserItemDetailEvt(this);
+		//이벤트 처리
+		UserItemDetailEvt uode=new UserItemDetailEvt(this,ui,uie);
 		jcbQuantity.addActionListener(uode);
 		jbtPut.addActionListener(uode);
 		jbtClose.addActionListener(uode);
@@ -68,7 +74,7 @@ public class UserItemDetail extends JDialog{
 		//수동배치
 		setLayout(null);
 		jlFoodDetailImg.setBounds(10, 10, 250, 250);
-		jtfFoodName.setBounds(280, 20, 300, 30);
+		jtfName.setBounds(280, 20, 300, 30);
 		jlFoodStrongPoint.setBounds(280, 50, 100, 50);
 		jtaFoodStrongPoint.setBounds(280, 95, 300, 70);
 		jlFoodPrice.setBounds(280, 220, 50, 50);
@@ -80,7 +86,7 @@ public class UserItemDetail extends JDialog{
 		
 		//Frame에 추가
 		add(jlFoodDetailImg);
-		add(jtfFoodName);
+		add(jtfName);
 		add(jlFoodStrongPoint);
 		add(jtaFoodStrongPoint);
 		add(jlFoodPrice);
@@ -99,8 +105,8 @@ public class UserItemDetail extends JDialog{
 	
 	
 	//getter
-	public JTextField getJtfFoodName() {
-		return jtfFoodName;
+	public JTextField getJtfName() {
+		return jtfName;
 	}
 
 	public JTextField getJtfFoodPrice() {
@@ -128,8 +134,8 @@ public class UserItemDetail extends JDialog{
 	 * 단위테스트용
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		new UserItemDetail(new UserItem());
-	}//main
+//	public static void main(String[] args) {
+//		new UserItemDetail(new UserItem(),new UserItemDetailVO("1", "1", "1","1" , 1));
+//	}//main
 
 }//class

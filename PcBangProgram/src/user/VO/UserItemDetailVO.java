@@ -1,20 +1,21 @@
 package user.VO;
 
 public class UserItemDetailVO {
-	String cateName, itemName, itemImg, itemStrongPoint;
+	String categoryName, itemName, itemImg, itemDescription;
 	int ItemPrice;
 	
-	public UserItemDetailVO(String cateName, String itemName, String itemImg, String itemStrongPoint, int itemPrice) {
+	public UserItemDetailVO(String categoryName, String itemName, String itemImg, String itemDescription,
+			int itemPrice) {
 		super();
-		this.cateName = cateName;
+		this.categoryName = categoryName;
 		this.itemName = itemName;
 		this.itemImg = itemImg;
-		this.itemStrongPoint = itemStrongPoint;
+		this.itemDescription = itemDescription;
 		ItemPrice = itemPrice;
 	}
 
-	public String getCateName() {
-		return cateName;
+	public String getCategoryName() {
+		return categoryName;
 	}
 
 	public String getItemName() {
@@ -25,14 +26,20 @@ public class UserItemDetailVO {
 		return itemImg;
 	}
 
-	public String getItemStrongPoint() {
-		return itemStrongPoint;
+	public String getItemDescription() {
+		return itemDescription;
 	}
 
 	public int getItemPrice() {
 		return ItemPrice;
 	}
+
+	@Override
+	public String toString() {
+		return "UserItemDetailVO [categoryName=" + categoryName + ", itemName=" + itemName + ", itemImg=" + itemImg
+				+ ", itemDescription=" + itemDescription + ", ItemPrice=" + ItemPrice + "]";
+	}
 	
-	
+
 
 }

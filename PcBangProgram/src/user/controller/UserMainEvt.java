@@ -22,14 +22,13 @@ public class UserMainEvt implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==um.getJbtOrder()) { //먹거리주문버튼
-			//다른 클래스가 띄어지면 다시안띄게 하기
 				new UserItem();				
 		}//end if
 		
 		if(ae.getSource()==um.getJbtCounterChat()) { //카운터채팅버튼
-			if(um.getJbtCounterChat()==null) {
-				new UserChat();				
-			}
+//			if(um.getJbtCounterChat()) {
+			new UserChat();				
+//			}
 		}//end if
 		
 		if(ae.getSource()==um.getJbtAdImage()) { //광고창버튼
