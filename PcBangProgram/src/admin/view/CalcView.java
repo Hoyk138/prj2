@@ -121,6 +121,7 @@ public class CalcView extends JPanel {
 		jbtCalcPC.addActionListener(cpe);
 		CalcItemEvt cie = new CalcItemEvt(this) ;
 		jbtCalcItem.addActionListener(cie);
+		jtp.addMouseListener(cpe);
 		jtp.addMouseListener(cie);
 		
 //		setBounds(400, 200, 719, 600);

@@ -38,14 +38,15 @@ public class MainViewEvt implements ActionListener {
 		}
 		if (ae.getSource() == mv.getJbtnmanagePayment()) {
 			mv.getCard().show(mv.getJpCenter(), "payment");
-			List<CalcPCVO> list;
+			
+			List<CalcPCVO> listPC;
 			CalcPCDAO cpcDAO = CalcPCDAO.getInstance();
 			try {
 				
-				list = cpcDAO.selectCalcPC();
+				listPC = cpcDAO.selectCalcPC();
 
-				if (list.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "PC 결제 내역이 없습니다.");
+				if (listPC.isEmpty()) {
+					JOptionPane.showMessageDialog(mv, "PC 결제 내역이 없습니다.");
 				} // end if
 				
 			} catch (SQLException se) {

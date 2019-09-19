@@ -2,6 +2,7 @@ package admin.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ import admin.DAO.CalcPCDAO;
 import admin.VO.CalcPCVO;
 import admin.view.CalcView;
 
-public class CalcPCEvt implements ActionListener {
+public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	
 	private CalcView cv ;
 	
@@ -100,9 +101,6 @@ public class CalcPCEvt implements ActionListener {
 	}
 		
 	public void setCalcPCList() {
-		DefaultTableModel dtm = cv.getDtmCalcPC() ;
-		
-		dtm.setRowCount(0);
 		Object[] rowData = null ;
 		
 		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
@@ -110,9 +108,12 @@ public class CalcPCEvt implements ActionListener {
 		try {
 			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
 			
-//			if (list.isEmpty()) {
-//				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
-//			} // end if
+			if (list.isEmpty()) {
+				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
+				return;
+			} // end if
+			DefaultTableModel dtm = cv.getDtmCalcPC() ;
+			dtm.setRowCount(0);
 			
 			CalcPCVO cpcVO = null ;
 			
@@ -142,7 +143,7 @@ public class CalcPCEvt implements ActionListener {
 
 			if (me.getSource() == cv.getJtp()) { // 주문 탭을 눌렀을 때 이벤트 처리 => 주문현황 조회 시작
 				JTabbedPane jtptemp = (JTabbedPane) me.getSource();
-				if (jtptemp.getSelectedIndex() == 1) {
+				if (jtptemp.getSelectedIndex() == 0) {
 //					if (ot == null) { // 조회 Thread가 생성되어 있지 않음(주문조회X)
 //						ot = new OrderThread(lm.getJtOrderList(), lm.getDtmOrderList()); // 선택된 행을 비교, 값을 넣는 일
 //						ot.start();
