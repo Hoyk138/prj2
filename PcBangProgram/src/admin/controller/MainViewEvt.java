@@ -2,17 +2,23 @@ package admin.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import admin.DAO.CalcPCDAO;
+import admin.VO.CalcPCVO;
 import admin.view.MainView;
 
-public class MainViewEvt implements ActionListener{
+public class MainViewEvt implements ActionListener {
 
 	private MainView mv;
-	
+
 	public MainViewEvt(MainView mv) {
 		this.mv = mv;
-	}//MainViewEvt
-	
+	}// MainViewEvt
+
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == mv.getJbtnmanageShop()) {
@@ -32,7 +38,21 @@ public class MainViewEvt implements ActionListener{
 		}
 		if (ae.getSource() == mv.getJbtnmanagePayment()) {
 			mv.getCard().show(mv.getJpCenter(), "payment");
-		}
-	}//actionPerformed
+			List<CalcPCVO> list;
+			CalcPCDAO cpcDAO = CalcPCDAO.getInstance();
+			try {
+				
+				list = cpcDAO.selectCalcPC();
+
+				if (list.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "PC 결제 내역이 없습니다.");
+				} // end if
+				
+			} catch (SQLException se) {
+				se.printStackTrace();
+			} // end catch
+		} // end if
+		
+	}// actionPerformed
 
 }

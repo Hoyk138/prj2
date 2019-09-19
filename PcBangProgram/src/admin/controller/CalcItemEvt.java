@@ -45,6 +45,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 			JTextArea jta = new JTextArea(20, 50);
 			JScrollPane jsp = new JScrollPane(jta);
+			
 			if (list.isEmpty()) {
 //				jta.append("정산할 수 있는 거래 목록이 없습니다.");
 				JOptionPane.showMessageDialog(null, "정산할 수 있는 거래 목록이 없습니다.");

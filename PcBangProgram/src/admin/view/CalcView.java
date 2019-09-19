@@ -18,8 +18,8 @@ public class CalcView extends JPanel {
 
 	private JTable jtCalcPC, jtCalcItem ;
 	private DefaultTableModel dtmCalcPC, dtmCalcItem;
-	private JTabbedPane jtp ;
 	private JButton jbtCalcPC, jbtCalcItem ;
+	private JTabbedPane jtp ;
 	
 	public CalcView() {
 
@@ -57,8 +57,8 @@ public class CalcView extends JPanel {
 		
 //		jbtClosePC = new JButton("종료") ;
 //		jbtCloseItem = new JButton("종료") ;
-		jbtCalcPC = new JButton("정산") ;
-		jbtCalcItem = new JButton("정산") ;
+		jbtCalcPC = new JButton("PC 정산") ;
+		jbtCalcItem = new JButton("매점 정산") ;
 		
 //		JPanel jpCalc = new JPanel() ;
 //		jpCalc.setLayout(new BorderLayout()) ;

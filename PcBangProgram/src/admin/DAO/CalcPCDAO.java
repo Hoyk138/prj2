@@ -77,7 +77,8 @@ public class CalcPCDAO {
 //		.append("	from pc_history	") ;
 		.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time   ")
 		.append("	from pc_use	pu, pc_payment pp   ")
-		.append("	where pp.pc_use_code = pu.pc_use_code   ");
+		.append("	where pp.pc_use_code = pu.pc_use_code   ")
+		.append("	and to_char(pu.login_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')   ") ;
 		
 		pstmt = conn.prepareStatement(selectCalcPC.toString()) ;
 		
@@ -121,8 +122,10 @@ public class CalcPCDAO {
 			selectCalcPCRecipt
 			//select pc_code, sum(use_time) use_time, sum(use_fee) use_fee	from pc_history group by pc_code ;
 			.append("	select pc_code, sum(use_time) use_time, sum(use_fee) use_fee	")
-			.append("	from pc_history	")
-			.append("	group by pc_code	") ;
+			.append("	from pc_use	")
+			.append("	group by pc_code	") 
+			.append("	where to_char(login_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')	") 
+			;
 			
 			pstmt = conn.prepareStatement(selectCalcPCRecipt.toString()) ;
 			
