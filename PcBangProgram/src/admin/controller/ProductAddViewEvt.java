@@ -16,11 +16,13 @@ import kr.co.sist.util.img.ImageResize;
 
 public class ProductAddViewEvt implements ActionListener{
 	private ProductAddView pav;
+	private ProductEvt pe;
 //	private boolean imgFlag=false;
-	String path,file;
+	private String path,file;
 	
-	public ProductAddViewEvt(ProductAddView pav) {
+	public ProductAddViewEvt(ProductAddView pav,ProductEvt pe) {
 		this.pav=pav;
+		this.pe=pe;
 	}
 
 	public void imgAdd(){
@@ -63,14 +65,17 @@ public class ProductAddViewEvt implements ActionListener{
 		ProductAddVO paVO=new ProductAddVO(imgPath, category, name, explain, price);
 		
 		heeDAO hDAO=heeDAO.getInstance();
-		
 		try {
 			hDAO.InsertProduct(paVO);
+			JOptionPane.showMessageDialog(pav,"상품이 추가되었습니다.");
+			pe.setDrinkList();
+			pe.setFoodList();
+			pe.setSnackList();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		JOptionPane.showMessageDialog(pav,"상품이 추가되었습니다.");
+		
 		
 	}//productAdd
 	

@@ -1,15 +1,15 @@
 package admin.view;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import admin.VO.ProductMDViewVO;
 import admin.controller.ModifyDeleteEvt;
+import admin.controller.ProductEvt;
 
 @SuppressWarnings("serial")
 public class ModifyDeleteView extends JDialog{
@@ -17,34 +17,46 @@ public class ModifyDeleteView extends JDialog{
 	private JButton jbtProductModify,jbtProductImageModify,jbtProductDelete;
 	private JLabel jlImgModify,jlState;
 	private JTextField jtfProductNameModify,jtfPriceModify;
-	private DefaultComboBoxModel<String> dcbmCategoryModify;
 	private JTextArea jtaExplainModify;
-	public ModifyDeleteView() {
+	private String itemCode;
+	private ProductEvt pe;
+	
+	public ModifyDeleteView(ProductMDViewVO pmdvVO,ProductEvt pe) {
 //		super("메뉴 수정 삭제");
-		
-		jtaExplainModify=new JTextArea();
+//		super(ProductView pv,"");
+		this.pe=pe;
+		itemCode=pmdvVO.getItemCode();
+		jtaExplainModify=new JTextArea(pmdvVO.getExplain());
 		JLabel jlProductName=new JLabel("상품명");
 		JLabel jlProductPrice=new JLabel("상품가격");
-		JLabel jlExplain=new JLabel("상품설명");
-		
-		String[] category= {"식사","스낵","음료"};
-		dcbmCategoryModify =new DefaultComboBoxModel<String>(category);
-		JComboBox<String> jcbCategory=new JComboBox<String>(dcbmCategoryModify);
+		JLabel jlExplain=new JLabel("상품설명");		
+		JLabel jlCategory=null;
+		if(pmdvVO.getCategory().equals("S")){
+			jlCategory=new JLabel("스낵입니다.");
+		}else if(pmdvVO.getCategory().equals("D")) {
+			jlCategory=new JLabel("음료입니다.");
+		}else {
+			jlCategory=new JLabel("식사입니다.");
+		}
 		
 		jbtProductModify=new JButton("수정");
 		jbtProductDelete=new JButton("삭제");
 		jbtProductImageModify=new JButton("이미지 선택");
-		jlImgModify=new JLabel(new ImageIcon("C:/dev/workspace/jdbc_prj/src/kr/co/sist/user/img/슈렉.jpg"));
-		jtfProductNameModify=new JTextField();
-		jtfPriceModify=new JTextField();
-		jlState=new JLabel("판매중인 상품입니다.");
+		jlImgModify=new JLabel(new ImageIcon(pmdvVO.getImg()));
+		jtfProductNameModify=new JTextField(pmdvVO.getName());
+		jtfPriceModify=new JTextField(String.valueOf(pmdvVO.getPrice()));
+		if(pmdvVO.getState().equals("Y")) {
+			jlState=new JLabel("판매중인 상품입니다.");
+		}else {
+			jlState=new JLabel("삭제된 상품입니다.");
+		}
 		
 		jtaExplainModify.setLineWrap(true);
 		setLayout(null);
 		
 		jlImgModify.setBounds(30,30,350,350);
 		jbtProductImageModify.setBounds(120,400,150,30);
-		jcbCategory.setBounds(400,45,270,30);
+		jlCategory.setBounds(450,45,270,30);
 		jlProductName.setBounds(400,100,70,30);
 		jtfProductNameModify.setBounds(472,100,200,30);
 		jlProductPrice.setBounds(400,150,70,30);
@@ -53,11 +65,16 @@ public class ModifyDeleteView extends JDialog{
 		jtaExplainModify.setBounds(400,225,370,300);
 		jbtProductModify.setBounds(480,540,100,30);
 		jbtProductDelete.setBounds(585,540,100,30);
-		jlState.setBounds(125,450,150,100);
+		jlState.setBounds(125,450,180,100);
+		
+		ModifyDeleteEvt mde=new ModifyDeleteEvt(this,pmdvVO,pe);
+		jbtProductImageModify.addActionListener(mde);
+		jbtProductModify.addActionListener(mde);
+		jbtProductDelete.addActionListener(mde);
 		
 		add(jlImgModify);
 		add(jbtProductImageModify);
-		add(jcbCategory);
+
 		add(jlProductName);
 		add(jtfProductNameModify);
 		add(jlProductPrice);
@@ -67,11 +84,8 @@ public class ModifyDeleteView extends JDialog{
 		add(jbtProductModify);
 		add(jbtProductDelete);
 		add(jlState);
+		add(jlCategory);
 		
-		ModifyDeleteEvt mde=new ModifyDeleteEvt();
-		jbtProductImageModify.addActionListener(mde);
-		jbtProductModify.addActionListener(mde);
-		jbtProductDelete.addActionListener(mde);
 		
 		setBounds(100,100,800,700);
 		
@@ -120,8 +134,8 @@ public class ModifyDeleteView extends JDialog{
 
 
 
-	public DefaultComboBoxModel<String> getDcbmCategoryModify() {
-		return dcbmCategoryModify;
+	public JLabel getJlState() {
+		return jlState;
 	}
 
 
@@ -131,6 +145,12 @@ public class ModifyDeleteView extends JDialog{
 	}
 
 
+
+	public String getItemCode() {
+		return itemCode;
+	}
+	
+	
 
 //	public static void main(String[] args) {
 //		new ModifyDeleteView();

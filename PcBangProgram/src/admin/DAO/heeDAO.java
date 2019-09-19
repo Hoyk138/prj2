@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import admin.VO.ProductAddVO;
+import admin.VO.ProductDeleteVO;
+import admin.VO.ProductMDViewVO;
+import admin.VO.ProductModifyVO;
 import admin.VO.ProductViewVO;
 
 public class heeDAO {
@@ -64,7 +67,7 @@ private static heeDAO aDAO;
 			StringBuilder insertProduct=new StringBuilder();
 			
 			insertProduct
-			.append(" insert into item(item_code,img,name,price,category,description,state) ")
+			.append(" insert into item(item_code,img,name,price,category,description,display_state) ")
 			.append(" values(item_code,?,?,?,?,?,'Y') ");
 			
 			pstmt=con.prepareStatement(insertProduct.toString());
@@ -126,4 +129,112 @@ private static heeDAO aDAO;
 		return list;
 	}//productView
 	
+	public void selectDetailProduct(ProductMDViewVO pmdvVO)throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			
+			con=getConnection();
+			
+			StringBuilder selectProduct=new StringBuilder();
+			
+			selectProduct
+			.append(" select CATEGORY, DISPLAY_STATE, ITEM_CODE  ")
+			.append(" from item  ")
+			.append(" where name=? ");
+			
+			pstmt=con.prepareStatement(selectProduct.toString());
+			
+			pstmt.setString(1,pmdvVO.getName());
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				pmdvVO.setCategory(rs.getString("category"));
+				pmdvVO.setState(rs.getString("DISPLAY_STATE"));
+				pmdvVO.setItemCode(rs.getString("ITEM_CODE"));
+			}
+			
+		}finally {
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}
+	}//selectDetailProduct
+	
+	public int modifyProduct(ProductModifyVO pmVO) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		int cnt=0;
+		
+		try {
+			
+			con=getConnection();
+			
+			StringBuilder modifyProduct=new StringBuilder();
+			
+			modifyProduct
+			.append(" update item  ")
+			.append(" set img=?,description=?,name=?,price=?  ")
+			.append(" where item_code=? ");
+			
+			
+			
+			pstmt=con.prepareStatement(modifyProduct.toString());
+			
+			pstmt.setString(1,pmVO.getImgPath());
+			pstmt.setString(2,pmVO.getExplain());
+			pstmt.setString(3,pmVO.getName());
+			pstmt.setInt(4,pmVO.getPrice());
+			pstmt.setString(5,pmVO.getItemCode());
+			
+			cnt=pstmt.executeUpdate();
+		}finally {
+
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}
+		return cnt;
+		
+	}//modifyProduct
+	
+	public int DeleteProduct(ProductDeleteVO pdVO) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		int cnt=0;
+		
+		try {
+			
+			con=getConnection();
+			
+			StringBuilder deleteProduct=new StringBuilder();
+			
+			deleteProduct
+			.append(" update item ")
+			.append(" set DISPLAY_STATE='N'  ")
+			.append(" where ITEM_CODE=? ");
+			
+			
+			pstmt=con.prepareStatement(deleteProduct.toString());
+			
+			pstmt.setString(1,pdVO.getItemCode());
+			
+			cnt=pstmt.executeUpdate();
+		}finally {
+
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}
+		return cnt;
+	}//DeleteProduct
+	
 }//class
+
+
+
+
+

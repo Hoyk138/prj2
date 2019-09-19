@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import admin.controller.ProductAddViewEvt;
+import admin.controller.ProductEvt;
 
 @SuppressWarnings("serial")
 public class ProductAddView extends JDialog{
@@ -20,7 +21,7 @@ public class ProductAddView extends JDialog{
 	private DefaultComboBoxModel<String> dcbmCategoryAdd;
 	private JTextArea jtaExplainAdd;
 	
-	public ProductAddView() {
+	public ProductAddView(ProductEvt pe) {
 //		super("메뉴 추가");
 		
 		jtaExplainAdd=new JTextArea();
@@ -53,7 +54,7 @@ public class ProductAddView extends JDialog{
 		jtaExplainAdd.setBounds(400,225,370,300);
 		jbtProductAdd.setBounds(530,540,100,30);
 
-		ProductAddViewEvt pave=new ProductAddViewEvt(this);
+		ProductAddViewEvt pave=new ProductAddViewEvt(this,pe);
 		jbtProductImageAdd.addActionListener(pave);
 		jbtProductAdd.addActionListener(pave);
 		

@@ -2,9 +2,17 @@ package admin.VO;
 
 public class ProductMDViewVO {
 	
-	private String explain,category,state,name,img;
+	private String explain,category,state,name,img,itemCode;
 	private int price;
 	
+
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
 
 	public void setExplain(String explain) {
 		this.explain = explain;
