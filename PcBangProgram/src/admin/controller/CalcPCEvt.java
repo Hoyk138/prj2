@@ -108,12 +108,13 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 		try {
 			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
 			
+			DefaultTableModel dtm = cv.getDtmCalcPC() ;
+			dtm.setRowCount(0);
+			
 			if (list.isEmpty()) {
 				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
 				return;
 			} // end if
-			DefaultTableModel dtm = cv.getDtmCalcPC() ;
-			dtm.setRowCount(0);
 			
 			CalcPCVO cpcVO = null ;
 			

@@ -26,8 +26,8 @@ public class CalcView extends JPanel {
 		String[] pcColumnNames = { "코드", "PC번호", "사용자(ID)", "이용시간(분)", "이용금액(원)" };
 		String[] itemColumnNames = { "코드", "PC번호", "구매자(ID)", "제품명", "개수", "결제금액(원)" };
 
-		dtmCalcPC = new DefaultTableModel(pcColumnNames, 5) ;
-		dtmCalcItem = new DefaultTableModel(itemColumnNames, 5) ;
+		dtmCalcPC = new DefaultTableModel(pcColumnNames, 0) ;
+		dtmCalcItem = new DefaultTableModel(itemColumnNames, 0) ;
 		
 		JTable jtCalcPC = new JTable(dtmCalcPC) {
 

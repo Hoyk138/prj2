@@ -118,13 +118,14 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 		try {
 			List<CalcItemVO> list = ciDAO.selectCalcItem();
 
+			DefaultTableModel dtm = cv.getDtmCalcItem();
+			dtm.setRowCount(0);
+			
 			if (list.isEmpty()) {
 				JOptionPane.showMessageDialog(cv, "매점 이용 내역이 없습니다.");
 				return;
 			} // end if
 
-			DefaultTableModel dtm = cv.getDtmCalcItem();
-			dtm.setRowCount(0);
 
 			CalcItemVO ciVO = null;
 
