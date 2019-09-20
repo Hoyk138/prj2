@@ -3,22 +3,24 @@ package user.view;
 import java.awt.Color;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import user.controller.UserChatEvt;
 
-public class UserChat extends JFrame{
+public class UserChat extends JDialog{
 	
 	private JTextField jtfTalk;
 	private JTextArea jtaChat;
 	private JScrollPane jspChat;
 	private JButton jbtSend;
+	
+	private UserMain um;
 
-	public UserChat() {
-		super("사용자 채팅");
+	public UserChat(UserMain um) {
+		super(um,"사용자 채팅",false);
 		
 		//선언
 		jtfTalk=new JTextField(25);
@@ -72,13 +74,13 @@ public class UserChat extends JFrame{
 	}
 
 
-	/**
-	 * 단위 테스트용
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		new UserChat();
-	}//main
+//	/**
+//	 * 단위 테스트용
+//	 * @param args
+//	 */
+//	public static void main(String[] args) {
+//		new UserChat();
+//	}//main
 	
 }//UserChat
 
