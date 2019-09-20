@@ -279,42 +279,81 @@ public class UserDAO { //singleton pattern
 	
 	////////////////////////소현///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
+	 * ip주소를 받아 ip에 맞는 pc번호를 조회하는 일
+	 * @param ipAddr
+	 * @return
+	 * @throws SQLException
+	 */
+	public int selectPcNum(String ipAddr) throws SQLException {
+		int num=0;
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			con=getConn();
+			
+			StringBuilder selectPcNum=new StringBuilder();
+			selectPcNum
+			.append(" 	select pc_num		")
+			.append("	from pc		")
+			.append("	where ip_address=?		");
+			
+			pstmt=con.prepareStatement(selectPcNum.toString());
+			//
+			pstmt.setString(1,ipAddr);
+			//
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				num=rs.getInt("pc_num");
+			}//end if
+			
+		}finally {
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}//end catch
+		return num;
+	}//selectPcNum
+	
+	
+	
+	/**
 	 * 사용자의 pc기록을 pcHistory테이블에 추가하는 일
 	 * @param phVO
 	 * @return
 	 * @throws SQLException
 	 */
-//	public void insertPcHistory(PcHistoryVO phVO) throws SQLException {
-//		
-//		Connection con=null;
-//		PreparedStatement pstmt=null;
-//		ResultSet rs=null;
-//		
-//		try {
-//			con=getConn();
-//		
-//			StringBuilder insertPcHistory=new StringBuilder();
-//			insertPcHistory
-//			.append("insert into pc_history(pc_code,pc_num,start_time,use_time,use_fee,end_time,id)")
-//			.append("values(seq_pcCode.nextval,?,?,?,?,sysdate,?)");
-//			
-//			pstmt=con.prepareStatement(insertPcHistory.toString());
-//		//4.
-//			pstmt.setInt(1, phVO.getPcNum());
-//			pstmt.setString(2, phVO.getStartTime());
-//			pstmt.setInt(3, phVO.getUseTime());
-//			pstmt.setInt(4, phVO.getUseFee());
-//			pstmt.setString(5, phVO.getUserId());
-//		//5.
-//			pstmt.executeUpdate();
-//			
-//		}finally {
-//			if(rs!=null) {rs.close();} //end if
-//			if(pstmt!=null) {pstmt.close();} //end if
-//			if(con!=null) {con.close();} //end if
-//		}//end finally
-//		
-//	}//insertPcHistory
+	public void insertPcHistory(PcHistoryVO phVO) throws SQLException {
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			con=getConn();
+		
+			StringBuilder insertPcHistory=new StringBuilder();
+			insertPcHistory
+			.append("insert into pc_use(pc_use_code, pc_num, id, login_time)")
+			.append("values(pc_use_code,?,?,sysdate)");
+			
+			pstmt=con.prepareStatement(insertPcHistory.toString());
+		//4.
+			pstmt.setInt(1, phVO.getPcNum());
+			pstmt.setString(2, phVO.getUserId());
+		//5.
+			pstmt.executeUpdate();
+			
+		}finally {
+			if(rs!=null) {rs.close();} //end if
+			if(pstmt!=null) {pstmt.close();} //end if
+			if(con!=null) {con.close();} //end if
+		}//end finally
+		
+	}//insertPcHistory
 	
 	
 	/**
@@ -414,7 +453,7 @@ public class UserDAO { //singleton pattern
 			StringBuilder insertOrder=new StringBuilder();
 			insertOrder
 			.append("insert into item_order(order_code,pc_use_code,item_code,quantity,order_date)")
-			.append("values(seq_order_code.nextval,?,?,?,sysdate)");
+			.append("values(order_code,?,?,?,sysdate)");
 			
 			pstmt=con.prepareStatement(insertOrder.toString());
 			

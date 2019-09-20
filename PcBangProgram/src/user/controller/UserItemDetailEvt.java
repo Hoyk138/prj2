@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 
+import user.VO.UserOrderVO;
 import user.view.UserItem;
 import user.view.UserItemDetail;
 
@@ -17,6 +18,7 @@ public class UserItemDetailEvt implements ActionListener {
 	private UserItemEvt uie;
 	
 	private int price;
+	private List<UserOrderVO> orderList;
 	
 	public UserItemDetailEvt(UserItemDetail uid,UserItem ui, UserItemEvt uie) {
 		this.uid=uid;
@@ -48,11 +50,11 @@ public class UserItemDetailEvt implements ActionListener {
 
 		//선택가격
 		List<Integer> priceList=uie.getPriceList();
-		int choicePrice=new Integer(uid.getJtfFoodPrice().getText().trim());
+		int choicePrice=Integer.parseInt(uid.getJtfFoodPrice().getText().trim());
 		priceList.add(choicePrice);
-
+		
 		int total=0;
-	
+		
 		for(int i=0;i<uie.getPriceList().size();i++) {
 			total+=uie.getPriceList().get(i);
 		}//end for
@@ -60,10 +62,19 @@ public class UserItemDetailEvt implements ActionListener {
 		ui.getJtfTotalPrice().setText(String.valueOf(total));
 		
 		
-		//선택된 상품코드(itemCode)
-		List<String> codeList=uie.getItemCodeList();
-		codeList.add(uie.getSelectedItemCode());
-//		System.out.println(codeList+choiceQuan);
+		//pcuserCode
+		String pcCode="P_000005";
+		
+		//수량
+		int quan=Integer.parseInt(choiceQuan);
+
+		//itemCode
+		String itemCode=uie.getSelectedItemCode();
+		
+		
+		orderList=uie.getitemOrderList();
+		orderList.add(new UserOrderVO(itemCode, pcCode, quan));
+		
 		
 	}//setPut
 	
@@ -89,5 +100,6 @@ public class UserItemDetailEvt implements ActionListener {
 		}//end if
 		
 	}//actionPerformed	
+
 
 }//class

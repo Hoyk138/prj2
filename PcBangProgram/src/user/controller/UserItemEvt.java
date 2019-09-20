@@ -34,7 +34,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 	
 	private List<UserItemVO> listItem;
 	private List<Integer> priceList;
-	private List<String>itemCodeList;
+	private List<UserOrderVO> itemOrderList;
 	
 	private String selectedItemCode;
 	
@@ -46,7 +46,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		setItem("F");
 		
 		priceList = new ArrayList<Integer>();
-		itemCodeList = new ArrayList<String>();
+		itemOrderList = new ArrayList<UserOrderVO>();
 	}//UserOrderEvt
 	
 	/**
@@ -104,7 +104,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		int selectIndex=choice.getSelectedIndex(); //0행
 		
 		int cancelPrice=priceList.get(selectIndex); //0행
-		int total=new Integer(ui.getJtfTotalPrice().getText());
+		int total=Integer.parseInt(ui.getJtfTotalPrice().getText());
 		int setTotal=total-cancelPrice;
 		
 		if(selectIndex==-1) {
@@ -121,6 +121,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			choiceData.removeElementAt(selectIndex);
 			priceList.remove(selectIndex);
 			ui.getJtfTotalPrice().setText(String.valueOf(setTotal));
+			itemOrderList.remove(selectIndex);
 
 		}//end switch
 		
@@ -128,62 +129,26 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 	}//choiceCancel
 	
 	/**
-	 *	선택한 상품 리스트를 주문하는 일  ////////////////??
+	 *	선택한 상품 리스트를 주문하는 일  //////
 	 */
 	private void setOrder() {
 		
-		//수량
-		DefaultListModel<String> dtm=ui.getDlmOrderChoiceList();
-		String temp=null;
-		int quan=0;
+//		for (int i = 0; i < itemOrderList.size(); i++) {
+//			System.out.println(itemOrderList.get(i).toString());
+//		}
 	
-		
-		for(int i=0; i<dtm.size();i++) {
-			temp=dtm.get(i);
-			quan=new Integer(temp.substring(temp.lastIndexOf(":")+1));
-			System.out.println(quan);
-	
-		}//end for
-		
-		
-		//item코드
-		String itemCode=null;
-		
-		for(int j=0;j<itemCodeList.size();j++) {
-			itemCode=itemCodeList.get(j);
-		}//end for
-		
-		
-		
-		
-		//pcCode
-		String pcCode="P_000005";
-		/////////////////////////////////////
-//		System.out.println(itemCode+" "+pcCode+" "+quan);
-		
-		UserOrderVO uoVO=new UserOrderVO(itemCode, pcCode, quan);
-		List<UserOrderVO> orderListVO=new ArrayList<UserOrderVO>();
-//		UserOrderVO uoVO=null;
-		
-		for(int i=0; i<orderListVO.size();i++) {
-			orderListVO.add(uoVO);
-
-		}
-		
-		
 		//DB에 추가
 		UserDAO uDAO=UserDAO.getInstance();
 		
-//		for(int i=0;i<orderListVO.size();i++) {
+		for(int i=0;i<itemOrderList.size();i++) {
 			try {
-				uDAO.insertOrder(orderListVO);
+				uDAO.insertOrder(itemOrderList);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}//end catch
-//		}//end for
+		}//end for
 		
-//		JOptionPane.showMessageDialog(ui, "주문이 완료되었습니다.");
-		
+		JOptionPane.showMessageDialog(ui, "주문이 완료되었습니다.");
 		
 	}//setOrder
 	
@@ -281,12 +246,16 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		return priceList;
 	}
 
-	public List<String> getItemCodeList() {
-		return itemCodeList;
-	}
+//	public List<String> getitemOrderList() {
+//		return itemOrderList;
+//	}
 
 	public String getSelectedItemCode() {
 		return selectedItemCode;
+	}
+
+	public List<UserOrderVO> getitemOrderList() {
+		return itemOrderList;
 	}
 	
 	

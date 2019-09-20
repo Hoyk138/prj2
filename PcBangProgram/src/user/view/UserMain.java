@@ -1,18 +1,18 @@
 package user.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.TileObserver;
-import java.awt.image.WritableRenderedImage;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
+import user.DAO.UserDAO;
 import user.controller.UserMainEvt;
 
 
@@ -20,20 +20,23 @@ public class UserMain extends JFrame{
 	private JLabel jlPcNum, jlID, jlStartTime, jlUsePrice, jlUseTime;
 	private JButton jbtOrder, jbtCounterChat, jbtAdImage;
 	// 
-	private String id,startTime,usePrice,UseTime;
-	private int pcNum;
+//	private String usePrice,useTime;
 	
-	public UserMain() {
-		super("E_ZO PC방");
+	public UserMain(String userId) {
+		super(" [E_ZO PC방] "+userId+"님 환영합니다!");
 		
-		pcNum=10;
+		//**5분=200원 -> 60분=1200원
+//		int pcNum=10;
+		//시작시간
+		SimpleDateFormat sdf=new SimpleDateFormat("a h시 m분");
+		String startTime=sdf.format(new Date());
 		
 		//생성
-		jlPcNum=new JLabel("NO");
-		jlID=new JLabel("ID : "+"ssang1004");
-		jlStartTime=new JLabel("시작시간 : "+"2019-09-03 오후 06:00");
-		jlUsePrice=new JLabel("사용요금 : "+"7,000"+"원");
-		jlUseTime=new JLabel("사용시간 : "+"07:00"+"분");
+		jlPcNum=new JLabel("NO.0");
+		jlID=new JLabel(userId);
+		jlStartTime=new JLabel("시작시간 : "+startTime);
+		jlUseTime=new JLabel("사용시간 : ");
+		jlUsePrice=new JLabel("사용요금 : ");
 		
 		jbtAdImage=new JButton("광고창");
 		jbtOrder=new JButton("먹거리주문");
@@ -73,6 +76,7 @@ public class UserMain extends JFrame{
 		jbtOrder.addActionListener(ume);
 		jbtCounterChat.addActionListener(ume);
 		jbtAdImage.addActionListener(ume);
+		ume.pcNum();
 		
 		setResizable(false);
 		setBounds(1300, 0, 590, 259);
@@ -87,7 +91,6 @@ public class UserMain extends JFrame{
 		return jbtOrder;
 	}
 
-
 	public JButton getJbtCounterChat() {
 		return jbtCounterChat;
 	}
@@ -95,18 +98,46 @@ public class UserMain extends JFrame{
 	public JButton getJbtAdImage() {
 		return jbtAdImage;
 	}
-	
-	
-	public int getPcNum() {
-		return pcNum;
+
+	public JLabel getJlPcNum() {
+		return jlPcNum;
 	}
 
-	/**
-	 * 단위테스트용
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		new UserMain();
-	}//main
+	public JLabel getJlUsePrice() {
+		return jlUsePrice;
+	}
+
+	public JLabel getJlUseTime() {
+		return jlUseTime;
+	}
+
+	public JLabel getJlID() {
+		return jlID;
+	}
+	
+	
+
+//	public String getUsePrice() {
+//		return usePrice;
+//	}
+//
+//	public String getUseTime() {
+//		return useTime;
+//	}
+
+//	public Date getStartDate() {
+//		return startDate;
+//	}
+	
+	
+	
+
+//	/**
+//	 * 단위테스트용
+//	 * @param args
+//	 */
+//	public static void main(String[] args) {
+//		new UserMain();
+//	}//main
 	
 }//class
