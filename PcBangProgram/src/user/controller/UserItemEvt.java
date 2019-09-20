@@ -140,14 +140,14 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		//DB에 추가
 		UserDAO uDAO=UserDAO.getInstance();
 		
-		for(int i=0;i<itemOrderList.size();i++) {
+//		for(int i=0;i<itemOrderList.size();i++) {
 			try {
 				uDAO.insertOrder(itemOrderList);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}//end catch
-		}//end for
-		
+//		}//end for
+//		System.out.println("주문버튼");
 		JOptionPane.showMessageDialog(ui, "주문이 완료되었습니다.");
 		
 	}//setOrder
