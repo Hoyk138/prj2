@@ -29,7 +29,7 @@ public class UserJoin extends JDialog {
 		//DB에 넣고 list로 불러와서 combobox에 넣기
 		dcbmQuestion=new DefaultComboBoxModel<String>(new String[] 
 				{"자신의 보물 제1호는?","자신의 인생 좌우명은?","유년시절 가장 생각나는 친구 이름은?",
-				"다시 태어나면 되고 싶은 것은?","내가 좋아하는 캐릭터는?","인상 깊게 읽은 책 이름은?","출신 초등학교는 어디인가요?"});
+				"다시 태어나면 되고 싶은 것은?","내가 좋아하는 캐릭터는?","인상 깊게 읽은 책 이름은?"});
 		jcbQuestion=new JComboBox<String>(dcbmQuestion);
 		
 		jlblId=new JLabel("ID");
@@ -111,7 +111,7 @@ public class UserJoin extends JDialog {
 		
 		
 		setResizable(false);
-		setBounds(100, 200, 450, 470);
+		setBounds(700, 260, 450, 470);
 		setVisible(true);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

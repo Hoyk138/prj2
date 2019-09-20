@@ -62,7 +62,7 @@ public class FindPass extends JDialog {
 		jbtnFindPass.addActionListener(fpe);
 		
 		setResizable(false);
-		setBounds(100, 200, 450, 300);
+		setBounds(700, 370, 450, 300);
 		setVisible(true);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -100,5 +100,5 @@ public class FindPass extends JDialog {
 		return jbtnFindPass;
 	}
 	
-		
+
 }//class

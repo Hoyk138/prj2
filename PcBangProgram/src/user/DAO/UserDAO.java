@@ -237,8 +237,7 @@ public class UserDAO { //singleton pattern
 	 * @param ujVO
 	 * @throws SQLException
 	 */
-	public boolean insertMember(UserJoinVO ujVO) throws SQLException { 
-		boolean insertFlag=false;
+	public void insertMember(UserJoinVO ujVO) throws SQLException { 
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		
@@ -248,7 +247,7 @@ public class UserDAO { //singleton pattern
 		//3. 쿼리문 생성객체 얻기
 			StringBuilder insertMember=new StringBuilder();
 			insertMember
-			.append("	insert into member_account(ID,PASS, NAME, PHONE, QUESTION_VERIFY,	ANSWER_VERIFY	, JOIN_DATE) values (?,?,?,?,?,?)" );
+			.append("	insert into member_account(ID,PASS, NAME, PHONE, QUESTION_VERIFY,	ANSWER_VERIFY	, JOIN_DATE) values (?,?,?,?,?,?,sysdate)" );
 
 			
 			pstmt=con.prepareStatement(insertMember.toString());
@@ -261,15 +260,61 @@ public class UserDAO { //singleton pattern
 			pstmt.setString(5, ujVO.getQuestion());
 			pstmt.setString(6, ujVO.getAnswer());
 		//5. 쿼리 실행 후 결과 얻기
-			insertFlag=pstmt.executeUpdate()==1;
+			pstmt.executeUpdate();
 
 		}finally {
 		//6. 연결끊기
 			if ( pstmt != null ) { pstmt.close(); } //end if
 			if ( con != null ) { con.close(); } //end if
 		}//end finally
-		return insertFlag;
 	}//selectLogin
+	
+
+	/**
+	 * 회원가입시 입력받은 아이디로 member_account 테이블에서 일치하는 아이디를 찾아 중복아이디가 있는지 확인하여 반환하는 일
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public String overlapId(String id) throws SQLException { 
+		String userId="";
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConn();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder selectName=new StringBuilder();
+			selectName
+			.append("		select id			")
+			.append("		from member_account	")
+			.append("		where id=?					");
+			
+			pstmt=con.prepareStatement(selectName.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setString(1, id);
+		//5. 쿼리 실행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userId=rs.getString("id");
+			}//end if
+			
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return userId;
+	}//selectLogin
+	
+	
+
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	

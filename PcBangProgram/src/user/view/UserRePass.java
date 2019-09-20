@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import user.controller.FindPassEvt;
 import user.controller.UserRePassEvt;
 
 @SuppressWarnings("serial")
@@ -16,14 +17,18 @@ public class UserRePass extends JDialog {
 	private JPasswordField jpfPass, jpfConfirm;
 	private JButton jbtnResetPass;
 	
-	public UserRePass() {
+	private FindPass fp;
+	
+	public UserRePass(FindPass fp) {
+		
+		this.fp=fp;
 //		super("ID 찾기");
 		
 		jlblId=new JLabel("아이디");
 		jlblPass=new JLabel("비밀번호");
 		jlblConfirm=new JLabel("비밀번호확인");
 		
-		jtfId=new JTextField(); //자릿수설정?
+		jtfId=new JTextField(fp.getJtfId().getText()); 
 		jpfPass=new JPasswordField();
 		jpfConfirm=new JPasswordField(); 
 		
@@ -56,7 +61,7 @@ public class UserRePass extends JDialog {
 		jbtnResetPass.addActionListener(urpe);
 		
 		setResizable(false);
-		setBounds(100, 200, 450, 250);
+		setBounds(700, 400, 450, 250);
 		setVisible(true);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

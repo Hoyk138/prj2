@@ -13,11 +13,13 @@ import kr.co.sist.util.cipher.DataEncrypt;
 import user.DAO.UserDAO;
 import user.VO.FindIdVO;
 import user.VO.UserRePassVO;
+import user.view.FindPass;
 import user.view.UserRePass;
 
 public class UserRePassEvt implements ActionListener {
 
 	private UserRePass urp;
+	private FindPass fp;
 	
 	public UserRePassEvt(UserRePass urp) {
 		this.urp=urp;
@@ -25,12 +27,12 @@ public class UserRePassEvt implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource()==urp.getJtfId()) { //비밀번호를 재설정할 ID 입력받기
-			if(!urp.getJtfId().getText().equals("")) { //ID를 입력 받았는지 판잔
-				
-				urp.getJpfPass().requestFocus(); //값이 존재한다면 커서를 비밀번호재설정으로 이동
-			}//end if
-		}//end if
+//		if (ae.getSource()==urp.getJtfId()) { //비밀번호를 재설정할 ID 입력받기
+//			if(!urp.getJtfId().getText().equals("")) { //ID를 입력 받았는지 판잔
+//				
+//				urp.getJpfPass().requestFocus(); //값이 존재한다면 커서를 비밀번호재설정으로 이동
+//			}//end if
+//		}//end if
 		
 		if(ae.getSource()==urp.getJpfPass()) {
 			if(!new String(urp.getJpfPass().getPassword()).isEmpty()) {
@@ -46,7 +48,8 @@ public class UserRePassEvt implements ActionListener {
 		}//end if
 
 		if(ae.getSource()==urp.getJbtnResetPass()) {
-			String reID=urp.getJtfId().getText();
+//			String reId=urp.getJtfId().getText();
+			String reId=urp.getJtfId().getText();
 			String rePass=urp.getJpfPass().getText();
 			String cipherPass="";
 			
@@ -63,7 +66,7 @@ public class UserRePassEvt implements ActionListener {
 			
 			
 			//입력받은 아이디와 비밀번호를 VO에 저장
-			UserRePassVO urpVO=new UserRePassVO(reID, cipherPass);
+			UserRePassVO urpVO=new UserRePassVO(reId, cipherPass);
 			//DB를 조회하기 위해 DAO객체를 얻기
 			UserDAO uDAO=UserDAO.getInstance();
 			
@@ -72,6 +75,7 @@ public class UserRePassEvt implements ActionListener {
 				
 				if(passUpdate) {
 					JOptionPane.showMessageDialog(urp, "비밀번호 변경되었습니다");
+					urp.dispose();
 				}else {
 					urp.getJtfId().setText("");
 					urp.getJpfPass().setText("");

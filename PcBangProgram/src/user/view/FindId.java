@@ -27,7 +27,7 @@ public class FindId extends JDialog {
 		jlbName=new JLabel("이름");
 		jlbPhone=new JLabel("휴대폰번호");
 		
-		jtfName=new JTextField();
+		jtfName=new JTextField(4);
 		jtfPhone2=new JTextField();
 		jtfPhone3=new JTextField();
 		
@@ -61,7 +61,7 @@ public class FindId extends JDialog {
 		jbtnFindID.addActionListener(fie);
 		
 		setResizable(false);
-		setBounds(100, 200, 450, 250);
+		setBounds(700, 400, 450, 250);
 		setVisible(true);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -104,6 +104,11 @@ public class FindId extends JDialog {
 	}
 	
 	
+	
+//	public static void main(String[] args) {
+//		new FindId();
+//		
+//	}
 
 
 }

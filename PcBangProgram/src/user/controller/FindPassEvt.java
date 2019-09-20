@@ -38,7 +38,6 @@ public class FindPassEvt implements ActionListener {
 		
 		if(ae.getSource()==fp.getJbtnFindPass()) {
 			String pwId=fp.getJtfId().getText();
-//			StringBuilder pwQuestion=fp.getJcbQuestion().getSelectedItem();
 			StringBuilder sb=new StringBuilder();
 			sb.append(fp.getJcbQuestion().getSelectedItem());
 			String pwAnswer=sb.toString();
@@ -53,7 +52,7 @@ public class FindPassEvt implements ActionListener {
 				boolean pass=uDAO.selectPass(fpVO);
 				
 				if(pass) {
-					new UserRePass();
+					new UserRePass(fp);
 					fp.dispose();
 				}else {
 					fp.getJtfId().setText("");//아이디 초기화

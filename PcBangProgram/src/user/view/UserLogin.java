@@ -71,7 +71,7 @@ public class UserLogin extends JFrame {
 		});
 		
 		setResizable(false);
-		setBounds(300, 100, 450, 250);
+		setBounds(1470, 760, 450, 250);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

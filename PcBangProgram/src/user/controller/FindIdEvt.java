@@ -34,7 +34,7 @@ public class FindIdEvt implements ActionListener {
 		
 		if(ae.getSource()==fi.getJtfPhone2()) {
 			if(!fi.getJtfPhone2().getText().equals("")) {
-//				if(fi.getJtfPhone2().getText().length()==4) {
+//				if(fi.getJtfPhone2().getText().length()==4) {  ???숫자4자리까지만 입력받게 만들기 제한해야되는데 이거아닌듯
 //					
 //				}
 					
@@ -44,17 +44,22 @@ public class FindIdEvt implements ActionListener {
 		
 		if(ae.getSource()==fi.getJtfPhone3()) {
 			if(!fi.getJtfPhone2().getText().equals("")) {
+				
+//				if(fi.getJtfPhone3().getText().length()==4) {  ???숫자4자리까지만 입력받게 만들기  제한해야되는데 이거아닌듯
+//				
+//			}
+				
 				fi.getJbtnFindID().requestFocus();
 			}//end if
 		}
 		
 		if(ae.getSource()==fi.getJbtnFindID()) {
+			if(!fi.getJtfName().getText().equals("") && !fi.getJtfPhone2().getText().equals("") && !fi.getJtfPhone3().getText().equals("")) {
+				
 			String idName=fi.getJtfName().getText();
 			StringBuilder sb=new StringBuilder();
 			sb.append(fi.getJcbNum().getSelectedItem()).append(fi.getJtfPhone2().getText()).append(fi.getJtfPhone3().getText());
 			String idPhone=sb.toString();
-//			System.out.println(idName);
-//			System.out.println(idPhone);
 			
 			//입력받은 이름과 전화번호를 VO에 저장
 			FindIdVO fiVO=new FindIdVO(idName, idPhone);
@@ -65,8 +70,9 @@ public class FindIdEvt implements ActionListener {
 				String id=uDAO.selectId(fiVO);
 				
 				if(!id.isEmpty()) {
-					System.out.println(id);
+					JOptionPane.showMessageDialog(fi, "회원님의 아이디는 "+id+" 입니다"); 
 					fi.dispose();
+					
 				}else {
 					fi.getJtfName().setText(""); //이름 초기화
 					fi.getJtfPhone2().setText(""); //전화번호 초기화
@@ -80,6 +86,9 @@ public class FindIdEvt implements ActionListener {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}//catch
+			}else {
+				JOptionPane.showMessageDialog(fi, "정보를 모두 입력해주세요");  
+			}
 			
 		}//end if
 		
