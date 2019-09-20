@@ -14,6 +14,7 @@ import admin.DAO.heeDAO;
 import admin.VO.ProductDeleteVO;
 import admin.VO.ProductMDViewVO;
 import admin.VO.ProductModifyVO;
+import admin.VO.ProductRealDeleteVO;
 import admin.view.ModifyDeleteView;
 
 
@@ -93,8 +94,38 @@ public class ModifyDeleteEvt implements ActionListener{
 		
 		heeDAO hDAO=heeDAO.getInstance();
 		try {
-			if(hDAO.DeleteProduct(pdVO)==1) {
-				JOptionPane.showMessageDialog(mdv,"이 상품은 관리자만 볼수 있습니다.");
+			
+			if(mdv.getJlState().getText().equals("판매중인 상품입니다.")) {
+				if(hDAO.DeleteProduct(pdVO)==1) {
+					JOptionPane.showMessageDialog(mdv,"이 상품은 손님에게 보이지 않습니다.");
+				}//end if
+			}else if(mdv.getJlState().getText().equals("매진된 상품입니다.")){
+				if(hDAO.revive(pdVO)==1) {
+					JOptionPane.showMessageDialog(mdv,"이 상품은 손님에게 보여집니다.");
+				}//end if
+			}else {
+				JOptionPane.showMessageDialog(mdv,"오류");
+			}//end if
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}//catch
+		
+	}//productDelete
+	
+	public void productRealDelete() {
+		String itemCode=pmdvVO.getItemCode();
+		ProductRealDeleteVO prdVO=new ProductRealDeleteVO(itemCode);
+		
+		heeDAO hDAO=heeDAO.getInstance();
+		
+		try {
+			if(hDAO.RealDelete(prdVO)==1) {
+				JOptionPane.showMessageDialog(mdv, "상품이 삭제되었습니다.");
+				pe.setDrinkList();
+				pe.setSnackList();
+				pe.setFoodList();
+			}else {
+				JOptionPane.showMessageDialog(mdv, "상품이 삭제 실패하였습니다.");
 			}//end if
 			
 		} catch (SQLException e) {
@@ -102,7 +133,8 @@ public class ModifyDeleteEvt implements ActionListener{
 		}//catch
 		
 		
-	}//productDelete
+		
+	}//productRealDelete
 	
 
 	@Override
@@ -116,6 +148,9 @@ public class ModifyDeleteEvt implements ActionListener{
 		if(ae.getSource()==mdv.getJbtProductDelete()) {
 			productDelete();
 		}//end if
+		if(ae.getSource()==mdv.getJbtRealDelete()) {
+			productRealDelete();
+		}
 	}//actionPerformed
 	
 }//class

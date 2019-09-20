@@ -14,7 +14,7 @@ import admin.controller.ProductEvt;
 @SuppressWarnings("serial")
 public class ModifyDeleteView extends JDialog{
 	
-	private JButton jbtProductModify,jbtProductImageModify,jbtProductDelete;
+	private JButton jbtProductModify,jbtProductImageModify,jbtProductDelete,jbtRealDelete;
 	private JLabel jlImgModify,jlState;
 	private JTextField jtfProductNameModify,jtfPriceModify;
 	private JTextArea jtaExplainModify;
@@ -40,16 +40,20 @@ public class ModifyDeleteView extends JDialog{
 		}
 		
 		jbtProductModify=new JButton("수정");
-		jbtProductDelete=new JButton("삭제");
+		jbtProductDelete=new JButton("매진/해제");
 		jbtProductImageModify=new JButton("이미지 선택");
+		jbtRealDelete=new JButton("삭제(주의)");
 		jlImgModify=new JLabel(new ImageIcon(pmdvVO.getImg()));
 		jtfProductNameModify=new JTextField(pmdvVO.getName());
 		jtfPriceModify=new JTextField(String.valueOf(pmdvVO.getPrice()));
+		
+		//jlState=new JLabel("판매중인 상품입니다.");
 		if(pmdvVO.getState().equals("Y")) {
 			jlState=new JLabel("판매중인 상품입니다.");
 		}else {
-			jlState=new JLabel("삭제된 상품입니다.");
+			jlState=new JLabel("매진된 상품입니다.");
 		}
+		
 		
 		jtaExplainModify.setLineWrap(true);
 		setLayout(null);
@@ -66,15 +70,17 @@ public class ModifyDeleteView extends JDialog{
 		jbtProductModify.setBounds(480,540,100,30);
 		jbtProductDelete.setBounds(585,540,100,30);
 		jlState.setBounds(125,450,180,100);
+		jbtRealDelete.setBounds(300,600,200,30);
 		
 		ModifyDeleteEvt mde=new ModifyDeleteEvt(this,pmdvVO,pe);
 		jbtProductImageModify.addActionListener(mde);
 		jbtProductModify.addActionListener(mde);
 		jbtProductDelete.addActionListener(mde);
+		jbtRealDelete.addActionListener(mde);
 		
 		add(jlImgModify);
 		add(jbtProductImageModify);
-
+		add(jbtRealDelete);
 		add(jlProductName);
 		add(jtfProductNameModify);
 		add(jlProductPrice);
@@ -148,6 +154,12 @@ public class ModifyDeleteView extends JDialog{
 
 	public String getItemCode() {
 		return itemCode;
+	}
+
+
+
+	public JButton getJbtRealDelete() {
+		return jbtRealDelete;
 	}
 	
 	

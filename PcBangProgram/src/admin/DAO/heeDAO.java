@@ -8,10 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import admin.VO.OrderStateVO;
+import admin.VO.OrderVO;
+import admin.VO.OrderViewVO;
 import admin.VO.ProductAddVO;
 import admin.VO.ProductDeleteVO;
 import admin.VO.ProductMDViewVO;
 import admin.VO.ProductModifyVO;
+import admin.VO.ProductRealDeleteVO;
 import admin.VO.ProductViewVO;
 
 public class heeDAO {
@@ -231,6 +237,167 @@ private static heeDAO aDAO;
 		}
 		return cnt;
 	}//DeleteProduct
+	
+	public List<OrderViewVO> OrderView() throws SQLException{
+		List<OrderViewVO> list=new ArrayList<OrderViewVO>();
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			con=getConnection();
+			StringBuilder selectOrder=new StringBuilder();
+			
+			selectOrder
+			.append( " select  io.ORDER_CODE order_code,pu.PC_NUM pc_num, " )
+			.append(	 " to_char(io.ORDER_DATE,'yyyy-mm-dd am hh:mi') order_date, " )
+			.append(	 " pu.ID id,io.QUANTITY quantity,i.NAME name,(i.price*io.QUANTITY) totalprice, " )
+			.append(	 " nvl(to_char(ip.PAYMENT_TIME,'yyyy-mm-dd am hh:mi'),'결제 대기중 입니다.') payment_time " )
+			.append(	 " from  ITEM_ORDER io, ITEM_PAYMENT ip, ITEM i, PC_USE pu " )
+			.append(	 " where  (io.PC_USE_CODE=pu.PC_USE_CODE) and (io.ITEM_CODE=i.ITEM_CODE) " )
+			.append(	 " and(ip.ORDER_CODE(+)=io.ORDER_CODE) " );
+			
+
+
+			
+			pstmt=con.prepareStatement(selectOrder.toString());
+			
+			rs=pstmt.executeQuery();
+			OrderViewVO ovVO=null;
+			while(rs.next()) {
+		
+				ovVO=new OrderViewVO(rs.getString("order_code"),rs.getString("order_date"),
+						rs.getString("id"),rs.getString("name"),rs.getString("payment_time"),rs.getInt("pc_num")
+						,rs.getInt("quantity"),rs.getInt("totalprice"));
+				list.add(ovVO);
+			}//end while
+			
+		}finally {
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}//end finally
+		
+		return list;
+	}//OrderView
+	
+	public int orderState(String orderCode,admin.view.OrderView ov) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		int cnt=0;
+		
+		try {
+			con=getConnection();
+			StringBuilder selectpayment=new StringBuilder();
+			selectpayment
+			.append(" select nvl(to_char(ip.PAYMENT_TIME,'yyyy-mm-dd am hh:mi'),'nopay') payment_time,io.order_code order_code ")			
+			.append(" from ITEM_ORDER io, ITEM_PAYMENT ip ")
+			.append(" where  (ip.ORDER_CODE(+)=io.ORDER_CODE) and (io.ORDER_CODE=?) ");
+			
+			
+			pstmt=con.prepareStatement(selectpayment.toString());
+			pstmt.setString(1,orderCode);
+			
+			rs=pstmt.executeQuery();
+			OrderStateVO osVO=null;
+			if(rs.next()) {
+				osVO=new OrderStateVO(rs.getString("order_code"),rs.getString("payment_time"));
+			}//if end
+			
+			
+			if(!rs.getString("payment_time").equals("nopay")) {
+				JOptionPane.showMessageDialog(ov,"결제된 상품입니다.");
+			}else {
+			con.close();
+			rs.close();
+			con=getConnection();
+			pstmt.close();
+			
+			StringBuilder payment_state=new StringBuilder();
+			payment_state
+			.append(" insert into item_payment(ORDER_CODE) ")
+			.append(" values(?) ");		
+			
+			pstmt=con.prepareStatement(payment_state.toString());
+			
+			OrderVO oVO=new OrderVO(osVO.getOrderCode());
+			
+			pstmt.setString(1,oVO.getOrderCode());
+			
+			cnt=pstmt.executeUpdate();
+			}//end if
+		}finally {
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}
+		return cnt;
+	}//orderState
+	
+	public int revive(ProductDeleteVO pdVO) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		int cnt=0;
+		
+		try {
+			
+			con=getConnection();
+			
+			StringBuilder reviveProduct=new StringBuilder();
+			
+			reviveProduct
+			.append(" update item ")
+			.append(" set DISPLAY_STATE='Y' ")
+			.append(" where ITEM_CODE=? ");
+			
+			
+			pstmt=con.prepareStatement(reviveProduct.toString());
+			
+			pstmt.setString(1,pdVO.getItemCode());
+			
+			cnt=pstmt.executeUpdate();
+		}finally {
+
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}
+		return cnt;
+	}//DeleteProduct
+	
+	public int RealDelete(ProductRealDeleteVO prdVO) throws SQLException {
+		int cnt=0;
+		String itemCode=prdVO.getItemCode();
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+			
+			con=getConnection();
+			
+			StringBuilder RealDeleteProduct=new StringBuilder();
+			
+			RealDeleteProduct
+			.append(" delete from item ")
+			.append(" where item_code=? ");
+			
+			pstmt=con.prepareStatement(RealDeleteProduct.toString());
+			
+			pstmt.setString(1,itemCode);
+			
+			cnt=pstmt.executeUpdate();
+		}finally {
+
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}
+		
+		return cnt;
+	}//RealDelete
 	
 }//class
 

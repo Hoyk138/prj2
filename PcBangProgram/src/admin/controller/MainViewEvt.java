@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import admin.DAO.CalcPCDAO;
 import admin.VO.CalcPCVO;
+import admin.helper.OrderThread;
 import admin.view.MainView;
 
 public class MainViewEvt implements ActionListener {
@@ -35,6 +36,8 @@ public class MainViewEvt implements ActionListener {
 		}
 		if (ae.getSource() == mv.getJbtnmanageOrder()) {
 			mv.getCard().show(mv.getJpCenter(), "order");
+			OrderThread ot=new OrderThread(mv.getOv());
+			ot.start();
 		}
 		if (ae.getSource() == mv.getJbtnmanagePayment()) {
 			mv.getCard().show(mv.getJpCenter(), "payment");

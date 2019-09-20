@@ -18,6 +18,7 @@ public class MainView extends JFrame{
 	private JButton jbtnmanageOrder;
 	private JButton jbtnmanagePayment;
 	
+	private OrderView ov;
 	private CardLayout card;
 	private JPanel jpCenter;
 	
@@ -49,7 +50,9 @@ public class MainView extends JFrame{
 		jpCenter.add("pc", new ManagePC(this));
 		jpCenter.add("member", new ManageMember(this));
 		jpCenter.add("item", new ProductView());
-		jpCenter.add("order", new OrderView());
+		ov=new OrderView();
+		//System.out.println(ov.getDtmOrder().getRowCount());
+		jpCenter.add("order",ov);
 		jpCenter.add("payment", new CalcView());
 		
 		
@@ -71,6 +74,14 @@ public class MainView extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//MainView
+	
+	
+	
+	public OrderView getOv() {
+		return ov;
+	}
+
+
 
 	public JButton getJbtnmanageShop() {
 		return jbtnmanageShop;
