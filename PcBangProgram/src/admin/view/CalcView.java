@@ -88,6 +88,7 @@ public class CalcView extends JPanel {
 		JTextField jtfStartPC = new JTextField(15) ;
 		JLabel jlblPC = new JLabel("~") ;
 		JTextField jtfEndPC = new JTextField(15) ;
+		JButton jbtnSearchPC = new JButton("조회") ;
 		
 		jpCalcPC2.add(chbTodayPC) ;
 		jpCalcPC2.add(chbWeekPC) ;
@@ -96,6 +97,8 @@ public class CalcView extends JPanel {
 		jpCalcPC2.add(jtfStartPC) ;
 		jpCalcPC2.add(jlblPC) ;
 		jpCalcPC2.add(jtfEndPC) ;
+		jpCalcPC2.add(jbtnSearchPC) ;
+		
 		
 		jpCalcPCNorth.add(jpCalcPC2) ;
 		jpCalcPCSouth.add(jbtCalcPC) ;
@@ -137,6 +140,7 @@ public class CalcView extends JPanel {
 		JTextField jtfStartItem = new JTextField(15) ;
 		JLabel jlblItem = new JLabel("~") ;
 		JTextField jtfEndItem = new JTextField(15) ;
+		JButton jbtnSearchItem = new JButton("조회") ;
 		
 		jpCalcItem2.add(chbTodayItem) ;
 		jpCalcItem2.add(chbWeekItem) ;
@@ -145,6 +149,7 @@ public class CalcView extends JPanel {
 		jpCalcItem2.add(jtfStartItem) ;
 		jpCalcItem2.add(jlblItem) ;
 		jpCalcItem2.add(jtfEndItem) ;
+		jpCalcItem2.add(jbtnSearchItem) ;
 		
 		jpCalcItemNorth.add(jpCalcItem2) ;
 		
