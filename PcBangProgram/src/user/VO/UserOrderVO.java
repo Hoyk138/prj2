@@ -22,6 +22,11 @@ public class UserOrderVO {
 	public int getQuantity() {
 		return quantity;
 	}
+
+	@Override
+	public String toString() {
+		return "UserOrderVO [itemCode=" + itemCode + ", pcUserCode=" + pcUserCode + ", quantity=" + quantity + "]";
+	}
 	
 	
 	

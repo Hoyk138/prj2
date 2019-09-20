@@ -1,32 +1,29 @@
 package user.VO;
 
 public class PcHistoryVO {
-	int pcNum, useTime, useFee;
-	String userId, startTime;
+	int pcNum;
+	String userId;
 	
-	public PcHistoryVO(int pcNum, int useTime, int useFee, String userId, String startTime) {
+	public PcHistoryVO(int pcNum, String userId) {
 		super();
 		this.pcNum = pcNum;
-		this.useTime = useTime;
-		this.useFee = useFee;
 		this.userId = userId;
-		this.startTime = startTime;
 	}
-	//getter
+
 	public int getPcNum() {
 		return pcNum;
 	}
-	public int getUseTime() {
-		return useTime;
-	}
-	public int getUseFee() {
-		return useFee;
-	}
+
 	public String getUserId() {
 		return userId;
 	}
-	public String getStartTime() {
-		return startTime;
+
+	@Override
+	public String toString() {
+		return "PcHistoryVO [pcNum=" + pcNum + ", userId=" + userId + "]";
 	}
+
+	
+	
 	
 }//class
