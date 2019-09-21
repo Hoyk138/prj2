@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import admin.VO.AdminLoginVO;
+import admin.VO.MemberVO;
 
 public class AdminDAO {
 	
@@ -38,7 +41,8 @@ public class AdminDAO {
 			e.printStackTrace();
 		}//end catch
 		//2. Connection 얻기
-		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+//		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
 //		String url="jdbc:oracle:thin:@211.63.89.133:1521:orcl";
 		String id="pcbang";
 		String pass="ezo";
@@ -92,6 +96,175 @@ public class AdminDAO {
 		return adminName;
 	}//selectLogin
 	
+	public boolean selectPCip(int pcNum) throws SQLException {
+		boolean register_flag = false;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConnection();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder selectPCip = new StringBuilder();
+			selectPCip
+			.append("   select ip_address   ")
+			.append("   from pc   ")
+			.append("   where pc_num = ?   ");
+			
+			pstmt=con.prepareStatement(selectPCip.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setInt(1, pcNum);
+		//5. 쿼리 실행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				register_flag = true;
+			}//end if
+			
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return register_flag;
+	}//selectPCip
+	
+	public int selectPCNum(String pcIP) throws SQLException {
+		int pcNum = 0;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConnection();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder selectPCNum = new StringBuilder();
+			selectPCNum
+			.append("   select pc_num   ")
+			.append("   from pc   ")
+			.append("   where ip_address = ?   ");
+
+			pstmt=con.prepareStatement(selectPCNum.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setString(1, pcIP);
+		//5. 쿼리 실행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				pcNum = rs.getInt("pc_num");
+			}//end if
+			
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return pcNum;
+	}//selectPCNum
+	
+//	public List<MemberVO> selectAllPC() throws SQLException{
+//		List<MemberVO> list = new ArrayList<MemberVO>();
+//		
+//		Connection con = null;
+//		PreparedStatement pstmt =null;
+//		ResultSet rs = null;
+//		
+//		try {
+//			
+//		//2. Connection 얻기
+//		con = getConnection();
+//		//3. 쿼리문 생성객체 얻기: 
+//		//{"회원번호","ID","이름","전화번호","가입일"}
+//		//ID	PASS	NAME	PHONE	QUESTION_VERIFY	ANSWER_VERIFY	JOIN_DATE	
+//		StringBuilder selectAllMember = new StringBuilder();
+//		selectAllMember
+//		.append("   select   id, pass, name, phone, to_char(join_date,'yyyy-mm-dd hh24:mi') join_date   ")
+//		.append("   from     member_account   ");
+//		
+//		pstmt = con.prepareStatement(selectAllMember.toString());
+//		//4. 바인드 변수 값 넣기
+//		//5. 쿼리문 실행 후 값 얻기
+//		rs = pstmt.executeQuery();
+//		MemberVO lVO = null;
+//		while (rs.next()) {
+//			//(String id, String name, String phone, String join_date)
+//			lVO = new MemberVO(
+//					rs.getString("id"), 
+//					rs.getString("name"), 
+//					rs.getString("phone"), 
+//					rs.getString("join_date") 
+//					);
+//			list.add(lVO);//조회된 레코드를 저장한 VO를 list에 추가
+//		}//end while
+//		} finally {
+//		//6. 연결 끊기
+//			if(rs != null) { rs.close(); }//end if
+//			if(pstmt != null) { pstmt.close(); }//end if
+//			if(con != null) { con.close(); }//end if
+//		}//end finally
+//		return list;
+//	}//selectAllPC
+	
+	/**
+	 * DBMS테이블에 존재하는 모든 도시락 목록을 조회
+	 * @return 도시락 목록
+	 * @throws SQLException
+	 */
+	public List<MemberVO> selectAllMember() throws SQLException{
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		
+		Connection con = null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		
+		try {
+			
+		//2. Connection 얻기
+		con = getConnection();
+		//3. 쿼리문 생성객체 얻기: 
+		//{"회원번호","ID","이름","전화번호","가입일"}
+		//ID	PASS	NAME	PHONE	QUESTION_VERIFY	ANSWER_VERIFY	JOIN_DATE	
+		StringBuilder selectAllMember = new StringBuilder();
+//		selectAllMember
+//		.append("   select   id, name, phone, to_char(join_date,'yyyy-mm-dd hh24:mi') join_date   ")
+//		.append("   from     member_account   ");
+		selectAllMember
+		.append("   select ma.id, ma.name, phone, to_char(join_date,'yyyy-mm-dd hh24:mi') join_date, nvl(sum(pp.payment_time - login_time)*24*60,0) pc_use_time,nvl(sum(price*quantity),0) item_pay_sum   ")
+		.append("   from   item i, item_order io, item_payment ip, pc_payment pp, pc_use pu, member_account ma   ")
+		.append("   where  (pu.id(+)= ma.id and pp.pc_use_code(+)=pu.pc_use_code and io.pc_use_code(+)=pu.pc_use_code and io.item_code=i.item_code(+) and ip.order_code=io.order_code(+))   ")
+		.append("   group by ma.id, ma.name, phone, join_date   ");
+		
+		pstmt = con.prepareStatement(selectAllMember.toString());
+		//4. 바인드 변수 값 넣기
+		//5. 쿼리문 실행 후 값 얻기
+		rs = pstmt.executeQuery();
+		MemberVO mVO = null;
+		while (rs.next()) {
+			//id, name, phone, join_date, pc_use_time, item_pay_sum
+			mVO = new MemberVO(
+					rs.getString("id"), 
+					rs.getString("name"), 
+					rs.getString("phone"), 
+					rs.getString("join_date"), 
+					rs.getInt("pc_use_time"), 
+					rs.getInt("item_pay_sum")
+					);
+			list.add(mVO);//조회된 레코드를 저장한 VO를 list에 추가
+		}//end while
+		} finally {
+		//6. 연결 끊기
+			if(rs != null) { rs.close(); }//end if
+			if(pstmt != null) { pstmt.close(); }//end if
+			if(con != null) { con.close(); }//end if
+		}//end finally
+		return list;
+	}//selectAllMember
 	
 //	public static void main(String[] args) {
 //		AdminDAO ad=AdminDAO.getInstance();
