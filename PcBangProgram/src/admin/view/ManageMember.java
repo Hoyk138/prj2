@@ -97,8 +97,6 @@ public class ManageMember extends JPanel{
 		jtMember.setRowHeight(30);
 		//열 이동 불가
 		jtMember.getTableHeader().setReorderingAllowed(false);
-		
-		JScrollPane jspMember = new JScrollPane(jtMember);
 
 		//가운데 정렬
 		//DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
@@ -112,10 +110,12 @@ public class ManageMember extends JPanel{
 			tcmMember.getColumn(i).setCellRenderer(dtcrMember);
 		} // end for
 		
-		//테이블을 자동 내림 차순, 오름 차순으로  정렬하는 기능 추가
+		//테이블을 자동 내림 차순, 오름 차순으로  정렬하는 기능
 		jtMember.setAutoCreateRowSorter(true); 
 		TableRowSorter<TableModel> trsMember = new TableRowSorter<TableModel>(jtMember.getModel()); 
 		jtMember.setRowSorter(trsMember); 
+
+		JScrollPane jspMember = new JScrollPane(jtMember);
 
 		//배치
 		setLayout(new BorderLayout());

@@ -10,6 +10,7 @@ import java.util.List;
 
 import admin.VO.AdminLoginVO;
 import admin.VO.MemberVO;
+import admin.VO.PCVO;
 
 public class AdminDAO {
 	
@@ -18,7 +19,7 @@ public class AdminDAO {
 	private static final int ID = 0;
 	private static final int NAME = 1;
 	private static final int PHONE = 2;
-	private static final int JOIN_DATE =3;
+	private static final int JOIN_DATE = 3;
 	
 	private AdminDAO() {
 		
@@ -125,7 +126,9 @@ public class AdminDAO {
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-				register_flag = true;
+				if (rs.getString("ip_address") != null) {
+					register_flag = true;
+				}//end if
 			}//end if
 			
 		}finally {
@@ -173,6 +176,83 @@ public class AdminDAO {
 		return pcNum;
 	}//selectPCNum
 	
+	public List<PCVO> selectAllPC() throws SQLException {
+		List<PCVO> list = new ArrayList<PCVO>();
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConnection();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder selectAllPC = new StringBuilder();
+			selectAllPC
+			.append("   select pc_num, ip_address, to_char(input_date,'yyyy\"년\" mm\"월\" dd\"일\" hh24:mi') input_date   ")
+			.append("   from pc   ");
+
+			pstmt=con.prepareStatement(selectAllPC.toString());
+		//4. 바인드 변수에 값 넣기
+			
+		//5. 쿼리 실행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			PCVO pcVO = null;
+			while (rs.next()) {
+				//ip_address, input_date, pc_num
+				pcVO = new PCVO(
+						rs.getString("ip_address"), 
+						rs.getString("input_date"), 
+						rs.getInt("pc_num")
+						);
+				list.add(pcVO);//조회된 레코드를 저장한 VO를 list에 추가
+			}//end while
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return list;
+	}//selectAllPC
+	
+	public boolean updatePCIP(int pcNum, String inputIP, String msg) throws SQLException{
+		boolean updateFlag = false;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+		//2. 커넥션 얻기
+			con = getConnection();
+		//3. 쿼리문 생성 객체 얻기
+			StringBuilder updateLunch = new StringBuilder();
+			//PC_NUM	IP_ADDRESS	INPUT_DATE	
+			if (msg.equals("등록")||msg.equals("수정")) {
+				updateLunch
+				.append("   update pc   ")
+				.append("   set    IP_ADDRESS = ?, input_date = sysdate   ")
+				.append("   where  PC_NUM = ?   ");
+			}//end if
+			if (msg.equals("삭제")) {
+				updateLunch
+				.append("   update pc   ")
+				.append("   set    IP_ADDRESS = ?, input_date = null   ")
+				.append("   where  PC_NUM = ?   ");
+			}//end if
+			
+			pstmt = con.prepareStatement(updateLunch.toString());
+		//4. 바인드 변수 설정
+			pstmt.setString(1, inputIP);
+			pstmt.setInt(2, pcNum);
+		//5. 쿼리 수행 후 값 얻기
+			updateFlag = (pstmt.executeUpdate()==1);
+		} finally {
+		//6. 연결 끊기
+			if(pstmt != null) { pstmt.close(); }//end if
+			if(con != null) { con.close(); }//end if
+		}//end finally
+		return updateFlag;
+	}//updatePC
+	
 //	public List<MemberVO> selectAllPC() throws SQLException{
 //		List<MemberVO> list = new ArrayList<MemberVO>();
 //		
@@ -217,7 +297,7 @@ public class AdminDAO {
 //	}//selectAllPC
 	
 	/**
-	 * DBMS테이블에 존재하는 모든 도시락 목록을 조회
+	 * DBMS테이블에 존재하는 모든 회원 목록을 조회
 	 * @return 도시락 목록
 	 * @throws SQLException
 	 */
@@ -295,7 +375,3 @@ public class AdminDAO {
 //	}//main
 	
 }//class
-	
-	
-	
-	

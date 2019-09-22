@@ -12,22 +12,23 @@ import admin.controller.MainViewEvt;
 public class MainView extends JFrame{
 	
 	private JButton jbtnmanageShop;
-	private JButton jbtnmanagePC;
+//	private JButton jbtnmanagePC;
 	private JButton jbtnmanageMember;
 	private JButton jbtnmanageItem;
 	private JButton jbtnmanageOrder;
 	private JButton jbtnmanagePayment;
 	
-	private OrderView ov;
 	private CardLayout card;
 	private JPanel jpCenter;
+	
+    private	OrderView ov;
 	
 	public MainView() {
 		super("PC방 관리 프로그램");
 		
 		//버튼 생성
 		jbtnmanageShop = new JButton("매장");
-		jbtnmanagePC = new JButton("PC");
+//		jbtnmanagePC = new JButton("PC");
 		jbtnmanageMember = new JButton("회원");
 		jbtnmanageItem = new JButton("상품");
 		jbtnmanageOrder = new JButton("주문");
@@ -36,7 +37,7 @@ public class MainView extends JFrame{
 		//North에 넣을 JPanel
 		JPanel jpNorth = new JPanel();
 		jpNorth.add(jbtnmanageShop);
-		jpNorth.add(jbtnmanagePC);
+//		jpNorth.add(jbtnmanagePC);
 		jpNorth.add(jbtnmanageMember);
 		jpNorth.add(jbtnmanageItem);
 		jpNorth.add(jbtnmanageOrder);
@@ -46,15 +47,12 @@ public class MainView extends JFrame{
 		card = new CardLayout();
 		jpCenter = new JPanel(card);
 		
-		jpCenter.add("shop", new ManageShop());
-		jpCenter.add("pc", new ManagePC(this));
+		jpCenter.add("shop", new ManageShop(this));
+//		jpCenter.add("pc", new ManagePC(this));
 		jpCenter.add("member", new ManageMember(this));
 		jpCenter.add("item", new ProductView());
-		ov=new OrderView();
-		//System.out.println(ov.getDtmOrder().getRowCount());
-		jpCenter.add("order",ov);
+		jpCenter.add("order", ov = new OrderView());
 		jpCenter.add("payment", new CalcView());
-		
 		
 		//배치
 		add("North",jpNorth);
@@ -63,33 +61,26 @@ public class MainView extends JFrame{
 		//이벤트 등록
 		MainViewEvt mve = new MainViewEvt(this);
 		jbtnmanageShop.addActionListener(mve);
-		jbtnmanagePC.addActionListener(mve);
+//		jbtnmanagePC.addActionListener(mve);
 		jbtnmanageMember.addActionListener(mve);
 		jbtnmanageItem.addActionListener(mve);
 		jbtnmanageOrder.addActionListener(mve);
 		jbtnmanagePayment.addActionListener(mve);
 		
-		setBounds(100, 100, 900, 700);
+		setBounds(100, 100, 900, 800);
 		setVisible(true);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//MainView
-	
-	
-	
-	public OrderView getOv() {
-		return ov;
-	}
-
-
 
 	public JButton getJbtnmanageShop() {
 		return jbtnmanageShop;
 	}
 
-	public JButton getJbtnmanagePC() {
-		return jbtnmanagePC;
-	}
+//	public JButton getJbtnmanagePC() {
+//		return jbtnmanagePC;
+//	}
 
 	public JButton getJbtnmanageMember() {
 		return jbtnmanageMember;
@@ -114,7 +105,9 @@ public class MainView extends JFrame{
 	public JPanel getJpCenter() {
 		return jpCenter;
 	}
-	
-	
+
+	public OrderView getOv() {
+		return ov;
+	}
 
 }//class

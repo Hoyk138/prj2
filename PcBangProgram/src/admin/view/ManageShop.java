@@ -9,6 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import admin.controller.ManageShopEvt;
+import admin.server.ManageShopServer;
+
 @SuppressWarnings("serial")
 public class ManageShop extends JPanel {
 	
@@ -33,16 +36,22 @@ public class ManageShop extends JPanel {
 //
 //	}//ManageShop
 	
+	private MainView mv;
+	
+//	private JPanel jpCenter;
+	
 	private Map<Integer, PCState> pcStateMap = new HashMap<Integer, PCState>(27);
+	private Map<Integer, PCStateEvt> pcStateEvtMap = new HashMap<Integer, PCStateEvt>(27);
 	private JButton jbtnPCManage, jbtnLogManage;
 	
-	public ManageShop() {
+	public ManageShop(MainView mv) {
+		this.mv = mv;
 		setBorder(new TitledBorder("매장"));
 		
 		setLayout(new BorderLayout());
 		
 		JPanel jpCenter = new JPanel();
-		jpCenter.setLayout(new GridLayout(4, 5));
+		jpCenter.setLayout(new GridLayout(5, 5));
 		addJpPCStateArr(jpCenter);
 
 		JPanel jpSouth = new JPanel();
@@ -53,8 +62,15 @@ public class ManageShop extends JPanel {
 		
 		add("Center",jpCenter);
 		add("South",jpSouth);
+		
+		//이벤트 등록
+		ManageShopEvt mse = new ManageShopEvt(this);
+		jbtnPCManage.addActionListener(mse);
+		jbtnLogManage.addActionListener(mse);
 
 		//매장 관리 서버를 오픈하고 사용자 소켓을 받기 위한 thread를 실행한다.
+	    ManageShopServer mss = new ManageShopServer(this);
+	    mss.start();
 //		ManageShopServer mss = new ManageShopServer(this);
 //		mss.start();
 //		Thread thread = new Thread(this);
@@ -63,13 +79,34 @@ public class ManageShop extends JPanel {
 	}//ManageShop
 
 	public void addJpPCStateArr(JPanel jpCenter) {
-		for (int pcNum = 1; pcNum <= 20; pcNum++) {
-			pcStateMap.put(pcNum, new PCState(pcNum));
+		for (int pcNum = 1; pcNum <= 25; pcNum++) {
+			pcStateMap.put(pcNum, new PCState(this, pcNum));
+//			pcStateEvtMap.put(pcNum, new PCState(pcNum).getPcse());
 			jpCenter.add(pcStateMap.get(pcNum));
 //			jpPCStateArr[pcNum-1] = new PCState(pcNum);
 //			jpCenter.add(jpPCStateArr[pcNum-1]);
 		}//end for
 	}//setJpCenter
+
+	public MainView getMv() {
+		return mv;
+	}
+
+	public Map<Integer, PCState> getPcStateMap() {
+		return pcStateMap;
+	}
+
+	public Map<Integer, PCStateEvt> getPcStateEvtMap() {
+		return pcStateEvtMap;
+	}
+
+	public JButton getJbtnPCManage() {
+		return jbtnPCManage;
+	}
+
+	public JButton getJbtnLogManage() {
+		return jbtnLogManage;
+	}
 	
 //	public JPanel jpPCState(int PCNum) {
 //		JPanel jpPCState = new JPanel();
