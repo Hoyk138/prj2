@@ -93,6 +93,11 @@ public class ManageMember extends JPanel{
 				return false;
 			}//isCellEditable
 		};
+		// 컬럼의 높이 변경
+		jtMember.setRowHeight(30);
+		//열 이동 불가
+		jtMember.getTableHeader().setReorderingAllowed(false);
+		
 		JScrollPane jspMember = new JScrollPane(jtMember);
 
 		//가운데 정렬
@@ -132,10 +137,6 @@ public class ManageMember extends JPanel{
 		return jcbSearch;
 	}
 
-	public void setJcbSearch(JComboBox<String> jcbSearch) {
-		this.jcbSearch = jcbSearch;
-	}
-
 	public JTextField getJtfSearch() {
 		return jtfSearch;
 	}
@@ -144,4 +145,4 @@ public class ManageMember extends JPanel{
 		return jbtnSearch;
 	}
  
-}
+}//class

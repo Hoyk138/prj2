@@ -18,14 +18,15 @@ public class ManageMemberEvt implements ActionListener{
 	
 	public ManageMemberEvt(ManageMember mm) {
 		this.mm = mm;
-		setMemberList();
+		setMemberList(-1,"");
 	}//ManageMemberEvt
 	
 	/**
-	 * DBMS 테이블에서 조회한 도시락 리스트를 JTable에 설정
+	 * DBMS 테이블에서 조회한 회원 리스트를 JTable에 설정
 	 */
 	//method의 접근 지정자를 잘 모르면 public으로 하라
-	private void setMemberList() {
+//	private void setMemberList(String searchWord) {
+	private void setMemberList(int searchCondition, String searchWord) {
 		DefaultTableModel dtm = mm.getDtmMember();
 
 		// JTable의 레코드 초기화
@@ -36,9 +37,9 @@ public class ManageMemberEvt implements ActionListener{
 		// DBMS에서 조회
 		AdminDAO aDAO = AdminDAO.getInstance();
 		try {
-			List<MemberVO> listMember = aDAO.selectAllMember();
+			List<MemberVO> listMember = aDAO.selectMember(searchCondition,searchWord);
 			if (listMember.isEmpty()) {// 도시락 제품이 없는 경우
-				JOptionPane.showMessageDialog(mm, "등록된 회원이 없습니다.");
+				JOptionPane.showMessageDialog(mm, "조회된 회원이 없습니다.");
 			} // end if
 			MemberVO mVO = null;// list의 방의 값을 저장하기 위한 변수
 			StringBuilder tempPhone = null; 
@@ -67,10 +68,18 @@ public class ManageMemberEvt implements ActionListener{
 
 	}// setMemberList
 
+	private void searchSpecificMember() {
+		int searchCondition = mm.getJcbSearch().getSelectedIndex();
+		String searchWord = mm.getJtfSearch().getText().trim();
+//		System.out.println(searchCondition+"/"+searchWord);
+		setMemberList(searchCondition, searchWord);
+	}//searchSpecificMember
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource()==mm.getJtfSearch() || ae.getSource()==mm.getJbtnSearch()) {
-			System.out.println("조회");
+//			System.out.println("조회");
+			searchSpecificMember();
 		}//end if
 	}//jcbSearch
 	

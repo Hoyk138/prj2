@@ -15,6 +15,11 @@ public class AdminDAO {
 	
 	private static AdminDAO aDAO;
 	
+	private static final int ID = 0;
+	private static final int NAME = 1;
+	private static final int PHONE = 2;
+	private static final int JOIN_DATE =3;
+	
 	private AdminDAO() {
 		
 	}//AdminDAO
@@ -216,7 +221,8 @@ public class AdminDAO {
 	 * @return 도시락 목록
 	 * @throws SQLException
 	 */
-	public List<MemberVO> selectAllMember() throws SQLException{
+//	public List<MemberVO> selectAllMember() throws SQLException{
+	public List<MemberVO> selectMember(int selectCondition, String selectWord) throws SQLException{
 		List<MemberVO> list = new ArrayList<MemberVO>();
 		
 		Connection con = null;
@@ -230,17 +236,30 @@ public class AdminDAO {
 		//3. 쿼리문 생성객체 얻기: 
 		//{"회원번호","ID","이름","전화번호","가입일"}
 		//ID	PASS	NAME	PHONE	QUESTION_VERIFY	ANSWER_VERIFY	JOIN_DATE	
-		StringBuilder selectAllMember = new StringBuilder();
+		StringBuilder selectMember = new StringBuilder();
 //		selectAllMember
 //		.append("   select   id, name, phone, to_char(join_date,'yyyy-mm-dd hh24:mi') join_date   ")
 //		.append("   from     member_account   ");
-		selectAllMember
-		.append("   select ma.id, ma.name, phone, to_char(join_date,'yyyy-mm-dd hh24:mi') join_date, nvl(sum(pp.payment_time - login_time)*24*60,0) pc_use_time,nvl(sum(price*quantity),0) item_pay_sum   ")
+//		if (selectCondition == -1) {
+//			selectMember
+//			.append("   select ma.id, ma.name, phone, to_char(join_date,'yyyy-mm-dd hh24:mi') join_date, nvl(sum(pp.payment_time - login_time)*24*60,0) pc_use_time,nvl(sum(price*quantity),0) item_pay_sum   ")
+//			.append("   from   item i, item_order io, item_payment ip, pc_payment pp, pc_use pu, member_account ma   ")
+//			.append("   where  (pu.id(+)= ma.id and pp.pc_use_code(+)=pu.pc_use_code and io.pc_use_code(+)=pu.pc_use_code and io.item_code=i.item_code(+) and ip.order_code=io.order_code(+))   ")
+//			.append("   group by ma.id, ma.name, phone, join_date   ");
+//		}//end if
+		selectMember
+		.append("   select ma.id, ma.name, phone, to_char(join_date,'yyyy\"년\" mm\"월\" dd\"일\" hh24:mi') join_date, nvl(sum(pp.payment_time - login_time)*24*60,0) pc_use_time,nvl(sum(price*quantity),0) item_pay_sum   ")
 		.append("   from   item i, item_order io, item_payment ip, pc_payment pp, pc_use pu, member_account ma   ")
-		.append("   where  (pu.id(+)= ma.id and pp.pc_use_code(+)=pu.pc_use_code and io.pc_use_code(+)=pu.pc_use_code and io.item_code=i.item_code(+) and ip.order_code=io.order_code(+))   ")
-		.append("   group by ma.id, ma.name, phone, join_date   ");
+		.append("   where  (pu.id(+)= ma.id and pp.pc_use_code(+)=pu.pc_use_code and io.pc_use_code(+)=pu.pc_use_code and io.item_code=i.item_code(+) and ip.order_code=io.order_code(+))   ");
+		switch (selectCondition) {
+		    case ID: selectMember.append("   and ma.id like '%" + selectWord + "%'   "); break;
+		    case NAME: selectMember.append("   and ma.name like '%" + selectWord + "%'   "); break;
+		    case PHONE: selectMember.append("   and phone like '%" + selectWord.replace("-", "") + "%'   "); break;
+		    case JOIN_DATE: selectMember.append("   and to_char(join_date,'yyyy\"년\" mm\"월\" dd\"일\" hh24:mi') like '%" + selectWord + "%'   "); break;
+		}//switch case
+		selectMember.append("   group by ma.id, ma.name, phone, join_date   ");
 		
-		pstmt = con.prepareStatement(selectAllMember.toString());
+		pstmt = con.prepareStatement(selectMember.toString());
 		//4. 바인드 변수 값 넣기
 		//5. 쿼리문 실행 후 값 얻기
 		rs = pstmt.executeQuery();
