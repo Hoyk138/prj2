@@ -299,7 +299,7 @@ public class AdminDAO {
 	
 	/**
 	 * DBMS테이블에 존재하는 모든 회원 목록을 조회
-	 * @return 도시락 목록
+	 * @return 회원 목록
 	 * @throws SQLException
 	 */
 //	public List<MemberVO> selectAllMember() throws SQLException{
