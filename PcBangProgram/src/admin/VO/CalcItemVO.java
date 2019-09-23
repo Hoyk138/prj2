@@ -69,5 +69,6 @@ public class CalcItemVO {
 		return price;
 	}
 
+	
 } // class
 

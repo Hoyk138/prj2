@@ -3,9 +3,12 @@ package admin.view;
 import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 
+import javax.swing.FocusManager;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,15 +20,16 @@ import javax.swing.table.DefaultTableModel;
 
 import admin.controller.CalcItemEvt;
 import admin.controller.CalcPCEvt;
-import javafx.scene.control.CheckBox;
 
 @SuppressWarnings("serial")
 public class CalcView extends JPanel {
 
 	private JTable jtCalcPC, jtCalcItem ;
 	private DefaultTableModel dtmCalcPC, dtmCalcItem;
-	private JButton jbtCalcPC, jbtCalcItem ;
+	private JButton jbtCalcPC, jbtCalcItem, jbtnSearchPC, jbtnSearchItem ;
 	private JTabbedPane jtp ;
+	private CheckboxGroup cgPC, cgItem ;
+	private JTextField jtfStartPC, jtfEndPC, jtfStartItem, jtfEndItem ;
 	
 	public CalcView() {
 
@@ -73,22 +77,48 @@ public class CalcView extends JPanel {
 		JPanel jpCalcPCSouth = new JPanel();
 		
 		jpCalcPC.setLayout(new BorderLayout()) ;
-		jpCalcPC.setBorder(new TitledBorder("PC사용료 정산")) ;
+		jpCalcPC.setBorder(new TitledBorder("PC 사용료 정산")) ;
 		
 		JPanel jpCalcPCNorth = new JPanel() ;
 		jpCalcPCNorth.setLayout(new BorderLayout()) ;
 		jpCalcPCNorth.setBorder(new TitledBorder("날짜 옵션")) ;
 		
-		CheckboxGroup cgPC = new CheckboxGroup() ;
+		cgPC = new CheckboxGroup() ;
 		Checkbox chbTodayPC = new Checkbox("오늘", cgPC, true);
 		Checkbox chbWeekPC = new Checkbox("일주일", cgPC, false);
 		Checkbox chbMonthPC = new Checkbox("한 달", cgPC, false);
 		Checkbox chbCustomPC = new Checkbox("사용자 지정", cgPC, false);
 		
-		JTextField jtfStartPC = new JTextField(15) ;
+		jtfStartPC = new JTextField(15) {
+			@Override
+			protected void paintComponent(java.awt.Graphics g) {
+			    super.paintComponent(g);
+
+			    if(getText().isEmpty() && ! (FocusManager.getCurrentKeyboardFocusManager().getFocusOwner() == this)){
+			        Graphics2D g2 = (Graphics2D)g.create();
+			        g2.setBackground(Color.gray);
+			        g2.setFont(getFont().deriveFont(Font.PLAIN));
+			        g2.drawString("예)2019-01-01", 5, 15); //figure out x, y from font's FontMetrics and size of component.
+			        g2.dispose();
+			    }
+			  }
+		};
 		JLabel jlblPC = new JLabel("~") ;
-		JTextField jtfEndPC = new JTextField(15) ;
-		JButton jbtnSearchPC = new JButton("조회") ;
+		jtfEndPC = new JTextField(15){
+			@Override
+			protected void paintComponent(java.awt.Graphics g) {
+			    super.paintComponent(g);
+
+			    if(getText().isEmpty() && ! (FocusManager.getCurrentKeyboardFocusManager().getFocusOwner() == this)){
+			        Graphics2D g2 = (Graphics2D)g.create();
+			        g2.setBackground(Color.gray);
+			        g2.setFont(getFont().deriveFont(Font.PLAIN));
+			        g2.drawString("예)2019-12-31", 5, 15); //figure out x, y from font's FontMetrics and size of component.
+			        g2.dispose();
+			    }
+			  }
+		} ;
+		jbtnSearchPC = new JButton("조회") ;
 		
 		jpCalcPC2.add(chbTodayPC) ;
 		jpCalcPC2.add(chbWeekPC) ;
@@ -131,16 +161,42 @@ public class CalcView extends JPanel {
 		jpCalcItemNorth.setLayout(new BorderLayout()) ;
 		jpCalcItemNorth.setBorder(new TitledBorder("날짜 옵션")) ;
 		
-		CheckboxGroup cgItem = new CheckboxGroup() ;
+		cgItem = new CheckboxGroup() ;
 		Checkbox chbTodayItem = new Checkbox("오늘", cgItem, true);
 		Checkbox chbWeekItem = new Checkbox("일주일", cgItem, false);
 		Checkbox chbMonthItem = new Checkbox("한 달", cgItem, false);
 		Checkbox chbCustomItem = new Checkbox("사용자 지정", cgItem, false);
 		
-		JTextField jtfStartItem = new JTextField(15) ;
+		jtfStartItem = new JTextField(15) {
+			@Override
+			protected void paintComponent(java.awt.Graphics g) {
+			    super.paintComponent(g);
+
+			    if(getText().isEmpty() && ! (FocusManager.getCurrentKeyboardFocusManager().getFocusOwner() == this)){
+			        Graphics2D g2 = (Graphics2D)g.create();
+			        g2.setBackground(Color.gray);
+			        g2.setFont(getFont().deriveFont(Font.PLAIN));
+			        g2.drawString("예)2019-01-01", 5, 15); //figure out x, y from font's FontMetrics and size of component.
+			        g2.dispose();
+			    }
+			  }
+		} ;
 		JLabel jlblItem = new JLabel("~") ;
-		JTextField jtfEndItem = new JTextField(15) ;
-		JButton jbtnSearchItem = new JButton("조회") ;
+		jtfEndItem = new JTextField(15) {
+			@Override
+			protected void paintComponent(java.awt.Graphics g) {
+			    super.paintComponent(g);
+
+			    if(getText().isEmpty() && ! (FocusManager.getCurrentKeyboardFocusManager().getFocusOwner() == this)){
+			        Graphics2D g2 = (Graphics2D)g.create();
+			        g2.setBackground(Color.gray);
+			        g2.setFont(getFont().deriveFont(Font.PLAIN));
+			        g2.drawString("예)2019-12-31", 5, 15); //figure out x, y from font's FontMetrics and size of component.
+			        g2.dispose();
+			    }
+			  }
+		} ;
+		jbtnSearchItem = new JButton("조회") ;
 		
 		jpCalcItem2.add(chbTodayItem) ;
 		jpCalcItem2.add(chbWeekItem) ;
@@ -181,6 +237,8 @@ public class CalcView extends JPanel {
 		jbtCalcItem.addActionListener(cie);
 		jtp.addMouseListener(cpe);
 		jtp.addMouseListener(cie);
+		jbtnSearchPC.addActionListener(cpe);
+		jbtnSearchItem.addActionListener(cie);
 		
 //		setBounds(400, 200, 719, 600);
 		setVisible(true);
@@ -203,11 +261,6 @@ public class CalcView extends JPanel {
 		return dtmCalcItem;
 	}
 
-	public JTabbedPane getJtp() {
-		return jtp;
-	}
-
-
 	public JButton getJbtCalcPC() {
 		return jbtCalcPC;
 	}
@@ -215,6 +268,44 @@ public class CalcView extends JPanel {
 	public JButton getJbtCalcItem() {
 		return jbtCalcItem;
 	}
+
+	public JButton getJbtnSearchPC() {
+		return jbtnSearchPC;
+	}
+
+	public JButton getJbtnSearchItem() {
+		return jbtnSearchItem;
+	}
+
+	public JTabbedPane getJtp() {
+		return jtp;
+	}
+
+	public CheckboxGroup getCgPC() {
+		return cgPC;
+	}
+
+	public CheckboxGroup getCgItem() {
+		return cgItem;
+	}
+
+	public JTextField getJtfStartPC() {
+		return jtfStartPC;
+	}
+
+	public JTextField getJtfEndPC() {
+		return jtfEndPC;
+	}
+	
+	public JTextField getJtfStartItem() {
+		return jtfStartItem;
+	}
+	
+	public JTextField getJtfEndItem() {
+		return jtfEndItem;
+	}
+
+	
 
 	
 //	public static void main(String[] args) {

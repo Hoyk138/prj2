@@ -1,5 +1,6 @@
 package admin.controller;
 
+import java.awt.Checkbox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -42,7 +43,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			JTextArea jta = new JTextArea(20, 50) ;
 			JScrollPane jsp = new JScrollPane(jta) ;
 			if (list.isEmpty()) {
-				JOptionPane.showMessageDialog(null,"정산할 수 있는 거래 목록이 없습니다.");
+				JOptionPane.showMessageDialog(null,"당일 거래된 목록이 없습니다.");
 				return ;
 			} // end if				
 			
@@ -92,13 +93,6 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 		
 	} // CalcPCEvt
 
-	@Override
-	public void actionPerformed(ActionEvent ae) {
-
-		if (ae.getSource() == cv.getJbtCalcPC()) {
-			viewCalcPCRecipt();
-		} // end if
-	}
 		
 	public void setCalcPCList() {
 		Object[] rowData = null ;
@@ -140,6 +134,126 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	} // setCalcPCList
 	
 	
+	public void setCalcPCList7() {
+		Object[] rowData = null ;
+		
+		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+		
+		try {
+			List<CalcPCVO> list = cpcDAO.selectCalcPC7() ;
+			
+			DefaultTableModel dtm = cv.getDtmCalcPC() ;
+			dtm.setRowCount(0);
+			
+			if (list.isEmpty()) {
+				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
+				return;
+			} // end if
+			
+			CalcPCVO cpcVO = null ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				cpcVO = list.get(i) ;
+				
+				rowData = new Object[5] ;
+				
+				rowData[0] = cpcVO.getPcCode() ;
+				rowData[1] = cpcVO.getPcNum() ;
+				rowData[2] = cpcVO.getId() ;
+				rowData[3] = cpcVO.getUseTime() ;
+				rowData[4] = cpcVO.getUseFee() ;
+				
+				dtm.addRow(rowData);
+			} // end for
+			
+		} catch (SQLException Se) {
+			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
+			Se.printStackTrace();
+		} // end catch
+		
+	} // setCalcPCList
+	
+	
+	public void setCalcPCLstMonth() {
+		Object[] rowData = null ;
+		
+		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+		
+		try {
+			List<CalcPCVO> list = cpcDAO.selectCalcPCLstMonth() ;
+			
+			DefaultTableModel dtm = cv.getDtmCalcPC() ;
+			dtm.setRowCount(0);
+			
+			if (list.isEmpty()) {
+				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
+				return;
+			} // end if
+			
+			CalcPCVO cpcVO = null ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				cpcVO = list.get(i) ;
+				
+				rowData = new Object[5] ;
+				
+				rowData[0] = cpcVO.getPcCode() ;
+				rowData[1] = cpcVO.getPcNum() ;
+				rowData[2] = cpcVO.getId() ;
+				rowData[3] = cpcVO.getUseTime() ;
+				rowData[4] = cpcVO.getUseFee() ;
+				
+				dtm.addRow(rowData);
+			} // end for
+			
+		} catch (SQLException Se) {
+			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
+			Se.printStackTrace();
+		} // end catch
+		
+	} // setCalcPCLstMonth
+	
+	public void setCalcPCLstCustom() {
+		Object[] rowData = null ;
+		
+		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+		String startDate = cv.getJtfStartPC().getText().trim() ;
+		String endDate = cv.getJtfEndPC().getText().trim() ;
+		
+		try {
+			List<CalcPCVO> list = cpcDAO.selectCalcPCLstCustom(startDate, endDate) ;
+			
+			DefaultTableModel dtm = cv.getDtmCalcPC() ;
+			dtm.setRowCount(0);
+			
+			if (list.isEmpty()) {
+				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
+				return;
+			} // end if
+			
+			CalcPCVO cpcVO = null ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				cpcVO = list.get(i) ;
+				
+				rowData = new Object[5] ;
+				
+				rowData[0] = cpcVO.getPcCode() ;
+				rowData[1] = cpcVO.getPcNum() ;
+				rowData[2] = cpcVO.getId() ;
+				rowData[3] = cpcVO.getUseTime() ;
+				rowData[4] = cpcVO.getUseFee() ;
+				
+				dtm.addRow(rowData);
+			} // end for
+			
+		} catch (SQLException Se) {
+			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
+			Se.printStackTrace();
+		} // end catch
+		
+	} // setCalcPCLstMonth
+	
 		public void mouseClicked(MouseEvent me) {
 
 			if (me.getSource() == cv.getJtp()) { // 주문 탭을 눌렀을 때 이벤트 처리 => 주문현황 조회 시작
@@ -153,6 +267,40 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				} // end if
 
 			} // end if
+		
+		
+		@Override
+		public void actionPerformed(ActionEvent ae) {
+			
+			// 영수증
+			if (ae.getSource() == cv.getJbtCalcPC()) {
+				viewCalcPCRecipt();
+			} // end if
+			
+			// 조회버튼
+			
+			if (ae.getSource()==cv.getJbtnSearchPC()) {
+				Checkbox selectChb=cv.getCgPC().getSelectedCheckbox() ;
+				
+				switch (selectChb.getLabel()) {
+				case "오늘":
+					setCalcPCList();
+					break;
+				case "일주일":
+					setCalcPCList7();
+					break;
+				case "한 달":
+					setCalcPCLstMonth();
+					break;
+					
+				case "사용자 지정":
+					setCalcPCLstCustom();
+					break;
+					
+				}
+			} // end if
+			
+		} // actionPerformed
 		
 	// 단위테스트용
 //	public static void main(String[] args) {

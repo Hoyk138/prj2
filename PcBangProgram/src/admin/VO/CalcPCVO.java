@@ -33,6 +33,7 @@ public class CalcPCVO {
 	public int getUseFee() {
 		return useFee;
 	}
+	
 
 } // class
 

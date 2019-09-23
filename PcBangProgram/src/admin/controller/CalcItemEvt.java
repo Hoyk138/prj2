@@ -1,5 +1,6 @@
 package admin.controller;
 
+import java.awt.Checkbox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -48,7 +49,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			
 			if (list.isEmpty()) {
 //				jta.append("정산할 수 있는 거래 목록이 없습니다.");
-				JOptionPane.showMessageDialog(null, "정산할 수 있는 거래 목록이 없습니다.");
+				JOptionPane.showMessageDialog(null, "당일 거래된 목록이 없습니다.");
 				return;
 			} // end if
 
@@ -101,14 +102,6 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 	} // CalcItmeEvt
 
-	@Override
-	public void actionPerformed(ActionEvent ae) {
-
-		if (ae.getSource() == cv.getJbtCalcItem()) {
-			viewCalcItemRecipt();
-		} // end if
-
-	}
 
 	public void setCalcItemList() {
 		Object[] rowData = null;
@@ -151,7 +144,144 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 		} // end catch
 
 	} // setCalcItemList
+	
+	
+	public void setCalcItemList7() {
+		Object[] rowData = null ;
+		
+		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		
+		try {
+			List<CalcItemVO> list = ciDAO.selectCalcItem7() ;
+			
+			DefaultTableModel dtm = cv.getDtmCalcItem() ;
+			dtm.setRowCount(0);
+			
+			
+			if (list.isEmpty()) {
+				JOptionPane.showMessageDialog(cv, "매점 이용 내역이 없습니다.");
+				return;
+			} // end if
 
+
+			CalcItemVO ciVO = null;
+
+			for (int i = 0; i < list.size(); i++) {
+				ciVO = list.get(i);
+
+				rowData = new Object[6];
+
+				rowData[0] = ciVO.getOrder_code();
+				rowData[1] = ciVO.getPCnum();
+				rowData[2] = ciVO.getId();
+				rowData[3] = ciVO.getItemName();
+				rowData[4] = ciVO.getQuantity();
+				rowData[5] = ciVO.getPrice();
+
+				dtm.addRow(rowData);
+
+			} // end for
+			
+		} catch (SQLException Se) {
+			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
+			Se.printStackTrace();
+		} // end catch
+		
+	} // setCalcItemList7
+	
+	
+	public void setCalcItemLstMonth() {
+		Object[] rowData = null ;
+		
+		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		
+		try {
+			List<CalcItemVO> list = ciDAO.selectCalcItem7() ;
+			
+			DefaultTableModel dtm = cv.getDtmCalcItem() ;
+			dtm.setRowCount(0);
+			
+			
+			if (list.isEmpty()) {
+				JOptionPane.showMessageDialog(cv, "매점 이용 내역이 없습니다.");
+				return;
+			} // end if
+
+
+			CalcItemVO ciVO = null;
+
+			for (int i = 0; i < list.size(); i++) {
+				ciVO = list.get(i);
+
+				rowData = new Object[6];
+
+				rowData[0] = ciVO.getOrder_code();
+				rowData[1] = ciVO.getPCnum();
+				rowData[2] = ciVO.getId();
+				rowData[3] = ciVO.getItemName();
+				rowData[4] = ciVO.getQuantity();
+				rowData[5] = ciVO.getPrice();
+
+				dtm.addRow(rowData);
+
+			} // end for
+			
+		} catch (SQLException Se) {
+			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
+			Se.printStackTrace();
+		} // end catch
+		
+	} // setCalcItemLstMonth
+
+	
+	
+	public void setCalcItemLstCustom() {
+		Object[] rowData = null ;
+		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		
+		String startDate = cv.getJtfStartItem().getText().trim() ;
+		String endDate = cv.getJtfEndItem().getText().trim() ;
+		
+		
+		try {
+			List<CalcItemVO> list = ciDAO.selectCalcItemLstCustom(startDate, endDate) ;
+			
+			DefaultTableModel dtm = cv.getDtmCalcItem() ;
+			dtm.setRowCount(0);
+			
+			if (list.isEmpty()) {
+				JOptionPane.showMessageDialog(cv, "매점 이용 내역이 없습니다.");
+				return;
+			} // end if
+
+
+			CalcItemVO ciVO = null;
+
+			for (int i = 0; i < list.size(); i++) {
+				ciVO = list.get(i);
+
+				rowData = new Object[6];
+
+				rowData[0] = ciVO.getOrder_code();
+				rowData[1] = ciVO.getPCnum();
+				rowData[2] = ciVO.getId();
+				rowData[3] = ciVO.getItemName();
+				rowData[4] = ciVO.getQuantity();
+				rowData[5] = ciVO.getPrice();
+
+				dtm.addRow(rowData);
+
+			} // end for
+			
+		} catch (SQLException Se) {
+			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
+			Se.printStackTrace();
+		} // end catch
+		
+	} // setCalcItemLstMonth
+	
+	
+	
 	public void mouseClicked(MouseEvent me) {
 
 		if (me.getSource() == cv.getJtp()) { // 주문 탭을 눌렀을 때 이벤트 처리 => 주문현황 조회 시작
@@ -164,7 +294,40 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 		} // end if
 
 	} // end mouseClicked
-
+	
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		// 영수증
+		if (ae.getSource() == cv.getJbtCalcItem()) {
+			viewCalcItemRecipt();
+		} // end if
+		// 조회버튼
+		
+		if (ae.getSource()==cv.getJbtnSearchItem()) {
+			Checkbox selectChb=cv.getCgItem().getSelectedCheckbox() ;
+			
+			switch (selectChb.getLabel()) {
+			case "오늘":
+				setCalcItemList();
+				break;
+			case "일주일":
+				setCalcItemList7();
+				break;
+			case "한 달":
+				setCalcItemLstMonth();
+				break;
+				
+			case "사용자 지정":
+				setCalcItemLstCustom();
+				System.out.println("떠");
+				break;
+				
+			} // end switch
+			
+		} // end if
+		
+	} // actionPerformed
+	
 	// 단위테스트용
 //	public static void main(String[] args) {
 //		new CalcItemEvt();

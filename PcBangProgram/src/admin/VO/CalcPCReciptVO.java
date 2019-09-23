@@ -15,7 +15,7 @@ public class CalcPCReciptVO {
 		return useTime;
 	}
 
-	public int getpcNum() {
+	public int getPcNum() {
 		return pcNum;
 	}
 

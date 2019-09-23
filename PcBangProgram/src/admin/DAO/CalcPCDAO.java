@@ -150,4 +150,143 @@ public class CalcPCDAO {
 		
 		return list ;
 	} // selectCalcPCRecipt
-}
+	
+	// 일주일 전 조회
+	public List<CalcPCVO> selectCalcPC7() throws SQLException {
+		List<CalcPCVO> list = new ArrayList<CalcPCVO>() ;
+		
+		Connection conn = null ;
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		
+		// 2. Connection 얻기
+		conn = getConnection() ;
+		
+		
+		try {
+			// 3. 쿼리문 생성 객체 얻기 
+			StringBuilder selectCalcPC7 = new StringBuilder() ;
+			selectCalcPC7
+			.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time	")
+			.append("	from pc_use	pu, pc_payment pp	")
+			.append("	where pp.pc_use_code = pu.pc_use_code	")
+			.append("	and payment_time >= sysdate-7	") ;
+			
+			pstmt = conn.prepareStatement(selectCalcPC7.toString()) ;
+			
+			// 4. bind 변수에 값 설정
+			// 없음
+			
+			// 5. 쿼리 수행 후 결과 얻기
+			rs = pstmt.executeQuery() ;
+			CalcPCVO cv = null ;
+			while( rs.next() ) {
+				cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), (rs.getInt("use_time"))*20) ;
+				list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
+			} // end while
+			
+		} finally {
+			// 6. 연결 끊기
+			if ( rs != null) { rs.close(); } // end if
+			if ( pstmt != null) { pstmt.close(); } // end if
+			if ( conn != null) { conn.close(); } // end if
+			
+		} // end finally
+		
+		return list ;
+	} // selectCalcPC7
+	
+	// 한 달 전 조회
+	public List<CalcPCVO> selectCalcPCLstMonth() throws SQLException {
+		List<CalcPCVO> list = new ArrayList<CalcPCVO>() ;
+		
+		Connection conn = null ;
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		
+		// 2. Connection 얻기
+		conn = getConnection() ;
+		
+		
+		try {
+			// 3. 쿼리문 생성 객체 얻기 
+			StringBuilder selectCalcPCLstMonth = new StringBuilder() ;
+			selectCalcPCLstMonth
+			.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time	")
+			.append("	from pc_use	pu, pc_payment pp	")
+			.append("	where pp.pc_use_code = pu.pc_use_code	")
+			.append("	and payment_time >= add_months(sysdate, -1)	") ;
+			
+			pstmt = conn.prepareStatement(selectCalcPCLstMonth.toString()) ;
+			
+			// 4. bind 변수에 값 설정
+			// 없음
+			
+			// 5. 쿼리 수행 후 결과 얻기
+			rs = pstmt.executeQuery() ;
+			CalcPCVO cv = null ;
+			while( rs.next() ) {
+				cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), (rs.getInt("use_time"))*20) ;
+				list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
+			} // end while
+			
+		} finally {
+			// 6. 연결 끊기
+			if ( rs != null) { rs.close(); } // end if
+			if ( pstmt != null) { pstmt.close(); } // end if
+			if ( conn != null) { conn.close(); } // end if
+			
+		} // end finally
+		
+		return list ;
+	} // selectCalcPCLstMonth
+	
+	
+	// 사용자 정의 조회
+
+	public List<CalcPCVO> selectCalcPCLstCustom(String startDate, String endDate) throws SQLException {
+		List<CalcPCVO> list = new ArrayList<CalcPCVO>() ;
+		
+		Connection conn = null ;
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		
+		// 2. Connection 얻기
+		conn = getConnection() ;
+		
+		
+		try {
+			// 3. 쿼리문 생성 객체 얻기 
+			StringBuilder selectCalcPCLstCustom = new StringBuilder() ;
+			selectCalcPCLstCustom
+			.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time	")
+			.append("	from pc_use	pu, pc_payment pp	")
+			.append("	where pp.pc_use_code = pu.pc_use_code	")
+			.append("		and to_date(?,'yyyy-mm-dd')<=payment_time and payment_time<= to_date(?,'yyyy-mm-dd')	") ;
+			
+			pstmt = conn.prepareStatement(selectCalcPCLstCustom.toString()) ;
+			
+			// 4. bind 변수에 값 설정
+			pstmt.setString(1, startDate);
+			pstmt.setString(2, endDate);
+			
+			// 5. 쿼리 수행 후 결과 얻기
+			rs = pstmt.executeQuery() ;
+			CalcPCVO cv = null ;
+			while( rs.next() ) {
+				cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), (rs.getInt("use_time"))*20) ;
+				list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
+			} // end while
+			
+		} finally {
+			// 6. 연결 끊기
+			if ( rs != null) { rs.close(); } // end if
+			if ( pstmt != null) { pstmt.close(); } // end if
+			if ( conn != null) { conn.close(); } // end if
+			
+		} // end finally
+		
+		return list ;
+	} // selectCalcPCLstCustom
+	
+} // class

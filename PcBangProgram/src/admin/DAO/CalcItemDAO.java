@@ -166,4 +166,146 @@ public class CalcItemDAO {
 		
 		return list ;
 	} // selectCalcItemRecipt
+	
+
+	public List<CalcItemVO> selectCalcItem7() throws SQLException {
+		List<CalcItemVO> list = new ArrayList<CalcItemVO>() ;
+		
+		Connection conn = null ;
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		
+		// 2. Connection 얻기
+		conn = getConnection() ;
+		
+
+		try {
+		// 3. 쿼리문 생성 객체 얻기 
+		StringBuilder selectCalcItem = new StringBuilder() ;
+		selectCalcItem
+		.append("	select io.order_code, pc_num, id, name, quantity, (price*quantity) total_price   ")
+		.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
+		.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
+		.append("	      and io.order_date >= sysdate-7 	")
+		.append("	      and payment_time is not null 	") ;
+		
+		
+		pstmt = conn.prepareStatement(selectCalcItem.toString()) ;
+		
+		// 4. bind 변수에 값 설정
+		// 없음
+		
+		// 5. 쿼리 수행 후 결과 얻기
+		rs = pstmt.executeQuery() ;
+		CalcItemVO cv = null ;
+		while( rs.next() ) {
+			cv = new CalcItemVO(rs.getString("order_code"), rs.getString("id"), rs.getString("name"), rs.getInt("pc_num"), rs.getInt("quantity"), rs.getInt("total_price")) ;
+			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
+		} // end while
+		
+		} finally {
+		// 6. 연결 끊기
+			if ( rs != null) { rs.close(); } // end if
+			if ( pstmt != null) { pstmt.close(); } // end if
+			if ( conn != null) { conn.close(); } // end if
+			
+		} // end finally
+				
+		return list ;
+	} // selectCalcItem
+	
+
+	public List<CalcItemVO> selectCalcItemLstMonth() throws SQLException {
+		List<CalcItemVO> list = new ArrayList<CalcItemVO>() ;
+		
+		Connection conn = null ;
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		
+		// 2. Connection 얻기
+		conn = getConnection() ;
+		
+
+		try {
+		// 3. 쿼리문 생성 객체 얻기
+		StringBuilder selectCalcItem = new StringBuilder() ;
+		selectCalcItem
+		.append("	select io.order_code, pc_num, id, name, quantity, (price*quantity) total_price   ")
+		.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
+		.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
+		.append("			and io.order_date >= add_months(sysdate, -1) 	") 
+		.append("			and payment_time is not null 	") ;
+		
+		
+		pstmt = conn.prepareStatement(selectCalcItem.toString()) ;
+		
+		// 4. bind 변수에 값 설정
+		// 없음
+		
+		// 5. 쿼리 수행 후 결과 얻기
+		rs = pstmt.executeQuery() ;
+		CalcItemVO cv = null ;
+		while( rs.next() ) {
+			cv = new CalcItemVO(rs.getString("order_code"), rs.getString("id"), rs.getString("name"), rs.getInt("pc_num"), rs.getInt("quantity"), rs.getInt("total_price")) ;
+			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
+		} // end while
+		
+		} finally {
+		// 6. 연결 끊기
+			if ( rs != null) { rs.close(); } // end if
+			if ( pstmt != null) { pstmt.close(); } // end if
+			if ( conn != null) { conn.close(); } // end if
+			
+		} // end finally
+				
+		return list ;
+	} // selectCalcItem
+	
+	
+	public List<CalcItemVO> selectCalcItemLstCustom(String startDate, String endDate) throws SQLException {
+		List<CalcItemVO> list = new ArrayList<CalcItemVO>() ;
+		
+		Connection conn = null ;
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		
+		// 2. Connection 얻기
+		conn = getConnection() ;
+		
+		try {
+			// 3. 쿼리문 생성 객체 얻기 
+			StringBuilder selectCalcItemLstCustom = new StringBuilder() ;
+			selectCalcItemLstCustom
+			.append("	select io.order_code, pc_num, id, name, quantity, (price*quantity) total_price   ")
+			.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
+			.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
+			.append("			and to_date(?,'yyyy-mm-dd')<=payment_time and payment_time<= to_date(?,'yyyy-mm-dd') 	") 
+			.append("			and payment_time is not null 	") ;
+			
+			pstmt = conn.prepareStatement(selectCalcItemLstCustom.toString()) ;
+			
+			// 4. bind 변수에 값 설정
+			pstmt.setString(1, startDate);
+			pstmt.setString(2, endDate);
+			
+			// 5. 쿼리 수행 후 결과 얻기
+			rs = pstmt.executeQuery() ;
+			CalcItemVO ciVO = null ;
+			while( rs.next() ) {
+				ciVO = new CalcItemVO(rs.getString("order_code"), rs.getString("id"), rs.getString("name"), rs.getInt("pc_num"), rs.getInt("quantity"), rs.getInt("total_price")) ;
+				list.add(ciVO) ;	// 조회된 레코드를 저장한 VO를 list에 추가
+			} // end while
+			
+		} finally {
+			// 6. 연결 끊기
+			if ( rs != null) { rs.close(); } // end if
+			if ( pstmt != null) { pstmt.close(); } // end if
+			if ( conn != null) { conn.close(); } // end if
+			
+		} // end finally
+		
+		return list ;
+	} // selectCalcPCLstCustom
+	
+	
 }
