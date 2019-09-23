@@ -4,6 +4,9 @@ import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
@@ -44,9 +47,16 @@ public class ProductAddViewEvt implements ActionListener{
 			}//end if
 			
 			//이미지를 미리보기 라베엘에 설정
-			File writeFile=new File("C:/dev"+file);
-			ImageResize.resizeImage(writeFile.getAbsolutePath(), 100, 80);
-			pav.getJlImgAdd().setIcon(new ImageIcon(path+file));
+			File writeFile=new File(path+file);
+			ImageResize.resizeImage(writeFile.getAbsolutePath(), 303, 321);
+			pav.getJlImgAdd().setIcon(new ImageIcon(path+"rs_"+file));
+			
+			try {
+				uploadImg();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 //			imgFlag=true;
 		}else{
 //			imgFlag=false;
@@ -54,6 +64,41 @@ public class ProductAddViewEvt implements ActionListener{
 		
 		
 	}//imgAdd
+	
+private void uploadImg() throws IOException{
+		
+		//선택한 이미지를 도시락의 이미지 폴더에 복사.
+		File readFile=new File(path+file);
+		
+		byte[] readData=new byte[512];
+		int len=0;
+		
+		FileOutputStream fos=null;
+		FileInputStream fis=null;
+		
+		try {
+		fis=new FileInputStream(readFile); //파일을 읽어 들여
+		
+		if(readFile.exists()) {
+			
+			File writeFile=new File("C:/Users/owner/git/prj2/PcBangProgram/src/image/"+readFile.getName());
+			fos=new FileOutputStream(writeFile); //관리자 이미지 폴더에 복사
+			
+			while((len=fis.read(readData))!=-1) {
+				fos.write(readData,0,len);  //읽어들인 만큼 출력 스트림에 기록
+			}//end while
+			fos.flush();
+			//이미지를 thumbnail image로 생성
+			ImageResize.resizeImage(writeFile.getAbsolutePath(), 303, 321);
+			
+		}//end if
+		
+		}finally {
+			if(fos!=null) {fos.close();}
+			if(fis!=null) {fis.close();}
+		}//end finally
+		
+	}//uploadImg
 
 	public void productAdd() {
 		String imgPath=path+file;
