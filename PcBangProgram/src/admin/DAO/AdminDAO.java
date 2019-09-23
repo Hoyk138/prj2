@@ -189,7 +189,8 @@ public class AdminDAO {
 			StringBuilder selectAllPC = new StringBuilder();
 			selectAllPC
 			.append("   select pc_num, ip_address, to_char(input_date,'yyyy\"년\" mm\"월\" dd\"일\" hh24:mi') input_date   ")
-			.append("   from pc   ");
+			.append("   from pc   ")
+			.append("   order by pc_num asc   ");
 
 			pstmt=con.prepareStatement(selectAllPC.toString());
 		//4. 바인드 변수에 값 넣기
