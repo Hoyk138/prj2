@@ -217,17 +217,17 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		DefaultListModel<String> choiceData=ui.getDlmOrderChoiceList();
 		int selectIndex=choice.getSelectedIndex(); //0행
 		
-		int cancelPrice=priceList.get(selectIndex); //0행
-		int total=Integer.parseInt(ui.getJtfTotalPrice().getText());
-		int setTotal=total-cancelPrice;
-		
 		if(selectIndex==-1) {
 			JOptionPane.showMessageDialog(ui, "취소할 상품을 선택해주세요.");
 			return;
 		}//end if
 		
+		int cancelPrice=priceList.get(selectIndex); //0행
+		int total=Integer.parseInt(ui.getJtfTotalPrice().getText());
+		int setTotal=total-cancelPrice;
+		
 		String choiceItem=choice.getSelectedValue();
-		String choiceName=choiceItem.substring(0,choiceItem.lastIndexOf("▷"));
+		String choiceName=choiceItem.substring(0,choiceItem.lastIndexOf("-"));
 		
 		switch(JOptionPane.showConfirmDialog(ui, choiceName+"을 취소하시겠습니까?")) {
 		case JOptionPane.OK_OPTION:
