@@ -49,22 +49,27 @@ public class UserRePassEvt implements ActionListener {
 
 		if(ae.getSource()==urp.getJbtnResetPass()) {
 //			String reId=urp.getJtfId().getText();
-			String reId=urp.getJtfId().getText();
-			String rePass=urp.getJpfPass().getText();
+			String reId=urp.getJlblId2().getText();
+			String rePass=new String(urp.getJpfPass().getPassword());
+			String rePassConfirm=new String(urp.getJpfConfirm().getPassword());
 			String cipherPass="";
 			
-				try {
-					DataEncrypt de=new DataEncrypt("1111111111111111");
-					cipherPass=de.encryption(rePass);
-				} catch (UnsupportedEncodingException uee) {
-					uee.printStackTrace();
-				} catch (NoSuchAlgorithmException nsae) {
-					nsae.printStackTrace();
-				} catch (GeneralSecurityException gse) {
-					gse.printStackTrace();
-				} // end catch
+			try {
+				DataEncrypt de=new DataEncrypt("1111111111111111");
+				cipherPass=de.encryption(rePass);
+			} catch (UnsupportedEncodingException uee) {
+				uee.printStackTrace();
+			} catch (NoSuchAlgorithmException nsae) {
+				nsae.printStackTrace();
+			} catch (GeneralSecurityException gse) {
+				gse.printStackTrace();
+			} // end catch
 			
-			
+			if(!rePass.equals(rePassConfirm)) {
+				JOptionPane.showMessageDialog(urp, "비밀번호 확인이 일치하지 않습니다");
+				return;
+			}//end if
+				
 			//입력받은 아이디와 비밀번호를 VO에 저장
 			UserRePassVO urpVO=new UserRePassVO(reId, cipherPass);
 			//DB를 조회하기 위해 DAO객체를 얻기
@@ -77,11 +82,11 @@ public class UserRePassEvt implements ActionListener {
 					JOptionPane.showMessageDialog(urp, "비밀번호 변경되었습니다");
 					urp.dispose();
 				}else {
-					urp.getJtfId().setText("");
+//					urp.getJlblId2().setText("");
 					urp.getJpfPass().setText("");
 					urp.getJpfConfirm().setText("");
 					JOptionPane.showMessageDialog(urp, "비밀번호 변경에 실패하였습니다.");
-					urp.getJtfId().requestFocus();
+					urp.getJpfPass().requestFocus();
 				}//end else
 				
 			} catch (SQLException e) {
@@ -91,6 +96,7 @@ public class UserRePassEvt implements ActionListener {
 	
 			}//end if
 		
+
 		
 		}//actionPerformed
 		
