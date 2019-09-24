@@ -15,47 +15,13 @@ public class FindIdEvt implements ActionListener {
 	private FindId fi;
 	
 	public FindIdEvt (FindId fi) {
-		
 		this.fi=fi;
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource()==fi.getJtfName()) { //이름 입력받기
-			if(!fi.getJtfName().getText().equals("")) { //이름이 비어있는지 판단
-				
-				fi.getJtfPhone2().requestFocus(); //값이 존재한다면 커서를 전화번호중간자리로 이동
-			}//end if
-		}//end if
+	private void findId() {
 		
-		if(ae.getSource()==fi.getJcbNum()) {
-			fi.getJtfPhone2().requestFocus();
-		}
-		
-		if(ae.getSource()==fi.getJtfPhone2()) {
-			if(!fi.getJtfPhone2().getText().equals("")) {
-//				if(fi.getJtfPhone2().getText().length()==4) {  ???숫자4자리까지만 입력받게 만들기 제한해야되는데 이거아닌듯
-//					
-//				}
-					
-				fi.getJtfPhone3().requestFocus();
-			}//end if
-		}
-		
-		if(ae.getSource()==fi.getJtfPhone3()) {
-			if(!fi.getJtfPhone2().getText().equals("")) {
-				
-//				if(fi.getJtfPhone3().getText().length()==4) {  ???숫자4자리까지만 입력받게 만들기  제한해야되는데 이거아닌듯
-//				
-//			}
-				
-				fi.getJbtnFindID().requestFocus();
-			}//end if
-		}
-		
-		if(ae.getSource()==fi.getJbtnFindID()) {
-			if(!fi.getJtfName().getText().equals("") && !fi.getJtfPhone2().getText().equals("") && !fi.getJtfPhone3().getText().equals("")) {
-				
+		if(!fi.getJtfName().getText().equals("") && !fi.getJtfPhone2().getText().equals("") && !fi.getJtfPhone3().getText().equals("")) {
+			
 			String idName=fi.getJtfName().getText();
 			StringBuilder sb=new StringBuilder();
 			sb.append(fi.getJcbNum().getSelectedItem()).append(fi.getJtfPhone2().getText()).append(fi.getJtfPhone3().getText());
@@ -88,14 +54,40 @@ public class FindIdEvt implements ActionListener {
 			}//catch
 			}else {
 				JOptionPane.showMessageDialog(fi, "정보를 모두 입력해주세요");  
-			}
-			
+			}//end else
+		
+	}//findId
+	
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		if (ae.getSource()==fi.getJtfName()) { //이름 입력받기
+			if(!fi.getJtfName().getText().equals("")) { //이름이 비어있는지 판단
+				fi.getJtfPhone2().requestFocus(); //값이 존재한다면 커서를 전화번호중간자리로 이동
+			}//end if
 		}//end if
 		
+		if(ae.getSource()==fi.getJcbNum()) {
+			fi.getJtfPhone2().requestFocus();
+		}//end if
 		
+		if(ae.getSource()==fi.getJtfPhone2()) {
+			if(!fi.getJtfPhone2().getText().equals("")) {
+
+					
+				fi.getJtfPhone3().requestFocus();
+			}//end if
+		}//end if
+		
+		if(ae.getSource()==fi.getJtfPhone3()) {
+			if(!fi.getJtfPhone2().getText().equals("")) {
+				fi.getJbtnFindID().requestFocus();
+			}//end if
+		}//end if
+		
+		if(ae.getSource()==fi.getJbtnFindID()) {
+			findId();
+		}//end if
 		
 	}//actionPerformed
-	
-
 	
 }//class

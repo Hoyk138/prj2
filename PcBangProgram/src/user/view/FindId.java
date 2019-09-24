@@ -18,8 +18,8 @@ public class FindId extends JDialog {
 	private JTextField jtfName, jtfPhone1, jtfPhone2, jtfPhone3;
 	private JButton jbtnFindID;
 	
-	public FindId(/* UserLogin ul */) {   //////////
-//		super("ID 찾기");
+	public FindId(UserLogin ul) {  
+		super(ul,"ID 찾기",true);
 		
 		dcbmNum=new DefaultComboBoxModel<String>(new String[] {"010","011","016","017","018","019"});
 		jcbNum=new JComboBox<String>(dcbmNum);

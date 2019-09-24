@@ -39,8 +39,8 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 					JOptionPane.showMessageDialog(uj, "사용가능한 아이디 입니다");
 					uj.getJpfPass().requestFocus(); 
 				}else {
-					JOptionPane.showMessageDialog(uj, "이미 존재하는 아이디 입니다");
 					uj.getJtfId().setText("");
+					JOptionPane.showMessageDialog(uj, "이미 존재하는 아이디 입니다");
 					uj.getJtfId().requestFocus(); //?
 				}//end else
 			}else {
@@ -54,43 +54,6 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 		}//end catch
 		
 	}//confirmId
-	
-	
-//	private void confirmPhone() {
-//
-//	
-//	
-//	StringBuilder sbNum=new StringBuilder();
-//	sbNum.append(uj.getJcbNum().getSelectedItem()).append(uj.getJtfPhone2().getText()).append(uj.getJtfPhone3().getText());
-//	String joinPhone=sbNum.toString();
-//	String temp="";
-//	
-//	UserDAO uDAO=UserDAO.getInstance();
-//	
-//		try {
-//			temp=uDAO.overlapPhone(joinPhone);
-//			
-//			if(!joinPhone.equals("")) {
-//				if(temp.isEmpty()) {
-////					JOptionPane.showMessageDialog(uj, "사용가능한 아이디 입니다");
-//					uj.getJpfPass().requestFocus(); 
-//				}else {
-//					JOptionPane.showMessageDialog(uj, "이미 회원가입된 전화번호 입니다");
-//					uj.getJtfId().setText("");
-//				}//end else
-//			}else {
-//				JOptionPane.showMessageDialog(uj, "전화번호를 입력해주세요");
-//				uj.getJtfId().requestFocus();
-//			}//end else
-//	
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			
-//		}//end catch
-//		
-//	}//confirmPhone
-	
-	
 	
 	private void addMember() {
 		
@@ -146,8 +109,6 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 								if(temp2.isEmpty()) {
 //									JOptionPane.showMessageDialog(uj, "사용가능한 아이디 입니다");
 					
-					
-					
 						try {
 								
 							uDAO.insertMember(ujVO);
@@ -166,12 +127,8 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 		//					uj.getJtfPhone3().setText("");
 		//					uj.getJcbQuestion().setSelectedIndex(0);
 		//					uj.getJtfAnswer().setText("");
-							
-//							uj.getJtfPhone2().setText("");
-//							uj.getJtfPhone3().setText("");
-//							JOptionPane.showMessageDialog(uj, "이미 가입된 전화번호 입니다.");
 							JOptionPane.showMessageDialog(uj, "회원가입에 실패했습니다.");
-//							uj.getJtfPhone2().requestFocus();
+							
 					}//end catch
 						
 								}else {
@@ -252,8 +209,6 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 			uj.getJtfPhone2().requestFocus();
 		}//end if
 
-		
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if(ae.getSource()==uj.getJtfPhone2()) {
 			if(!uj.getJtfPhone2().getText().equals("")) {   
 				uj.getJtfPhone3().requestFocus();
@@ -265,7 +220,6 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 				uj.getJcbQuestion().requestFocus();
 			}//end if
 		}//end if
-////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		if(ae.getSource()==uj.getJcbQuestion()) {
 			uj.getJtfAnswer().requestFocus();
@@ -284,12 +238,10 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 			}else{
 				addMember();
 			}//end else
-			
 		}//end if
 
 }//actionPerformed
 	
-
 	@Override
 	public void focusGained(FocusEvent fe) {
 		
@@ -297,13 +249,29 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 
 	@Override
 	public void focusLost(FocusEvent fe) {
+		
 
 		if (fe.getSource() == uj.getJtfPhone2()) {
+			
 			if (!uj.getJtfPhone2().getText().equals("")) {
+				
 				if (uj.getJtfPhone2().getText().length() == 3 || uj.getJtfPhone2().getText().length() == 4) {
+					
+					try {
+						Integer.parseInt(uj.getJtfPhone2().getText());
+						
+					}catch(NumberFormatException nfe) {
+						uj.getJtfPhone2().setText("");
+						JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
+						uj.getJtfPhone2().requestFocus();
+						return;
+					}//end catch
+					
 					uj.getJtfPhone3().requestFocus();
+					
 				} else {
-					JOptionPane.showMessageDialog(uj, "올바른 전화번호를 입력해주세요");
+					uj.getJtfPhone2().setText("");
+					JOptionPane.showMessageDialog(uj, "3자리혹은 4자리 번호를 입력해주세요");
 					uj.getJtfPhone2().requestFocus();
 					return;
 				} // end else
@@ -313,9 +281,21 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 		if (fe.getSource() == uj.getJtfPhone3()) {
 			if (!uj.getJtfPhone3().getText().equals("")) {
 				if (uj.getJtfPhone3().getText().length() == 4) {
+					
+					try {
+						Integer.parseInt(uj.getJtfPhone3().getText());
+						
+					}catch(NumberFormatException nfe) {
+						uj.getJtfPhone3().setText("");
+						JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
+						uj.getJtfPhone3().requestFocus();
+						return;
+					}//end catch
+//					uj.getJtfAnswer().requestFocus();
 					uj.getJcbQuestion().requestFocus();
 				} else {
-					JOptionPane.showMessageDialog(uj, "올바른 전화번호를 입력해주세요");
+					uj.getJtfPhone3().setText("");
+					JOptionPane.showMessageDialog(uj, "4자리 번호를 입력해주세요");
 					uj.getJtfPhone3().requestFocus();
 					return;
 				} // end else
@@ -323,6 +303,8 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 		} // end if
 
 	}//focusLost
+	
+	
 	
 	
 }//class

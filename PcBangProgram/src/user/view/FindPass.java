@@ -18,8 +18,8 @@ public class FindPass extends JDialog {
 	private JTextField jtfId, jtfAnswer ;
 	private JButton jbtnFindPass;
 	
-	public FindPass() {
-//		super("PW 찾기");
+	public FindPass(UserLogin ul) {
+		super(ul,"PW 찾기",true);
 		
 		dcbmQuestion=new DefaultComboBoxModel<String>(new String[] 
 				{"자신의 보물 제1호는?","자신의 인생 좌우명은?","유년시절 가장 생각나는 친구 이름은?",

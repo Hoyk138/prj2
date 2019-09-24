@@ -28,19 +28,17 @@ public class UserLoginEvt implements ActionListener{
 	
 	}//UserLoginEvt
 	
-	
 	public void userJoin() {
-		new UserJoin();
+		new UserJoin(ul);
 	}
 	
 	public void findId() {
-		new FindId();
+		new FindId(ul);
 	}
 	
 	public void findPass() {
-		new FindPass();
+		new FindPass(ul);
 	}
-	
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -53,29 +51,25 @@ public class UserLoginEvt implements ActionListener{
 
 		if (ae.getSource() == ul.getJpfPass()  || ae.getSource()==ul.getJbtnLogin()) { //비밀번호
 			
-			if (ul.getJtfId().getText().equals("") && ul.getJpfPass().getText().equals("")) { ////////////getText()되긴하는데..바꿔야하는지..?/////
+			if (ul.getJtfId().getText().equals("") && ul.getJpfPass().getPassword().equals("")) { 
 				
-//				ul.getJtfId().setText(""); //아이디 초기화
-//				ul.getJpfPass().setText(""); //비밀번호 초기화
-				JOptionPane.showMessageDialog(ul, "아이디 비밀번호를 모두 입력해주세요");   //말바꾸기
+				JOptionPane.showMessageDialog(ul, "아이디와 비밀번호를 모두 입력해주세요");  
 				ul.getJtfId().requestFocus(); //커서를 아이디에 위치
 				
-			}else if(!ul.getJtfId().getText().equals("") && ul.getJpfPass().getText().equals("")) {
+			}else if(!ul.getJtfId().getText().equals("") && ul.getJpfPass().getPassword().equals("")) {
 				
 				ul.getJpfPass().setText(""); //비밀번호 초기화
-				JOptionPane.showMessageDialog(ul, "비밀번호를 입력해주세요");   //말바꾸기
+				JOptionPane.showMessageDialog(ul, "비밀번호를 입력해주세요");  
 				ul.getJpfPass().requestFocus(); //커서를 비밀번호 위치
 				
-
-			}else if(ul.getJtfId().getText().equals("") && !ul.getJpfPass().getText().equals("")) {
+			}else if(ul.getJtfId().getText().equals("") && !ul.getJpfPass().getPassword().equals("")) {
 				ul.getJtfId().setText(""); //아이디 초기화
 				ul.getJpfPass().setText(""); //비밀번호 초기화
-				JOptionPane.showMessageDialog(ul, "아이디를 입력해주세요");   //말바꾸기
+				JOptionPane.showMessageDialog(ul, "아이디를 입력해주세요");  
 				ul.getJtfId().requestFocus(); //커서를 아이디에 위치
 				
 			}else {
 				
-			
 				//입력한 비밀번호 가져오기
 				String inputPass=new String (ul.getJpfPass().getPassword()); //비번얻기 PlainText(평문) 
 				String inputId=ul.getJtfId().getText(); // 아이디얻기
@@ -92,44 +86,44 @@ public class UserLoginEvt implements ActionListener{
 						gse.printStackTrace();
 					} // end catch
 		
-					//입력받은 아이디와 비밀번호를 VO에 저장
-					UserLoginVO ulVO = new UserLoginVO(inputId, cipherPass);
-					//DB를 조회하기 위해 DAO객체를 얻기
-					UserDAO uDAO=UserDAO.getInstance(); 
-					try {
-						String name = uDAO.selectLogin(ulVO);
+				//입력받은 아이디와 비밀번호를 VO에 저장
+				UserLoginVO ulVO = new UserLoginVO(inputId, cipherPass);
+				//DB를 조회하기 위해 DAO객체를 얻기
+				UserDAO uDAO=UserDAO.getInstance(); 
+				try {
+					String name = uDAO.selectLogin(ulVO);
 		
-							if( !name.isEmpty() ) { //입력된 아이디와 비밀번호에 일치하는 정보가 있다면
-								new UserMain(ul.getJtfId().getText());
-								ul.dispose();
-							}else {
-								ul.getJtfId().setText(""); //아이디 초기화
-								ul.getJpfPass().setText(""); //비밀번호 초기화
-								JOptionPane.showMessageDialog(ul, "일치하는 회원정보가 없습니다");   ///멘트바꾸기
-								ul.getJtfId().requestFocus(); //커서를 아이디에 위치
-							}//end else
+						if( !name.isEmpty() ) { //입력된 아이디와 비밀번호에 일치하는 정보가 있다면
+							
+							//if else 
+							
+							new UserMain(ul.getJtfId().getText());
+							ul.dispose();
+						}else {
+//							ul.getJtfId().setText(""); //아이디 초기화
+							ul.getJpfPass().setText(""); //비밀번호 초기화
+							JOptionPane.showMessageDialog(ul, "아이디나 비밀번호를 확인해주세요");   
+						}//end else
 						
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}//end catch		
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}//end catch		
 				
 			}//end else 
 	
-			
 		}//end if
 		
 		if(ae.getSource()==ul.getJbtnJoin()) {
 			userJoin();  
-			
-		}
+		}//end if
 			
 		if(ae.getSource()==ul.getJbtnID()) {
 			findId();
-		}
+		}//end if
 
 		if(ae.getSource()==ul.getJbtnPass()) {
 			findPass();
-		}
+		}//end if
 		
 	}//actionPerformed
 

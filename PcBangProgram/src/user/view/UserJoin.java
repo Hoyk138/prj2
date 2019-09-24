@@ -20,8 +20,8 @@ public class UserJoin extends JDialog {
 	private JPasswordField jpfPass, jpfPassComfirm;
 	private JButton jbtnOverlap, jbtnJoin;
 	
-	public UserJoin() {
-//		super("회원가입");
+	public UserJoin(UserLogin ul) {
+		super(ul,"회원가입",true);
 		
 		dcbmNum=new DefaultComboBoxModel<String>(new String[] {"010","011","016","017","018","019"});
 		jcbNum=new JComboBox<String>(dcbmNum);
