@@ -169,7 +169,7 @@ public class UserDAO { //singleton pattern
 			.append("		select pu.pc_use_code, id, pc_num, login_time, payment_time	")   
 			.append("		from pc_payment pp, pc_use pu										")
 			.append("		where (pp.pc_use_code(+)= pu.pc_use_code) and id = ?			")
-			.append("		order by pu.pc_use_code;												");
+			.append("		order by pu.pc_use_code											");
 			
 			pstmt=con.prepareStatement(checkLogin.toString());
 			
