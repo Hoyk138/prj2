@@ -139,7 +139,7 @@ public class CalcItemDAO {
 			.append("	select i.name item_name, io.quantity quantity, (i.price*io.quantity) orderedPrice, i.price price, io.order_date order_date, payment_time	")
 			.append("	from item_payment ip, item_order io, item i	") 
 			.append("	where (ip.order_code=io.order_code)and(io.item_code=i.item_code)	")			
-			.append("	      and to_char(io.order_date, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')	")		
+			.append("	      and to_char(ip.payment_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')	")		
 			.append("	      and payment_time is not null   ");		
 			pstmt = conn.prepareStatement(selectCalcItemRecipt.toString()) ;
 			
@@ -186,7 +186,7 @@ public class CalcItemDAO {
 		.append("	select io.order_code, pc_num, id, name, quantity, (price*quantity) total_price   ")
 		.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
 		.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
-		.append("	      and io.order_date >= sysdate-7 	")
+		.append("	      and ip.payment_time >= sysdate-7 	")
 		.append("	      and payment_time is not null 	") ;
 		
 		
@@ -233,7 +233,7 @@ public class CalcItemDAO {
 		.append("	select io.order_code, pc_num, id, name, quantity, (price*quantity) total_price   ")
 		.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
 		.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
-		.append("			and io.order_date >= add_months(sysdate, -1) 	") 
+		.append("			and ip.payment_time >= add_months(sysdate, -1) 	") 
 		.append("			and payment_time is not null 	") ;
 		
 		
