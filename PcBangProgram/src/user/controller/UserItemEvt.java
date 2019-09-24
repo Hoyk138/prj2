@@ -205,6 +205,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 	 * 검색한 상품 상세보기
 	 */
 	public void searchDetail() {
+		
 		JList<String> list=ui.getJlSearchList();
 		int selectIndex=list.getSelectedIndex();
 		
@@ -218,7 +219,9 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			new UserItemDetail(ui, this, uidVO);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}//end catch
+		} catch(NullPointerException ne) {
+			ne.printStackTrace();
+		}
 		
 		
 	}//searchDetail
@@ -266,6 +269,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			try {
 				uDAO.insertOrder(itemOrderList);
 			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(ui, "주문이 처리되지 않았습니다.");
 				e.printStackTrace();
 			}//end catch
 			
@@ -295,8 +299,13 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		if(ae.getSource()==ui.getJbtSearchDetail()) { //검색된 상품 상세보기 버튼
 			JList<String> listDetail=ui.getJlSearchList();
 			int detailIndex=listDetail.getSelectedIndex();
+			String search=ui.getJtfSearch().getText();
+			if(search.isEmpty()) {
+				JOptionPane.showMessageDialog(ui, "검색하신 상품이 없습니다.\n상품을 선택해주세요.");
+				return;
+			}//end if
 			if(detailIndex==-1) {
-				JOptionPane.showMessageDialog(ui, "검색하신 상품을 선택해주세요.");
+				JOptionPane.showMessageDialog(ui, "검색하신 상품이 없습니다.\n(상품을 검색하시거나 선택해주세요)");
 				return;
 			}//end if
 			searchDetail();
@@ -307,10 +316,14 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		}//end if
 		
 		if(ae.getSource()==ui.getJbtOrder()) { //주문 버튼
-			switch(JOptionPane.showConfirmDialog(ui, "선택하신 상품을 주문하시겠습니까?")) {
-			case JOptionPane.OK_OPTION:
-				setOrder();
-			}//end switch
+			if(!ui.getDlmOrderChoiceList().isEmpty()) {
+				switch(JOptionPane.showConfirmDialog(ui, "선택하신 상품을 주문하시겠습니까?")) {
+				case JOptionPane.OK_OPTION:
+					setOrder();
+				}//end switch
+			}else {
+				JOptionPane.showMessageDialog(ui, "주문할 상품이 없습니다.");
+			}//end else
 		}//end if
 		
 		

@@ -138,10 +138,7 @@ public class UserItemDetailEvt implements ActionListener {
 		}//end if
 		
 		if(ae.getSource()==uid.getJbtClose()) { //닫기 버튼
-			switch(JOptionPane.showConfirmDialog(uid, "창을 닫으시겠습니까?")) {
-			case JOptionPane.OK_OPTION:
-				close();
-			}//end switch
+			close();
 		}//end if
 		
 	}//actionPerformed	

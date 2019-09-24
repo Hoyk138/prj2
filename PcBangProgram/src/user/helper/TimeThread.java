@@ -35,11 +35,8 @@ public class TimeThread extends Thread{
 			
 			jlUseTime.setText(time);
 			
-			System.out.println(time);
-			
 			try {
 				Thread.sleep(60000);
-//				priceThread.sleep(300*1000); //5분마다 가격 증가
 				
 			} catch (InterruptedException e) {
 				e.printStackTrace();

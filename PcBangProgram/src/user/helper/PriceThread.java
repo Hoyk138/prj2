@@ -24,7 +24,6 @@ public class PriceThread extends Thread{
 			//사용금액 thread
 			
 			jlUsePrice.setText(String.valueOf(price)+"원");
-			System.out.println(price);
 			try {
 				Thread.sleep(300*1000); //5분마다 가격 증가
 			} catch (InterruptedException e) {
