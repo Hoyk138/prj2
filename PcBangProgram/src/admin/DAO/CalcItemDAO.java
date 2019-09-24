@@ -84,7 +84,7 @@ public class CalcItemDAO {
 		.append("	select io.order_code, pc_num, id, name, quantity, (price*quantity) total_price   ")
 		.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
 		.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
-		.append("	      and to_char(io.order_date, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd') 	")
+		.append("	      and to_char(ip.payment_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd') 	")
 		.append("	      and payment_time is not null 	") ;
 		
 		
