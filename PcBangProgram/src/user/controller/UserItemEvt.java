@@ -274,6 +274,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 				e.printStackTrace();
 			}//end catch
 			
+			ui.getDlmOrderChoiceList().removeAllElements();
 		
 	}//setOrder
 	
