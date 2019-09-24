@@ -21,11 +21,11 @@ public class FindPassEvt implements ActionListener {
 	
 	private void findPass() {
 		
-		String pwId=fp.getJtfId().getText();
+		String pwId=fp.getJtfId().getText().trim();
 		StringBuilder sb=new StringBuilder();
 		sb.append(fp.getJcbQuestion().getSelectedItem());
 		String pwAnswer=sb.toString();
-		String pwQuestion=fp.getJtfAnswer().getText();
+		String pwQuestion=fp.getJtfAnswer().getText().trim();
 		
 		//입력받은 아이디와 비밀번호확인질문, 답을 VO에 저장
 		FindPassVO fpVO=new FindPassVO(pwId, pwAnswer, pwQuestion );

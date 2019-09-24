@@ -26,9 +26,9 @@ public class UserRePassEvt implements ActionListener {
 	
 	private void resetPass() {
 		
-		String reId=urp.getJlblId2().getText();
-		String rePass=new String(urp.getJpfPass().getPassword());
-		String rePassConfirm=new String(urp.getJpfConfirm().getPassword());
+		String reId=urp.getJlblId2().getText().trim();
+		String rePass=new String(urp.getJpfPass().getPassword()).trim();
+		String rePassConfirm=new String(urp.getJpfConfirm().getPassword()).trim();
 		String cipherPass="";
 		
 		try {

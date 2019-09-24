@@ -22,9 +22,9 @@ public class FindIdEvt implements ActionListener {
 		
 		if(!fi.getJtfName().getText().equals("") && !fi.getJtfPhone2().getText().equals("") && !fi.getJtfPhone3().getText().equals("")) {
 			
-			String idName=fi.getJtfName().getText();
+			String idName=fi.getJtfName().getText().trim();
 			StringBuilder sb=new StringBuilder();
-			sb.append(fi.getJcbNum().getSelectedItem()).append(fi.getJtfPhone2().getText()).append(fi.getJtfPhone3().getText());
+			sb.append(fi.getJcbNum().getSelectedItem()).append(fi.getJtfPhone2().getText().trim()).append(fi.getJtfPhone3().getText().trim());
 			String idPhone=sb.toString();
 			
 			//입력받은 이름과 전화번호를 VO에 저장

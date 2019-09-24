@@ -40,6 +40,29 @@ public class UserLoginEvt implements ActionListener{
 		new FindPass(ul);
 	}
 	
+	private void checkLogin() {
+		
+		String checkLoginId=ul.getJtfId().getText().trim();
+		String temp="";
+		
+		UserDAO uDAO=UserDAO.getInstance();
+		
+			try {
+				temp=uDAO.checkLogin(checkLoginId);
+				
+					if(temp.isEmpty()) {
+						JOptionPane.showMessageDialog(ul, "이미 사용중인 아이디 입니다");
+						ul.getJtfId().requestFocus(); 
+					}
+		
+			} catch (SQLException e) {
+				e.printStackTrace();
+				
+			}//end catch
+		
+		
+	}//checkLogin
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		
@@ -50,6 +73,8 @@ public class UserLoginEvt implements ActionListener{
 		}//end if
 
 		if (ae.getSource() == ul.getJpfPass()  || ae.getSource()==ul.getJbtnLogin()) { //비밀번호
+			
+			checkLogin();
 			
 			if (ul.getJtfId().getText().equals("") && ul.getJpfPass().getPassword().equals("")) { 
 				
@@ -71,8 +96,8 @@ public class UserLoginEvt implements ActionListener{
 			}else {
 				
 				//입력한 비밀번호 가져오기
-				String inputPass=new String (ul.getJpfPass().getPassword()); //비번얻기 PlainText(평문) 
-				String inputId=ul.getJtfId().getText(); // 아이디얻기
+				String inputPass=new String (ul.getJpfPass().getPassword()).trim(); //비번얻기 PlainText(평문) 
+				String inputId=ul.getJtfId().getText().trim(); // 아이디얻기
 				String cipherPass="";
 				
 					try {
@@ -97,7 +122,7 @@ public class UserLoginEvt implements ActionListener{
 							
 							//if else 
 							
-							new UserMain(ul.getJtfId().getText());
+							new UserMain(ul.getJtfId().getText().trim());
 							ul.dispose();
 						}else {
 //							ul.getJtfId().setText(""); //아이디 초기화

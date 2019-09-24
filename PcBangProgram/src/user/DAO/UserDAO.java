@@ -107,6 +107,101 @@ public class UserDAO { //singleton pattern
 		return userName;
 	}//selectLogin
 	
+	
+//	/**
+//	 * 로그인중인 아이디 걸러내기~~
+//	 * @param id
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public boolean checkLogin(UserLoginVO ulVO) throws SQLException { 
+//		boolean checkFlag=false;
+//		Connection con=null;
+//		PreparedStatement pstmt=null;
+//		ResultSet rs=null;
+//		
+//		try {
+//		//2. 커넥션 얻기
+//			con=getConn();
+//		//3. 쿼리문 생성객체 얻기
+//			StringBuilder checkLogin=new StringBuilder();
+//			checkLogin
+//			.append("		select pu.pc_use_code, id, pc_num, login_time, payment_time	")   
+//			.append("		from pc_payment pp, pc_use pu										")
+//			.append("		where (pp.pc_use_code(+)= pu.pc_use_code) and id = ?			")
+//			.append("		order by pu.pc_use_code;												");
+//			
+//			pstmt=con.prepareStatement(checkLogin.toString());
+//			
+//		//4. 바인드 변수에 값 넣기
+//			pstmt.setString(1, ulVO.getId());
+//		//5. 쿼리 실행 후 결과 얻기
+//			checkFlag=pstmt.executeUpdate()==1; //1과 같으면 true;
+//			
+//		}finally {
+//		//6. 연결끊기
+//			if ( rs != null ) { rs.close(); } //end if
+//			if ( pstmt != null ) { pstmt.close(); } //end if
+//			if ( con != null ) { con.close(); } //end if
+//		}//end finally
+//		return checkFlag;  
+//	}//selectPass
+	
+	
+	/**
+	 * 로그인시 입력받은 아이디로 pc_payment, pc_use 테이블에서 해당 아이디를 사용중인지 확인하여 반환하는 일
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public String checkLogin(String id) throws SQLException { 
+		String userId="";
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConn();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder checkLogin=new StringBuilder();
+			checkLogin
+			.append("		select pu.pc_use_code, id, pc_num, login_time, payment_time	")   
+			.append("		from pc_payment pp, pc_use pu										")
+			.append("		where (pp.pc_use_code(+)= pu.pc_use_code) and id = ?			")
+			.append("		order by pu.pc_use_code;												");
+			
+			pstmt=con.prepareStatement(checkLogin.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setString(1, id);
+		//5. 쿼리 실행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userId=rs.getString("id");
+			}//end if
+			
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return userId;
+	}//overlapId
+	
+	
+	
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	
+	
 	/**
 	 * 이름과 전화번호를 입력받아 member 테이블에서 일치하는 아이디를 찾아 반환하는 일
 	 * 
@@ -357,14 +452,7 @@ public class UserDAO { //singleton pattern
 	}//overlapId
 	
 	
-	
-
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-	
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	////////////////////////소현///////////////////////////////////////////////////////////////////////////////////////////////////////////

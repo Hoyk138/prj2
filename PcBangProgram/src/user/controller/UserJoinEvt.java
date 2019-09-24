@@ -26,7 +26,7 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 	
 	private void confirmId() {
 
-	String joinId=uj.getJtfId().getText();
+	String joinId=uj.getJtfId().getText().trim();
 	String temp="";
 	
 	UserDAO uDAO=UserDAO.getInstance();
@@ -41,7 +41,7 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 				}else {
 					uj.getJtfId().setText("");
 					JOptionPane.showMessageDialog(uj, "이미 존재하는 아이디 입니다");
-					uj.getJtfId().requestFocus(); //?
+					uj.getJtfId().requestFocus(); 
 				}//end else
 			}else {
 				JOptionPane.showMessageDialog(uj, "아이디를 입력해주세요");
@@ -57,9 +57,9 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 	
 	private void addMember() {
 		
-		String joinId=uj.getJtfId().getText();
-		String joinPw= new String(uj.getJpfPass().getPassword());
-		String joinPwConfirm= new String(uj.getJpfPassComfirm().getPassword());
+		String joinId=uj.getJtfId().getText().trim();
+		String joinPw= new String(uj.getJpfPass().getPassword()).trim();
+		String joinPwConfirm= new String(uj.getJpfPassComfirm().getPassword()).trim();
 		String cipherPass="";
 		
 			try {
@@ -74,16 +74,16 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 			} // end catch
 			
 		
-		String joinName=uj.getJtfName().getText();
+		String joinName=uj.getJtfName().getText().trim();
 			StringBuilder sbNum=new StringBuilder();
-			sbNum.append(uj.getJcbNum().getSelectedItem()).append(uj.getJtfPhone2().getText()).append(uj.getJtfPhone3().getText());
-		String num2=uj.getJtfPhone2().getText();
-		String num3=uj.getJtfPhone3().getText();
+			sbNum.append(uj.getJcbNum().getSelectedItem()).append(uj.getJtfPhone2().getText().trim()).append(uj.getJtfPhone3().getText().trim());
+		String num2=uj.getJtfPhone2().getText().trim();
+		String num3=uj.getJtfPhone3().getText().trim();
 		String joinPhone=sbNum.toString();
 			StringBuilder sbQuestion=new StringBuilder();
 			sbQuestion.append(uj.getJcbQuestion().getSelectedItem());
 		String joinQuestion=sbQuestion.toString();
-		String joinAnswer=uj.getJtfAnswer().getText();
+		String joinAnswer=uj.getJtfAnswer().getText().trim();
 		String temp2="";
 		
 			if (!joinId.equals("") && !cipherPass.equals("") && !joinPwConfirm.equals("")  && !joinName.equals("") && !num2.equals("")&& !num3.equals("") && !joinQuestion.equals("") && !joinAnswer.equals("")) {
@@ -156,7 +156,7 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 	public void actionPerformed(ActionEvent ae) {
 		
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		String inputId=new String(uj.getJtfId().getText());
+		String inputId=new String(uj.getJtfId().getText().trim());
 		if (this.inputId.isEmpty()) {
 			this.inputId=inputId;
 		}else {
@@ -167,8 +167,8 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 		}//end else
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		String pass=new String(uj.getJpfPass().getPassword());
-		String confirm=new String(uj.getJpfPassComfirm().getPassword());
+		String pass=new String(uj.getJpfPass().getPassword()).trim();
+		String confirm=new String(uj.getJpfPassComfirm().getPassword()).trim();
 	
 		
 		if (ae.getSource()==uj.getJtfId()) { //ID 입력받기
@@ -258,7 +258,7 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 				if (uj.getJtfPhone2().getText().length() == 3 || uj.getJtfPhone2().getText().length() == 4) {
 					
 					try {
-						Integer.parseInt(uj.getJtfPhone2().getText());
+						Integer.parseInt(uj.getJtfPhone2().getText().trim());
 						
 					}catch(NumberFormatException nfe) {
 						uj.getJtfPhone2().setText("");
@@ -283,7 +283,7 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 				if (uj.getJtfPhone3().getText().length() == 4) {
 					
 					try {
-						Integer.parseInt(uj.getJtfPhone3().getText());
+						Integer.parseInt(uj.getJtfPhone3().getText().trim());
 						
 					}catch(NumberFormatException nfe) {
 						uj.getJtfPhone3().setText("");
