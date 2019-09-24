@@ -2,17 +2,25 @@ package user.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
+import user.DAO.UserDAO;
 import user.VO.UserOrderVO;
 import user.view.UserItem;
 import user.view.UserItemDetail;
+import user.view.UserMain;
 
 public class UserItemDetailEvt implements ActionListener {
 	
+	private UserMain um;
+	private UserMainEvt ume;
 	private UserItemDetail uid;
 	private UserItem ui;
 	private UserItemEvt uie;
@@ -20,12 +28,13 @@ public class UserItemDetailEvt implements ActionListener {
 	private int price;
 	private List<UserOrderVO> orderList;
 	
-	public UserItemDetailEvt(UserItemDetail uid,UserItem ui, UserItemEvt uie) {
+	public UserItemDetailEvt(UserMain um,UserItemDetail uid,UserItem ui, UserItemEvt uie) {
+		this.um=um;
 		this.uid=uid;
 		this.ui=ui;
 		this.uie=uie;
 		
-		price=Integer.parseInt(uid.getJtfFoodPrice().getText().trim());
+		price=Integer.parseInt(uid.getJlDetailPrice().getText().trim()); //가격값을 가져옴
 	}//UserOrderDetailEvt
 	
 	/**
@@ -34,7 +43,8 @@ public class UserItemDetailEvt implements ActionListener {
 	private void setTotalPrice() {
 		int quan=uid.getJcbQuantity().getSelectedIndex()+1;
 		int totalPrice=quan*price;
-		uid.getJtfFoodPrice().setText(String.valueOf(totalPrice));
+		
+		uid.getJlDetailPrice().setText(String.valueOf(totalPrice));
 	}//setTotalPrice
 	
 	
@@ -44,13 +54,24 @@ public class UserItemDetailEvt implements ActionListener {
 	public void setPut() {
 		//선택리스트
 		DefaultListModel<String> dlmChoice=ui.getDlmOrderChoiceList();
-		String choiceName=uid.getJtfName().getText().trim();
+		String choiceName=uid.getJlDetailName().getText().trim();
 		String choiceQuan=String.valueOf(uid.getJcbQuantity().getSelectedIndex()+1);
-		dlmChoice.addElement(choiceName+"-수량:"+choiceQuan);
+		dlmChoice.addElement(choiceName+"▷ 수량:"+choiceQuan+"개");
+
+//		for(int i=0; i<dlmChoice.size();i++) {
+//			String sameName=dlmChoice.get(i);
+//			if(sameName.equals(choiceName)) {
+//				String temp=sameName.substring(sameName.lastIndexOf(":"));
+//				int cnt=Integer.parseInt(temp);
+//				cnt=cnt+1;
+//				sameName=choiceName+"▷ 수량:"+String.valueOf(cnt);
+//			}//end if
+//		}//end for
 
 		//선택가격
 		List<Integer> priceList=uie.getPriceList();
-		int choicePrice=Integer.parseInt(uid.getJtfFoodPrice().getText().trim());
+		int choicePrice=Integer.parseInt(uid.getJlDetailPrice().getText().trim());
+		
 		priceList.add(choicePrice);
 		
 		int total=0;
@@ -61,9 +82,27 @@ public class UserItemDetailEvt implements ActionListener {
 		
 		ui.getJtfTotalPrice().setText(String.valueOf(total));
 		
+		///////////////////////////////////////////////////////////////////////////////
+		//VOList(주문)에도 값을 저장해준다.
 		
 		//pcuserCode
-		String pcCode="P_000005";
+		InetAddress local; 
+
+		int pcNum=0;
+		String pcUseCode="";
+		
+		UserDAO uDAO=UserDAO.getInstance();
+			
+		try {
+			local = InetAddress.getLocalHost(); 
+			String ip = local.getHostAddress(); 
+			pcNum=uDAO.selectPcNum(ip);
+			pcUseCode=uDAO.selectPcUseCode(pcNum);
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace(); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}//end catch
 		
 		//수량
 		int quan=Integer.parseInt(choiceQuan);
@@ -71,10 +110,8 @@ public class UserItemDetailEvt implements ActionListener {
 		//itemCode
 		String itemCode=uie.getSelectedItemCode();
 		
-		
 		orderList=uie.getitemOrderList();
-		orderList.add(new UserOrderVO(itemCode, pcCode, quan));
-		
+		orderList.add(new UserOrderVO(itemCode, pcUseCode, quan));
 		
 	}//setPut
 	
@@ -92,14 +129,21 @@ public class UserItemDetailEvt implements ActionListener {
 		}//end if
 		
 		if(ae.getSource()==uid.getJbtPut()) { //주문목록에 담기 버튼
-			setPut();
+			switch(JOptionPane.showConfirmDialog(uid, "장바구니에 담으시겠습니까?")) {
+			case JOptionPane.OK_OPTION:
+				JOptionPane.showMessageDialog(uid, "장바구니에 담겨졌습니다.");
+				close();
+				setPut();
+			}//end switch
 		}//end if
 		
 		if(ae.getSource()==uid.getJbtClose()) { //닫기 버튼
-			close();
+			switch(JOptionPane.showConfirmDialog(uid, "창을 닫으시겠습니까?")) {
+			case JOptionPane.OK_OPTION:
+				close();
+			}//end switch
 		}//end if
 		
 	}//actionPerformed	
-
 
 }//class

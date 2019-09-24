@@ -1,19 +1,20 @@
 package user.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import user.controller.UserItemDetailEvt;
@@ -27,18 +28,21 @@ import user.controller.UserItemEvt;
 public class UserItem extends JFrame{
 	
 	private DefaultTableModel dtmFood,dtmSnack,dtmDrink;
-	private DefaultListModel<String> dlmOrderChoiceList;
+	private DefaultListModel<String> dlmOrderChoiceList,dlmSearchList;
+	private DefaultComboBoxModel<String> dcbOrderBy;
+	private JComboBox<String> jcbOrderBy;
 	private JTable jtFood, jtSnack, jtDrink;
-	private JList<String> jltOrderChoiceList;
-	private JTextField jtfTotalPrice;
-	private JLabel jlTotalPrice, jlOrderChoiceList;
-	private JButton jbtOrder;
+	private JList<String> jltOrderChoiceList,jlSearchList;
+	private JTextField jtfTotalPrice,jtfSearch;
+	private JButton jbtOrder, jbtSearch, jbtSearchDetail;
 	private JTabbedPane jtpOrder;
 	
 	private JPopupMenu jpm;
 	private JMenuItem jmCancel;
 	
 	private UserItemDetailEvt uide;
+	
+	private UserMain um;
 	
 	public UserItem() {
 		super("먹거리 주문");
@@ -126,6 +130,17 @@ public class UserItem extends JFrame{
 		dlmOrderChoiceList=new DefaultListModel<String>();
 		jltOrderChoiceList=new JList<String>(dlmOrderChoiceList);
 		JScrollPane jspOrderChoiceList=new JScrollPane(jltOrderChoiceList);
+		//검색리스트
+		dlmSearchList=new DefaultListModel<String>();
+		jlSearchList=new JList<String>(dlmSearchList);
+		JScrollPane jspSearchList=new JScrollPane(jlSearchList);
+		
+		//comboBox
+		dcbOrderBy=new DefaultComboBoxModel<String>();
+		dcbOrderBy.addElement("최신순");
+		dcbOrderBy.addElement("인기순");
+		dcbOrderBy.addElement("가격순");
+		jcbOrderBy=new JComboBox<String>(dcbOrderBy);
 		
 		//popmenu
 		jpm=new JPopupMenu();
@@ -135,10 +150,11 @@ public class UserItem extends JFrame{
 		//선택리스트에 팝업메뉴 넣기
 		jltOrderChoiceList.setComponentPopupMenu(jpm);
 		
-		jlOrderChoiceList=new JLabel("선택목록");
-		jlTotalPrice=new JLabel("총금액");
 		jtfTotalPrice=new JTextField("0");
+		jtfSearch=new JTextField();
 		jbtOrder=new JButton("주문");
+		jbtSearch=new JButton("검색");
+		jbtSearchDetail=new JButton("상세보기");
 		
 		jtfTotalPrice.setEditable(false);
 		
@@ -147,33 +163,75 @@ public class UserItem extends JFrame{
 		jtpOrder.add("스낵",jspSnack);
 		jtpOrder.add("음료",jspDrink);
 		
+		//Panel
+		JPanel jpSearch=new JPanel();
+		JPanel jpItem=new JPanel();
+		JPanel jpChoiceOrder=new JPanel();
+		
+		jpSearch.add(jtfSearch);
+		jpSearch.add(jbtSearch);
+		jpSearch.add(jspSearchList);
+		jpSearch.add(jbtSearchDetail);
+		
+		jpItem.add(jcbOrderBy);
+		jpItem.add(jtpOrder);
+		
+		jpChoiceOrder.add(jspOrderChoiceList);
+		jpChoiceOrder.add(jtfTotalPrice);
+		jpChoiceOrder.add(jbtOrder);
+		
+		jpSearch.setBorder(new TitledBorder("상품검색"));
+		jpItem.setBorder(new TitledBorder(""));
+		jpChoiceOrder.setBorder(new TitledBorder(""));
+		jspOrderChoiceList.setBorder(new TitledBorder("선택목록"));
+		jtfTotalPrice.setBorder(new TitledBorder("총 금액"));
+		jspSearchList.setBorder(new TitledBorder(""));
+		
+		jpSearch.setLayout(null);
+		jtfSearch.setBounds(20, 30, 150, 30);
+		jbtSearch.setBounds(185, 30, 65, 30);
+		jspSearchList.setBounds(20, 70, 230, 130);
+		jbtSearchDetail.setBounds(20, 210, 230, 40);
+		
+		jpItem.setLayout(null);
+		jtpOrder.setBounds(10, 50, 670, 600);
+		jcbOrderBy.setBounds(550, 20, 100, 30);
+		
+		jpChoiceOrder.setLayout(null);
+		jspOrderChoiceList.setBounds(10, 20, 250, 150);
+		jtfTotalPrice.setBounds(50, 190, 200, 90);
+		jbtOrder.setBounds(50, 300, 200, 80);
 		
 		setLayout(null);
-		jtpOrder.setBounds(0, 0, 550, 520);
-		jlOrderChoiceList.setBounds(20, 530, 100, 30);
-		jlTotalPrice.setBounds(250, 530, 80, 30);
-		jspOrderChoiceList.setBounds(20, 550, 200, 100);
-		jtfTotalPrice.setBounds(250, 550, 120, 100);
-		jbtOrder.setBounds(400,530,120,120);
+		jpSearch.setBounds(750, 45, 270, 260);
+		jpItem.setBounds(50, 50, 690, 680);
+		jpChoiceOrder.setBounds(750, 330, 270, 400);
 		
-		add(jtpOrder);
-		add(jlOrderChoiceList);
-		add(jlTotalPrice);
-		add(jspOrderChoiceList);
-		add(jtfTotalPrice);
-		add(jbtOrder);
+		add(jpSearch);
+		add(jpItem);
+		add(jpChoiceOrder);
 		
 		//이벤트 처리
 		UserItemEvt uie=new UserItemEvt(this,uide);
 		jtFood.addMouseListener(uie);
 		jtSnack.addMouseListener(uie);
 		jtDrink.addMouseListener(uie);
-		jbtOrder.addActionListener(uie);
 		jtpOrder.addMouseListener(uie);
 		jmCancel.addActionListener(uie);
+		jbtOrder.addActionListener(uie);
+		jbtSearch.addActionListener(uie);
+		jbtSearchDetail.addActionListener(uie);
+		jcbOrderBy.addActionListener(uie);
+		
+		jtFood.getTableHeader().setReorderingAllowed(false); //테이블 열 바뀌지 않음
+		jtFood.getTableHeader().setResizingAllowed(false); //컬럼명 사이즈 바뀌지 않음
+		jtSnack.getTableHeader().setReorderingAllowed(false);
+		jtSnack.getTableHeader().setResizingAllowed(false); 
+		jtDrink.getTableHeader().setReorderingAllowed(false); 
+		jtDrink.getTableHeader().setResizingAllowed(false); 
 		
 		setResizable(false);
-		setBounds(700,150,550,700);
+		setBounds(700,150,1050,830);
 		setVisible(true);
 		
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -234,6 +292,30 @@ public class UserItem extends JFrame{
 
 	public JMenuItem getJmCancel() {
 		return jmCancel;
+	}
+	
+	public JButton getJbtSearch() {
+		return jbtSearch;
+	}
+	
+	public JComboBox<String> getJcbOrderBy() {
+		return jcbOrderBy;
+	}
+
+	public JButton getJbtSearchDetail() {
+		return jbtSearchDetail;
+	}
+	
+	public JList<String> getJlSearchList() {
+		return jlSearchList;
+	}
+
+	public DefaultListModel<String> getDlmSearchList() {
+		return dlmSearchList;
+	}
+
+	public JTextField getJtfSearch() {
+		return jtfSearch;
 	}
 
 

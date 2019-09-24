@@ -39,7 +39,5 @@ public class UserItemDetailVO {
 		return "UserItemDetailVO [categoryName=" + categoryName + ", itemName=" + itemName + ", itemImg=" + itemImg
 				+ ", itemDescription=" + itemDescription + ", ItemPrice=" + ItemPrice + "]";
 	}
-	
 
-
-}
+}//class

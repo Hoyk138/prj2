@@ -39,19 +39,5 @@ public class UserItemVO {
 				+ ", categoryName=" + categoryName + ", price=" + price + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-}
+}//class

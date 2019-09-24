@@ -11,6 +11,7 @@ public class UserOrderVO {
 		this.quantity = quantity;
 	}
 
+	//getter
 	public String getItemCode() {
 		return itemCode;
 	}
@@ -23,16 +24,9 @@ public class UserOrderVO {
 		return quantity;
 	}
 
-	@Override
-	public String toString() {
-		return "UserOrderVO [itemCode=" + itemCode + ", pcUserCode=" + pcUserCode + ", quantity=" + quantity + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "UserOrderVO [itemCode=" + itemCode + ", pcUserCode=" + pcUserCode + ", quantity=" + quantity + "]";
+//	}
 	
-	
-	
-
-	
-	
-
-
-}
+}//class

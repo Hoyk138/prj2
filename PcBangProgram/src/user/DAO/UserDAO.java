@@ -17,6 +17,7 @@ import user.VO.UserJoinVO;
 import user.VO.UserLoginVO;
 import user.VO.UserOrderVO;
 import user.VO.UserRePassVO;
+import user.VO.selectSearchVO;
 
 public class UserDAO { //singleton pattern
 	private static UserDAO uDAO;
@@ -323,6 +324,8 @@ public class UserDAO { //singleton pattern
 	
 	
 	////////////////////////소현///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
 	/**
 	 * ip주소를 받아 ip에 맞는 pc번호를 조회하는 일
 	 * @param ipAddr
@@ -371,7 +374,9 @@ public class UserDAO { //singleton pattern
 	 * @return
 	 * @throws SQLException
 	 */
-	public void insertPcHistory(PcHistoryVO phVO) throws SQLException {
+	public String insertPcHistory(PcHistoryVO phVO) throws SQLException {
+		
+		String pcUseCode=null;
 		
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -398,6 +403,8 @@ public class UserDAO { //singleton pattern
 			if(con!=null) {con.close();} //end if
 		}//end finally
 		
+		return pcUseCode;
+		
 	}//insertPcHistory
 	
 	
@@ -421,7 +428,7 @@ public class UserDAO { //singleton pattern
 		.append("	select i.item_code, i.name, i.img, c.category_name, i.price	")
 		.append("	from item i, category c 	")
 		.append("	where (i.category=c.category_code) and display_state='Y' and category=? 	")
-		.append("	order by i.input_date desc 	");
+		.append("	order by i.input_date desc");
 		
 		pstmt=con.prepareStatement(selectUserItemList.toString());
 		
@@ -441,6 +448,103 @@ public class UserDAO { //singleton pattern
 		}//end finally
 		return list;
 	}//selectUserItemList
+	
+	
+	//////////////////////////////////
+//	public List<UserItemVO> selectOrderBy(selectItemVO siVO) throws SQLException {
+//		List<UserItemVO> list=new ArrayList<UserItemVO>();
+//		
+//		Connection con=null;
+//		PreparedStatement pstmt=null;
+//		ResultSet rs=null;
+//		
+//		try {
+//		con=getConn();
+//		
+//		StringBuilder selectOrderBy=new StringBuilder();
+//		if(siVO.getIndex()==0) {
+//			selectOrderBy
+//		.append("	select i.item_code, i.name, i.img, c.category_name, i.price	")
+//		.append("	from item i, category c, item_order io 	")
+//		.append("	where (i.category=c.category_code) and (i.item_code=io.item_code) and display_state='Y' and category=? 	")
+//		.append("	order by i.input_date desc 	"); //최신순
+//		}else if(siVO.getIndex()==1) {
+//			selectOrderBy
+//			.append("	select i.item_code, sum(io.quantity) rank , i.item_code, i.name, i.img, c.category_name, i.price	")
+//			.append("	from item i, category c, item_order io 	")
+//			.append("	where (i.category=c.category_code) and (io.item_code=i.item_code) and i.display_state='Y' and category=? 	")
+//			.append("	group by i.item_code, i.item_code, i.name, i.img, c.category_name, i.price 	") 
+//			.append("	order by rank desc 	"); //인기순
+//		}else if(siVO.getIndex()==2) {
+//			selectOrderBy
+//			.append("	select i.item_code, i.name, i.img, c.category_name, i.price	")
+//			.append("	from item i, category c, item_order io 	")
+//			.append("	where (i.category=c.category_code) and (i.item_code=io.item_code) and display_state='Y' and category=? 	")
+//			.append("	order by i.price desc 	"); //가격순
+//		}//end else
+//		
+//		pstmt=con.prepareStatement(selectOrderBy.toString());
+//		
+//		pstmt.setString(1,siVO.getCategory());
+//		
+//		rs=pstmt.executeQuery();
+//		UserItemVO uiv=null;
+//		while(rs.next()) {
+//			uiv=new UserItemVO(rs.getString("item_code"),rs.getString("name"), rs.getString("img"),rs.getString("category_name"),rs.getInt("price"));
+//			list.add(uiv);
+//		}//end while
+//		
+//		}finally {
+//			if(rs!=null) {rs.close();} //end if
+//			if(pstmt!=null) {pstmt.close();} //end if
+//			if(con!=null) {con.close();} //end if
+//		}//end finally
+//		return list;
+//	}//selectOrderBy
+	
+	/**
+	 * 검색한 검색어를 조회하는 일
+	 * @throws SQLException 
+	 */
+	public List<selectSearchVO> selectSearch(String str) throws SQLException {
+		List<selectSearchVO> list=new ArrayList<selectSearchVO>();
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		con=getConn();
+		
+		StringBuilder selectSearch=new StringBuilder();
+		selectSearch
+		.append("	select item_code, name, price	")
+		.append("	from item 	")
+		.append("	where name like '%"+str+"%'	");
+		
+		pstmt=con.prepareStatement(selectSearch.toString());
+		
+//		pstmt.setString(1,str);
+		
+		rs=pstmt.executeQuery();
+		selectSearchVO ssv=null;
+		while(rs.next()) {
+			ssv=new selectSearchVO(rs.getString("item_code"),rs.getString("name"),rs.getInt("price"));
+			list.add(ssv);
+		}//end while
+		
+		}finally {
+			if(rs!=null) {rs.close();} //end if
+			if(pstmt!=null) {pstmt.close();} //end if
+			if(con!=null) {con.close();} //end if
+		}//end finally
+		return list;
+	}//SelectSearch
+	
+	public void SelectSearchDetail() throws SQLException {
+		
+		
+	}//SelectSearchDetail
 	
 	/**
 	 * itemCode로 상세보기 창에 조회하는 일
@@ -479,6 +583,48 @@ public class UserDAO { //singleton pattern
 		
 		return uidVO;
 	}//selectUserItemDetail
+	
+	/**
+	 * 사용중인 pc번호를 찾아 pcUseCode를 조회하는 일 (음식주문을 위한 코드)
+	 * @param pcNum
+	 * @return
+	 * @throws SQLException
+	 */
+	public String selectPcUseCode(int pcNum) throws SQLException {
+		String useCode=null;
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			con=getConn();
+			
+			StringBuilder selectPcUseCode=new StringBuilder();
+			selectPcUseCode
+			.append("	select pc_use_code	")
+			.append("	from pc_use	")
+			.append("	where pc_num=?	")
+			.append(" order by login_time desc");
+			
+			pstmt=con.prepareStatement(selectPcUseCode.toString());
+			
+			pstmt.setInt(1,pcNum);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				useCode=rs.getString("pc_use_code");
+			}//end if
+		
+		}finally {
+			if(rs!=null) {rs.close();}//end if
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally
+		
+		return useCode;
+	}//selectPcUseCode
 	
 	/**
 	 * 주문목록들을 주문테이블에 추가하는 일

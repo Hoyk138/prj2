@@ -18,12 +18,9 @@ public class PcHistoryVO {
 		return userId;
 	}
 
-	@Override
-	public String toString() {
-		return "PcHistoryVO [pcNum=" + pcNum + ", userId=" + userId + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "PcHistoryVO [pcNum=" + pcNum + ", userId=" + userId + "]";
+//	}
 
-	
-	
-	
 }//class
