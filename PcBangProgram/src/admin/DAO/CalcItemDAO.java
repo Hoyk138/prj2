@@ -14,7 +14,7 @@ import admin.VO.CalcItemVO;
 
 //import kr.co.sist.admin.vo.CalcVO;
 
-public class CalcItemDAO {
+public class CalcItemDAO { 
 	
 	
 	private static CalcItemDAO itemDAO ;
