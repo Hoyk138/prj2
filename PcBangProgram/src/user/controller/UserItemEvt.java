@@ -185,17 +185,19 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			selectList=uDAO.selectSearch(searchText);
 			if(selectList.isEmpty()) {
 				JOptionPane.showMessageDialog(ui, "연관된 검색어가 없습니다.");
+				ui.getJtfSearch().setText("");
+				ui.getJtfSearch().requestFocus();
 				return;
 			}//end if
 			for(int i=0; i<selectList.size();i++) {
 				ssVO=selectList.get(i);
 				listSearch.addElement(ssVO.getItemName()+"("+ssVO.getPrice()+"원)");
+				ui.getJtfSearch().requestFocus();
 			}//end for
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(ui, "연관된 검색어가 없습니다.");
 			e.printStackTrace();
 		}//end catch
-		ui.getJtfSearch().setText("");
 		
 	}//ItemSearch
 	
@@ -275,12 +277,12 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		
+		
 		if(ae.getSource()==ui.getJcbOrderBy()) { //조회순 이벤트 처리
 			setOrderBy();
 		}//end if
 		
-		
-		if(ae.getSource()==ui.getJbtSearch()) { //상품검색 버튼
+		if(ae.getSource()==ui.getJbtSearch() || ae.getSource()==ui.getJtfSearch()) { //상품검색 버튼
 			JTextField jtfSearch=ui.getJtfSearch();
 			if((jtfSearch.getText()).isEmpty()) {
 				JOptionPane.showMessageDialog(ui, "검색할 상품을 입력해주세요!");
@@ -370,7 +372,6 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		}//end if
 		
 		if(me.getClickCount()==DOUBLE_CLICK) { //더블클릭
-			
 			
 			if(me.getSource()==ui.getJtFood()) {
 				

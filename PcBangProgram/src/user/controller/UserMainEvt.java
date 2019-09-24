@@ -93,7 +93,7 @@ public class UserMainEvt implements ActionListener{
 	 */
 	public void useClose() {
 		um.dispose();
-		new UserLogin();
+		new RunPcUser();
 	}//useClose
 	
 	/**

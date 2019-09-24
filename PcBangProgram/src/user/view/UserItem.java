@@ -222,6 +222,7 @@ public class UserItem extends JFrame{
 		jbtSearch.addActionListener(uie);
 		jbtSearchDetail.addActionListener(uie);
 		jcbOrderBy.addActionListener(uie);
+		jtfSearch.addActionListener(uie);
 		
 		jtFood.getTableHeader().setReorderingAllowed(false); //테이블 열 바뀌지 않음
 		jtFood.getTableHeader().setResizingAllowed(false); //컬럼명 사이즈 바뀌지 않음

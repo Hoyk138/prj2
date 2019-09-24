@@ -14,7 +14,7 @@ import user.view.UserLogin;
 public class RunPcUser {
 	
 	public RunPcUser() {
-		
+		new UserLogin();
 	}//RunPcUser
 	
 	public String getIp() {
@@ -107,7 +107,7 @@ public class RunPcUser {
 //		}//end catch
 		
 		
-		new UserLogin();
+//		new UserLogin();
 	}//main
 	
 	
