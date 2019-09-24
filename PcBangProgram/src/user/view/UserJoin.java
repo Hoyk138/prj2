@@ -104,6 +104,8 @@ public class UserJoin extends JDialog {
 		jcbNum.addActionListener(uje);
 		jtfPhone2.addActionListener(uje);
 		jtfPhone3.addActionListener(uje);
+		jtfPhone2.addFocusListener(uje);
+		jtfPhone3.addFocusListener(uje);
 		jcbQuestion.addActionListener(uje);
 		jtfAnswer.addActionListener(uje);
 		jbtnOverlap.addActionListener(uje);

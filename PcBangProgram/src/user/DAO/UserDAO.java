@@ -287,13 +287,13 @@ public class UserDAO { //singleton pattern
 		//2. 커넥션 얻기
 			con=getConn();
 		//3. 쿼리문 생성객체 얻기
-			StringBuilder selectName=new StringBuilder();
-			selectName
-			.append("		select id			")
+			StringBuilder overlapId=new StringBuilder();
+			overlapId
+			.append("		select id						")
 			.append("		from member_account	")
 			.append("		where id=?					");
 			
-			pstmt=con.prepareStatement(selectName.toString());
+			pstmt=con.prepareStatement(overlapId.toString());
 			
 		//4. 바인드 변수에 값 넣기
 			pstmt.setString(1, id);
@@ -311,7 +311,50 @@ public class UserDAO { //singleton pattern
 			if ( con != null ) { con.close(); } //end if
 		}//end finally
 		return userId;
-	}//selectLogin
+	}//overlapId
+	
+	/**
+	 * 회원가입시 입력받은 전화번호로 member_account 테이블에서 일치하는 전화번호를 찾아 중복되는 번호가 있는지 확인하여 반환하는 일
+	 * @param phone
+	 * @return
+	 * @throws SQLException
+	 */
+	public String overlapPhone(String phone) throws SQLException { 
+		String userPhone="";
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//2. 커넥션 얻기
+			con=getConn();
+		//3. 쿼리문 생성객체 얻기
+			StringBuilder overlapPhone=new StringBuilder();
+			overlapPhone
+			.append("		select phone						")
+			.append("		from member_account	")
+			.append("		where phone=?					");
+			
+			pstmt=con.prepareStatement(overlapPhone.toString());
+			
+		//4. 바인드 변수에 값 넣기
+			pstmt.setString(1, phone);
+		//5. 쿼리 실행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userPhone=rs.getString("phone");
+			}//end if
+			
+		}finally {
+		//6. 연결끊기
+			if ( rs != null ) { rs.close(); } //end if
+			if ( pstmt != null ) { pstmt.close(); } //end if
+			if ( con != null ) { con.close(); } //end if
+		}//end finally
+		return userPhone;
+	}//overlapId
+	
 	
 	
 

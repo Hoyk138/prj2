@@ -12,8 +12,8 @@ import user.controller.UserRePassEvt;
 @SuppressWarnings("serial")
 public class UserRePass extends JDialog {
 	
-	private JLabel jlblId, jlblPass, jlblConfirm;
-	private JTextField jtfId;
+	private JLabel jlblId, jlblPass, jlblConfirm, jlblId2;
+//	private JTextField jtfId;
 	private JPasswordField jpfPass, jpfConfirm;
 	private JButton jbtnResetPass;
 	
@@ -28,7 +28,7 @@ public class UserRePass extends JDialog {
 		jlblPass=new JLabel("비밀번호");
 		jlblConfirm=new JLabel("비밀번호확인");
 		
-		jtfId=new JTextField(fp.getJtfId().getText()); 
+		jlblId2=new JLabel(fp.getJtfId().getText()); 
 		jpfPass=new JPasswordField();
 		jpfConfirm=new JPasswordField(); 
 		
@@ -40,7 +40,7 @@ public class UserRePass extends JDialog {
 		jlblId.setBounds(40, 30, 76, 30);
 		jlblPass.setBounds(40, 70, 76, 30);
 		jlblConfirm.setBounds(40, 110, 100, 30);
-		jtfId.setBounds(170, 30, 200, 25);
+		jlblId2.setBounds(170, 30, 200, 25);
 		jpfPass.setBounds(170, 70, 200, 25);
 		jpfConfirm.setBounds(170, 110, 200, 25);
 		jbtnResetPass.setBounds(270, 150, 100, 30);
@@ -48,14 +48,14 @@ public class UserRePass extends JDialog {
 		add(jlblId);
 		add(jlblPass);
 		add(jlblConfirm);
-		add(jtfId);
+		add(jlblId2);
 		add(jpfPass);
 		add(jpfConfirm);
 		add(jbtnResetPass);
 		
 		UserRePassEvt urpe=new UserRePassEvt(this);
 		
-		jtfId.addActionListener(urpe);
+//		jtfId.addActionListener(urpe);
 		jpfPass.addActionListener(urpe);
 		jpfConfirm.addActionListener(urpe);
 		jbtnResetPass.addActionListener(urpe);
@@ -63,6 +63,7 @@ public class UserRePass extends JDialog {
 		setResizable(false);
 		setBounds(700, 400, 450, 250);
 		setVisible(true);
+//		fp.setVisible(false);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//UserRePass
@@ -79,8 +80,8 @@ public class UserRePass extends JDialog {
 		return jlblConfirm;
 	}
 
-	public JTextField getJtfId() {
-		return jtfId;
+	public JLabel getJlblId2() {
+		return jlblId2;
 	}
 
 	public JPasswordField getJpfPass() {
@@ -94,6 +95,12 @@ public class UserRePass extends JDialog {
 	public JButton getJbtnResetPass() {
 		return jbtnResetPass;
 	}
+
+	public FindPass getFp() {
+		return fp;
+	}
+
+
 
 
 
