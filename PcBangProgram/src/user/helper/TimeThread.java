@@ -31,7 +31,7 @@ public class TimeThread extends Thread{
 			int hour=useTime/3600; //시
 			
 			//1초간 
-			String time=String.format("[사용시간] %2d : %2d", hour,min);
+			String time=String.format("%2d : %2d 분", hour,min);
 			
 			jlUseTime.setText(time);
 			
