@@ -297,14 +297,19 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+		Checkbox selectChb=cv.getCgItem().getSelectedCheckbox() ;
 		// 영수증
 		if (ae.getSource() == cv.getJbtCalcItem()) {
-			viewCalcItemRecipt();
+			if (selectChb.getLabel()=="오늘") {
+				viewCalcItemRecipt();
+			} else {
+				JOptionPane.showMessageDialog(null, "정산은 당일 내역만 가능합니다.");
+			} // end if
 		} // end if
+			
+			
 		// 조회버튼
-		
 		if (ae.getSource()==cv.getJbtnSearchItem()) {
-			Checkbox selectChb=cv.getCgItem().getSelectedCheckbox() ;
 			
 			switch (selectChb.getLabel()) {
 			case "오늘":

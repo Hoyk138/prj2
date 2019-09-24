@@ -30,6 +30,7 @@ public class CalcView extends JPanel {
 	private JTabbedPane jtp ;
 	private CheckboxGroup cgPC, cgItem ;
 	private JTextField jtfStartPC, jtfEndPC, jtfStartItem, jtfEndItem ;
+	private String logFile;
 	
 	public CalcView() {
 
@@ -303,6 +304,10 @@ public class CalcView extends JPanel {
 	
 	public JTextField getJtfEndItem() {
 		return jtfEndItem;
+	}
+
+	public String getLogFile() {
+		return logFile;
 	}
 
 	

@@ -5,7 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +30,8 @@ import admin.view.CalcView;
 public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	
 	private CalcView cv ;
+	private String fileName;
+	private CalcPCDAO cpDAO ;
 	
 	public CalcPCEvt(CalcView cv) {
 		this.cv = cv ;
@@ -272,15 +279,9 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent ae) {
 			
-			// 영수증
-			if (ae.getSource() == cv.getJbtCalcPC()) {
-				viewCalcPCRecipt();
-			} // end if
-			
+			Checkbox selectChb=cv.getCgPC().getSelectedCheckbox() ;
 			// 조회버튼
-			
 			if (ae.getSource()==cv.getJbtnSearchPC()) {
-				Checkbox selectChb=cv.getCgPC().getSelectedCheckbox() ;
 				
 				switch (selectChb.getLabel()) {
 				case "오늘":
@@ -296,11 +297,51 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				case "사용자 지정":
 					setCalcPCLstCustom();
 					break;
-					
 				}
 			} // end if
 			
+			
+			// 영수증	
+			if (ae.getSource() == cv.getJbtCalcPC()) {
+				if (selectChb.getLabel()=="오늘") {
+					viewCalcPCRecipt();
+				} else {
+					JOptionPane.showMessageDialog(null, "정산은 당일 내역만 가능합니다.");
+					return;
+				} // end if
+			} // end if
+			
 		} // actionPerformed
+		
+		
+		public void reportFile() throws IOException {
+			
+			BufferedWriter bw = null;
+			
+			try {
+				File file = new File("c:/dev/report");
+
+				if (!file.exists()) {
+					file.mkdir();
+				} // end if
+				
+				fileName = file.getAbsolutePath() + "/report_" + System.currentTimeMillis() + ".dat";
+				bw = new BufferedWriter(new FileWriter(fileName));
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
+				bw.write( "======================================\n"
+						+ "파일명 : [" + cv.getLogFile() + "]     " + sdf.format(System.currentTimeMillis())+"\n"
+						+ "======================================\n"+ "\n" 
+						+ cpDAO.getReport_file());
+				
+				// 스트림의 내용을 목적지로 분출
+				bw.flush();
+
+			} finally {
+				if (bw != null) { bw.close(); } // end if
+			} // end finally
+			
+		}//reportFile
 		
 	// 단위테스트용
 //	public static void main(String[] args) {
