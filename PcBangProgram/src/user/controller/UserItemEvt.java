@@ -49,7 +49,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 	public UserItemEvt(UserItem ui,UserItemDetailEvt uide) {
 		this.ui=ui;
 		this.uide=uide;
-		setItem("F");
+		setItem("F",0);
 		
 		priceList = new ArrayList<Integer>();
 		itemOrderList = new ArrayList<UserOrderVO>();
@@ -58,7 +58,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 	/**
 	 * 상품 데이터를 테이블에 조회하는 일
 	 */
-	public void setItem(String category) {
+	public void setItem(String category, int combo) {
 		DefaultTableModel dtm=null;
 		
 		switch(category) {
@@ -79,12 +79,22 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		
 		Object[] rowData=null;
 		
-//		int index=ui.getJcbOrderBy().getSelectedIndex();
 		UserDAO uDAO=UserDAO.getInstance();
-//		selectItemVO siVO=new selectItemVO(category, index);
 		
 		try {
-			listItem=uDAO.selectUserItemList(category);
+			selectItemVO siVO=new selectItemVO(category, combo);
+			
+			switch(combo) {
+			case 0:
+				listItem=uDAO.selectOrderBy(siVO);
+				break;
+			case 1:
+				listItem=uDAO.selectOrderBy(siVO);
+				break;
+			case 2:
+				listItem=uDAO.selectOrderBy(siVO);
+				break;
+			}//end switch
 			
 			UserItemVO uiv=null;
 			
@@ -103,58 +113,60 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		
 	}//setFoodItem
 	
-//	/**
-//	 * 조회순마다 발생하는 조회
-//	 */
-//	public void setOrderBy() {
-//		
-//		int index=ui.getJcbOrderBy().getSelectedIndex();
-//		
-//		DefaultTableModel dtmFood=ui.getDtmFood();
-//		DefaultTableModel dtmSnack=ui.getDtmSnack();
-//		DefaultTableModel dtmDrink=ui.getDtmDrink();
-//		System.out.println("하");
-//		String category="F";
-//		
-//		dtmFood.setRowCount(0); 
-//		dtmSnack.setRowCount(0); 
-//		dtmDrink.setRowCount(0); 
-//		
-//		Object[] rowData=null;
-//		
-//		UserDAO uDAO=UserDAO.getInstance();
-//		selectItemVO siVO=new selectItemVO(category, index);
-//		
-//		try {
-//			listItem=uDAO.selectUserItemList(category);
-//			
-//			UserItemVO uiv=null;
-//			
-//			for(int i=0;i<listItem.size();i++) {
-//				uiv=listItem.get(i);
-//				rowData=new Object[3];
-//				rowData[0] = "["+uiv.getCategoryName()+"]" +uiv.getItemName();
-//				rowData[1]=new ImageIcon(uiv.getItemImg());
-//				rowData[2]=new Integer(uiv.getPrice());
-//				dtmFood.addRow(rowData);
-//				dtmSnack.addRow(rowData);
-//				dtmDrink.addRow(rowData);
-//			}//end for
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}//end catch
-//		
-//		switch(index) {
-//		case 0:
-//			
-//		case 1:
-//			
-//		case 2:
-//			
-//		}//end switch
-//		
-//	}//setOrderBy
+	/**
+	 * 조회순마다 발생하는 조회
+	 */
+	public void setOrderBy() {
+		
+		int comoboIndex=ui.getJcbOrderBy().getSelectedIndex();
+		
+		DefaultTableModel dtm=null;
+		
+		int tabIndex=ui.getJtpOrder().getSelectedIndex();
+
+		String category=null;
+		switch(tabIndex) {
+		case 0:
+			category="F";
+			dtm=ui.getDtmFood();
+			break;
+		case 1:
+			category="S";
+			dtm=ui.getDtmSnack();
+			break;
+		case 2:
+			category="D";
+			dtm=ui.getDtmDrink();
+			break;
+		}//end switch
+		
+		dtm.setRowCount(0); 
+		
+		Object[] rowData=null;
+		
+		UserDAO uDAO=UserDAO.getInstance();
+		selectItemVO siVO=new selectItemVO(category, comoboIndex);
+		
+		try {
+			listItem=uDAO.selectOrderBy(siVO);
+			
+			UserItemVO uiv=null;
+			
+			for(int i=0;i<listItem.size();i++) {
+				uiv=listItem.get(i);
+				rowData=new Object[3];
+				rowData[0] = "["+uiv.getCategoryName()+"]" +uiv.getItemName();
+				rowData[1]=new ImageIcon(uiv.getItemImg());
+				rowData[2]=new Integer(uiv.getPrice());
+				dtm.addRow(rowData);
+			}//end for
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}//end catch
+		
+		
+	}//setOrderBy
 	
 	/**
 	 * 검색한 상품을 조회하는 일
@@ -227,7 +239,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		int setTotal=total-cancelPrice;
 		
 		String choiceItem=choice.getSelectedValue();
-		String choiceName=choiceItem.substring(0,choiceItem.lastIndexOf("-"));
+		String choiceName=choiceItem.substring(0,choiceItem.lastIndexOf("▷"));
 		
 		switch(JOptionPane.showConfirmDialog(ui, choiceName+"을 취소하시겠습니까?")) {
 		case JOptionPane.OK_OPTION:
@@ -264,7 +276,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 	public void actionPerformed(ActionEvent ae) {
 		
 		if(ae.getSource()==ui.getJcbOrderBy()) { //조회순 이벤트 처리
-//			setOrderBy();
+			setOrderBy();
 		}//end if
 		
 		
@@ -324,8 +336,6 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			break;
 		}//end switch
 
-//		UserItemVO uiv=null;
-		
 		UserDAO uDAO=UserDAO.getInstance();
 		
 		try {
@@ -343,16 +353,17 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 	@Override
 	public void mouseClicked(MouseEvent me) {
 		if(me.getSource()==ui.getJtpOrder()) {
+			int combo=ui.getJcbOrderBy().getSelectedIndex();
 			JTabbedPane jtpTemp=(JTabbedPane)me.getSource();
 			switch (jtpTemp.getSelectedIndex()) {
 			case 0:
-				setItem("F");
+				setItem("F",combo);
 				break;
 			case 1:
-				setItem("S");
+				setItem("S",combo);
 				break;
 			case 2:
-				setItem("D");
+				setItem("D",combo);
 				break;
 			}//end switch
 			
@@ -360,7 +371,9 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		
 		if(me.getClickCount()==DOUBLE_CLICK) { //더블클릭
 			
+			
 			if(me.getSource()==ui.getJtFood()) {
+				
 				detailItem("F");
 			}//end if
 			

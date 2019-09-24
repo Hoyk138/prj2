@@ -56,7 +56,7 @@ public class UserItemDetailEvt implements ActionListener {
 		DefaultListModel<String> dlmChoice=ui.getDlmOrderChoiceList();
 		String choiceName=uid.getJlDetailName().getText().trim();
 		String choiceQuan=String.valueOf(uid.getJcbQuantity().getSelectedIndex()+1);
-		dlmChoice.addElement(choiceName+"- 수량:"+choiceQuan+"개");
+		dlmChoice.addElement(choiceName+"▷ 수량:"+choiceQuan+"개");
 
 //		for(int i=0; i<dlmChoice.size();i++) {
 //			String sameName=dlmChoice.get(i);

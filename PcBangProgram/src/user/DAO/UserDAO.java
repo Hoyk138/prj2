@@ -17,6 +17,7 @@ import user.VO.UserJoinVO;
 import user.VO.UserLoginVO;
 import user.VO.UserOrderVO;
 import user.VO.UserRePassVO;
+import user.VO.selectItemVO;
 import user.VO.selectSearchVO;
 
 public class UserDAO { //singleton pattern
@@ -451,12 +452,8 @@ public class UserDAO { //singleton pattern
 	}//insertPcHistory
 	
 	
-	/**
-	 * 상품을 리스트로 조회하는 일
-	 * @return
-	 * @throws SQLException
-	 */
-	public List<UserItemVO> selectUserItemList(String category) throws SQLException{
+	//////////////////////////////////
+	public List<UserItemVO> selectOrderBy(selectItemVO siVO) throws SQLException {
 		List<UserItemVO> list=new ArrayList<UserItemVO>();
 		
 		Connection con=null;
@@ -466,16 +463,32 @@ public class UserDAO { //singleton pattern
 		try {
 		con=getConn();
 		
-		StringBuilder selectUserItemList=new StringBuilder();
-		selectUserItemList
+		StringBuilder selectOrderBy=new StringBuilder();
+		if(siVO.getIndex()==0) {
+			selectOrderBy
 		.append("	select i.item_code, i.name, i.img, c.category_name, i.price	")
-		.append("	from item i, category c 	")
+		.append("	from item i, category c	")
 		.append("	where (i.category=c.category_code) and display_state='Y' and category=? 	")
-		.append("	order by i.input_date desc");
+		.append("	order by i.input_date desc 	"); //최신순
+		}else if(siVO.getIndex()==1) {
+			selectOrderBy
+			.append("	select i.item_code, nvl(sum(io.quantity),0) orderCnt  , i.item_code, i.name, i.img, c.category_name, i.price	")
+			.append("	from item i, category c, item_order io 	")
+			.append("	where (i.category=c.category_code) and (io.item_code(+)=i.item_code) and i.display_state='Y' and category=? 	")
+			.append("	group by i.item_code, i.item_code, i.name, i.img, c.category_name, i.price	") 
+			.append("	order by orderCnt desc 	"); //인기순
+			
+		}else if(siVO.getIndex()==2) {
+			selectOrderBy
+			.append("	select i.item_code, i.name, i.img, c.category_name, i.price	")
+			.append("	from item i, category c 	")
+			.append("	where (i.category=c.category_code) and display_state='Y' and category=? 	")
+			.append("	order by i.price "); //가격순
+		}//end else
 		
-		pstmt=con.prepareStatement(selectUserItemList.toString());
+		pstmt=con.prepareStatement(selectOrderBy.toString());
 		
-		pstmt.setString(1,category);
+		pstmt.setString(1,siVO.getCategory());
 		
 		rs=pstmt.executeQuery();
 		UserItemVO uiv=null;
@@ -490,60 +503,7 @@ public class UserDAO { //singleton pattern
 			if(con!=null) {con.close();} //end if
 		}//end finally
 		return list;
-	}//selectUserItemList
-	
-	
-	//////////////////////////////////
-//	public List<UserItemVO> selectOrderBy(selectItemVO siVO) throws SQLException {
-//		List<UserItemVO> list=new ArrayList<UserItemVO>();
-//		
-//		Connection con=null;
-//		PreparedStatement pstmt=null;
-//		ResultSet rs=null;
-//		
-//		try {
-//		con=getConn();
-//		
-//		StringBuilder selectOrderBy=new StringBuilder();
-//		if(siVO.getIndex()==0) {
-//			selectOrderBy
-//		.append("	select i.item_code, i.name, i.img, c.category_name, i.price	")
-//		.append("	from item i, category c, item_order io 	")
-//		.append("	where (i.category=c.category_code) and (i.item_code=io.item_code) and display_state='Y' and category=? 	")
-//		.append("	order by i.input_date desc 	"); //최신순
-//		}else if(siVO.getIndex()==1) {
-//			selectOrderBy
-//			.append("	select i.item_code, sum(io.quantity) rank , i.item_code, i.name, i.img, c.category_name, i.price	")
-//			.append("	from item i, category c, item_order io 	")
-//			.append("	where (i.category=c.category_code) and (io.item_code=i.item_code) and i.display_state='Y' and category=? 	")
-//			.append("	group by i.item_code, i.item_code, i.name, i.img, c.category_name, i.price 	") 
-//			.append("	order by rank desc 	"); //인기순
-//		}else if(siVO.getIndex()==2) {
-//			selectOrderBy
-//			.append("	select i.item_code, i.name, i.img, c.category_name, i.price	")
-//			.append("	from item i, category c, item_order io 	")
-//			.append("	where (i.category=c.category_code) and (i.item_code=io.item_code) and display_state='Y' and category=? 	")
-//			.append("	order by i.price desc 	"); //가격순
-//		}//end else
-//		
-//		pstmt=con.prepareStatement(selectOrderBy.toString());
-//		
-//		pstmt.setString(1,siVO.getCategory());
-//		
-//		rs=pstmt.executeQuery();
-//		UserItemVO uiv=null;
-//		while(rs.next()) {
-//			uiv=new UserItemVO(rs.getString("item_code"),rs.getString("name"), rs.getString("img"),rs.getString("category_name"),rs.getInt("price"));
-//			list.add(uiv);
-//		}//end while
-//		
-//		}finally {
-//			if(rs!=null) {rs.close();} //end if
-//			if(pstmt!=null) {pstmt.close();} //end if
-//			if(con!=null) {con.close();} //end if
-//		}//end finally
-//		return list;
-//	}//selectOrderBy
+	}//selectOrderBy
 	
 	/**
 	 * 검색한 검색어를 조회하는 일
