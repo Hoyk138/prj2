@@ -36,7 +36,7 @@ public class ModifyDeleteEvt implements ActionListener{
 	}//기본생성자
 	
 	public void imgModify() {
-		FileDialog fdOpen=new FileDialog(mdv,"도시락 수정 이미지",FileDialog.LOAD);
+		FileDialog fdOpen=new FileDialog(mdv,"상품 수정 이미지",FileDialog.LOAD);
 		fdOpen.setVisible(true);
 		
 		path=fdOpen.getDirectory();
@@ -54,16 +54,12 @@ public class ModifyDeleteEvt implements ActionListener{
 			}//end if
 			//이미지를 미리보기 라베엘에 설정	
 
-			File writeFile=new File(path+file);
-			ImageResize.resizeImage(writeFile.getAbsolutePath(), 303, 321);
-			mdv.getJlImgModify().setIcon(new ImageIcon(path+"rs_"+file));
-			
 			try {
 				uploadImg();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
+			mdv.getJlImgModify().setIcon(new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/"+"rs_"+file));
 			
 		}//end if
 			
@@ -71,38 +67,43 @@ public class ModifyDeleteEvt implements ActionListener{
 	
 private void uploadImg() throws IOException{
 		
-		//선택한 이미지를 도시락의 이미지 폴더에 복사.
-		File readFile=new File(path+file);
+		//복사할 디렉토리 생성
+		File mkDirectory=new File("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image");
 		
-		byte[] readData=new byte[512];
-		int len=0;
-		
-		FileOutputStream fos=null;
+		//1.읽기 스트림 생성
 		FileInputStream fis=null;
+		//2.쓰기 스트림 생성
+		FileOutputStream fos=null;
+		
+		File originalFile=new File(path+file);
+		//복사할 파일명을 생성	
+		File copyFile=new File(mkDirectory.getAbsolutePath()+"/"+file);
 		
 		try {
-		fis=new FileInputStream(readFile); //파일을 읽어 들여
-		
-		if(readFile.exists()) {
+			fis=new FileInputStream(originalFile);
+			fos=new FileOutputStream(copyFile); //입력된 경로에 파일을 생성
 			
-			File writeFile=new File("C:/Users/owner/git/prj2/PcBangProgram/src/image/"+readFile.getName());
-			fos=new FileOutputStream(writeFile); //관리자 이미지 폴더에 복사
+			//3.원본파일에서 1byte씩 읽어들여
+			int temp=0;
 			
-			while((len=fis.read(readData))!=-1) {
-				fos.write(readData,0,len);  //읽어들인 만큼 출력 스트림에 기록
+			byte[] readData=new byte[512]; //HDD에서 한번에 읽어들이는 sector단위로
+			//저장 할 것이므로 sector(512byte)와 동일한 크기의 배열을 생성
+			while((temp=fis.read(readData))!=-1) { //채워져있는 갯수가 나옴
+				//4.읽어들인 1byte를 출력 스트림에 기록
+				fos.write(readData,0,temp);  //readData에 담긴걸 0부터 배열의 수까지
 			}//end while
+			//5.스트림에 남아있는 내용을 목적지로 분출
 			fos.flush();
-			//이미지를 thumbnail image로 생성
-			ImageResize.resizeImage(writeFile.getAbsolutePath(), 303, 321);
 			
-		}//end if
-		
+			ImageResize.resizeImage(copyFile.getAbsolutePath(), 303, 321);
 		}finally {
-			if(fos!=null) {fos.close();}
 			if(fis!=null) {fis.close();}
-		}//end finally
+			if(fos!=null) {fos.close();}
+		}
+			
+		}//uploadImg
 		
-	}//uploadImg
+
 	
 	
 	public void productModify()  {
@@ -110,7 +111,7 @@ private void uploadImg() throws IOException{
 		if(file==null) {
 			imgPath=pmdvVO.getImg();
 		}else {
-			imgPath=path+file;
+			imgPath=file;
 		}
 		String name=mdv.getJtfProductNameModify().getText().trim();
 		int price=Integer.parseInt((mdv.getJtfPriceModify().getText().trim()));
