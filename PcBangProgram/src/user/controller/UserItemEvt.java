@@ -268,12 +268,12 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		
 			try {
 				uDAO.insertOrder(itemOrderList);
+				JOptionPane.showMessageDialog(ui, "주문이 완료되었습니다.");
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(ui, "주문이 처리되지 않았습니다.");
 				e.printStackTrace();
 			}//end catch
 			
-		JOptionPane.showMessageDialog(ui, "주문이 완료되었습니다.");
 		
 	}//setOrder
 	
