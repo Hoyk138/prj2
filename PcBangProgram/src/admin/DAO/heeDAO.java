@@ -256,7 +256,8 @@ private static heeDAO aDAO;
 			.append(	 " nvl(to_char(ip.PAYMENT_TIME,'yyyy-mm-dd am hh:mi'),'결제 대기중 입니다.') payment_time " )
 			.append(	 " from  ITEM_ORDER io, ITEM_PAYMENT ip, ITEM i, PC_USE pu " )
 			.append(	 " where  (io.PC_USE_CODE=pu.PC_USE_CODE) and (io.ITEM_CODE=i.ITEM_CODE) " )
-			.append(	 " and(ip.ORDER_CODE(+)=io.ORDER_CODE) " );
+			.append(	 " and(ip.ORDER_CODE(+)=io.ORDER_CODE) " )
+			.append(	 " order by payment_time desc " );
 			
 
 
