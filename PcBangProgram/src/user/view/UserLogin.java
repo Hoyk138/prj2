@@ -3,6 +3,7 @@ package user.view;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,7 +22,10 @@ public class UserLogin extends JFrame {
 	
 	public UserLogin() {
 		super("사용자 로그인");
+		
+		ImageIcon iiBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/prj2/Img/bgcolor.jpg");
 
+        JLabel jlBack=new JLabel(iiBackground);
 		jlbId=new JLabel("아이디");
 		jlbPass=new JLabel("비밀번호");
 		
@@ -35,6 +39,7 @@ public class UserLogin extends JFrame {
 		
 		setLayout(null);
 		
+        jlBack.setBounds(0, 0, 450, 250);
 		jlbId.setBounds(40, 60, 76, 30);
 		jlbPass.setBounds(40, 100, 76, 30);
         jtfId.setBounds(100, 60, 200, 25);
@@ -52,6 +57,7 @@ public class UserLogin extends JFrame {
 		add(jbtnID);
 		add(jbtnPass);
 		add(jbtnJoin);
+        add(jlBack);
 		
 		UserLoginEvt ule=new UserLoginEvt(this);
 		

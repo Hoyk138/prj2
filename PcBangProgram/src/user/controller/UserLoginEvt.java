@@ -40,8 +40,9 @@ public class UserLoginEvt implements ActionListener{
 		new FindPass(ul);
 	}
 	
-	private void checkLogin() {
+	private boolean checkLogin() {
 		
+		boolean flag=false;
 		String checkLoginId=ul.getJtfId().getText().trim();
 		String temp="";
 		
@@ -50,16 +51,18 @@ public class UserLoginEvt implements ActionListener{
 			try {
 				temp=uDAO.checkLogin(checkLoginId);
 				
-					if(temp.isEmpty()) {
+					if(temp==null) {
 						JOptionPane.showMessageDialog(ul, "이미 사용중인 아이디 입니다");
 						ul.getJtfId().requestFocus(); 
+					}else { 
+						flag=true;
 					}
 		
 			} catch (SQLException e) {
 				e.printStackTrace();
 				
 			}//end catch
-		
+			return flag;
 		
 	}//checkLogin
 	
@@ -73,8 +76,14 @@ public class UserLoginEvt implements ActionListener{
 		}//end if
 
 		if (ae.getSource() == ul.getJpfPass()  || ae.getSource()==ul.getJbtnLogin()) { //비밀번호
+		
+			/////////////////////////////////////
 			
-			checkLogin();
+			if(!checkLogin()) {
+				return;
+			}//end if
+			
+			/////////////////////////////////////
 			
 			if (ul.getJtfId().getText().equals("") && ul.getJpfPass().getPassword().equals("")) { 
 				
