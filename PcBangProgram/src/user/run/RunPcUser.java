@@ -36,7 +36,7 @@ public class RunPcUser {
 		DataOutputStream dos = null;
 		DataInputStream dis = null;
 		FileOutputStream fos = null;
-		
+		 
 		try {
 			//2. 소켓생성 (소켓을 열어서 서버에 연결) 
 			client = new Socket("localhost", 5000);
