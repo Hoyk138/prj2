@@ -15,7 +15,7 @@ import user.view.UserLogin;
 public class RunPcUser {
 	
 	public RunPcUser() {
-		
+		new UserLogin();
 	}//RunPcUser
 	
 	public String getIp() {
@@ -39,8 +39,11 @@ public class RunPcUser {
 		
 		try {
 			//2. 소켓생성 (소켓을 열어서 서버에 연결) 
-			client = new Socket("211.63.89.132", 5000);
+			client = new Socket("localhost", 5000);
 //			client = new Socket("211.63.89.130", 5000);
+//			client = new Socket("211.63.89.132", 5000);
+//			client = new Socket("211.63.89.133", 5000);
+//			client = new Socket("211.63.89.134", 5000);
 			//4. 데이터를 주고 받을 스트림 연결
 			dos = new DataOutputStream(client.getOutputStream());
 			dis = new DataInputStream(client.getInputStream());
@@ -130,7 +133,7 @@ public class RunPcUser {
 		}//end catch
 		
 		
-		new UserLogin();
+		
 	}//main
 	
 	
