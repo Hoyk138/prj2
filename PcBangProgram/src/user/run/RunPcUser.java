@@ -41,8 +41,8 @@ public class RunPcUser {
 			//2. 소켓생성 (소켓을 열어서 서버에 연결) 
 //			client = new Socket("localhost", 5000);
 //			client = new Socket("211.63.89.130", 5000);
-//			client = new Socket("211.63.89.132", 5000);
-			client = new Socket("211.63.89.133", 5000);
+			client = new Socket("211.63.89.132", 5000);
+//			client = new Socket("211.63.89.133", 5000);
 //			client = new Socket("211.63.89.134", 5000);
 //			client = new Socket("211.63.89.142", 5000);
 			//4. 데이터를 주고 받을 스트림 연결
@@ -95,6 +95,7 @@ public class RunPcUser {
 				//클러스터 bomb
 				//플래그를 주고 받음으로서 서버와 클라이언트가 헛돌지 않게 해줍니다. 
 				dos.writeUTF("Y");//블로킹 메서드
+				dos.flush();
 				
 				//code block: 서버에서 응답이 오기 전까지 대기
 				//10. 읽어들일 파일의 횟수 받기
@@ -114,7 +115,12 @@ public class RunPcUser {
 				fos.close();
 				//14.thumbnail 파일 생성
 				System.out.println("thumbnail 파일 생성:"+recieveFileName); 
-				ImageResize.resizeImage("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/"+recieveFileName, 100, 80);
+				try {
+					ImageResize.resizeImage("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/"+recieveFileName, 100, 80);
+				} catch (NullPointerException npe) {
+					npe.printStackTrace();
+					System.out.println(recieveFileName);
+				}
 				System.out.println("----------"); 
 				
 			}//end for
