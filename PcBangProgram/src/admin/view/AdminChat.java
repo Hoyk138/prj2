@@ -1,28 +1,41 @@
 package admin.view;
 
 import java.awt.Color;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import admin.controller.AdminChatEvt;
+import admin.controller.PCStateEvt;
+
 @SuppressWarnings("serial")
-public class AdminChat extends JFrame{
+public class AdminChat extends JDialog{
 
 	private PCState pcs;
+	private PCStateEvt pcse;
 	
 	private JTextArea jtaChat;
 	private JScrollPane jspChat;
 	private JTextField jtfTalk;
 	private JButton jbtSend;
+	
+	private DataInputStream dis;
+	private DataOutputStream dos;
 
-	public AdminChat(PCState pcs) {
-		super(pcs.getPcNum()+"번 PC");
+	public AdminChat(PCState pcs, PCStateEvt pcse) {
+		super(pcs.getMv(), pcs.getPcNum()+"번 PC",false);
 		this.pcs = pcs;
+		this.pcse = pcse;
+		
+		this.dis = pcs.getDis();
+		this.dos = pcs.getDos();
 		
 		//선언
 		jtaChat=new JTextArea();
@@ -43,6 +56,14 @@ public class AdminChat extends JFrame{
 		setResizable(false);
 		setBounds(100, 100, 360, 420);
 		setVisible(true);
+
+		//이벤트 처리
+		System.out.println("this: "+this);
+		AdminChatEvt ace = new AdminChatEvt(this);
+		jtfTalk.addActionListener(ace);
+		jbtSend.addActionListener(ace);
+		
+		addWindowListener(ace);
 		
 //		//이벤트 처리
 //		AdminChatEvt ace = new AdminChatEvt(this);
@@ -56,7 +77,11 @@ public class AdminChat extends JFrame{
 	public PCState getPcs() {
 		return pcs;
 	}
-
+	
+	public PCStateEvt getPcse() {
+		return pcse;
+	}
+	
 	public JTextArea getJtaChat() {
 		return jtaChat;
 	}
@@ -71,6 +96,14 @@ public class AdminChat extends JFrame{
 
 	public JButton getJbtSend() {
 		return jbtSend;
+	}
+	
+	public DataInputStream getDis() {
+		return dis;
+	}
+
+	public DataOutputStream getDos() {
+		return dos;
 	}
 	
 //	public AdminChat() {

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import admin.controller.ManageShopEvt;
+import admin.controller.PCStateEvt;
 import admin.server.ManageShopServer;
 
 @SuppressWarnings("serial")

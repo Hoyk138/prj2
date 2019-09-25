@@ -9,7 +9,7 @@ public class AdminRun {
 		FileServer fs=new FileServer();
 		fs.start(); //runºÎ¸£±â~
 		
-		new MainView();
+		new MainView("test");
 	}//run
 
 }//class

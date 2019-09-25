@@ -11,7 +11,7 @@ import javax.swing.border.TitledBorder;
 
 import user.controller.UserMainEvt;
 
-
+@SuppressWarnings("serial")
 public class UserMain extends JFrame{
 	private JLabel pcNum, id, startTime, usePrice, useTime; // 속성 (타이틀)
 	private JLabel jlPcNum, jlID, jlStartTime, jlUsePrice, jlUseTime; //속성 값들(data)

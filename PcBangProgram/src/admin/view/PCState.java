@@ -16,6 +16,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.TitledBorder;
 
 import admin.DAO.AdminDAO;
+import admin.controller.PCStateEvt;
 
 @SuppressWarnings("serial")
 public class PCState extends JPanel implements Runnable {
