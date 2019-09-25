@@ -68,7 +68,8 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 //			String ip =JOptionPane.showInputDialog("서버의 ip Address입력\n"+"130,132,133,134,135,137,138,140,141,142,143,144,155,147,148,149,150,159,152,153");
 			// localhost, 127.0.0.1, 자신의 ip를 넣으면 내 컴퓨터에 존재하는 서버에 접속한다.
 //			client = new Socket("localhost", 55555);
-			socket = new Socket("211.63.89.133", 9001);
+			socket = new Socket("localhost", 9001);//단위 테스트 할 때는 자신의 IP로, 실제 상황에는 관리자 프로그램이 켜져있는 IP로
+//			socket = new Socket("211.63.89.133", 9001);
 
 			// 읽기 스트림 연결
 			disRead = new DataInputStream(socket.getInputStream());
