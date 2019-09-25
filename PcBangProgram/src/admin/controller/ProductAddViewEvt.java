@@ -107,21 +107,31 @@ private void uploadImg() throws IOException{
 		String category = pav.getDcbmCategoryAdd().getSelectedItem().toString(); 
 		String name =pav.getJtfProductNameAdd().getText().trim();
 		String explain = pav.getJtaExplainAdd().getText().trim();
-		int price = Integer.parseInt(pav.getJtfPriceAdd().getText().trim());
+		int price=0;
+		try {
+			price=Integer.parseInt((pav.getJtfPriceAdd().getText().trim()));
+		}catch ( java.lang.NumberFormatException e) {
+			JOptionPane.showMessageDialog(pav,"가격은 숫자만 넣어주세요");
+			return;
+		}
 		
 		ProductAddVO paVO=new ProductAddVO(imgPath, category, name, explain, price);
 		
 		heeDAO hDAO=heeDAO.getInstance();
+		
 		try {
-			hDAO.InsertProduct(paVO);
+			if(hDAO.InsertProduct(paVO)==1) {
 			JOptionPane.showMessageDialog(pav,"상품이 추가되었습니다.");
 			pe.setDrinkList();
 			pe.setFoodList();
 			pe.setSnackList();
+			}else {
+				JOptionPane.showMessageDialog(pav,"상품이 추가실패했습니다.");
+			}//end if
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+	
 		
 		
 	}//productAdd

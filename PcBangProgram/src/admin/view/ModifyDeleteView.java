@@ -19,14 +19,15 @@ public class ModifyDeleteView extends JDialog{
 	private JTextField jtfProductNameModify,jtfPriceModify;
 	private JTextArea jtaExplainModify;
 	private String itemCode;
-	private ProductEvt pe;
+	
 	
 	public ModifyDeleteView(ProductMDViewVO pmdvVO,ProductEvt pe) {
 //		super("메뉴 수정 삭제");
 //		super(ProductView pv,"");
-		this.pe=pe;
 		itemCode=pmdvVO.getItemCode();
 		jtaExplainModify=new JTextArea(pmdvVO.getExplain());
+		ImageIcon bgimg=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/b1g1.png");
+		JLabel jlBGimg=new JLabel(bgimg);
 		JLabel jlProductName=new JLabel("상품명");
 		JLabel jlProductPrice=new JLabel("상품가격");
 		JLabel jlExplain=new JLabel("상품설명");		
@@ -58,6 +59,7 @@ public class ModifyDeleteView extends JDialog{
 		jtaExplainModify.setLineWrap(true);
 		setLayout(null);
 		
+		jlBGimg.setBounds(0,0,800,700);
 		jlImgModify.setBounds(30,30,350,350);
 		jbtProductImageModify.setBounds(120,400,150,30);
 		jlCategory.setBounds(450,45,270,30);
@@ -91,7 +93,7 @@ public class ModifyDeleteView extends JDialog{
 		add(jbtProductDelete);
 		add(jlState);
 		add(jlCategory);
-		
+		add(jlBGimg);
 		
 		setBounds(100,100,800,700);
 		

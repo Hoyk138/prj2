@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
+import com.sun.webkit.ContextMenu.ShowContext;
 
 import admin.DAO.heeDAO;
 import admin.VO.ProductDeleteVO;
@@ -114,7 +114,13 @@ private void uploadImg() throws IOException{
 			imgPath=file;
 		}
 		String name=mdv.getJtfProductNameModify().getText().trim();
-		int price=Integer.parseInt((mdv.getJtfPriceModify().getText().trim()));
+		int price=0;
+		try {
+			price=Integer.parseInt((mdv.getJtfPriceModify().getText().trim()));
+		}catch ( java.lang.NumberFormatException e) {
+			JOptionPane.showMessageDialog(mdv,"가격은 숫자만 넣어주세요");
+			return;
+		}
 		String explain=mdv.getJtaExplainModify().getText().trim();
 		String itemCode=mdv.getItemCode();
 		
@@ -128,7 +134,7 @@ private void uploadImg() throws IOException{
 		cnt=hDAO.modifyProduct(pmVO);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}//catch
+		}
 		if(cnt==1) {
 			JOptionPane.showMessageDialog(mdv,"상품이 변경되었습니다.");
 			pe.setDrinkList();
@@ -170,6 +176,15 @@ private void uploadImg() throws IOException{
 	public void productRealDelete() {
 		String itemCode=pmdvVO.getItemCode();
 		ProductRealDeleteVO prdVO=new ProductRealDeleteVO(itemCode);
+		
+		File originalFile=new File(mdv.getJlImgModify().getIcon().toString());
+		File reSizeFile=new File(mdv.getJlImgModify().getIcon().toString().substring(0,
+				mdv.getJlImgModify().getIcon().toString().lastIndexOf("/")+1)+
+				mdv.getJlImgModify().getIcon().toString().substring(
+				mdv.getJlImgModify().getIcon().toString().lastIndexOf("/")+1).replace("rs_",""));
+		
+		originalFile.delete();
+		reSizeFile.delete();
 		
 		heeDAO hDAO=heeDAO.getInstance();
 		

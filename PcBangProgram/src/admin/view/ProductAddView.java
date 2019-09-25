@@ -24,6 +24,8 @@ public class ProductAddView extends JDialog{
 	public ProductAddView(ProductEvt pe) {
 //		super("메뉴 추가");
 		
+		ImageIcon bgimg=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/b1g1.png");
+		JLabel jlBGimg=new JLabel(bgimg);
 		jtaExplainAdd=new JTextArea();
 		JLabel jlProductName=new JLabel("상품명");
 		JLabel jlProductPrice=new JLabel("상품가격");
@@ -42,7 +44,7 @@ public class ProductAddView extends JDialog{
 		jtaExplainAdd.setLineWrap(true);
 		setLayout(null);
 
-		
+		jlBGimg.setBounds(0,0,800,700);
 		jlImgAdd.setBounds(30,30,350,350);
 		jbtProductImageAdd.setBounds(120,400,150,30);
 		jcbCategory.setBounds(400,45,270,30);
@@ -69,7 +71,7 @@ public class ProductAddView extends JDialog{
 		add(jlExplain);
 		add(jtaExplainAdd);
 		add(jbtProductAdd);
-		
+		add(jlBGimg);
 		
 		setBounds(100,100,800,700);
 		

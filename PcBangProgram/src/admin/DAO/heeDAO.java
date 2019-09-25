@@ -63,9 +63,10 @@ private static heeDAO aDAO;
 	
 	}//getConnection
 	
-	public void InsertProduct(ProductAddVO paVO) throws SQLException{
+	public int InsertProduct(ProductAddVO paVO) throws SQLException{
 		Connection con=null;
 		PreparedStatement pstmt=null;
+		int flag=0;
 		
 		try {
 			con=getConnection();
@@ -93,12 +94,17 @@ private static heeDAO aDAO;
 			pstmt.setString(4,category);
 			pstmt.setString(5,paVO.getExplain());
 			
-			pstmt.executeUpdate();
+			try {
+			flag=pstmt.executeUpdate();
+			}catch (java.sql.SQLDataException e) {
+				JOptionPane.showMessageDialog(null,"가격은 10만원을 넘을수 없습니다.");
+			}
 		}finally {
 			if(pstmt!=null) {pstmt.close();}
 			if(con!=null) {con.close();}
 		}
 		
+		return flag;
 	}//AddProduct
 	
 	public List<ProductViewVO> selectProductView() throws SQLException{
@@ -196,8 +202,12 @@ private static heeDAO aDAO;
 			pstmt.setString(3,pmVO.getName());
 			pstmt.setInt(4,pmVO.getPrice());
 			pstmt.setString(5,pmVO.getItemCode());
-			
-			cnt=pstmt.executeUpdate();
+
+			try {
+				cnt=pstmt.executeUpdate();
+				}catch (java.sql.SQLDataException e) {
+					JOptionPane.showMessageDialog(null,"가격은 10만원을 넘을수 없습니다.");
+				}
 		}finally {
 
 			if(pstmt!=null) {pstmt.close();}
@@ -258,7 +268,6 @@ private static heeDAO aDAO;
 			.append(	 " where  (io.PC_USE_CODE=pu.PC_USE_CODE) and (io.ITEM_CODE=i.ITEM_CODE) " )
 			.append(	 " and(ip.ORDER_CODE(+)=io.ORDER_CODE) " )
 			.append(	 " order by payment_time desc " );
-			
 
 
 			
