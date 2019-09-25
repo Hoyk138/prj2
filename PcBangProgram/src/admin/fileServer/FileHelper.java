@@ -52,7 +52,7 @@ public class FileHelper extends Thread {
 	
 	public void run() {
 		byte[] readData = new byte[512];//파일에서 읽어들인 내용을 임시로 저장
-		int sendCnt = 0;//전송할 readData의 갯수(파일을 몇 번 보낼 지 주고 받을 사인)
+		long sendCnt = 0;//전송할 readData의 갯수(파일을 몇 번 보낼 지 주고 받을 사인)
 		int readSize = 0;//읽어들인 배열의 방의 갯수(크기)
 		
 		try {
@@ -70,9 +70,11 @@ public class FileHelper extends Thread {
 				dis.readUTF();// 클라이언트로 부터 값이 들어 오면
 
 				// 8. 전송할 횟수를 클라이언트에게 보낸다.
-				dos.writeInt(sendCnt);
+				System.out.println("전송할 횟수:"+sendCnt);
+				dos.writeLong(sendCnt);
 				dos.flush();
 				// 11. 전송할 파일명을 보낸다.
+				System.out.println("전송할 파일명:"+listSendFile.get(i));
 				dos.writeUTF(listSendFile.get(i));
 				dos.flush();
 

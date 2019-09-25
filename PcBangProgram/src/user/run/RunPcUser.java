@@ -18,18 +18,18 @@ public class RunPcUser {
 		new UserLogin();
 	}//RunPcUser
 	
-	public String getIp() {
-		InetAddress local; 
-		String ip=null;
-		
-		try { 
-			local = InetAddress.getLocalHost(); 
-			ip = local.getHostAddress(); 
-		} catch (UnknownHostException e1) {
-			e1.printStackTrace(); 
-		}//end catch
-		return ip;
-	}//getIp
+//	public String getIp() {
+//		InetAddress local; 
+//		String ip=null;
+//		
+//		try { 
+//			local = InetAddress.getLocalHost(); 
+//			ip = local.getHostAddress(); 
+//		} catch (UnknownHostException e1) {
+//			e1.printStackTrace(); 
+//		}//end catch
+//		return ip;
+//	}//getIp
 	
 	public void sendImage() throws UnknownHostException, IOException {
 		Socket client = null;
@@ -44,6 +44,7 @@ public class RunPcUser {
 //			client = new Socket("211.63.89.132", 5000);
 			client = new Socket("211.63.89.133", 5000);
 //			client = new Socket("211.63.89.134", 5000);
+//			client = new Socket("211.63.89.142", 5000);
 			//4. 데이터를 주고 받을 스트림 연결
 			dos = new DataOutputStream(client.getOutputStream());
 			dis = new DataInputStream(client.getInputStream());
@@ -72,6 +73,8 @@ public class RunPcUser {
 //			csvImgFile2.append(string).append(",");
 //		}//end for
 //		System.out.println(csvImgFile2.toString());
+			
+			System.out.println("서버로 보낼 파일 리스트: "+csvImgFile.toString());
 
 			// 5. 서버로 파일리스트 CSV Data 보내기
 			dos.writeUTF(csvImgFile.toString());//문자열을 스트림 기록
@@ -79,25 +82,27 @@ public class RunPcUser {
 			
 			//9. 서버에서 없는 파일의 갯수를 보낸 것을 받아 그 횟수만큼 반복시킨다. 
 			int fileCnt = dis.readInt();
+			System.out.println("서버에서 알려 준 '받아야 할 파일 갯수': "+fileCnt);
 
-			int readCnt = 0;
+			long readCnt = 0;
 			String recieveFileName = "";
 			byte[] readData= new byte[512];
 			int readSize = 0;
 			for (int i = 0; i < fileCnt; i++) {
-				
-//				
+				System.out.println("----------"); 
+				readCnt = 0;
+				System.out.println("클라이언트(파일의 횟수 초기화): " + readCnt);
 				//클러스터 bomb
 				//플래그를 주고 받음으로서 서버와 클라이언트가 헛돌지 않게 해줍니다. 
 				dos.writeUTF("Y");//블로킹 메서드
 				
 				//code block: 서버에서 응답이 오기 전까지 대기
 				//10. 읽어들일 파일의 횟수 받기
-				readCnt = dis.readInt();
-//				System.out.println("클라이언트: " + readCnt);
+				readCnt = dis.readLong();
+				System.out.println("클라이언트(파일의 횟수): " + readCnt);
 				//12. 받아서 생성할 파일명을 받기 
 				recieveFileName = dis.readUTF();
-//				System.out.println("클라이언트: " + recieveFileName);
+				System.out.println("클라이언트(파일명): " + recieveFileName);
 				//14. 파일생성(같은 이름이 있다면 덮어 씌우겠다.)
 				fos = new FileOutputStream("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/"+recieveFileName);
 				while(readCnt > 0) {
@@ -108,9 +113,10 @@ public class RunPcUser {
 				fos.flush();
 				fos.close();
 				//14.thumbnail 파일 생성
+				System.out.println("thumbnail 파일 생성:"+recieveFileName); 
 				ImageResize.resizeImage("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/"+recieveFileName, 100, 80);
+				System.out.println("----------"); 
 				
-
 			}//end for
 			
 		} finally {
