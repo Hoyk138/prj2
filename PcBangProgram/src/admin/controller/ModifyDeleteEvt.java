@@ -99,7 +99,7 @@ private void uploadImg() throws IOException{
 		}finally {
 			if(fis!=null) {fis.close();}
 			if(fos!=null) {fos.close();}
-		}
+		}//finally
 			
 		}//uploadImg
 		
