@@ -11,7 +11,7 @@ import java.util.List;
 
 public class FileHelper extends Thread {
 
-	private Socket client;
+//	private Socket client;
 	private DataInputStream dis;
 	private DataOutputStream dos;
 	private FileInputStream fis;
@@ -19,7 +19,7 @@ public class FileHelper extends Thread {
 	private File temp1;
 
 	public FileHelper(Socket client) throws IOException{
-		this.client = client;
+//		this.client = client;
 		
 		//4. 데이터를 주고 받을 스트림 연결
 		dis = new DataInputStream(client.getInputStream());
