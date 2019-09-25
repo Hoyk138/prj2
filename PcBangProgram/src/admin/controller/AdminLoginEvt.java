@@ -64,7 +64,7 @@ public class AdminLoginEvt implements ActionListener{
 				String name = aDAO.selectLogin(alVO);
 					
 				if( !name.isEmpty() ) { //입력된 아이디와 비밀번호에 일치하는 정보가 있다면
-					new MainView();
+					new MainView(name);
 					al.dispose();
 				}else {
 					al.getJtfId().setText(""); //아이디 초기화

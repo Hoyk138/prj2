@@ -23,8 +23,8 @@ public class MainView extends JFrame{
 	
     private	OrderView ov;
 	
-	public MainView() {
-		super("PC방 관리 프로그램");
+	public MainView(String name) {
+		super("PC방 관리 프로그램["+name+"]");
 		
 		//버튼 생성
 		jbtnmanageShop = new JButton("매장");
