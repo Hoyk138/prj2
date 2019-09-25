@@ -26,11 +26,10 @@ public class CalcView extends JPanel {
 
 	private JTable jtCalcPC, jtCalcItem ;
 	private DefaultTableModel dtmCalcPC, dtmCalcItem;
-	private JButton jbtCalcPC, jbtCalcItem, jbtnSearchPC, jbtnSearchItem ;
+	private JButton jbtCalcPC, jbtCalcItem, jbtnSearchPC, jbtnSearchItem, jbtnPCSaveFile, jbtnItemSaveFile ;
 	private JTabbedPane jtp ;
 	private CheckboxGroup cgPC, cgItem ;
 	private JTextField jtfStartPC, jtfEndPC, jtfStartItem, jtfEndItem ;
-	private String logFile;
 	
 	public CalcView() {
 
@@ -70,6 +69,8 @@ public class CalcView extends JPanel {
 //		jbtCloseItem = new JButton("종료") ;
 		jbtCalcPC = new JButton("PC 정산") ;
 		jbtCalcItem = new JButton("매점 정산") ;
+		jbtnPCSaveFile = new JButton("텍스트 파일로 저장") ;
+		jbtnItemSaveFile = new JButton("텍스트 파일로 저장") ;
 		
 		
 		JScrollPane jspCalcPC = new JScrollPane(jtCalcPC);
@@ -133,6 +134,7 @@ public class CalcView extends JPanel {
 		
 		jpCalcPCNorth.add(jpCalcPC2) ;
 		jpCalcPCSouth.add(jbtCalcPC) ;
+		jpCalcPCSouth.add(jbtnPCSaveFile) ;
 		jpCalcPC.add("Center", jspCalcPC) ;
 		jpCalcPC.add("South", jpCalcPCSouth) ;
 		jpCalcPC.add("North",jpCalcPCNorth) ;
@@ -213,6 +215,7 @@ public class CalcView extends JPanel {
 		
 //		jpCalcItemSouth.add(jbtCloseItem) ;
 		jpCalcItemSouth.add(jbtCalcItem) ;
+		jpCalcItemSouth.add(jbtnItemSaveFile) ;
 		jpCalcItem.add("Center", jspCalcItem) ;
 		jpCalcItem.add("South", jpCalcItemSouth) ;
 		jpCalcItem.add("North", jpCalcItemNorth) ;
@@ -240,6 +243,8 @@ public class CalcView extends JPanel {
 		jtp.addMouseListener(cie);
 		jbtnSearchPC.addActionListener(cpe);
 		jbtnSearchItem.addActionListener(cie);
+		jbtnPCSaveFile.addActionListener(cpe);
+		jbtnItemSaveFile.addActionListener(cie);
 		
 //		setBounds(400, 200, 719, 600);
 		setVisible(true);
@@ -306,8 +311,12 @@ public class CalcView extends JPanel {
 		return jtfEndItem;
 	}
 
-	public String getLogFile() {
-		return logFile;
+	public JButton getJbtnPCSaveFile() {
+		return jbtnPCSaveFile;
+	}
+
+	public JButton getJbtnItemSaveFile() {
+		return jbtnItemSaveFile;
 	}
 
 	

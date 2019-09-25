@@ -33,6 +33,12 @@ public class CalcPCVO {
 	public int getUseFee() {
 		return useFee;
 	}
+
+	@Override
+	public String toString() {
+		return pcCode + "\t" +   id + "\t" +  pcNum  + "\t\t" + useFee + "Пј\t\t" + useTime + "Ка\n" ;
+	}
+	
 	
 
 } // class

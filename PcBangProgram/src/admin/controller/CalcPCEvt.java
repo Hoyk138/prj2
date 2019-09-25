@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -30,11 +31,16 @@ import admin.view.CalcView;
 public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	
 	private CalcView cv ;
-	private String fileName;
-	private CalcPCDAO cpDAO ;
+	private CalcPCDAO cpcDAO ;
+	private String fileName ;
+	private StringBuilder msg ;
+	private StringBuilder report_file;
+	
 	
 	public CalcPCEvt(CalcView cv) {
 		this.cv = cv ;
+		report_file = new StringBuilder();
+		msg = new StringBuilder() ;
 //		setCalcPCList();
 	} // CalcPCEvt
 	
@@ -89,9 +95,10 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			jta.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원");
 			
 
-//			JOptionPane.showMessageDialog(cv, jsp);
-			JOptionPane.showMessageDialog(null, jsp);
+			JOptionPane.showMessageDialog(cv, jsp);
+//			JOptionPane.showMessageDialog(null, jsp);
 			
+			System.out.println(jta.getText());
 			
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "DBMS에 문제가 발생했습니다.");
@@ -102,6 +109,8 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 
 		
 	public void setCalcPCList() {
+		
+		
 		Object[] rowData = null ;
 		
 		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
@@ -132,6 +141,24 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				
 				dtm.addRow(rowData);
 			} // end for
+			
+			int totalUseTime=0 ;
+			int totalPrice=0 ;
+			
+			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				msg.append(list.get(i)).toString() ;
+				
+				totalUseTime += list.get(i).getUseTime() ;
+				totalPrice += list.get(i).getUseFee() ;
+			} // end for
+			
+			msg.append("-------------------------------------------------------------\n")
+			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원") ;
+//			msg = msg.append(list) ;
+			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
 			
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
@@ -173,6 +200,26 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				dtm.addRow(rowData);
 			} // end for
 			
+	
+			int totalUseTime=0 ;
+			int totalPrice=0 ;
+			report_file.delete(0, report_file.length()) ;
+			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				msg.append(list.get(i)).toString() ;
+				
+				totalUseTime += list.get(i).getUseTime() ;
+				totalPrice += list.get(i).getUseFee() ;
+			} // end for
+			
+			msg.append("-------------------------------------------------------------\n")
+			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원") ;
+//			msg = msg.append(list) ;
+			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
+		
+						
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
 			Se.printStackTrace();
@@ -212,6 +259,25 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				
 				dtm.addRow(rowData);
 			} // end for
+			
+			int totalUseTime=0 ;
+			int totalPrice=0 ;
+			report_file.delete(0, report_file.length()) ;
+			
+			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				msg.append(list.get(i)).toString() ;
+				
+				totalUseTime += list.get(i).getUseTime() ;
+				totalPrice += list.get(i).getUseFee() ;
+			} // end for
+			
+			msg.append("-------------------------------------------------------------\n")
+			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원") ;
+//			msg = msg.append(list) ;
+			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
 			
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
@@ -253,6 +319,24 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				
 				dtm.addRow(rowData);
 			} // end for
+			
+			int totalUseTime=0 ;
+			int totalPrice=0 ;
+			report_file.delete(0, report_file.length()) ;
+			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				msg.append(list.get(i)).toString() ;
+				
+				totalUseTime += list.get(i).getUseTime() ;
+				totalPrice += list.get(i).getUseFee() ;
+			} // end for
+			
+			msg.append("-------------------------------------------------------------\n")
+			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원") ;
+//			msg = msg.append(list) ;
+			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
 			
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
@@ -311,6 +395,16 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				} // end if
 			} // end if
 			
+			if (ae.getSource()==cv.getJbtnPCSaveFile()) {
+				try {
+					reportFile() ;
+				JOptionPane.showMessageDialog(null, "(C:\\dev\\PCBang_calc) 경로에 저장되었습니다.");
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				} // end catch
+			} // end if
+			
 		} // actionPerformed
 		
 		
@@ -319,20 +413,21 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			BufferedWriter bw = null;
 			
 			try {
-				File file = new File("c:/dev/report");
+				File file = new File("c:/dev/PCBang_calc");
 
 				if (!file.exists()) {
 					file.mkdir();
 				} // end if
 				
-				fileName = file.getAbsolutePath() + "/report_" + System.currentTimeMillis() + ".dat";
+				fileName = file.getAbsolutePath() + "/PC_" + System.currentTimeMillis() + ".dat";
 				bw = new BufferedWriter(new FileWriter(fileName));
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
 				bw.write( "======================================\n"
-						+ "파일명 : [" + cv.getLogFile() + "]     " + sdf.format(System.currentTimeMillis())+"\n"
-						+ "======================================\n"+ "\n" 
-						+ cpDAO.getReport_file());
+						+ "[PC 정산 내역] (" + sdf.format(System.currentTimeMillis())+"에 저장됨.)\n"
+						+ "======================================\n"
+						+ getReport_file()
+						+ "\n======================================");
 				
 				// 스트림의 내용을 목적지로 분출
 				bw.flush();
@@ -342,6 +437,10 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			} // end finally
 			
 		}//reportFile
+
+		public String getReport_file() {
+			return report_file.toString();
+		}
 		
 	// 단위테스트용
 //	public static void main(String[] args) {

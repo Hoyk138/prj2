@@ -16,8 +16,6 @@ import admin.VO.CalcPCVO;
 public class CalcPCDAO {
 	
 	private static CalcPCDAO pcDAO ;
-	private StringBuilder report_file ;
-	
 	private CalcPCDAO() {
 		
 		
@@ -104,6 +102,8 @@ public class CalcPCDAO {
 		} // end finally
 				
 		return list ;
+		
+		
 	} // selectCalcPC
 	
 	public List<CalcPCReciptVO> selectCalcPCRecipt() throws SQLException {
@@ -289,10 +289,6 @@ public class CalcPCDAO {
 		
 		return list ;
 	} // selectCalcPCLstCustom
-
-	public StringBuilder getReport_file() {
-		return report_file;
-	}
 
 	
 } // class
