@@ -124,8 +124,8 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 				} // end while
 			} catch (IOException ie) {
 				JOptionPane.showMessageDialog(ac, "사용자께서 채팅을 나가셨습니다.");
-				ac.getPcs().setBackgrounColor(Color.LIGHT_GRAY);
-				ac.getPcs().setBackground(ac.getPcs().getBackgrounColor());
+//				ac.getPcs().setBackgrounColor(Color.LIGHT_GRAY);
+//				ac.getPcs().setBackground(ac.getPcs().getBackgrounColor());
 				ie.printStackTrace();
 			} // end catch
 		} // end if
