@@ -1,5 +1,7 @@
 package user.view;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.text.DecimalFormat;
 
 import javax.swing.DefaultComboBoxModel;
@@ -10,6 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import user.VO.UserItemDetailVO;
@@ -28,7 +31,7 @@ public class UserItemDetail extends JDialog{
 	
 	private UserMain um;
 	private UserItem ui;
-	private UserItemEvt uie;
+	private static UserItemEvt uie; //
 	private UserMainEvt ume;
 	private String itemName;
 	
@@ -46,7 +49,7 @@ public class UserItemDetail extends JDialog{
 		jlDescription=new JLabel("◎ 먹거리 POINT ◎");
 		jlQuantity=new JLabel("수량");
 		//VO
-		jlImg=new JLabel(new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/"+uidVO.getItemImg()));
+		jlImg=new JLabel(new ImageIcon(uidVO.getItemImg()));
 		
 		//JTextField,TextArea  //VO
 		jlDetailName=new JLabel("["+uidVO.getCategoryName()+"]"+uidVO.getItemName()); 
@@ -88,8 +91,12 @@ public class UserItemDetail extends JDialog{
 		jpBtn.add(jbtPut);
 		jpBtn.add(jbtClose);
 		
-		jpDetailName.setBorder(new TitledBorder(""));
-		jpCenter.setBorder(new TitledBorder(""));
+		jlImg.setBorder(new TitledBorder(new  LineBorder(Color.black)));
+		jtfDescription.setBorder(new TitledBorder(new  LineBorder(Color.black)));
+		jpDetailName.setBorder(new TitledBorder(new  LineBorder(Color.black)));
+		jpCenter.setBorder(new TitledBorder(new  LineBorder(Color.black)));
+		jbtPut.setBorder(new TitledBorder(new  LineBorder(Color.black)));
+		jbtClose.setBorder(new TitledBorder(new  LineBorder(Color.black)));
 		
 		jp.setLayout(null);
 		jpDetailName.setBounds(0, 0, 600, 50);
@@ -101,7 +108,7 @@ public class UserItemDetail extends JDialog{
 		//
 		jpCenter.setLayout(null);
 		jlImg.setBounds(30, 30, 260, 220);
-		jlDescription.setBounds(390, 30, 200, 50);
+		jlDescription.setBounds(370, 30, 200, 50);
 		jtfDescription.setBounds(310, 80, 280, 50);
 		jlQuantity.setBounds(330, 150, 100, 50);
 		jcbQuantity.setBounds(390, 160, 120, 25);
@@ -125,6 +132,23 @@ public class UserItemDetail extends JDialog{
 		
 		//Frame에 추가
 		add(jp);
+		
+		//
+		jpDetailName.setBackground(new Color(0x6482B9));
+		jpCenter.setBackground(Color.white);
+		jtfDescription.setBackground(new Color(0xE0EBFF));
+		jcbQuantity.setBackground(Color.white);
+		jpBtn.setBackground(new Color(0xCCCCCC));
+		jbtPut.setBackground(new Color(0x6482B9));
+		jbtClose.setBackground(new Color(0x6482B9));
+		//폰트
+		jlDetailName.setFont(new Font("serif", Font.BOLD, 15));
+		jlDescription.setFont(new Font("MonoSpaced", Font.BOLD, 15));
+		jlDetailName.setForeground(Color.white);	
+		jbtPut.setForeground(Color.white);	
+		jbtClose.setForeground(Color.white);	
+		
+		getContentPane().setBackground(new Color(0xCCCCCC));
 		
 		setResizable(false);
 		setBounds(ui.getX()+300, ui.getY()+200, 650, 450);

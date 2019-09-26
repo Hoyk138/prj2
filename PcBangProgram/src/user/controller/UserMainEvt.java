@@ -3,10 +3,8 @@ package user.controller;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -23,6 +21,7 @@ import user.view.UserChat;
 import user.view.UserItem;
 import user.view.UserLogin;
 import user.view.UserMain;
+import user.view.UserMain;
 
 public class UserMainEvt implements ActionListener{
 	
@@ -34,10 +33,6 @@ public class UserMainEvt implements ActionListener{
 	
 	private int pcNum;
 	private String pcUseCode;
-	
-	private Socket socket;
-//	private DataInputStream dis;
-	private DataOutputStream dos;
 	
 	public UserMainEvt(UserMain um) {
 		this.um=um;
@@ -52,15 +47,6 @@ public class UserMainEvt implements ActionListener{
 			pt=new PriceThread(um.getJlUsePrice());
 			pt.start();
 		}//end if
-		
-		//서버에 연결
-	    try {
-			connectToServer();
-		} catch (UnknownHostException uhe) {
-			uhe.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}//end catch
 		
 	}//UserMainEvt
 	
@@ -124,48 +110,6 @@ public class UserMainEvt implements ActionListener{
 		}//end catch
 	}//openWebpage
 	
-    private void connectToServer() throws UnknownHostException, IOException{
-//		try {
-			// 소켓을 생성
-			socket = new Socket("localhost", 9000);
-
-			// 읽기 스트림 연결
-//			dis = new DataInputStream(socket.getInputStream());
-			// 쓰기 스트림 연결
-			dos = new DataOutputStream(socket.getOutputStream());
-			
-            //내 별명을 인스턴스 변수에 저장
-//			this.nick = nick;//입력 대화명을 어디에서든 사용할 수 있도록 인스턴스변수에
-			
-			//상대방의 대화명을 받기
-//			inputNick = disRead.readUTF();
-
-			//ID와 로그인 시간을 상대방에게 전송.
-			dos.writeUTF("아이디");
-			dos.writeUTF("현재시간");
-			dos.flush();
-			
-//			jtaDisplay.append(inputNick+"님의 대화 서버에 들어 오셨습니다. 즐거운 대화 나누세요.\n");
-//		} catch (ConnectException ce) {
-//			ce.printStackTrace();
-//		} // end catch
-    }//connectToServer
-    
-	private void openChat() throws IOException{
-		String[] options = {"예","아니요"};
-//		switch (JOptionPane.showConfirmDialog(um, "관리자와 채팅을 시작 하시겠습니까?")) {
-		switch (JOptionPane.showOptionDialog(um, "관리자와 채팅을 시작 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
-		case JOptionPane.OK_OPTION:
-			try {
-				dos.writeUTF("/채팅");	
-				dos.flush();
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}//catch
-			new UserChat(um,Integer.parseInt(um.getJlPcNum().getText()),dos);	
-		}//switch case
-	}//openChat
-    
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 			
@@ -174,16 +118,11 @@ public class UserMainEvt implements ActionListener{
 		}//end if
 		
 		if(ae.getSource()==um.getJbtCounterChat()) { //카운터채팅버튼
-//			switch(JOptionPane.showConfirmDialog(um, "카운터에 문의하시겠습니까?")) {
-//			case JOptionPane.OK_OPTION:
-//				JOptionPane.showMessageDialog(um, "※채팅이 원활하지 않을 경우, 카운터에 직접 문의해주세요.※");
-//				new UserChat(um);
-//			}//end switch
-			try {
-				openChat();
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}//catch
+			switch(JOptionPane.showConfirmDialog(um, "카운터에 문의하시겠습니까?")) {
+			case JOptionPane.OK_OPTION:
+				JOptionPane.showMessageDialog(um, "※채팅이 원활하지 않을 경우, 카운터에 직접 문의해주세요.※");
+				new UserChat(um);
+			}//end switch			
 		}//end if
 		
 		if(ae.getSource()==um.getJbtExit()) { //사용종료버튼
