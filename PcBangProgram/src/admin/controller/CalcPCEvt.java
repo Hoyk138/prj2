@@ -9,11 +9,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,6 +37,15 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	private String fileName ;
 	private StringBuilder msg ;
 	private StringBuilder report_file;
+	private long date ;
+	private Date today ; 
+	private DateFormat format ; 
+	private String formatted ; 
+	private SimpleDateFormat sdf ;
+	private Calendar cal ;
+	private String todate; 
+	private String predate ;
+	
 	
 	
 	public CalcPCEvt(CalcView cv) {
@@ -89,8 +102,8 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				jta.append("\t" + pcNum + "\t" + pcMap.get(pcNum) + "\t" + pcMap.get(pcNum)*20 + "\n") ; // 각 PC 사용시간 & ita.next():PC번호
 			} // end while
 			
-			jta.append("------------------------------------------------------------------------------------------------------------\n");
-			jta.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원");
+			jta.append("------------------------------------------------------------------------------------------------------------\n") ;
+			jta.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n") ;
 			
 
 			JOptionPane.showMessageDialog(cv, jsp);
@@ -143,6 +156,12 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			int totalUseTime=0 ;
 			int totalPrice=0 ;
 			
+			todate= null; 
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
+			cal = Calendar.getInstance() ;
+			
+			todate = sdf.format(cal.getTime()) ;
+			
 			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
 			
 			for (int i = 0; i < list.size(); i++) {
@@ -153,7 +172,9 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			} // end for
 			
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원") ;
+			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
+			.append("조회 기간 : " + todate) ;
+			
 //			msg = msg.append(list) ;
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
@@ -201,7 +222,17 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	
 			int totalUseTime=0 ;
 			int totalPrice=0 ;
+			todate= null; 
+			predate= null ;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
+			cal = Calendar.getInstance() ;
+			
+			todate = sdf.format(cal.getTime()) ;
+			cal.add(Calendar.DATE, -7);
+			predate = sdf.format(cal.getTime()) ;
+			
 			report_file.delete(0, report_file.length()) ;
+			
 			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
 			
 			for (int i = 0; i < list.size(); i++) {
@@ -212,8 +243,9 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			} // end for
 			
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원") ;
-//			msg = msg.append(list) ;
+			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
+			.append("조회 기간 : " + predate + " ~ " + todate);
+
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 		
@@ -260,6 +292,16 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			
 			int totalUseTime=0 ;
 			int totalPrice=0 ;
+			
+			todate= null; 
+			predate= null ;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
+			cal = Calendar.getInstance() ;
+			
+			todate = sdf.format(cal.getTime()) ;
+			cal.add(Calendar.MONTH, -1);
+			predate = sdf.format(cal.getTime()) ;
+			
 			report_file.delete(0, report_file.length()) ;
 			
 			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
@@ -272,8 +314,8 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			} // end for
 			
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원") ;
-//			msg = msg.append(list) ;
+			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
+			.append("조회 기간 : " + predate + " ~ " + todate);
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 			
@@ -320,6 +362,15 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			
 			int totalUseTime=0 ;
 			int totalPrice=0 ;
+			
+			todate= null; 
+			predate= null ;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
+			cal = Calendar.getInstance() ;
+			
+			todate  = cv.getJtfEndPC().getText() ;
+			predate= cv.getJtfStartPC().getText() ;
+			
 			report_file.delete(0, report_file.length()) ;
 			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
 			
@@ -331,7 +382,8 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			} // end for
 			
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원") ;
+			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
+			.append("조회 기간 : " + predate + " ~ " + todate);
 //			msg = msg.append(list) ;
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
@@ -405,10 +457,17 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			
 		} // actionPerformed
 		
+
 		
 		public void reportFile() throws IOException {
 			
 			BufferedWriter bw = null;
+			date = System.currentTimeMillis() ;
+			today = new Date ( date ); 
+//			format = DateFormat.getInstance(); 
+//			formatted = format.format ( today ); 
+			sdf = new SimpleDateFormat("yyyy-MM-dd HH/mm/") ;
+			
 			
 			try {
 				File file = new File("c:/dev/PCBang_calc_PC");
@@ -417,15 +476,16 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 					file.mkdir();
 				} // end if
 				
-				fileName = file.getAbsolutePath() + "/PC_" + System.currentTimeMillis() + ".dat";
+				fileName = file.getAbsolutePath() + "/PC_" + date + ".dat";
 				bw = new BufferedWriter(new FileWriter(fileName));
 				
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
+				sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
 				bw.write( "======================================\n"
-						+ "[PC 정산 내역] (" + sdf.format(System.currentTimeMillis())+"에 저장됨.)\n"
+						+ "[PC 정산 내역] (" + sdf.format(date) +"에 저장됨.)\n"
 						+ "======================================\n"
 						+ getReport_file()
 						+ "\n======================================");
+				
 				
 				// 스트림의 내용을 목적지로 분출
 				bw.flush();

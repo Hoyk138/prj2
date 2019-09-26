@@ -9,11 +9,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,6 +38,14 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	private String fileName ;
 	private StringBuilder msg ;
 	private StringBuilder report_file;
+	private long date ;
+	private Date today ; 
+	private DateFormat format ; 
+	private String formatted ; 
+	private SimpleDateFormat sdf ;
+	private Calendar cal ;
+	private String todate; 
+	private String predate ;
 
 	public CalcItemEvt(CalcView cv) {
 		this.cv = cv;
@@ -211,6 +223,14 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			
 			int totalQuantity=0 ;
 			int totalPrice=0 ;
+			todate= null; 
+			predate= null ;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
+			cal = Calendar.getInstance() ;
+			
+			todate = sdf.format(cal.getTime()) ;
+			cal.add(Calendar.DATE, -7);
+			predate = sdf.format(cal.getTime()) ;
 			
 			msg.append("상품명\t판매 수량\t가격\n") ;
 			
@@ -222,7 +242,8 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			} // end for
 			
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원") ;
+			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원\n")
+			.append("조회 기간 : " + predate + " ~ " + todate);
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 			
@@ -273,6 +294,15 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			int totalQuantity=0 ;
 			int totalPrice=0 ;
 			
+			todate= null; 
+			predate= null ;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
+			cal = Calendar.getInstance() ;
+			
+			todate = sdf.format(cal.getTime()) ;
+			cal.add(Calendar.MONTH, -1);
+			predate = sdf.format(cal.getTime()) ;
+			
 			msg.append("상품명\t판매 수량\t가격\n") ;
 			
 			for (int i = 0; i < list.size(); i++) {
@@ -283,7 +313,8 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			} // end for
 			
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원") ;
+			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원")
+			.append("조회 기간 : " + predate + " ~ " + todate);
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 			
@@ -337,6 +368,14 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			int totalQuantity=0 ;
 			int totalPrice=0 ;
 			
+			todate= null; 
+			predate= null ;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
+			cal = Calendar.getInstance() ;
+			
+			todate  = cv.getJtfEndPC().getText() ;
+			predate= cv.getJtfStartPC().getText() ;
+			
 			msg.append("상품명\t판매 수량\t가격\n") ;
 			
 			for (int i = 0; i < list.size(); i++) {
@@ -347,7 +386,8 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			} // end for
 			
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원") ;
+			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원")
+			.append("조회 기간 : " + predate + " ~ " + todate);
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 			
@@ -424,6 +464,10 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	public void reportFile() throws IOException {
 		
 		BufferedWriter bw = null;
+		date = System.currentTimeMillis() ;
+		today = new Date ( date ); 
+		format = DateFormat.getDateInstance ( DateFormat.FULL,Locale.US ); 
+		formatted = format.format ( today ); 
 		
 		try {
 			File file = new File("c:/dev/PCBang_calc_ITEM");
@@ -432,12 +476,12 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 				file.mkdir();
 			} // end if
 			
-			fileName = file.getAbsolutePath() + "/Item_" + System.currentTimeMillis() + ".dat";
+			fileName = file.getAbsolutePath() + "/Item_" + date + ".dat";
 			bw = new BufferedWriter(new FileWriter(fileName));
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
+			sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
 			bw.write( "======================================\n"
-					+ "[매점 정산 내역] (" + sdf.format(System.currentTimeMillis())+"에 저장됨.)\n"
+					+ "[매점 정산 내역] (" + sdf.format(date)+"에 저장됨.)\n"
 					+ "======================================\n"
 					+ getReport_file()
 					+ "\n======================================");
