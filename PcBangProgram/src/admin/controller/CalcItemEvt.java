@@ -5,7 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,9 +31,14 @@ import admin.view.CalcView;
 public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 	private CalcView cv;
+	private String fileName ;
+	private StringBuilder msg ;
+	private StringBuilder report_file;
 
 	public CalcItemEvt(CalcView cv) {
 		this.cv = cv;
+		report_file = new StringBuilder();
+		msg = new StringBuilder() ;
 //		setCalcItemList();
 	} // CalcItemEvt
 
@@ -135,8 +145,25 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 				rowData[5] = ciVO.getPrice();
 
 				dtm.addRow(rowData);
-
+				
 			} // end for
+			
+			int totalQuantity=0 ;
+			int totalPrice=0 ;
+			
+			msg.append("상품명\t판매 수량\t가격\n") ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				msg.append(list.get(i)).toString() ;
+				
+				totalQuantity += list.get(i).getQuantity() ;
+				totalPrice += list.get(i).getPrice() ;
+			} // end for
+			
+			msg.append("-------------------------------------------------------------\n")
+			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원") ;
+			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
 
 		} catch (SQLException se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
@@ -182,6 +209,23 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 			} // end for
 			
+			int totalQuantity=0 ;
+			int totalPrice=0 ;
+			
+			msg.append("상품명\t판매 수량\t가격\n") ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				msg.append(list.get(i)).toString() ;
+				
+				totalQuantity += list.get(i).getQuantity() ;
+				totalPrice += list.get(i).getPrice() ;
+			} // end for
+			
+			msg.append("-------------------------------------------------------------\n")
+			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원") ;
+			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
+			
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
 			Se.printStackTrace();
@@ -225,6 +269,23 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 				dtm.addRow(rowData);
 
 			} // end for
+			
+			int totalQuantity=0 ;
+			int totalPrice=0 ;
+			
+			msg.append("상품명\t판매 수량\t가격\n") ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				msg.append(list.get(i)).toString() ;
+				
+				totalQuantity += list.get(i).getQuantity() ;
+				totalPrice += list.get(i).getPrice() ;
+			} // end for
+			
+			msg.append("-------------------------------------------------------------\n")
+			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원") ;
+			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
 			
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
@@ -272,6 +333,23 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 				dtm.addRow(rowData);
 
 			} // end for
+			
+			int totalQuantity=0 ;
+			int totalPrice=0 ;
+			
+			msg.append("상품명\t판매 수량\t가격\n") ;
+			
+			for (int i = 0; i < list.size(); i++) {
+				msg.append(list.get(i)).toString() ;
+				
+				totalQuantity += list.get(i).getQuantity() ;
+				totalPrice += list.get(i).getPrice() ;
+			} // end for
+			
+			msg.append("-------------------------------------------------------------\n")
+			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원") ;
+			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
 			
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
@@ -331,7 +409,51 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			
 		} // end if
 		
+		if (ae.getSource()==cv.getJbtnItemSaveFile()) {
+			try {
+				reportFile() ;
+			JOptionPane.showMessageDialog(null, "(C:\\dev\\PCBang_calc_ITEM) 경로에 저장되었습니다.");
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} // end catch
+		} // end if
+		
 	} // actionPerformed
+	
+	public void reportFile() throws IOException {
+		
+		BufferedWriter bw = null;
+		
+		try {
+			File file = new File("c:/dev/PCBang_calc_ITEM");
+
+			if (!file.exists()) {
+				file.mkdir();
+			} // end if
+			
+			fileName = file.getAbsolutePath() + "/Item_" + System.currentTimeMillis() + ".dat";
+			bw = new BufferedWriter(new FileWriter(fileName));
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
+			bw.write( "======================================\n"
+					+ "[매점 정산 내역] (" + sdf.format(System.currentTimeMillis())+"에 저장됨.)\n"
+					+ "======================================\n"
+					+ getReport_file()
+					+ "\n======================================");
+			
+			// 스트림의 내용을 목적지로 분출
+			bw.flush();
+
+		} finally {
+			if (bw != null) { bw.close(); } // end if
+		} // end finally
+		
+	}//reportFile
+
+	public String getReport_file() {
+		return report_file.toString();
+	}
 	
 	// 단위테스트용
 //	public static void main(String[] args) {

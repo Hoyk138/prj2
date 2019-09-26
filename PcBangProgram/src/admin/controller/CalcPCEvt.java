@@ -9,7 +9,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -31,7 +30,6 @@ import admin.view.CalcView;
 public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	
 	private CalcView cv ;
-	private CalcPCDAO cpcDAO ;
 	private String fileName ;
 	private StringBuilder msg ;
 	private StringBuilder report_file;
@@ -398,7 +396,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			if (ae.getSource()==cv.getJbtnPCSaveFile()) {
 				try {
 					reportFile() ;
-				JOptionPane.showMessageDialog(null, "(C:\\dev\\PCBang_calc) 경로에 저장되었습니다.");
+				JOptionPane.showMessageDialog(null, "(C:\\dev\\PCBang_calc_PC) 경로에 저장되었습니다.");
 					
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -413,7 +411,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			BufferedWriter bw = null;
 			
 			try {
-				File file = new File("c:/dev/PCBang_calc");
+				File file = new File("c:/dev/PCBang_calc_PC");
 
 				if (!file.exists()) {
 					file.mkdir();

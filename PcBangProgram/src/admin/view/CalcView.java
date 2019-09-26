@@ -69,8 +69,8 @@ public class CalcView extends JPanel {
 //		jbtCloseItem = new JButton("종료") ;
 		jbtCalcPC = new JButton("PC 정산") ;
 		jbtCalcItem = new JButton("매점 정산") ;
-		jbtnPCSaveFile = new JButton("텍스트 파일로 저장") ;
-		jbtnItemSaveFile = new JButton("텍스트 파일로 저장") ;
+		jbtnPCSaveFile = new JButton("파일로 저장") ;
+		jbtnItemSaveFile = new JButton("파일로 저장") ;
 		
 		
 		JScrollPane jspCalcPC = new JScrollPane(jtCalcPC);
