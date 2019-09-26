@@ -103,7 +103,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 				rowData=new Object[3];
 				rowData[0] = "["+uiv.getCategoryName()+"]" +uiv.getItemName();
 				rowData[1]=new ImageIcon(uiv.getItemImg());
-				rowData[2]=new Integer(uiv.getPrice());
+				rowData[2]=new Integer(uiv.getPrice())+"원";
 				dtm.addRow(rowData);
 			}//end for
 			
@@ -252,7 +252,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			JOptionPane.showMessageDialog(ui, choiceName+"이 취소되었습니다.");
 			choiceData.removeElementAt(selectIndex);
 			priceList.remove(selectIndex);
-			ui.getJtfTotalPrice().setText(String.valueOf(setTotal)+"원");
+			ui.getJtfTotalPrice().setText(String.valueOf(setTotal));
 			itemOrderList.remove(selectIndex);
 
 		}//end switch
@@ -276,7 +276,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			}//end catch
 			
 			ui.getDlmOrderChoiceList().removeAllElements();
-			ui.getJtfTotalPrice().setText("");
+			ui.getJtfTotalPrice().setText("0");
 		
 	}//setOrder
 	

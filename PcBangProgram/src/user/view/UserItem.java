@@ -135,10 +135,16 @@ public class UserItem extends JFrame{
 		dtcrCenter.setHorizontalAlignment(SwingConstants.CENTER);
 		TableColumnModel tcmFood=jtFood.getColumnModel();
 		tcmFood.getColumn(0).setCellRenderer(dtcrCenter);
+		tcmFood.getColumn(1).setCellRenderer(dtcrCenter);
+		tcmFood.getColumn(2).setCellRenderer(dtcrCenter);
 		TableColumnModel tcmSnack=jtSnack.getColumnModel();
 		tcmSnack.getColumn(0).setCellRenderer(dtcrCenter);
+		tcmSnack.getColumn(1).setCellRenderer(dtcrCenter);
+		tcmSnack.getColumn(2).setCellRenderer(dtcrCenter);
 		TableColumnModel tcmDrink=jtDrink.getColumnModel();
 		tcmDrink.getColumn(0).setCellRenderer(dtcrCenter);
+		tcmDrink.getColumn(1).setCellRenderer(dtcrCenter);
+		tcmDrink.getColumn(2).setCellRenderer(dtcrCenter);
 	
 		//////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -169,13 +175,16 @@ public class UserItem extends JFrame{
 		JLabel jlLogo=new JLabel("▒ E_ZO PC ▒");
 		JLabel search=new JLabel("▣ 상품 검색 ▣");
 		JLabel order=new JLabel("▣ 선택목록 ▣");
-		jtfTotalPrice=new JTextField("0원");
+		JLabel one=new JLabel("원");
+		jtfTotalPrice=new JTextField("0");
 		jtfSearch=new JTextField();
 		jbtOrder=new JButton("주 문");
 		jbtSearch=new JButton("검색");
 		jbtSearchDetail=new JButton("상세보기");
 		
 		jtfTotalPrice.setEditable(false);
+		
+		jtfTotalPrice.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		//탭 추가
 		jtpOrder.add("식사",jspFood);
@@ -186,6 +195,7 @@ public class UserItem extends JFrame{
 		JPanel jpSearch=new JPanel();
 		JPanel jpItem=new JPanel();
 		JPanel jpChoiceOrder=new JPanel();
+		JPanel total=new JPanel();
 		
 		jpSearch.add(search);
 		jpSearch.add(jtfSearch);
@@ -198,14 +208,17 @@ public class UserItem extends JFrame{
 		
 		jpChoiceOrder.add(order);
 		jpChoiceOrder.add(jspOrderChoiceList);
-		jpChoiceOrder.add(jtfTotalPrice);
+		jpChoiceOrder.add(total);
 		jpChoiceOrder.add(jbtOrder);
+		
+		total.add(one);
+		total.add(jtfTotalPrice);
 		
 		jpSearch.setBorder(new TitledBorder(new  LineBorder(Color.black,2)));
 		jpItem.setBorder(new TitledBorder(new  LineBorder(Color.black,2)));
 		jpChoiceOrder.setBorder(new TitledBorder(new  LineBorder(Color.black,2)));
 		jspOrderChoiceList.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
-		jtfTotalPrice.setBorder(new TitledBorder(new  LineBorder(Color.black,1),"총 금액"));
+		total.setBorder(new TitledBorder(new  LineBorder(Color.black,1),"총 금액"));
 		jspSearchList.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
 		
 		jpSearch.setLayout(null);
@@ -220,10 +233,14 @@ public class UserItem extends JFrame{
 		jcbOrderBy.setBounds(590, 20, 100, 30);
 		
 		jpChoiceOrder.setLayout(null);
-		order.setBounds(10, 10, 150, 40);
+		order.setBounds(10, 10, 200, 45);
 		jspOrderChoiceList.setBounds(10, 40, 250, 150);
-		jtfTotalPrice.setBounds(50, 200, 210, 90);
+		total.setBounds(50, 200, 210, 90);
 		jbtOrder.setBounds(10, 310, 250, 80);
+		
+		total.setLayout(null);
+		jtfTotalPrice.setBounds(10,25,150,40);
+		one.setBounds(180,25,50,40);
 		
 		setLayout(null);
 		jlLogo.setBounds(20, 10, 300, 50);
@@ -248,6 +265,7 @@ public class UserItem extends JFrame{
 		jbtSearchDetail.addActionListener(uie);
 		jcbOrderBy.addActionListener(uie);
 		jtfSearch.addActionListener(uie);
+		jlSearchList.addMouseListener(uie);
 		
 		jtFood.getTableHeader().setReorderingAllowed(false); //테이블 열 바뀌지 않음
 		jtFood.getTableHeader().setResizingAllowed(false); //컬럼명 사이즈 바뀌지 않음
@@ -256,11 +274,14 @@ public class UserItem extends JFrame{
 		jtDrink.getTableHeader().setReorderingAllowed(false); 
 		jtDrink.getTableHeader().setResizingAllowed(false); 
 		
+		jtfTotalPrice.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		jpItem.setBackground(Color.white);
 		jpSearch.setBackground(Color.white);
 		jpChoiceOrder.setBackground(Color.white);
 		jltOrderChoiceList.setBackground(Color.white);
+		total.setBackground(Color.white);
 		jtfTotalPrice.setBackground(Color.white);
+		one.setBackground(Color.white);
 		jtpOrder.setBackground(Color.white);
 		jbtOrder.setBackground(new Color(0x6482B9));
 		jbtSearch.setBackground(new Color(0x6482B9));
@@ -268,7 +289,6 @@ public class UserItem extends JFrame{
 		jcbOrderBy.setBackground(new Color(0xE0EBFF));
 		jlSearchList.setBackground(new Color(0xCCCCCC));
 		jltOrderChoiceList.setBackground(new Color(0xCCCCCC));
-//		jtFood.setBackground(new Color(0x6482B9));
 		jltOrderChoiceList.setBackground(new Color(0xCCCCCC));
 		//폰트
 		jlLogo.setFont(new Font("serif",Font.BOLD, 25));
@@ -276,12 +296,16 @@ public class UserItem extends JFrame{
 		search.setFont(new Font("MonoSpaced", Font.BOLD, 15));
 		order.setFont(new Font("MonoSpaced", Font.BOLD, 15));
 		jtfTotalPrice.setForeground(Color.RED);	
-		jtfTotalPrice.setFont(new Font("serif", Font.BOLD, 25));
+		one.setForeground(Color.RED);	
+		jtfTotalPrice.setFont(new Font("serif", Font.BOLD, 20));
+		one.setFont(new Font("serif", Font.BOLD, 15));
 		jbtOrder.setForeground(Color.white);	
 		jbtOrder.setFont(new Font("MonoSpaced", Font.BOLD, 20));
 		jbtSearch.setForeground(Color.white);	
 		jbtSearchDetail.setForeground(Color.white);	
-		jtFood.setFont(new Font("MonoSpaced", Font.BOLD, 12));
+		jtFood.setFont(new Font("MonoSpaced", Font.PLAIN, 15));
+		jtSnack.setFont(new Font("MonoSpaced", Font.PLAIN, 15));
+		jtDrink.setFont(new Font("MonoSpaced", Font.PLAIN, 15));
 		
 		setResizable(false);
 		setBounds(700,150,1050,850);

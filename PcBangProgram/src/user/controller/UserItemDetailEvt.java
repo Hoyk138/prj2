@@ -82,7 +82,7 @@ public class UserItemDetailEvt implements ActionListener {
 			total+=uie.getPriceList().get(i);
 		}//end for
 		
-		ui.getJtfTotalPrice().setText(String.valueOf(total)+"원");
+		ui.getJtfTotalPrice().setText(String.valueOf(total));
 		
 		///////////////////////////////////////////////////////////////////////////////
 		//VOList(주문)에도 값을 저장해준다.
