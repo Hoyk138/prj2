@@ -3,6 +3,7 @@ package user.controller;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -23,7 +24,7 @@ import user.view.UserChat;
 import user.view.UserItem;
 import user.view.UserMain;
 
-public class UserMainEvt implements ActionListener{
+public class UserMainEvt extends Thread implements ActionListener{
 	
 	private UserMain um;
 //	private RunPcUser rpu;
@@ -35,7 +36,7 @@ public class UserMainEvt implements ActionListener{
 	private String pcUseCode;
 	
 	private Socket socket;
-//	private DataInputStream dis;
+	private DataInputStream dis;
 	private DataOutputStream dos;
 	
 	public UserMainEvt(UserMain um) {
@@ -129,7 +130,7 @@ public class UserMainEvt implements ActionListener{
 			socket = new Socket("localhost", 9000);
 
 			// 읽기 스트림 연결
-//			dis = new DataInputStream(socket.getInputStream());
+			dis = new DataInputStream(socket.getInputStream());
 			// 쓰기 스트림 연결
 			dos = new DataOutputStream(socket.getOutputStream());
 			
@@ -145,12 +146,34 @@ public class UserMainEvt implements ActionListener{
 			dos.writeUTF(um.getLoginTime());
 			dos.flush();
 			
+			//스레드 시작
+			start();
 //			jtaDisplay.append(inputNick+"님의 대화 서버에 들어 오셨습니다. 즐거운 대화 나누세요.\n");
 //		} catch (ConnectException ce) {
 //			ce.printStackTrace();
 //		} // end catch
     }//connectToServer
 	
+	@Override
+	public void run() {
+		try {
+			String msg = "";
+			while (true) {
+				System.out.println("종료 메세지 대기");
+				msg = dis.readUTF();
+				System.out.println("종료 메세지 수신");
+				if (msg.equals("/종료")) {
+					System.out.println("종료 메세지 확인");
+					JOptionPane.showMessageDialog(um, "관리자의 요청으로 PC 사용을 종료합니다.");
+					useClose();
+					
+				}//end if
+			}//end while
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}//try catch
+	}//run
+
 	private void openChat() throws IOException{
 		String[] options = {"예","아니요"};
 //		switch (JOptionPane.showConfirmDialog(um, "관리자와 채팅을 시작 하시겠습니까?")) {

@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
@@ -66,20 +67,26 @@ public class PCStateEvt extends MouseAdapter implements ActionListener {
 			}
 			if (ae.getSource() == pcs.getJmiClose()) {
 				System.out.println("PC"+pcs.getPcNum()+"번 결제 및 사용 종료");
-			}
+				try {
+					pcs.getDos().writeUTF("/종료");
+					System.out.println("결제 및 사용 종료 메세지 전송 완료");
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				}//try catch
+			}//end if
 	}//actionPerformed
 	
 	public int getPcNum() {
 		return pcNum;
 	}
 
-	public DataInputStream getDis() {
-		return dis;
-	}
-
-	public DataOutputStream getDos() {
-		return dos;
-	}
+//	public DataInputStream getDis() {
+//		return dis;
+//	}
+//
+//	public DataOutputStream getDos() {
+//		return dos;
+//	}
 
 	public AdminChat getAc() {
 		return ac;

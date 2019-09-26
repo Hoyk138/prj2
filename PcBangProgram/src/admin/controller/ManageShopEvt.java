@@ -21,9 +21,9 @@ public class ManageShopEvt implements ActionListener{
 //			System.out.println("PC°ü¸®");
 			new ManagePC(ms.getMv());
 		}//end if
-        if (ae.getSource()==ms.getJbtnLogManage()) {
-			
-		}//end if
+//        if (ae.getSource()==ms.getJbtnLogManage()) {
+//			
+//		}//end if
 	}//actionPerformed
 
 }//class

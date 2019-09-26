@@ -57,9 +57,9 @@ public class ManageShop extends JPanel {
 
 		JPanel jpSouth = new JPanel();
 		jbtnPCManage = new JButton("PC 관리");
-		jbtnLogManage = new JButton("Log 관리");
+//		jbtnLogManage = new JButton("Log 관리");
 		jpSouth.add(jbtnPCManage);
-		jpSouth.add(jbtnLogManage);
+//		jpSouth.add(jbtnLogManage);
 		
 		add("Center",jpCenter);
 		add("South",jpSouth);
@@ -67,7 +67,7 @@ public class ManageShop extends JPanel {
 		//이벤트 등록
 		ManageShopEvt mse = new ManageShopEvt(this);
 		jbtnPCManage.addActionListener(mse);
-		jbtnLogManage.addActionListener(mse);
+//		jbtnLogManage.addActionListener(mse);
 
 		//매장 관리 서버를 오픈하고 사용자 소켓을 받기 위한 thread를 실행한다.
 	    ManageShopServer mss = new ManageShopServer(this);
