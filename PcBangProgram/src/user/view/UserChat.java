@@ -83,7 +83,7 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 		getContentPane().setBackground(new Color(0x434446));
 		
 		setResizable(false);
-		setBounds(100, 100, 350, 430);
+		setBounds(1300, 450, 550, 400);
 		setVisible(true);
 		
 		//채팅 서버 오픈

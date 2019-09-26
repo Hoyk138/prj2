@@ -1,6 +1,7 @@
 package admin.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
@@ -10,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import admin.controller.AdminChatEvt;
@@ -52,6 +54,15 @@ public class AdminChat extends JDialog{
 		
 		add("Center",jspChat);
 		add("South",jpSouth);
+		
+		jtaChat.setBorder(new TitledBorder(new  LineBorder(Color.black,2)));
+		jtfTalk.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
+		jbtSend.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
+		
+		jtaChat.setFont(new Font("serif",Font.PLAIN, 15));
+		jtfTalk.setFont(new Font("serif",Font.PLAIN, 15));
+		jbtSend.setBackground(new Color(0xF1C40F));
+		getContentPane().setBackground(new Color(0x434446));
 		
 		setResizable(false);
 		setBounds(100, 100, 360, 420);

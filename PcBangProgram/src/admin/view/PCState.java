@@ -104,6 +104,8 @@ public class PCState extends JPanel implements Runnable {
 		setBorder(new TitledBorder(pcNum+"¹ø"));
 		setVisible(true);
 		
+		setBackground(Color.white);
+		
 	}//PCState
 	
 	private boolean registerFlag() {

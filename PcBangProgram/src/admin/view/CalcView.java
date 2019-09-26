@@ -15,8 +15,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import admin.controller.CalcItemEvt;
 import admin.controller.CalcPCEvt;
@@ -64,6 +67,20 @@ public class CalcView extends JPanel {
 		jtCalcPC.getColumnModel().getColumn(4).setPreferredWidth(150);
 
 		jtCalcPC.setRowHeight(30);
+		
+		///////////////////////////////////////////////////////////////////////////////////////////
+		jtCalcPC.getTableHeader().setReorderingAllowed(false); //테이블 열 바뀌지 않음
+		jtCalcPC.getTableHeader().setResizingAllowed(false); //컬럼명 사이즈 바뀌지 않음
+		
+		DefaultTableCellRenderer dtcrCenter=new DefaultTableCellRenderer(); //가운데정렬
+		dtcrCenter.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcmCalcPC=jtCalcPC.getColumnModel();
+		tcmCalcPC.getColumn(0).setCellRenderer(dtcrCenter);
+		tcmCalcPC.getColumn(1).setCellRenderer(dtcrCenter);
+		tcmCalcPC.getColumn(2).setCellRenderer(dtcrCenter);
+		tcmCalcPC.getColumn(3).setCellRenderer(dtcrCenter);
+		tcmCalcPC.getColumn(4).setCellRenderer(dtcrCenter);
+		///////////////////////////////////////////////////////////////////////////////////////////
 		
 //		jbtClosePC = new JButton("종료") ;
 //		jbtCloseItem = new JButton("종료") ;
@@ -151,6 +168,18 @@ public class CalcView extends JPanel {
 		jtCalcItem.getColumnModel().getColumn(5).setPreferredWidth(150);
 		
 		jtCalcItem.setRowHeight(30);
+		
+	///////////////////////////////////////////////////////////////////////////////////////////
+	jtCalcItem.getTableHeader().setReorderingAllowed(false); //테이블 열 바뀌지 않음
+	jtCalcItem.getTableHeader().setResizingAllowed(false); //컬럼명 사이즈 바뀌지 않음
+	
+	TableColumnModel tcmCalcItem=jtCalcItem.getColumnModel();
+	tcmCalcItem.getColumn(0).setCellRenderer(dtcrCenter);
+	tcmCalcItem.getColumn(1).setCellRenderer(dtcrCenter);
+	tcmCalcItem.getColumn(2).setCellRenderer(dtcrCenter);
+	tcmCalcItem.getColumn(3).setCellRenderer(dtcrCenter);
+	tcmCalcItem.getColumn(4).setCellRenderer(dtcrCenter);
+	///////////////////////////////////////////////////////////////////////////////////////////
 		
 		JScrollPane jspCalcItem = new JScrollPane(jtCalcItem) ;
 		JPanel jpCalcItem = new JPanel() ;
@@ -245,6 +274,27 @@ public class CalcView extends JPanel {
 		jbtnSearchItem.addActionListener(cie);
 		jbtnPCSaveFile.addActionListener(cpe);
 		jbtnItemSaveFile.addActionListener(cie);
+		
+		//////////////////////////
+		jbtCalcPC.setBackground(new Color(0xFFAD7E));
+		jbtCalcItem.setBackground(new Color(0xFFAD7E));
+		jbtnSearchPC.setBackground(new Color(0xFFAD7E));
+		jbtnSearchItem.setBackground(new Color(0xFFAD7E));
+		jbtnPCSaveFile.setBackground(new Color(0xFFAD7E));
+		jbtnItemSaveFile.setBackground(new Color(0xFFAD7E));
+		jpCalcPC.setBackground(Color.white);
+		jpCalcPC2.setBackground(Color.white);
+		jpCalcPCNorth.setBackground(Color.white);
+		jpCalcPCSouth.setBackground(Color.white);
+		jpCalcItemNorth.setBackground(Color.white);
+		jpCalcItem.setBackground(Color.white);
+		jpCalcItem2.setBackground(Color.white);
+		jpCalcItemNorth.setBackground(Color.white);
+		jspCalcItem.setBackground(Color.white);
+		jpCalcItemSouth.setBackground(Color.white);
+		jtp.setBackground(Color.white);
+		setBackground(Color.white);
+		/////////////////////////////////
 		
 //		setBounds(400, 200, 719, 600);
 		setVisible(true);

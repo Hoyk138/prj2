@@ -1,11 +1,15 @@
 package admin.view;
 
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import admin.VO.ProductMDViewVO;
 import admin.controller.ModifyDeleteEvt;
@@ -26,8 +30,6 @@ public class ModifyDeleteView extends JDialog{
 //		super(ProductView pv,"");
 		itemCode=pmdvVO.getItemCode();
 		jtaExplainModify=new JTextArea(pmdvVO.getExplain());
-		ImageIcon bgimg=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/b1g1.png");
-		JLabel jlBGimg=new JLabel(bgimg);
 		JLabel jlProductName=new JLabel("상품명");
 		JLabel jlProductPrice=new JLabel("상품가격");
 		JLabel jlExplain=new JLabel("상품설명");		
@@ -59,7 +61,6 @@ public class ModifyDeleteView extends JDialog{
 		jtaExplainModify.setLineWrap(true);
 		setLayout(null);
 		
-		jlBGimg.setBounds(0,0,770,500);
 		jlImgModify.setBounds(50,50,280,200);
 		jbtProductImageModify.setBounds(130,280,130,30);
 		jlState.setBounds(400,40,60,30);
@@ -93,7 +94,17 @@ public class ModifyDeleteView extends JDialog{
 		add(jbtProductDelete);
 		add(jlState);
 		add(jlCategory);
-		add(jlBGimg);
+		
+		/////////////////////////////////////////
+		jlImgModify.setBorder(new TitledBorder(new  LineBorder(Color.black)));
+		jtaExplainModify.setBorder(new TitledBorder(new  LineBorder(Color.black)));
+		jlImgModify.setBackground(Color.white);
+		jbtProductImageModify.setBackground(new Color(0xF5D08A));
+		jbtRealDelete.setBackground(new Color(0xF5D08A));
+		jbtProductModify.setBackground(new Color(0xF5D08A));
+		jbtProductDelete.setBackground(new Color(0xF5D08A));
+		getContentPane().setBackground(new Color(0xE8F2FE));
+		/////////////////////////////////////////
 		
 		setBounds(100,100,770,500);
 		

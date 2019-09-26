@@ -1,6 +1,7 @@
 package admin.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -126,6 +127,12 @@ public class ManageMember extends JPanel{
 		ManageMemberEvt mme = new ManageMemberEvt(this);
 		jtfSearch.addActionListener(mme);
 		jbtnSearch.addActionListener(mme);
+		
+		////////////////////////////
+		jbtnSearch.setBackground(new Color(0xFFAD7E));
+		jpNorth.setBackground(Color.white);
+		setBackground(Color.white);
+		////////////////////////////
 
 	}//ManageMember
 

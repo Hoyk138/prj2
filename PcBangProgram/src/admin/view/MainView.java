@@ -1,6 +1,7 @@
 package admin.view;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -71,6 +72,15 @@ public class MainView extends JFrame{
 		setVisible(true);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		////////////////////////////////////////////
+		jbtnmanageShop.setBackground(new Color(0xF5D08A));
+		jbtnmanageMember.setBackground(new Color(0xF5D08A));
+		jbtnmanageItem.setBackground(new Color(0xF5D08A));
+		jbtnmanageOrder.setBackground(new Color(0xF5D08A));
+		jbtnmanagePayment.setBackground(new Color(0xF5D08A));
+		jpNorth.setBackground(new Color(0x3C5A91));
+		////////////////////////////////////////////
 		
 	}//MainView
 

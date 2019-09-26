@@ -1,6 +1,7 @@
 package admin.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,6 +77,13 @@ public class ManageShop extends JPanel {
 //		mss.start();
 //		Thread thread = new Thread(this);
 //		thread.start();
+	    
+	    ////////////////////////////
+	    jbtnPCManage.setBackground(new Color(0xF5D08A));
+	    jpSouth.setBackground((new Color(0x3C5A91)));
+	    jpCenter.setBackground(Color.white);
+		setBackground(Color.white);
+		////////////////////////////
 		
 	}//ManageShop
 

@@ -1,5 +1,7 @@
 package admin.view;
 
+import java.awt.Color;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -8,6 +10,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import admin.controller.ProductAddViewEvt;
 import admin.controller.ProductEvt;
@@ -24,8 +28,6 @@ public class ProductAddView extends JDialog{
 	public ProductAddView(ProductEvt pe) {
 //		super("메뉴 추가");
 		
-		ImageIcon bgimg=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/b1g1.png");
-		JLabel jlBGimg=new JLabel(bgimg);
 		jtaExplainAdd=new JTextArea();
 		JLabel jlProductName=new JLabel("상품명");
 		JLabel jlProductPrice=new JLabel("상품가격");
@@ -44,10 +46,9 @@ public class ProductAddView extends JDialog{
 		jtaExplainAdd.setLineWrap(true);
 		setLayout(null);
 
-		jlBGimg.setBounds(0,0,770,500);
 		jlImgAdd.setBounds(50,50,280,200);
 		jbtProductImageAdd.setBounds(130,280,130,30);
-		jcbCategory.setBounds(460,40,200,30);
+		jcbCategory.setBounds(400,40,100,30);
 		jlProductName.setBounds(400,100,70,30);
 		jtfProductNameAdd.setBounds(480,100,200,30);
 		jlProductPrice.setBounds(400,140,70,30);
@@ -71,7 +72,16 @@ public class ProductAddView extends JDialog{
 		add(jlExplain);
 		add(jtaExplainAdd);
 		add(jbtProductAdd);
-		add(jlBGimg);
+		
+		/////////////////////////////////////////
+		jlImgAdd.setBorder(new TitledBorder(new  LineBorder(Color.black)));
+		jtaExplainAdd.setBorder(new TitledBorder(new  LineBorder(Color.black)));
+		jcbCategory.setBackground(Color.white);
+		jlImgAdd.setBackground(Color.white);
+		jbtProductAdd.setBackground(new Color(0xF5D08A));
+		jbtProductImageAdd.setBackground(new Color(0xF5D08A));
+		getContentPane().setBackground(new Color(0xE8F2FE));
+		/////////////////////////////////////////
 		
 		setBounds(100,100,770,500);
 		

@@ -3,13 +3,19 @@ package admin.view;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import admin.controller.ProductEvt;
 
@@ -111,6 +117,32 @@ public class ProductView extends JPanel{
 		
 		jtDrink.setRowHeight(210);
 		
+		////////////////////////////
+		DefaultTableCellRenderer dtcrCenter=new DefaultTableCellRenderer(); //가운데정렬
+		dtcrCenter.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcmFood=jtFood.getColumnModel();
+		tcmFood.getColumn(0).setCellRenderer(dtcrCenter);
+		tcmFood.getColumn(1).setCellRenderer(dtcrCenter);
+		tcmFood.getColumn(2).setCellRenderer(dtcrCenter);
+		tcmFood.getColumn(3).setCellRenderer(dtcrCenter);
+		tcmFood.getColumn(4).setCellRenderer(dtcrCenter);
+		tcmFood.getColumn(5).setCellRenderer(dtcrCenter);
+		TableColumnModel tcmSnack=jtSnack.getColumnModel();
+		tcmSnack.getColumn(0).setCellRenderer(dtcrCenter);
+		tcmSnack.getColumn(1).setCellRenderer(dtcrCenter);
+		tcmSnack.getColumn(2).setCellRenderer(dtcrCenter);
+		tcmSnack.getColumn(3).setCellRenderer(dtcrCenter);
+		tcmSnack.getColumn(4).setCellRenderer(dtcrCenter);
+		tcmSnack.getColumn(5).setCellRenderer(dtcrCenter);
+		TableColumnModel tcmDrink=jtDrink.getColumnModel();
+		tcmDrink.getColumn(0).setCellRenderer(dtcrCenter);
+		tcmDrink.getColumn(1).setCellRenderer(dtcrCenter);
+		tcmDrink.getColumn(2).setCellRenderer(dtcrCenter);
+		tcmDrink.getColumn(3).setCellRenderer(dtcrCenter);
+		tcmDrink.getColumn(4).setCellRenderer(dtcrCenter);
+		tcmDrink.getColumn(5).setCellRenderer(dtcrCenter);
+		////////////////////////////
+		
 		JScrollPane jspDrink=new JScrollPane(jtDrink);
 		//테이블3개 끝
 		jbtProductAdd=new JButton("추가");	
@@ -153,6 +185,31 @@ public class ProductView extends JPanel{
 		
 		add("Center",jtp);
 		add("South",jpButton);
+		
+		////////////////////////////
+		jtFood.getTableHeader().setReorderingAllowed(false); //테이블 열 바뀌지 않음
+		jtFood.getTableHeader().setResizingAllowed(false); //컬럼명 사이즈 바뀌지 않음
+		jtSnack.getTableHeader().setReorderingAllowed(false);
+		jtSnack.getTableHeader().setResizingAllowed(false); 
+		jtDrink.getTableHeader().setReorderingAllowed(false); 
+		jtDrink.getTableHeader().setResizingAllowed(false); 
+		
+		jtFood.setAutoCreateRowSorter(true); 
+		TableRowSorter<TableModel> trsFood = new TableRowSorter<TableModel>(jtFood.getModel()); 
+		jtFood.setRowSorter(trsFood); 
+		jtSnack.setAutoCreateRowSorter(true); 
+		TableRowSorter<TableModel> trsSnack = new TableRowSorter<TableModel>(jtSnack.getModel()); 
+		jtSnack.setRowSorter(trsSnack); 
+		jtDrink.setAutoCreateRowSorter(true); 
+		TableRowSorter<TableModel> trsDrink = new TableRowSorter<TableModel>(jtDrink.getModel()); 
+		jtDrink.setRowSorter(trsDrink); 
+		
+		
+		jtp.setBackground(Color.white);
+		jpButton.setBackground(new Color(0x3C5A91));
+		jbtProductAdd.setBackground(new Color(0xF5D08A));
+		setBackground(Color.white);
+		////////////////////////////
 		
 		
 		setVisible(true);
