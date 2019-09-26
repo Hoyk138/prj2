@@ -87,12 +87,12 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 //				} catch (IOException ioe) {
 //					ioe.printStackTrace();
 //				}//end catch
-				try {
-					dos.writeUTF("/채팅종료");
-					dos.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+//				try {
+//					dos.writeUTF("/채팅종료");
+//					dos.flush();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
 				dispose();
 			}//windowClosing
 			

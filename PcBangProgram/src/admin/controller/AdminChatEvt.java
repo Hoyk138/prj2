@@ -1,5 +1,6 @@
 package admin.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -110,7 +111,7 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 	@Override
 	public void run() {
 		// 보내는 메세지를 무한루프로 읽어들이기
-		if (dis != null) {
+		if (disRead != null) {
 			try {
 				System.out.println("스레드 런");
 				while (true) {
@@ -123,6 +124,8 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 				} // end while
 			} catch (IOException ie) {
 				JOptionPane.showMessageDialog(ac, "사용자께서 채팅을 나가셨습니다.");
+				ac.getPcs().setBackgrounColor(Color.LIGHT_GRAY);
+				ac.getPcs().setBackground(ac.getPcs().getBackgrounColor());
 				ie.printStackTrace();
 			} // end catch
 		} // end if
@@ -135,7 +138,7 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 	 */
 	private void sendMsg() throws IOException {
 		// 스트림 연결시
-		if (dos != null) {
+		if (dosWrite != null) {
 			String msg = "관리자: " + ac.getJtfTalk().getText().trim();
 			ac.getJtaChat().append(msg + "\n");
 
@@ -199,8 +202,8 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 	public void windowClosed(WindowEvent e) {
 		thConnect=null;
 		try {
-		if(dis!=null) {dis.close();}//if
-		if(dos!=null) {dos.close();}//if
+		if(disRead!=null) {disRead.close();}//if
+		if(dosWrite!=null) {dosWrite.close();}//if
 		if(socket!=null) {socket.close();}//if
 		}catch(IOException ie) {
 			ie.printStackTrace();
