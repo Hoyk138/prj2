@@ -53,7 +53,7 @@ public class ProductView extends JPanel{
 		jtFood.getColumnModel().getColumn(4).setPreferredWidth(100);
 		jtFood.getColumnModel().getColumn(5).setPreferredWidth(100);
 		
-		jtFood.setRowHeight(150);
+		jtFood.setRowHeight(210);
 		
 		JScrollPane jspFood=new JScrollPane(jtFood);
 		//스낵류 테이블
@@ -81,7 +81,7 @@ public class ProductView extends JPanel{
 		jtSnack.getColumnModel().getColumn(4).setPreferredWidth(100);
 		jtSnack.getColumnModel().getColumn(5).setPreferredWidth(100);
 		
-		jtSnack.setRowHeight(150);
+		jtSnack.setRowHeight(210);
 		
 		JScrollPane jspSnack=new JScrollPane(jtSnack);
 		//음료류 테이블
@@ -109,7 +109,7 @@ public class ProductView extends JPanel{
 		jtDrink.getColumnModel().getColumn(4).setPreferredWidth(100);
 		jtDrink.getColumnModel().getColumn(5).setPreferredWidth(100);
 		
-		jtDrink.setRowHeight(150);
+		jtDrink.setRowHeight(210);
 		
 		JScrollPane jspDrink=new JScrollPane(jtDrink);
 		//테이블3개 끝

@@ -47,7 +47,6 @@ public class ProductAddViewEvt implements ActionListener{
 			}//end if
 			
 			//이미지를 미리보기 라베엘에 설정
-			File writeFile=new File(path+file);
 			try {
 				uploadImg();
 			} catch (IOException e) {
@@ -55,12 +54,7 @@ public class ProductAddViewEvt implements ActionListener{
 			}
 			
 			pav.getJlImgAdd().setIcon(new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/"+"rs_"+file));
-			
-//			imgFlag=true;
-		}else{
-//			imgFlag=false;
 		}//end if
-		
 		
 	}//imgAdd
 	
@@ -94,7 +88,7 @@ private void uploadImg() throws IOException{
 		//5.스트림에 남아있는 내용을 목적지로 분출
 		fos.flush();
 		
-		ImageResize.resizeImage(copyFile.getAbsolutePath(), 303, 321);
+		ImageResize.resizeImage(copyFile.getAbsolutePath(), 280, 200);
 	}finally {
 		if(fis!=null) {fis.close();}
 		if(fos!=null) {fos.close();}

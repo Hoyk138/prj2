@@ -95,7 +95,7 @@ private void uploadImg() throws IOException{
 			//5.스트림에 남아있는 내용을 목적지로 분출
 			fos.flush();
 			
-			ImageResize.resizeImage(copyFile.getAbsolutePath(), 303, 321);
+			ImageResize.resizeImage(copyFile.getAbsolutePath(), 280, 200);
 		}finally {
 			if(fis!=null) {fis.close();}
 			if(fos!=null) {fos.close();}
@@ -154,12 +154,12 @@ private void uploadImg() throws IOException{
 		heeDAO hDAO=heeDAO.getInstance();
 		try {
 			
-			if(mdv.getJlState().getText().equals("판매중인 상품입니다.")) {
+			if(mdv.getJlState().getText().equals("판매중인")) {
 				if(hDAO.DeleteProduct(pdVO)==1) {
 					JOptionPane.showMessageDialog(mdv,"이 상품은 손님에게 보이지 않습니다.");
 					mdv.dispose();
 				}//end if
-			}else if(mdv.getJlState().getText().equals("매진된 상품입니다.")){
+			}else if(mdv.getJlState().getText().equals("재고없는")){
 				if(hDAO.revive(pdVO)==1) {
 					JOptionPane.showMessageDialog(mdv,"이 상품은 손님에게 보여집니다.");
 					mdv.dispose();
@@ -174,35 +174,40 @@ private void uploadImg() throws IOException{
 	}//productDelete
 	
 	public void productRealDelete() {
-		String itemCode=pmdvVO.getItemCode();
-		ProductRealDeleteVO prdVO=new ProductRealDeleteVO(itemCode);
 		
-		File originalFile=new File(mdv.getJlImgModify().getIcon().toString());
-		File reSizeFile=new File(mdv.getJlImgModify().getIcon().toString().substring(0,
-				mdv.getJlImgModify().getIcon().toString().lastIndexOf("/")+1)+
-				mdv.getJlImgModify().getIcon().toString().substring(
-				mdv.getJlImgModify().getIcon().toString().lastIndexOf("/")+1).replace("rs_",""));
-		
-		originalFile.delete();
-		reSizeFile.delete();
-		
-		heeDAO hDAO=heeDAO.getInstance();
-		
-		try {
-			if(hDAO.RealDelete(prdVO)==1) {
-				JOptionPane.showMessageDialog(mdv, "상품이 삭제되었습니다.");
-				pe.setDrinkList();
-				pe.setSnackList();
-				pe.setFoodList();
-			}else {
-				JOptionPane.showMessageDialog(mdv, "상품이 삭제 실패하였습니다.");
-			}//end if
+		switch (JOptionPane.showConfirmDialog(mdv,"한번 삭제한 데이터는 돌아오지 않습니다.")) {
+		case JOptionPane.OK_OPTION:
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}//catch
-		
-		
+			String itemCode=pmdvVO.getItemCode();
+			ProductRealDeleteVO prdVO=new ProductRealDeleteVO(itemCode);
+			
+			File originalFile=new File(mdv.getJlImgModify().getIcon().toString());
+			File reSizeFile=new File(mdv.getJlImgModify().getIcon().toString().substring(0,
+					mdv.getJlImgModify().getIcon().toString().lastIndexOf("/")+1)+
+					mdv.getJlImgModify().getIcon().toString().substring(
+					mdv.getJlImgModify().getIcon().toString().lastIndexOf("/")+1).replace("rs_",""));
+			
+			originalFile.delete();
+			reSizeFile.delete();
+			
+			heeDAO hDAO=heeDAO.getInstance();
+			
+			try {
+				if(hDAO.RealDelete(prdVO)==1) {
+					JOptionPane.showMessageDialog(mdv, "상품이 삭제되었습니다.");
+					pe.setDrinkList();
+					pe.setSnackList();
+					pe.setFoodList();
+				}else {
+					JOptionPane.showMessageDialog(mdv, "상품이 삭제 실패하였습니다.");
+				}//end if
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}//catch
+			
+			break;
+		}//case
 		
 	}//productRealDelete
 	

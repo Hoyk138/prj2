@@ -37,24 +37,24 @@ public class ProductAddView extends JDialog{
 		
 		jbtProductAdd=new JButton("추가");
 		jbtProductImageAdd=new JButton("이미지 선택");
-		jlImgAdd=new JLabel(new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/슈렉.jpg"));
+		jlImgAdd=new JLabel(new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/rs_선택.jpg"));
 		jtfProductNameAdd=new JTextField();
 		jtfPriceAdd=new JTextField();
 		
 		jtaExplainAdd.setLineWrap(true);
 		setLayout(null);
 
-		jlBGimg.setBounds(0,0,800,700);
-		jlImgAdd.setBounds(30,30,350,350);
-		jbtProductImageAdd.setBounds(120,400,150,30);
-		jcbCategory.setBounds(400,45,270,30);
+		jlBGimg.setBounds(0,0,770,500);
+		jlImgAdd.setBounds(50,50,280,200);
+		jbtProductImageAdd.setBounds(130,280,130,30);
+		jcbCategory.setBounds(460,40,200,30);
 		jlProductName.setBounds(400,100,70,30);
-		jtfProductNameAdd.setBounds(472,100,200,30);
-		jlProductPrice.setBounds(400,150,70,30);
-		jtfPriceAdd.setBounds(472,150,200,30);
+		jtfProductNameAdd.setBounds(480,100,200,30);
+		jlProductPrice.setBounds(400,140,70,30);
+		jtfPriceAdd.setBounds(480,140,200,30);
 		jlExplain.setBounds(400,190,70,30);
-		jtaExplainAdd.setBounds(400,225,370,300);
-		jbtProductAdd.setBounds(530,540,100,30);
+		jtaExplainAdd.setBounds(400,225,300,100);
+		jbtProductAdd.setBounds(260,355,200,30);
 
 		ProductAddViewEvt pave=new ProductAddViewEvt(this,pe);
 		jbtProductImageAdd.addActionListener(pave);
@@ -73,7 +73,7 @@ public class ProductAddView extends JDialog{
 		add(jbtProductAdd);
 		add(jlBGimg);
 		
-		setBounds(100,100,800,700);
+		setBounds(100,100,770,500);
 		
 		setVisible(true);
 		

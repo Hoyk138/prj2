@@ -50,29 +50,29 @@ public class ModifyDeleteView extends JDialog{
 		
 		//jlState=new JLabel("판매중인 상품입니다.");
 		if(pmdvVO.getState().equals("Y")) {
-			jlState=new JLabel("판매중인 상품입니다.");
+			jlState=new JLabel("판매중인");
 		}else {
-			jlState=new JLabel("매진된 상품입니다.");
+			jlState=new JLabel("재고없는");
 		}
 		
 		
 		jtaExplainModify.setLineWrap(true);
 		setLayout(null);
 		
-		jlBGimg.setBounds(0,0,800,700);
-		jlImgModify.setBounds(30,30,350,350);
-		jbtProductImageModify.setBounds(120,400,150,30);
-		jlCategory.setBounds(450,45,270,30);
+		jlBGimg.setBounds(0,0,770,500);
+		jlImgModify.setBounds(50,50,280,200);
+		jbtProductImageModify.setBounds(130,280,130,30);
+		jlState.setBounds(400,40,60,30);
+		jlCategory.setBounds(460,40,100,30);
 		jlProductName.setBounds(400,100,70,30);
-		jtfProductNameModify.setBounds(472,100,200,30);
-		jlProductPrice.setBounds(400,150,70,30);
-		jtfPriceModify.setBounds(472,150,200,30);
+		jtfProductNameModify.setBounds(480,100,200,30);
+		jlProductPrice.setBounds(400,140,70,30);
+		jtfPriceModify.setBounds(480,140,200,30);
 		jlExplain.setBounds(400,190,70,30);
-		jtaExplainModify.setBounds(400,225,370,300);
-		jbtProductModify.setBounds(480,540,100,30);
-		jbtProductDelete.setBounds(585,540,100,30);
-		jlState.setBounds(125,450,180,100);
-		jbtRealDelete.setBounds(300,600,200,30);
+		jtaExplainModify.setBounds(400,225,300,100);
+		jbtProductModify.setBounds(100,355,100,30);
+		jbtProductDelete.setBounds(210,355,100,30);
+		jbtRealDelete.setBounds(465,355,180,30);
 		
 		ModifyDeleteEvt mde=new ModifyDeleteEvt(this,pmdvVO,pe);
 		jbtProductImageModify.addActionListener(mde);
@@ -95,7 +95,7 @@ public class ModifyDeleteView extends JDialog{
 		add(jlCategory);
 		add(jlBGimg);
 		
-		setBounds(100,100,800,700);
+		setBounds(100,100,770,500);
 		
 		setVisible(true);
 		

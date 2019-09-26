@@ -98,6 +98,8 @@ private static heeDAO aDAO;
 			flag=pstmt.executeUpdate();
 			}catch (java.sql.SQLDataException e) {
 				JOptionPane.showMessageDialog(null,"가격은 10만원을 넘을수 없습니다.");
+			}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+				JOptionPane.showMessageDialog(null,"사진을 넣어주세요");
 			}
 		}finally {
 			if(pstmt!=null) {pstmt.close();}
