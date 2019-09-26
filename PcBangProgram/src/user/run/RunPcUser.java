@@ -85,7 +85,7 @@ public class RunPcUser {
 
 			long readCnt = 0;
 			String recieveFileName = "";
-			byte[] readData= new byte[512];
+			byte[] readData= new byte[120];
 			int readSize = 0;
 			for (int i = 0; i < fileCnt; i++) {
 				System.out.println("----------"); 
