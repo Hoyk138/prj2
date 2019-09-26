@@ -102,7 +102,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 				uiv=listItem.get(i);
 				rowData=new Object[3];
 				rowData[0] = "["+uiv.getCategoryName()+"]" +uiv.getItemName();
-				rowData[1]=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/rs_"+uiv.getItemImg());
+				rowData[1]=new ImageIcon(uiv.getItemImg());
 				rowData[2]=new Integer(uiv.getPrice());
 				dtm.addRow(rowData);
 			}//end for
@@ -157,11 +157,12 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 				rowData=new Object[3];
 				rowData[0] = "["+uiv.getCategoryName()+"]" +uiv.getItemName();
 				rowData[1]=new ImageIcon(uiv.getItemImg());
-				rowData[2]=new Integer(uiv.getPrice());
+				rowData[2]=new Integer(uiv.getPrice())+"원";
 				dtm.addRow(rowData);
 			}//end for
 			
 		} catch (SQLException e) {
+//			JOptionPane.showMessageDialog(ui, "상품을 준비중입니다.");
 			e.printStackTrace();
 		}//end catch
 		
@@ -244,14 +245,14 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 		int setTotal=total-cancelPrice;
 		
 		String choiceItem=choice.getSelectedValue();
-		String choiceName=choiceItem.substring(0,choiceItem.lastIndexOf("▷"));
+		String choiceName=choiceItem.substring(0,choiceItem.lastIndexOf("-"));
 		
 		switch(JOptionPane.showConfirmDialog(ui, choiceName+"을 취소하시겠습니까?")) {
 		case JOptionPane.OK_OPTION:
 			JOptionPane.showMessageDialog(ui, choiceName+"이 취소되었습니다.");
 			choiceData.removeElementAt(selectIndex);
 			priceList.remove(selectIndex);
-			ui.getJtfTotalPrice().setText(String.valueOf(setTotal));
+			ui.getJtfTotalPrice().setText(String.valueOf(setTotal)+"원");
 			itemOrderList.remove(selectIndex);
 
 		}//end switch
@@ -275,6 +276,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			}//end catch
 			
 			ui.getDlmOrderChoiceList().removeAllElements();
+			ui.getJtfTotalPrice().setText("");
 		
 	}//setOrder
 	
@@ -398,6 +400,10 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			
 			if(me.getSource()==ui.getJtDrink()) {
 				detailItem("D");
+			}//end if
+			
+			if(me.getSource()==ui.getJlSearchList()) {
+				searchDetail();
 			}//end if
 			
 		}//end if

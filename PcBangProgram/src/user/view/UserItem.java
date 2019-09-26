@@ -1,5 +1,8 @@
 package user.view;
 
+import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -14,8 +17,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import user.controller.UserItemDetailEvt;
 import user.controller.UserItemEvt;
@@ -123,6 +130,15 @@ public class UserItem extends JFrame{
 		jtDrink.getColumnModel().getColumn(2).setPreferredWidth(80);
 		
 		jtDrink.setRowHeight(130);
+		
+		DefaultTableCellRenderer dtcrCenter=new DefaultTableCellRenderer(); //가운데정렬
+		dtcrCenter.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcmFood=jtFood.getColumnModel();
+		tcmFood.getColumn(0).setCellRenderer(dtcrCenter);
+		TableColumnModel tcmSnack=jtSnack.getColumnModel();
+		tcmSnack.getColumn(0).setCellRenderer(dtcrCenter);
+		TableColumnModel tcmDrink=jtDrink.getColumnModel();
+		tcmDrink.getColumn(0).setCellRenderer(dtcrCenter);
 	
 		//////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -150,9 +166,12 @@ public class UserItem extends JFrame{
 		//선택리스트에 팝업메뉴 넣기
 		jltOrderChoiceList.setComponentPopupMenu(jpm);
 		
-		jtfTotalPrice=new JTextField("0");
+		JLabel jlLogo=new JLabel("▒ E_ZO PC ▒");
+		JLabel search=new JLabel("▣ 상품 검색 ▣");
+		JLabel order=new JLabel("▣ 선택목록 ▣");
+		jtfTotalPrice=new JTextField("0원");
 		jtfSearch=new JTextField();
-		jbtOrder=new JButton("주문");
+		jbtOrder=new JButton("주 문");
 		jbtSearch=new JButton("검색");
 		jbtSearchDetail=new JButton("상세보기");
 		
@@ -168,6 +187,7 @@ public class UserItem extends JFrame{
 		JPanel jpItem=new JPanel();
 		JPanel jpChoiceOrder=new JPanel();
 		
+		jpSearch.add(search);
 		jpSearch.add(jtfSearch);
 		jpSearch.add(jbtSearch);
 		jpSearch.add(jspSearchList);
@@ -176,37 +196,42 @@ public class UserItem extends JFrame{
 		jpItem.add(jcbOrderBy);
 		jpItem.add(jtpOrder);
 		
+		jpChoiceOrder.add(order);
 		jpChoiceOrder.add(jspOrderChoiceList);
 		jpChoiceOrder.add(jtfTotalPrice);
 		jpChoiceOrder.add(jbtOrder);
 		
-		jpSearch.setBorder(new TitledBorder("상품검색"));
-		jpItem.setBorder(new TitledBorder(""));
-		jpChoiceOrder.setBorder(new TitledBorder(""));
-		jspOrderChoiceList.setBorder(new TitledBorder("선택목록"));
-		jtfTotalPrice.setBorder(new TitledBorder("총 금액"));
-		jspSearchList.setBorder(new TitledBorder(""));
+		jpSearch.setBorder(new TitledBorder(new  LineBorder(Color.black,2)));
+		jpItem.setBorder(new TitledBorder(new  LineBorder(Color.black,2)));
+		jpChoiceOrder.setBorder(new TitledBorder(new  LineBorder(Color.black,2)));
+		jspOrderChoiceList.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
+		jtfTotalPrice.setBorder(new TitledBorder(new  LineBorder(Color.black,1),"총 금액"));
+		jspSearchList.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
 		
 		jpSearch.setLayout(null);
-		jtfSearch.setBounds(20, 30, 150, 30);
-		jbtSearch.setBounds(185, 30, 65, 30);
-		jspSearchList.setBounds(20, 70, 230, 130);
-		jbtSearchDetail.setBounds(20, 210, 230, 40);
+		search.setBounds(20, 10, 150, 30);
+		jtfSearch.setBounds(20, 40, 155, 30);
+		jbtSearch.setBounds(185, 40, 65, 30);
+		jspSearchList.setBounds(20, 80, 230, 130);
+		jbtSearchDetail.setBounds(20, 220, 230, 40);
 		
 		jpItem.setLayout(null);
-		jtpOrder.setBounds(10, 50, 670, 600);
-		jcbOrderBy.setBounds(550, 20, 100, 30);
+		jtpOrder.setBounds(25, 50, 670, 650);
+		jcbOrderBy.setBounds(590, 20, 100, 30);
 		
 		jpChoiceOrder.setLayout(null);
-		jspOrderChoiceList.setBounds(10, 20, 250, 150);
-		jtfTotalPrice.setBounds(50, 190, 200, 90);
-		jbtOrder.setBounds(50, 300, 200, 80);
+		order.setBounds(10, 10, 150, 40);
+		jspOrderChoiceList.setBounds(10, 40, 250, 150);
+		jtfTotalPrice.setBounds(50, 200, 210, 90);
+		jbtOrder.setBounds(10, 310, 250, 80);
 		
 		setLayout(null);
-		jpSearch.setBounds(750, 45, 270, 260);
-		jpItem.setBounds(50, 50, 690, 680);
-		jpChoiceOrder.setBounds(750, 330, 270, 400);
+		jlLogo.setBounds(20, 10, 300, 50);
+		jpSearch.setBounds(750, 60, 270, 280);
+		jpItem.setBounds(20, 60, 720, 720);
+		jpChoiceOrder.setBounds(750, 360, 270, 420);
 		
+		add(jlLogo);
 		add(jpSearch);
 		add(jpItem);
 		add(jpChoiceOrder);
@@ -231,9 +256,38 @@ public class UserItem extends JFrame{
 		jtDrink.getTableHeader().setReorderingAllowed(false); 
 		jtDrink.getTableHeader().setResizingAllowed(false); 
 		
+		jpItem.setBackground(Color.white);
+		jpSearch.setBackground(Color.white);
+		jpChoiceOrder.setBackground(Color.white);
+		jltOrderChoiceList.setBackground(Color.white);
+		jtfTotalPrice.setBackground(Color.white);
+		jtpOrder.setBackground(Color.white);
+		jbtOrder.setBackground(new Color(0x6482B9));
+		jbtSearch.setBackground(new Color(0x6482B9));
+		jbtSearchDetail.setBackground(new Color(0x6482B9));
+		jcbOrderBy.setBackground(new Color(0xE0EBFF));
+		jlSearchList.setBackground(new Color(0xCCCCCC));
+		jltOrderChoiceList.setBackground(new Color(0xCCCCCC));
+//		jtFood.setBackground(new Color(0x6482B9));
+		jltOrderChoiceList.setBackground(new Color(0xCCCCCC));
+		//폰트
+		jlLogo.setFont(new Font("serif",Font.BOLD, 25));
+		jlLogo.setForeground(new Color(0xF1C40F));
+		search.setFont(new Font("MonoSpaced", Font.BOLD, 15));
+		order.setFont(new Font("MonoSpaced", Font.BOLD, 15));
+		jtfTotalPrice.setForeground(Color.RED);	
+		jtfTotalPrice.setFont(new Font("serif", Font.BOLD, 25));
+		jbtOrder.setForeground(Color.white);	
+		jbtOrder.setFont(new Font("MonoSpaced", Font.BOLD, 20));
+		jbtSearch.setForeground(Color.white);	
+		jbtSearchDetail.setForeground(Color.white);	
+		jtFood.setFont(new Font("MonoSpaced", Font.BOLD, 12));
+		
 		setResizable(false);
-		setBounds(700,150,1050,830);
+		setBounds(700,150,1050,850);
 		setVisible(true);
+		
+		getContentPane().setBackground(new Color(0x434446));
 		
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
@@ -324,8 +378,8 @@ public class UserItem extends JFrame{
 	 * 단위 테스트용
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		new UserItem();
-	}//main
+//	public static void main(String[] args) {
+//		new UserItem();
+//	}//main
 
 }//class

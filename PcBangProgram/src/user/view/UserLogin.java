@@ -1,5 +1,6 @@
 package user.view;
 
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -23,41 +24,71 @@ public class UserLogin extends JFrame {
 	public UserLogin() {
 		super("사용자 로그인");
 		
-		ImageIcon iiBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/prj2/Img/bgcolor.jpg");
+		ImageIcon loginBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/login_img4.png");
+		ImageIcon loginButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/start_button.png");
+		ImageIcon loginButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/start_button2.png");
+		ImageIcon joinButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/join_button.png");
+		ImageIcon joinButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/join_button2.png");
+		ImageIcon idButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_button.png");
+		ImageIcon idButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_button2.png");
+		ImageIcon passButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/pw_button.png");
+		ImageIcon passButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/pw_button2.png");
+		
+		
 
-        JLabel jlBack=new JLabel(iiBackground);
+		
+        JLabel jlBack=new JLabel(loginBackground);
 		jlbId=new JLabel("아이디");
 		jlbPass=new JLabel("비밀번호");
-		
+        
 		jtfId=new JTextField(20);
 		jpfPass=new JPasswordField(20);
 		
-		jbtnLogin=new JButton("로그인");
-		jbtnID=new JButton("ID찾기");
-		jbtnPass=new JButton("PW찾기");
-		jbtnJoin=new JButton("회원가입");
+		jbtnLogin=new JButton(loginButton);
+		jbtnJoin=new JButton(joinButton);
+		jbtnID=new JButton(idButton);
+		jbtnPass=new JButton(passButton);
+		
+		//Rollover : 마우스가 올라갔을 때 다른 이미지로 변경하는 것
+		jbtnLogin.setRolloverIcon(loginButton2);
+		jbtnJoin.setRolloverIcon(joinButton2);
+		jbtnID.setRolloverIcon(idButton2);
+		jbtnPass.setRolloverIcon(passButton2);
 		
 		setLayout(null);
 		
-        jlBack.setBounds(0, 0, 450, 250);
+		jlBack.setBounds(0, 0, 416, 298);
 		jlbId.setBounds(40, 60, 76, 30);
 		jlbPass.setBounds(40, 100, 76, 30);
-        jtfId.setBounds(100, 60, 200, 25);
-        jpfPass.setBounds(100, 100, 200, 25);
-		jbtnLogin.setBounds(320, 50, 90, 90);
-		jbtnID.setBounds(90, 170, 100, 30);
-		jbtnPass.setBounds(200, 170, 100, 30);
-		jbtnJoin.setBounds(310, 170, 100, 30);
-			
-		add(jlbId);
-		add(jlbPass);
+        jtfId.setBounds(142, 165, 133, 24);
+        jpfPass.setBounds(142, 203, 133, 24);
+		jbtnLogin.setBounds(296, 146, 96, 93);  
+		jbtnJoin.setBounds(14, 260, 119, 30);
+		jbtnID.setBounds(140, 260, 118, 30);
+		jbtnPass.setBounds(263, 260, 143, 30);
+		
+		jtfId.setBackground(new Color(0x1C1C1C));
+		jpfPass.setBackground(new Color(0x1C1C1C));
+		jtfId.setForeground(new Color(0xC2C2C2)); //jtf입력글자컬러바꾸기
+		jpfPass.setForeground(new Color(0xC2C2C2));
+		jtfId.setCaretColor(new Color(0xC2C2C2)); //커서컬러바꾸기
+		jpfPass.setCaretColor(new Color(0xC2C2C2));
+		jtfId.setBorder(javax.swing.BorderFactory.createEmptyBorder()); //jtf 테두리 없애기
+		jpfPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		jbtnLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder());//버튼테두리 없애기
+		jbtnJoin.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		jbtnID.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		jbtnPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+	
 		add(jtfId);
 		add(jpfPass);
 		add(jbtnLogin);
 		add(jbtnID);
 		add(jbtnPass);
 		add(jbtnJoin);
-        add(jlBack);
+		add(jlBack);
+		add(jlbId);
+		add(jlbPass);
 		
 		UserLoginEvt ule=new UserLoginEvt(this);
 		
@@ -77,7 +108,7 @@ public class UserLogin extends JFrame {
 		});
 		
 		setResizable(false);
-		setBounds(1470, 760, 450, 250);
+		setBounds(1470, 660, 416, 327);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

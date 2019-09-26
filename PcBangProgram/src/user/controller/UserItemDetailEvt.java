@@ -56,17 +56,19 @@ public class UserItemDetailEvt implements ActionListener {
 		DefaultListModel<String> dlmChoice=ui.getDlmOrderChoiceList();
 		String choiceName=uid.getJlDetailName().getText().trim();
 		String choiceQuan=String.valueOf(uid.getJcbQuantity().getSelectedIndex()+1);
-		dlmChoice.addElement(choiceName+"▷ 수량:"+choiceQuan+"개");
+		dlmChoice.addElement(choiceName+"- 수량:"+choiceQuan+"개");
 
-//		for(int i=0; i<dlmChoice.size();i++) {
-//			String sameName=dlmChoice.get(i);
-//			if(sameName.equals(choiceName)) {
-//				String temp=sameName.substring(sameName.lastIndexOf(":"));
-//				int cnt=Integer.parseInt(temp);
-//				cnt=cnt+1;
-//				sameName=choiceName+"▷ 수량:"+String.valueOf(cnt);
-//			}//end if
-//		}//end for
+		for(int i=0; i<dlmChoice.size();i++) {
+			String choice=dlmChoice.get(i);
+			String same=choice.substring(0,choice.lastIndexOf("-")-1);
+			if(same.equals(choiceName)) {
+				String temp=same.substring(same.lastIndexOf(":")+1);
+				int cnt=Integer.parseInt(temp);
+				int sumCnt=0;
+				sumCnt+=cnt;
+				same=choiceName+"- 수량:"+String.valueOf(sumCnt);
+			}//end if
+		}//end for
 
 		//선택가격
 		List<Integer> priceList=uie.getPriceList();
@@ -80,7 +82,7 @@ public class UserItemDetailEvt implements ActionListener {
 			total+=uie.getPriceList().get(i);
 		}//end for
 		
-		ui.getJtfTotalPrice().setText(String.valueOf(total));
+		ui.getJtfTotalPrice().setText(String.valueOf(total)+"원");
 		
 		///////////////////////////////////////////////////////////////////////////////
 		//VOList(주문)에도 값을 저장해준다.
@@ -129,9 +131,9 @@ public class UserItemDetailEvt implements ActionListener {
 		}//end if
 		
 		if(ae.getSource()==uid.getJbtPut()) { //주문목록에 담기 버튼
-			switch(JOptionPane.showConfirmDialog(uid, "장바구니에 담으시겠습니까?")) {
+			switch(JOptionPane.showConfirmDialog(uid, "선택목록에 담으시겠습니까?")) {
 			case JOptionPane.OK_OPTION:
-				JOptionPane.showMessageDialog(uid, "장바구니에 담겨졌습니다.");
+				JOptionPane.showMessageDialog(uid, "선택목록에 담겨졌습니다.");
 				close();
 				setPut();
 			}//end switch
