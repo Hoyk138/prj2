@@ -38,9 +38,9 @@ public class RunPcUser {
 		 
 		try {
 			//2. 소켓생성 (소켓을 열어서 서버에 연결) 
-//			client = new Socket("localhost", 5000);
+			client = new Socket("localhost", 5000);
 //			client = new Socket("211.63.89.130", 5000);
-			client = new Socket("211.63.89.132", 5000);
+//			client = new Socket("211.63.89.132", 5000);
 //			client = new Socket("211.63.89.133", 5000);
 //			client = new Socket("211.63.89.134", 5000);
 //			client = new Socket("211.63.89.142", 5000);
