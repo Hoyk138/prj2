@@ -8,13 +8,15 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JOptionPane;
+
 import kr.co.sist.util.img.ImageResize;
 import user.view.UserLogin;
 
 public class RunPcUser {
 	
-	public RunPcUser() {
-		new UserLogin();
+	public RunPcUser(String adminIP) {
+		new UserLogin(adminIP);
 	}//RunPcUser
 	
 //	public String getIp() {
@@ -30,7 +32,7 @@ public class RunPcUser {
 //		return ip;
 //	}//getIp
 	
-	public void sendImage() throws UnknownHostException, IOException {
+	public void sendImage(String adminIP) throws UnknownHostException, IOException {
 		Socket client = null;
 		DataOutputStream dos = null;
 		DataInputStream dis = null;
@@ -38,12 +40,14 @@ public class RunPcUser {
 		 
 		try {
 			//2. 소켓생성 (소켓을 열어서 서버에 연결) 
-			client = new Socket("localhost", 5000);
+//			client = new Socket("localhost", 5000);
 //			client = new Socket("211.63.89.130", 5000);
 //			client = new Socket("211.63.89.132", 5000);
 //			client = new Socket("211.63.89.133", 5000);
 //			client = new Socket("211.63.89.134", 5000);
 //			client = new Socket("211.63.89.142", 5000);
+			System.out.println(adminIP);
+			client = new Socket(adminIP, 5000);
 			//4. 데이터를 주고 받을 스트림 연결
 			dos = new DataOutputStream(client.getOutputStream());
 			dis = new DataInputStream(client.getInputStream());
@@ -134,20 +138,37 @@ public class RunPcUser {
 	
 
 	public static void main(String[] args) {
-		RunPcUser rpu=new RunPcUser();
-		try {
-			rpu.sendImage();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}//end catch
-		
-		
+		boolean flag = false;
+		String adminIP = "";
+//		String[] options = {"예","아니요"};
+		RunPcUser rpu = null;
+		do {
+			adminIP = JOptionPane.showInputDialog("관리자 PC의 IP를 입력 해주세요\n예)127.0.01");
+			
+			//switch (JOptionPane.showOptionDialog(null, adminIP+"로 연결 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
+			switch (JOptionPane.showConfirmDialog(null, adminIP+"로 연결 하시겠습니까?")) {
+			case JOptionPane.OK_OPTION:
+				rpu = new RunPcUser(adminIP);
+				flag = true;
+				try {
+					rpu.sendImage(adminIP);
+				} catch (UnknownHostException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} // end catch
+				break;
+			case JOptionPane.CANCEL_OPTION:
+				flag = true;
+				break;
+			case JOptionPane.CLOSED_OPTION:
+				flag = true;
+				break;
+			}//switch case
+			
+		} while (!flag);
 		
 	}//main
-	
-	
 	
 }//class
 

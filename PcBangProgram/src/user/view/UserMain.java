@@ -28,7 +28,7 @@ public class UserMain extends JFrame{
 	
 	private String loginTime;
 	
-	public UserMain(String userId) {
+	public UserMain(String userId, String adminIP) {
 		super(" ※E_ZO PC방※  [" +  userId +"]님");
 		
 		//**5분=100원 -> 60분=1200원
@@ -145,7 +145,7 @@ public class UserMain extends JFrame{
 		add(jbtAdImage);
 		
 		//이벤트 처리
-		UserMainEvt ume=new UserMainEvt(this);
+		UserMainEvt ume=new UserMainEvt(this, adminIP);
 		jbtOrder.addActionListener(ume);
 		jbtCounterChat.addActionListener(ume);
 		jbtExit.addActionListener(ume);

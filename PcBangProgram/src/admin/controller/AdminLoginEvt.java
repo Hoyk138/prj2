@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import admin.DAO.AdminDAO;
 import admin.VO.AdminLoginVO;
+import admin.fileServer.FileServer;
 import admin.view.AdminLogin;
 import admin.view.MainView;
 import kr.co.sist.util.cipher.DataEncrypt;
@@ -64,6 +65,10 @@ public class AdminLoginEvt implements ActionListener{
 				String name = aDAO.selectLogin(alVO);
 					
 				if( !name.isEmpty() ) { //입력된 아이디와 비밀번호에 일치하는 정보가 있다면
+					//파일 전송 서버 시작
+					FileServer fs=new FileServer();
+					fs.start(); //run부르기
+					
 					new MainView(name);
 					al.dispose();
 				}else {

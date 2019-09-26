@@ -21,8 +21,11 @@ public class UserLogin extends JFrame {
 	private JPasswordField jpfPass;
 	private JButton jbtnLogin, jbtnID, jbtnPass, jbtnJoin;
 	
-	public UserLogin() {
+	private String adminIP;
+	
+	public UserLogin(String adminIP) {
 		super("사용자 로그인");
+		this.adminIP = adminIP;
 		
 		ImageIcon loginBackground=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/login_img4.png");
 		ImageIcon loginButton=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/start_button.png");
@@ -110,6 +113,11 @@ public class UserLogin extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//LoginUser		
+	
+
+	public String getAdminIP() {
+		return adminIP;
+	}
 
 	public JTextField getJtfId() {
 		return jtfId;
@@ -135,8 +143,4 @@ public class UserLogin extends JFrame {
 		return jbtnJoin;
 	}
 	
-	
-	
-			
-
 }//class

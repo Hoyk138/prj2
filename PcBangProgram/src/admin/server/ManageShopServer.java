@@ -40,8 +40,8 @@ public class ManageShopServer extends Thread {
 				ip = socket.getInetAddress().getHostAddress();
 				System.out.println(ip);
 				//ip에 해당하는 PC번호를 DB에서 조회한 다음
-//				pcNum = aDAO.selectPCNum(ip);
-				pcNum = aDAO.selectPCNum("211.63.89.133");
+				pcNum = aDAO.selectPCNum(ip);
+//				pcNum = aDAO.selectPCNum("211.63.89.133");
 				System.out.println(pcNum);
 				//PC번호에 해당하는 PCState를 map에서 불러와 소켓을 주고
 				ms.getPcStateMap().get(pcNum).setSocket(socket);

@@ -40,8 +40,11 @@ public class UserMainEvt implements ActionListener, Runnable{
 	private DataInputStream dis;
 	private DataOutputStream dos;
 	
-	public UserMainEvt(UserMain um) {
+	private String adminIP;
+	
+	public UserMainEvt(UserMain um, String adminIP) {
 		this.um=um;
+		this.adminIP = adminIP;
 		pcNum();
 		setPcHistory();
 		
@@ -127,7 +130,7 @@ public class UserMainEvt implements ActionListener, Runnable{
 				ie.printStackTrace();
 			}//try catch
 			um.dispose();
-			new RunPcUser();
+			new RunPcUser(adminIP);
 		} else {
 			JOptionPane.showMessageDialog(um, "PC 사용 종료에 실패 하였습니다.");
 		}//if else
@@ -150,7 +153,8 @@ public class UserMainEvt implements ActionListener, Runnable{
     private void connectToServer() throws UnknownHostException, IOException{
 //		try {
 			// 소켓을 생성
-			socket = new Socket("localhost", 9000);
+//			socket = new Socket("localhost", 9000);
+			socket = new Socket(adminIP, 9000);
 
 			// 읽기 스트림 연결
 			dis = new DataInputStream(socket.getInputStream());
