@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import admin.VO.OrderStateVO;
+import admin.VO.OrderVO;
 import user.VO.FindIdVO;
 import user.VO.FindPassVO;
 import user.VO.PcHistoryVO;
@@ -754,5 +758,60 @@ public class UserDAO { //singleton pattern
 		
 	}//insertOrder
 	
+	
+	/**
+	 * 사용자가 PC 사용을 종료했을 떼 DB의 PC_payment 테이블에 결제 내용 기록
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean insertPCPayment(int pcNum) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		boolean flag = false;
+		String useCode = "";
+		
+		try {
+			con=getConn();
+			
+			StringBuilder selectPcUseCode=new StringBuilder();
+			selectPcUseCode
+			.append("	select pc_use_code	")
+			.append("	from pc_use	")
+			.append("	where pc_num=?	")
+			.append(" order by login_time desc");
+			
+			pstmt=con.prepareStatement(selectPcUseCode.toString());
+			
+			pstmt.setInt(1,pcNum);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				useCode=rs.getString("pc_use_code");
+			
+				pstmt.close();
+
+				StringBuilder payment_state = new StringBuilder();
+				payment_state
+				.append(" insert into pc_payment(pc_use_code,payment_time) ")
+				.append(" values(?,sysdate) ");
+
+				pstmt = con.prepareStatement(payment_state.toString());
+
+				pstmt.setString(1, useCode);
+
+				flag = (pstmt.executeUpdate() == 1);
+			
+			}//end if
+			
+		}finally {
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}
+		return flag;
+	}//insertPCPayment
 
 }//class

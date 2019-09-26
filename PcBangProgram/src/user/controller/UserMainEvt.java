@@ -24,11 +24,12 @@ import user.view.UserChat;
 import user.view.UserItem;
 import user.view.UserMain;
 
-public class UserMainEvt extends Thread implements ActionListener{
+public class UserMainEvt implements ActionListener, Runnable{
 	
 	private UserMain um;
 //	private RunPcUser rpu;
 	
+	private Thread thread; 
 	private TimeThread tt;
 	private PriceThread pt;
 	
@@ -107,8 +108,30 @@ public class UserMainEvt extends Thread implements ActionListener{
 	 * 이용종료
 	 */
 	public void useClose() {
-		um.dispose();
-		new RunPcUser();
+		UserDAO uDAO = UserDAO.getInstance();
+		boolean flag = false;
+		try {
+			flag = uDAO.insertPCPayment(pcNum);
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}//try catch
+		if (flag) {
+			pt =null;
+			tt =null;
+			thread=null;
+			try {
+				if(dis!=null) {dis.close();}//if
+				if(dos!=null) {dos.close();}//if
+				if(socket!=null) {socket.close();}//if
+			}catch(IOException ie) {
+				ie.printStackTrace();
+			}//try catch
+			um.dispose();
+			new RunPcUser();
+		} else {
+			JOptionPane.showMessageDialog(um, "PC 사용 종료에 실패 하였습니다.");
+		}//if else
+		
 	}//useClose
 	
 	/**
@@ -147,7 +170,8 @@ public class UserMainEvt extends Thread implements ActionListener{
 			dos.flush();
 			
 			//스레드 시작
-			start();
+			thread = new Thread(this);
+			thread.start();
 //			jtaDisplay.append(inputNick+"님의 대화 서버에 들어 오셨습니다. 즐거운 대화 나누세요.\n");
 //		} catch (ConnectException ce) {
 //			ce.printStackTrace();
@@ -158,6 +182,7 @@ public class UserMainEvt extends Thread implements ActionListener{
 	public void run() {
 		try {
 			String msg = "";
+			
 			while (true) {
 				System.out.println("종료 메세지 대기");
 				msg = dis.readUTF();
@@ -213,8 +238,8 @@ public class UserMainEvt extends Thread implements ActionListener{
 		if(ae.getSource()==um.getJbtExit()) { //사용종료버튼
 			switch(JOptionPane.showConfirmDialog(um, "PC 이용을 종료하시겠습니까?")) {
 			case JOptionPane.OK_OPTION:
-				JOptionPane.showMessageDialog(um, "PC 이용이 종료되었습니다.");
 				useClose();
+				JOptionPane.showMessageDialog(um, "PC 이용이 종료되었습니다.");
 			}//end switch			
 		}//end if
 		

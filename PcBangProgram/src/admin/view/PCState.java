@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.TitledBorder;
@@ -43,7 +44,7 @@ public class PCState extends JPanel implements Runnable {
 	
 	private PCStateEvt pcse;
 	
-//	private Socket socket;
+	private Socket socket;
 	private DataInputStream dis;
 	private DataOutputStream dos;
 	
@@ -119,7 +120,7 @@ public class PCState extends JPanel implements Runnable {
    }//registerFlag
 	
 	public void setSocket(Socket socket) throws IOException {
-		// this.socket = socket;
+		 this.socket = socket;
 
 		// 스트림을 연결하고
 		dis = new DataInputStream(socket.getInputStream());
@@ -195,6 +196,46 @@ public class PCState extends JPanel implements Runnable {
 					}// switch case
 			}//end while
 		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			System.out.println("!");
+			//메세지를 읽거나 보낼 수 없는 상태(접속자가 접속을 종료한 경우)
+			//접속 종료한 접속자 이외의 모든 접속자에게 접속 종료 메세지를 출력
+			try {
+				//관리자 창에 접속자가 나감을 통지
+//				jcs.getDlmConnect()
+//				   .addElement(cnt+"번재 접속자 ["+nick+"]님께서 접속을 종료 하였습니다.");
+//				JScrollPane jsp = jcs.getJspConnectView();
+//				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
+//				broadcast(cnt+"번재 접속자 ["+nick+"]님께서 접속을 종료하였습니다.");
+				JOptionPane.showMessageDialog(ms, pcNum+"번 PC의 사용이 종료 되었습니다.");
+				
+//				jcs.getJoinList().remove(nick);
+//				broadcast(nick);
+				
+				//스트림의 연결 끊기
+				if (dis!=null) { dis.close(); }//end if
+				if (dos!=null) { dos.close(); }//end if
+				if (socket!=null) { socket.close(); }//end if
+//				//리스트에서 삭제:
+//				//this -> 메세지를 읽거나 보낼 수 없어 예외를 발생시킨 객체
+//				jcs.getConnectList().remove(this);
+//				
+//				//닉네임을 삭제
+//				jcs.getConnectNickList().remove(nick);
+//				
+//				//삭제된 닉네임을 모든 접속자에게 제공
+//				sendNick();
+				
+				jlblPCStateArr[USER_ID].setText("사용자 ID: ");
+				jlblPCStateArr[START_TIME].setText("시작 시간: ");
+				jlblPCStateArr[USE_TIME].setText("사용 시간: ");
+				jlblPCStateArr[USE_FEE].setText("사용 요금: ");
+				
+				setBackgrounColor(new Color(0xEEEEEE));
+				
+			} catch (IOException ioe1) {
+				ioe1.printStackTrace();
+			}//end catch
 			ioe.printStackTrace();
 		}//catch
 	}//run
