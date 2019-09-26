@@ -1,6 +1,7 @@
 package user.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -13,10 +14,13 @@ import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import user.controller.UserChatEvt;
 
@@ -42,25 +46,41 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 	public UserChat(UserMain um, int pcNum, DataOutputStream dos) {
 		super(um,"사용자 채팅",false);
 		this.pcNum = pcNum;
+		
 		//선언
-		jtaChat=new JTextArea();
-		jspChat=new JScrollPane(jtaChat);
+		JLabel jlLogo=new JLabel("▒ E_ZO PC ▒ 카운터에 문의하기");
 		jtfTalk=new JTextField(25);
+		jtaChat=new JTextArea("무엇을 도와드릴까요?");
 		jbtSend=new JButton("보내기");
+		jspChat=new JScrollPane(jtaChat);
 		
 		jtaChat.setEditable(false);
 		jtaChat.setBackground(Color.white);
 		
+		jtaChat.setBorder(new TitledBorder(new  LineBorder(Color.black,2)));
+		jtfTalk.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
+		jbtSend.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
+		
 		//수동배치
 		setLayout(null);
-		jspChat.setBounds(15, 20, 300, 300);
-		jtfTalk.setBounds(15, 330, 220, 40);
-		jbtSend.setBounds(240, 330, 80, 40);
+		jlLogo.setBounds(20, 10, 500, 50);
+		jspChat.setBounds(20, 50, 500, 250);
+		jtfTalk.setBounds(20, 310, 400, 40);
+		jbtSend.setBounds(425, 310, 95, 40);
 		
 		//frame 추가
+		add(jlLogo);
 		add(jspChat);
 		add(jtfTalk);
 		add(jbtSend);
+		
+		//폰트
+		jlLogo.setFont(new Font("serif",Font.BOLD, 15));
+		jlLogo.setForeground(new Color(0xF1C40F));
+		jtaChat.setFont(new Font("serif",Font.PLAIN, 15));
+		jtfTalk.setFont(new Font("serif",Font.PLAIN, 15));
+		jbtSend.setBackground(new Color(0xF1C40F));
+		getContentPane().setBackground(new Color(0x434446));
 		
 		setResizable(false);
 		setBounds(100, 100, 350, 430);
