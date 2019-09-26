@@ -1,6 +1,9 @@
 package user.view;
 
+import java.awt.Color;
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -22,6 +25,14 @@ public class UserJoin extends JDialog {
 	
 	public UserJoin(UserLogin ul) {
 		super(ul,"회원가입",true);
+		
+		ImageIcon joinBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/member_join_backimg2.png");
+		ImageIcon idConfirmButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_confirm1.png");
+		ImageIcon idConfirmButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_confirm2.png");
+		ImageIcon joinButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/member_join_button1.png");
+		ImageIcon joinButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/member_join_button2.png");
+		
+        JLabel jiBack=new JLabel(joinBackground);
 		
 		dcbmNum=new DefaultComboBoxModel<String>(new String[] {"010","011","016","017","018","019"});
 		jcbNum=new JComboBox<String>(dcbmNum);
@@ -48,11 +59,16 @@ public class UserJoin extends JDialog {
 		jtfPhone3=new JTextField();
 		jtfAnswer=new JTextField();
 		
-		jbtnOverlap=new JButton("중복확인");
-		jbtnJoin=new JButton("가입하기");
+		jbtnOverlap=new JButton(idConfirmButton);
+		jbtnJoin=new JButton(joinButton);
 		
+		//Rollover : 마우스가 올라갔을 때 다른 이미지로 변경하는 것
+		jbtnOverlap.setRolloverIcon(idConfirmButton2);
+		jbtnJoin.setRolloverIcon(joinButton2);
+
 		setLayout(null);
 		
+		jiBack.setBounds(0, 0, 566, 540);
 		jlblId.setBounds(50, 60, 76, 30);
 		jlblPass.setBounds(50, 100, 76, 30);
 		jlblPassComfirm.setBounds(50, 140, 100, 30);
@@ -61,27 +77,49 @@ public class UserJoin extends JDialog {
 		jlblQuestion.setBounds(50, 260, 100, 30);
 		jlblAnswer.setBounds(50, 300, 76, 30);
 		
-		jtfId.setBounds(160, 60, 130, 25);
-		jpfPass.setBounds(160, 100, 130, 25);
-		jpfPassComfirm.setBounds(160, 140, 130, 25);
-		jtfName.setBounds(160, 180, 230, 25);
-		jcbNum.setBounds(160, 220, 60, 25);
-		jtfPhone2.setBounds(227, 220, 76, 25);
-		jtfPhone3.setBounds(310, 220, 80, 25);
-		jcbQuestion.setBounds(160, 260, 230, 25);
-		jtfAnswer.setBounds(160, 300, 230, 25);
+		jtfId.setBounds(174, 84, 180, 30);
+		jpfPass.setBounds(174, 133, 180, 30);
+		jpfPassComfirm.setBounds(174, 180, 180, 30);
+		jtfName.setBounds(174, 228, 300, 30);
+		jcbNum.setBounds(174, 274, 80, 34);
+		jtfPhone2.setBounds(293, 277, 76, 30);
+		jtfPhone3.setBounds(410, 277, 80, 30);
+		jcbQuestion.setBounds(174, 322, 324, 36);
+		jtfAnswer.setBounds(174, 374, 300, 30);
 		
-		jbtnOverlap.setBounds(300, 60, 90, 25);
-		jbtnJoin.setBounds(290, 350, 100, 40);
+		jbtnOverlap.setBounds(375, 79, 125, 39);
+		jbtnJoin.setBounds(204, 453, 145, 35);
 		
-		add(jlblId);
-		add(jlblPass);
-		add(jlblPassComfirm);
-		add(jlblName);
-		add(jlblPhone);
-		add(jlblQuestion);
-		add(jlblAnswer);
+//		jtfId.setForeground(new Color(0xC2C2C2)); //jtf입력글자컬러바꾸기
+//		jpfPass.setForeground(new Color(0xC2C2C2));
+//		jpfPassComfirm.setForeground(new Color(0xC2C2C2));
+//		jtfName.setForeground(new Color(0xC2C2C2));
+////		jcbNum.setForeground(new Color(0xC2C2C2));
+//		jtfPhone2.setForeground(new Color(0xC2C2C2));
+//		jtfPhone3.setForeground(new Color(0xC2C2C2));
+////		jcbQuestion.setForeground(new Color(0xC2C2C2));
+//		jtfAnswer.setForeground(new Color(0xC2C2C2));
 		
+		jtfId.setCaretColor(new Color(0xC2C2C2)); //커서컬러바꾸기
+		jpfPass.setCaretColor(new Color(0xC2C2C2));
+		jpfPassComfirm.setCaretColor(new Color(0xC2C2C2));
+		jtfName.setCaretColor(new Color(0xC2C2C2));
+		jtfPhone2.setCaretColor(new Color(0xC2C2C2));
+		jtfPhone3.setCaretColor(new Color(0xC2C2C2));
+		jtfAnswer.setCaretColor(new Color(0xC2C2C2));
+		
+		jtfId.setBorder(javax.swing.BorderFactory.createEmptyBorder()); //jtf 테두리 없애기
+		jpfPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		jpfPassComfirm.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		jtfName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		jtfPhone2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		jtfPhone3.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		jtfAnswer.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		
+		
+		jbtnOverlap.setBorder(javax.swing.BorderFactory.createEmptyBorder());//버튼테두리 없애기
+		jbtnJoin.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+
 		add(jtfId);
 		add(jpfPass);
 		add(jpfPassComfirm);
@@ -95,6 +133,15 @@ public class UserJoin extends JDialog {
 		add(jbtnOverlap);
 		add(jbtnJoin);
 		
+		add(jiBack);
+		
+		add(jlblId);
+		add(jlblPass);
+		add(jlblPassComfirm);
+		add(jlblName);
+		add(jlblPhone);
+		add(jlblQuestion);
+		add(jlblAnswer);
 		
 		UserJoinEvt uje=new UserJoinEvt(this);
 		jtfId.addActionListener(uje);
@@ -113,7 +160,7 @@ public class UserJoin extends JDialog {
 		
 		
 		setResizable(false);
-		setBounds(700, 260, 450, 470);
+		setBounds(700, 260, 570, 580);
 		setVisible(true);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -199,6 +246,11 @@ public class UserJoin extends JDialog {
 		return jbtnJoin;
 	}
 
+	
+	
+	public static void main(String[] args) {
+		new UserJoin(null);
+	}//main
 
 
 

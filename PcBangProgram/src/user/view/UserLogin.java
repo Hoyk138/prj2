@@ -21,21 +21,19 @@ public class UserLogin extends JFrame {
 	private JPasswordField jpfPass;
 	private JButton jbtnLogin, jbtnID, jbtnPass, jbtnJoin;
 	
-	private String adminIP;
-	
-	public UserLogin(String adminIP) {
+	public UserLogin() {
 		super("사용자 로그인");
-		this.adminIP = adminIP;
 		
-		ImageIcon loginBackground=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/login_img4.png");
-		ImageIcon loginButton=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/start_button.png");
-		ImageIcon loginButton2=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/start_button2.png");
-		ImageIcon joinButton=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/join_button.png");
-		ImageIcon joinButton2=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/join_button2.png");
-		ImageIcon idButton=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/id_button.png");
-		ImageIcon idButton2=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/id_button2.png");
-		ImageIcon passButton=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/pw_button.png");
-		ImageIcon passButton2=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/pw_button2.png");
+		ImageIcon loginBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/login_img4.png");
+		ImageIcon loginButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/start_button.png");
+		ImageIcon loginButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/start_button2.png");
+		ImageIcon joinButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/join_button.png");
+		ImageIcon joinButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/join_button2.png");
+		ImageIcon idButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_button.png");
+		ImageIcon idButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_button2.png");
+		ImageIcon passButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/pw_button.png");
+		ImageIcon passButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/pw_button2.png");
+		
 		
         JLabel jlBack=new JLabel(loginBackground);
 		jlbId=new JLabel("아이디");
@@ -113,11 +111,6 @@ public class UserLogin extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//LoginUser		
-	
-
-	public String getAdminIP() {
-		return adminIP;
-	}
 
 	public JTextField getJtfId() {
 		return jtfId;
@@ -143,4 +136,8 @@ public class UserLogin extends JFrame {
 		return jbtnJoin;
 	}
 	
+	
+	
+			
+
 }//class

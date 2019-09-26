@@ -261,7 +261,7 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 						Integer.parseInt(uj.getJtfPhone2().getText().trim());
 						
 					}catch(NumberFormatException nfe) {
-						uj.getJtfPhone2().setText("");
+//						uj.getJtfPhone2().setText("");
 						JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
 						uj.getJtfPhone2().requestFocus();
 						return;
@@ -270,7 +270,7 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 					uj.getJtfPhone3().requestFocus();
 					
 				} else {
-					uj.getJtfPhone2().setText("");
+//					uj.getJtfPhone2().setText("");
 					JOptionPane.showMessageDialog(uj, "3자리혹은 4자리 번호를 입력해주세요");
 					uj.getJtfPhone2().requestFocus();
 					return;
@@ -286,7 +286,7 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 						Integer.parseInt(uj.getJtfPhone3().getText().trim());
 						
 					}catch(NumberFormatException nfe) {
-						uj.getJtfPhone3().setText("");
+//						uj.getJtfPhone3().setText("");
 						JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
 						uj.getJtfPhone3().requestFocus();
 						return;
@@ -294,7 +294,7 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 //					uj.getJtfAnswer().requestFocus();
 					uj.getJcbQuestion().requestFocus();
 				} else {
-					uj.getJtfPhone3().setText("");
+//					uj.getJtfPhone3().setText("");
 					JOptionPane.showMessageDialog(uj, "4자리 번호를 입력해주세요");
 					uj.getJtfPhone3().requestFocus();
 					return;

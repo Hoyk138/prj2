@@ -131,7 +131,7 @@ public class UserLoginEvt implements ActionListener{
 							
 							//if else 
 							
-							new UserMain(ul.getJtfId().getText().trim(),ul.getAdminIP());
+							new UserMain(ul.getJtfId().getText().trim());
 							ul.dispose();
 						}else {
 //							ul.getJtfId().setText(""); //아이디 초기화
