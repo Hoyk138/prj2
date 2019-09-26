@@ -17,8 +17,8 @@ import javax.swing.border.TitledBorder;
 
 import admin.DAO.AdminDAO;
 import admin.controller.PCStateEvt;
-import admin.helper.PriceThread;
-import admin.helper.TimeThread;
+import user.helper.PriceThread;
+import user.helper.TimeThread;
 
 
 @SuppressWarnings("serial")
