@@ -20,8 +20,8 @@ public class PCStateEvt extends MouseAdapter implements ActionListener {
 	private int pcNum;
 	
 //	private Socket socket;
-	private DataInputStream dis;
-	private DataOutputStream dos;
+//	private DataInputStream dis;
+//	private DataOutputStream dos;
 	
 	
 	public PCStateEvt(PCState pcs) {
