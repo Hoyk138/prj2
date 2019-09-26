@@ -140,8 +140,9 @@ public class UserMainEvt implements ActionListener{
 //			inputNick = disRead.readUTF();
 
 			//ID와 로그인 시간을 상대방에게 전송.
-			dos.writeUTF("아이디");
-			dos.writeUTF("현재시간");
+			String userId=um.getJlID().getText();
+			dos.writeUTF(userId);
+			dos.writeUTF(um.getLoginTime());
 			dos.flush();
 			
 //			jtaDisplay.append(inputNick+"님의 대화 서버에 들어 오셨습니다. 즐거운 대화 나누세요.\n");

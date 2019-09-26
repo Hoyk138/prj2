@@ -17,6 +17,9 @@ import javax.swing.border.TitledBorder;
 
 import admin.DAO.AdminDAO;
 import admin.controller.PCStateEvt;
+import admin.helper.PriceThread;
+import admin.helper.TimeThread;
+
 
 @SuppressWarnings("serial")
 public class PCState extends JPanel implements Runnable {
@@ -45,6 +48,9 @@ public class PCState extends JPanel implements Runnable {
 	private DataOutputStream dos;
 	
 	private Thread thread;
+	
+	private TimeThread tt;
+	private PriceThread pt;
 	
 	public PCState(ManageShop ms, int pcNum) {
 		this.mv = ms.getMv();
@@ -127,6 +133,17 @@ public class PCState extends JPanel implements Runnable {
 		System.out.println(userID + "/" + startTime);
 		jlblPCStateArr[USER_ID].setText("사용자 ID: "+userID);
 		jlblPCStateArr[START_TIME].setText("시작 시간: "+startTime);
+		
+		//사용시간, 사용금액 thread
+		if(tt==null) {
+			tt=new TimeThread(jlblPCStateArr[USE_TIME]);
+			tt.start();
+		}//end if
+		if(pt==null) {
+			pt=new PriceThread(jlblPCStateArr[USE_FEE]);
+			pt.start();
+		}//end if
+		
 		backgrounColor = Color.LIGHT_GRAY;
 		setBackground(backgrounColor);
 		

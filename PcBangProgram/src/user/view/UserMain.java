@@ -17,13 +17,16 @@ import javax.swing.border.TitledBorder;
 
 import user.controller.UserMainEvt;
 
-
+@SuppressWarnings("serial")
 public class UserMain extends JFrame{
+	
 	private JLabel pcNum, id, startTime, usePrice, useTime; // 속성 (타이틀)
 	private JLabel jlPcNum, jlID, jlStartTime, jlUsePrice, jlUseTime; //속성 값들(data)
 	private JButton jbtOrder, jbtCounterChat, jbtAdImage,jbtExit; //버튼
 	
 	private UserLogin ul;
+	
+	private String loginTime;
 	
 	public UserMain(String userId) {
 		super(" ※E_ZO PC방※  [" +  userId +"]님");
@@ -48,7 +51,7 @@ public class UserMain extends JFrame{
 		
 		jlPcNum=new JLabel();
 		jlID=new JLabel(userId);
-		jlStartTime=new JLabel(sdf.format(new Date()));
+		jlStartTime=new JLabel(loginTime = sdf.format(new Date()));
 		jlUseTime=new JLabel();
 		jlUsePrice=new JLabel();
 		
@@ -219,8 +222,11 @@ public class UserMain extends JFrame{
 		return jlUseTime;
 	}
 
-	
+	public String getLoginTime() {
+		return loginTime;
+	}
 
+	
 //	/**
 //	 * 단위테스트용
 //	 * @param args
