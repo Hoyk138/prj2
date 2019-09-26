@@ -108,8 +108,9 @@ private void uploadImg() throws IOException{
 	
 	public void productModify()  {
 		String imgPath=null;
+		
 		if(file==null) {
-			imgPath=pmdvVO.getImg();
+			imgPath=pmdvVO.getImg().substring(pmdvVO.getImg().lastIndexOf("_")+1);
 		}else {
 			imgPath=file;
 		}
