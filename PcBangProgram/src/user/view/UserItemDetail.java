@@ -49,7 +49,7 @@ public class UserItemDetail extends JDialog{
 		jlDescription=new JLabel("¡Ý ¸Ô°Å¸® POINT ¡Ý");
 		jlQuantity=new JLabel("¼ö·®");
 		//VO
-		jlImg=new JLabel(new ImageIcon(uidVO.getItemImg()));
+		jlImg=new JLabel(new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/rs_"+uidVO.getItemImg()));
 		
 		//JTextField,TextArea  //VO
 		jlDetailName=new JLabel("["+uidVO.getCategoryName()+"]"+uidVO.getItemName()); 

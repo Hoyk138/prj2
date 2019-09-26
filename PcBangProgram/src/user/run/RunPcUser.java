@@ -119,7 +119,7 @@ public class RunPcUser {
 				//14.thumbnail 颇老 积己
 				System.out.println("thumbnail 颇老 积己:"+recieveFileName); 
 				try {
-					ImageResize.resizeImage("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/"+recieveFileName, 100, 80);
+					ImageResize.resizeImage("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/"+recieveFileName, 160, 130);
 				} catch (NullPointerException npe) {
 					npe.printStackTrace();
 					System.out.println(recieveFileName);
