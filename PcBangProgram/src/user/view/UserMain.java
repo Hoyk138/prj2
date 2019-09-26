@@ -34,9 +34,9 @@ public class UserMain extends JFrame{
 		
 		//디자인
 //		ImageIcon iiLogo=new ImageIcon("");
-		ImageIcon iiBack=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/designImg/bgcolor.jpg");
-		ImageIcon iiAd=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/designImg/AdImg.gif");
-		ImageIcon iiAd2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/designImg/AdImg2.gif");
+		ImageIcon iiBack=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/bgcolor.jpg");
+		ImageIcon iiAd=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/AdImg.gif");
+		ImageIcon iiAd2=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/AdImg2.gif");
 					
 		//생성
 		JLabel jlLogo=new JLabel("▒ E_ZO PC ▒");
