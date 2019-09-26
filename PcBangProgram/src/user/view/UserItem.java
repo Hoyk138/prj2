@@ -135,15 +135,12 @@ public class UserItem extends JFrame{
 		dtcrCenter.setHorizontalAlignment(SwingConstants.CENTER);
 		TableColumnModel tcmFood=jtFood.getColumnModel();
 		tcmFood.getColumn(0).setCellRenderer(dtcrCenter);
-		tcmFood.getColumn(1).setCellRenderer(dtcrCenter);
 		tcmFood.getColumn(2).setCellRenderer(dtcrCenter);
 		TableColumnModel tcmSnack=jtSnack.getColumnModel();
 		tcmSnack.getColumn(0).setCellRenderer(dtcrCenter);
-		tcmSnack.getColumn(1).setCellRenderer(dtcrCenter);
 		tcmSnack.getColumn(2).setCellRenderer(dtcrCenter);
 		TableColumnModel tcmDrink=jtDrink.getColumnModel();
 		tcmDrink.getColumn(0).setCellRenderer(dtcrCenter);
-		tcmDrink.getColumn(1).setCellRenderer(dtcrCenter);
 		tcmDrink.getColumn(2).setCellRenderer(dtcrCenter);
 	
 		//////////////////////////////////////////////////////////////////////////////////////////
