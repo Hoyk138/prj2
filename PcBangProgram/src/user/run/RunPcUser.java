@@ -53,9 +53,9 @@ public class RunPcUser {
 			dis = new DataInputStream(client.getInputStream());
 
 
-			// C:/dev/workspace/jdbc_prj/src/kr/co/sist/user/img
+			// c:/dev/pcbang/user/img/item
 			// 모든 파일의 목록을 CSV로 만들기
-			File file = new File("C:/Users/owner/git/prj2/PcBangProgram/src/user/image");
+			File file = new File("c:/dev/pcbang/user/img/item");
 			File[] fileArr = file.listFiles();
 			StringBuilder csvImgFile = new StringBuilder();
 			for (int i = 0; i < fileArr.length; i++) {
@@ -108,7 +108,7 @@ public class RunPcUser {
 				recieveFileName = dis.readUTF();
 				System.out.println("클라이언트(파일명): " + recieveFileName);
 				//14. 파일생성(같은 이름이 있다면 덮어 씌우겠다.)
-				fos = new FileOutputStream("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/"+recieveFileName);
+				fos = new FileOutputStream("c:/dev/pcbang/user/img/item/"+recieveFileName);
 				while(readCnt > 0) {
 					readSize = dis.read(readData);
 					fos.write(readData, 0, readSize);
@@ -119,7 +119,7 @@ public class RunPcUser {
 				//14.thumbnail 파일 생성
 				System.out.println("thumbnail 파일 생성:"+recieveFileName); 
 				try {
-					ImageResize.resizeImage("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/"+recieveFileName, 160, 130);
+					ImageResize.resizeImage("c:/dev/pcbang/user/img/item/"+recieveFileName, 160, 130);
 				} catch (NullPointerException npe) {
 					npe.printStackTrace();
 					System.out.println(recieveFileName);
