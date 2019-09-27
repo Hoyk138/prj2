@@ -39,7 +39,7 @@ public class ProductAddView extends JDialog{
 		
 		jbtProductAdd=new JButton("추가");
 		jbtProductImageAdd=new JButton("이미지 선택");
-		jlImgAdd=new JLabel(new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/rs_선택.jpg"));
+		jlImgAdd=new JLabel(new ImageIcon("C:/dev/pcbang/admin/img/item/rs_선택.jpg"));
 		jtfProductNameAdd=new JTextField();
 		jtfPriceAdd=new JTextField();
 		
