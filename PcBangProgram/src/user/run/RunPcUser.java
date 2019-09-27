@@ -56,6 +56,11 @@ public class RunPcUser {
 			// c:/dev/pcbang/user/img/item
 			// 모든 파일의 목록을 CSV로 만들기
 			File file = new File("c:/dev/pcbang/user/img/item");
+			
+			if(!file.exists()) {
+				file.mkdir();
+			}//end if
+			
 			File[] fileArr = file.listFiles();
 			StringBuilder csvImgFile = new StringBuilder();
 			for (int i = 0; i < fileArr.length; i++) {
