@@ -45,7 +45,7 @@ public class RunPcUser {
 		UserDAO uDAO=UserDAO.getInstance();
 		
 		try { 
-			local = InetAddress.getLocalHost(); 
+			local = InetAddress.getLocalHost();
 			String ip = local.getHostAddress();
 			System.out.println(ip);
 			pcNum=uDAO.selectPcNum(ip);

@@ -6,6 +6,8 @@ public class PriceThread extends Thread{
 	
 	private JLabel jlUsePrice;
 	
+	private boolean flag;
+	
 	public PriceThread(JLabel jlUsePrice) {
 		this.jlUsePrice=jlUsePrice;
 		
@@ -16,7 +18,7 @@ public class PriceThread extends Thread{
 		
 		
 		int price=0; ////5분당 100원 가격
-		while(true) {
+		while(!flag) {
 			price=price+100;
 			//사용금액 thread
 			
@@ -30,4 +32,8 @@ public class PriceThread extends Thread{
 		
 	}//run
 
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+	
 }//class

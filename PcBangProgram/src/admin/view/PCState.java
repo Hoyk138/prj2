@@ -240,15 +240,22 @@ public class PCState extends JPanel implements Runnable {
 				jlblPCStateArr[USE_TIME].setText("사용 시간: ");
 				jlblPCStateArr[USE_FEE].setText("사용 요금: ");
 				
+				setBackgrounColor(Color.WHITE);
+				setBackground(backgrounColor);
+				
+				//이벤트 해제
+				this.removeMouseListener(pcse);
+				
 				jpm.remove(jmiChat);
 				jpm.remove(jmiOrder);
 				jpm.remove(jmiClose);
-				
-				tt = null;
-				pt = null;
+
+				//스레드 정지
+				tt.setFlag(true);
+				tt =null;
+				pt.setFlag(true);
+				pt =null;
 				thread = null;
-				
-				setBackgrounColor(new Color(0xEEEEEE));
 				
 			} catch (IOException ioe1) {
 				ioe1.printStackTrace();

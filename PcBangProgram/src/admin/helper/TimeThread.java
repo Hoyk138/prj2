@@ -6,6 +6,8 @@ public class TimeThread extends Thread{
 	
 	private JLabel jlUseTime;
 	
+	private boolean flag;
+	
 	public TimeThread(JLabel jlUseTime) {
 		this.jlUseTime=jlUseTime;
 		
@@ -17,7 +19,7 @@ public class TimeThread extends Thread{
 //		// 1초*60=1분 -> 1분*60=1시간
 		int startTime=(int)System.currentTimeMillis()/1000;
 		
-		while(true) {
+		while(!flag) {
 			
 			//사용시간 thread
 			int nowTime=(int)System.currentTimeMillis()/1000;
@@ -42,4 +44,8 @@ public class TimeThread extends Thread{
 		
 	}//run
 
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+	
 }//class

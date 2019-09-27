@@ -79,6 +79,9 @@ public class ManagePCEvt implements ActionListener{
 			    case MODIFICATION: msg = "수정"; break;
 			}//switch case
 			inputIP = JOptionPane.showInputDialog(mpc, "새로 "+msg+"할 IP를 입력하세요.\n예) 127.0.0.1");
+			if (inputIP == null) {
+				inputIP = "";
+			}//end if
 			
 			String[] options = {"예","아니요"};
 			switch (JOptionPane.showOptionDialog(mpc, "입력하신 IP ["+inputIP+"]로 "+msg+" 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
