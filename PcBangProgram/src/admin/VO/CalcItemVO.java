@@ -2,12 +2,12 @@ package admin.VO;
 
 public class CalcItemVO {
 //번호, 제품명, 개수, 일시, 가격, 총 판매 수량, 총 매출
-	private String order_code, id, itemName;
+	private String orderCode, id, itemName;
 	private int PCnum, quantity, price;
 	
-	public CalcItemVO(String order_code, String id, String itemName, int pCnum, int quantity, int price) {
+	public CalcItemVO(String orderCode, String id, String itemName, int pCnum, int quantity, int price) {
 		super();
-		this.order_code = order_code;
+		this.orderCode = orderCode;
 		this.id = id;
 		this.itemName = itemName;
 		this.PCnum = pCnum;
@@ -15,8 +15,8 @@ public class CalcItemVO {
 		this.price = price;
 	}
 
-	public String getOrder_code() {
-		return order_code;
+	public String getOrderCode() {
+		return orderCode;
 	}
 
 	public String getId() {

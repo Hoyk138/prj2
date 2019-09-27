@@ -71,9 +71,6 @@ public class CalcPCDAO {
 		// 3. 쿼리문 생성 객체 얻기
 		StringBuilder selectCalcPC = new StringBuilder() ;
 		selectCalcPC
-		//select pc_num, pc_code, id, use_time, use_fee from pc_history
-//		.append("	select pc_num, pc_code, id, use_time, use_fee	")
-//		.append("	from pc_history	") ;
 		.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time   ")
 		.append("	from pc_use	pu, pc_payment pp   ")
 		.append("	where pp.pc_use_code = pu.pc_use_code   ")
@@ -88,7 +85,6 @@ public class CalcPCDAO {
 		rs = pstmt.executeQuery() ;
 		CalcPCVO cv = null ;
 		while( rs.next() ) {
-			//pc_num, pc_code, id, use_time, use_fee
 			cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), (rs.getInt("use_time"))*20) ;
 			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 		} // end while
@@ -121,7 +117,6 @@ public class CalcPCDAO {
 			// 3. 쿼리문 생성 객체 얻기 
 			StringBuilder selectCalcPCRecipt = new StringBuilder() ;
 			selectCalcPCRecipt
-			//select pc_code, sum(use_time) use_time, sum(use_fee) use_fee	from pc_history group by pc_code ;
 			.append("	select pc_code, sum(use_time) use_time, sum(use_fee) use_fee	")
 			.append("	from pc_use	")
 			.append("	group by pc_code	") 

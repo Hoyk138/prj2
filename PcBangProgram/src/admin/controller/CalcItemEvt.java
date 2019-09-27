@@ -91,7 +91,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 				itemPMap.put(cirVO.getItemName(), cirVO.getPrice()) ;
 				
 				totalCnt += cirVO.getQuantity() ;
-				totalPrice += cirVO.getorderedPrice() ;
+				totalPrice += cirVO.getOrderedPrice() ;
 			} // end for
 			
 			Set<String> keyQ = itemQMap.keySet() ;
@@ -143,7 +143,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 				rowData = new Object[6];
 
-				rowData[0] = ciVO.getOrder_code();
+				rowData[0] = ciVO.getOrderCode();
 				rowData[1] = ciVO.getPCnum();
 				rowData[2] = ciVO.getId();
 				rowData[3] = ciVO.getItemName();
@@ -205,7 +205,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 				rowData = new Object[6];
 
-				rowData[0] = ciVO.getOrder_code();
+				rowData[0] = ciVO.getOrderCode();
 				rowData[1] = ciVO.getPCnum();
 				rowData[2] = ciVO.getId();
 				rowData[3] = ciVO.getItemName();
@@ -277,7 +277,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 				rowData = new Object[6];
 
-				rowData[0] = ciVO.getOrder_code();
+				rowData[0] = ciVO.getOrderCode();
 				rowData[1] = ciVO.getPCnum();
 				rowData[2] = ciVO.getId();
 				rowData[3] = ciVO.getItemName();
@@ -353,7 +353,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 
 				rowData = new Object[6];
 
-				rowData[0] = ciVO.getOrder_code();
+				rowData[0] = ciVO.getOrderCode();
 				rowData[1] = ciVO.getPCnum();
 				rowData[2] = ciVO.getId();
 				rowData[3] = ciVO.getItemName();
