@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import admin.DAO.heeDAO;
+import admin.DAO.AdminDAO;
 import admin.VO.ProductMDViewVO;
 import admin.VO.ProductViewVO;
 import admin.view.ModifyDeleteView;
@@ -36,10 +36,12 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 		dtmF.setRowCount(0);
 		Object[] rowData = null;
 
-		heeDAO hDAO = heeDAO.getInstance();
+//		heeDAO hDAO = heeDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 
 		try {
-			List<ProductViewVO> list = hDAO.selectProductView();
+//			List<ProductViewVO> list = hDAO.selectProductView();
+			List<ProductViewVO> list = aDAO.selectProductView();
 
 			pvVO = null;
 
@@ -72,10 +74,12 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 		dtmS.setRowCount(0);
 		Object[] rowData = null;
 
-		heeDAO hDAO = heeDAO.getInstance();
+//		heeDAO hDAO = heeDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 
 		try {
-			List<ProductViewVO> list = hDAO.selectProductView();
+//			List<ProductViewVO> list = hDAO.selectProductView();
+			List<ProductViewVO> list = aDAO.selectProductView();
 
 			pvVO = null;
 
@@ -109,10 +113,12 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 		dtmD.setRowCount(0);
 		Object[] rowData = null;
 
-		heeDAO hDAO = heeDAO.getInstance();
+//		heeDAO hDAO = heeDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 
 		try {
-			List<ProductViewVO> list = hDAO.selectProductView();
+//			List<ProductViewVO> list = hDAO.selectProductView();
+			List<ProductViewVO> list = aDAO.selectProductView();
 
 			pvVO = null;
 
@@ -153,10 +159,12 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 		pmdvVO.setImg(img);
 		pmdvVO.setPrice(price);
 
-		heeDAO hDAO = heeDAO.getInstance();
+//		heeDAO hDAO = heeDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 
 		try {
-			hDAO.selectDetailProduct(pmdvVO);
+//			hDAO.selectDetailProduct(pmdvVO);
+			aDAO.selectDetailProduct(pmdvVO);
 			new ModifyDeleteView(pmdvVO, this);
 		} catch (SQLException e) {
 			e.printStackTrace();

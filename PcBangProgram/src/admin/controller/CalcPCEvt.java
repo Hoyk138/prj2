@@ -25,7 +25,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
-import admin.DAO.CalcPCDAO;
+import admin.DAO.AdminDAO;
 import admin.VO.CalcPCVO;
 import admin.view.CalcView;
 
@@ -50,13 +50,15 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	} // CalcPCEvt
 	
 	private void viewCalcPCRecipt() {
-		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+//		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+		AdminDAO aDAO = AdminDAO.getInstance() ;
 		
 		Map<Integer, Integer> pcMap = new HashMap<Integer, Integer>() ;
 		
 		
 		try {
-			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
+//			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
+			List<CalcPCVO> list = aDAO.selectCalcPC() ;
 			
 			JTextArea jta = new JTextArea(20, 50) ;
 			JScrollPane jsp = new JScrollPane(jta) ;
@@ -118,10 +120,12 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 		
 		Object[] rowData = null ;
 		
-		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+//		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+		AdminDAO aDAO = AdminDAO.getInstance() ;
 		
 		try {
-			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
+//			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
+			List<CalcPCVO> list = aDAO.selectCalcPC() ;
 			
 			DefaultTableModel dtm = cv.getDtmCalcPC() ;
 			dtm.setRowCount(0);
@@ -184,10 +188,12 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	public void setCalcPCList7() {
 		Object[] rowData = null ;
 		
-		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+//		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+		AdminDAO aDAO = AdminDAO.getInstance() ;
 		
 		try {
-			List<CalcPCVO> list = cpcDAO.selectCalcPC7() ;
+//			List<CalcPCVO> list = cpcDAO.selectCalcPC7() ;
+			List<CalcPCVO> list = aDAO.selectCalcPC7() ;
 			
 			DefaultTableModel dtm = cv.getDtmCalcPC() ;
 			dtm.setRowCount(0);
@@ -255,10 +261,12 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	public void setCalcPCLstMonth() {
 		Object[] rowData = null ;
 		
-		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+//		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+		AdminDAO aDAO = AdminDAO.getInstance() ;
 		
 		try {
-			List<CalcPCVO> list = cpcDAO.selectCalcPCLstMonth() ;
+//			List<CalcPCVO> list = cpcDAO.selectCalcPCLstMonth() ;
+			List<CalcPCVO> list = aDAO.selectCalcPCLstMonth() ;
 			
 			DefaultTableModel dtm = cv.getDtmCalcPC() ;
 			dtm.setRowCount(0);
@@ -323,12 +331,15 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	public void setCalcPCLstCustom() {
 		Object[] rowData = null ;
 		
-		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+//		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+		AdminDAO aDAO = AdminDAO.getInstance() ;
+		
 		String startDate = cv.getJtfStartPC().getText().trim() ;
 		String endDate = cv.getJtfEndPC().getText().trim() ;
 		
 		try {
-			List<CalcPCVO> list = cpcDAO.selectCalcPCLstCustom(startDate, endDate) ;
+//			List<CalcPCVO> list = cpcDAO.selectCalcPCLstCustom(startDate, endDate) ;
+			List<CalcPCVO> list = aDAO.selectCalcPCLstCustom(startDate, endDate) ;
 			
 			DefaultTableModel dtm = cv.getDtmCalcPC() ;
 			dtm.setRowCount(0);

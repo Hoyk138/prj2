@@ -1,9 +1,11 @@
 package admin.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -53,6 +55,10 @@ public class ManagePC extends JDialog{
 //		jpNorth.add(jtfSearch);
 //		jpNorth.add(jbtnSearch);
 		
+		//North에 넣을  패널
+		JPanel jpNorth = new JPanel();
+		jpNorth.add(new JLabel(" "));
+		
 		//Center에 넣을 테이블
 		String[] columnNames = {"PC번호","IP주소","다시 고친 날짜"};
 		dtmPC = new DefaultTableModel(columnNames, 6);
@@ -99,9 +105,19 @@ public class ManagePC extends JDialog{
 		jpSouth.add(jbtnUpdate);
 		jpSouth.add(jbtnDelete);
 		
+		//색깔//////////////////////////
+		jbtnResiter.setBackground(new Color(0xF5D08A));
+		jbtnUpdate.setBackground(new Color(0xF5D08A));
+		jbtnDelete.setBackground(new Color(0xF5D08A));
+		jpNorth.setBackground(new Color(0x3C5A91));
+		jspPC.setBackground(Color.white);
+		jpSouth.setBackground(new Color(0x3C5A91));
+		setBackground(Color.white);
+		////////////////////////////
+
 		//배치
 		setLayout(new BorderLayout());
-//		add("North",jpNorth);
+		add("North",jpNorth);
 		add("Center",jspPC);
 		add("South",jpSouth);
 		
@@ -111,10 +127,12 @@ public class ManagePC extends JDialog{
 		jbtnUpdate.addActionListener(mpce);
 		jbtnDelete.addActionListener(mpce);
 		
-		setBounds(mv.getX()+30, mv.getY()+30, 450, 760);
+		setBounds(mv.getX()+30, mv.getY()+30, 450, 775);
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
+		
 	}//ManagePC
 
 	public DefaultTableModel getDtmPC() {

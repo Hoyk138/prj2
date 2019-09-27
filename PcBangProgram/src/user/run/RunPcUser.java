@@ -46,7 +46,8 @@ public class RunPcUser {
 		
 		try { 
 			local = InetAddress.getLocalHost(); 
-			String ip = local.getHostAddress(); 
+			String ip = local.getHostAddress();
+			System.out.println(ip);
 			pcNum=uDAO.selectPcNum(ip);
 			
 		} catch (UnknownHostException e1) {
@@ -170,7 +171,7 @@ public class RunPcUser {
 	
 
 	public static void main(String[] args) {
-		if (RunPcUser.pcNum()==0) {
+		if (RunPcUser.pcNum() == 0) {
 			JOptionPane.showMessageDialog(null, "등록 되지 않은 PC입니다.\n카운터에 문의 해주세요");
 			return;
 		}//end if

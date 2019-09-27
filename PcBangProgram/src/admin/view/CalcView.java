@@ -285,13 +285,12 @@ public class CalcView extends JPanel {
 		jpCalcPC.setBackground(Color.white);
 		jpCalcPC2.setBackground(Color.white);
 		jpCalcPCNorth.setBackground(Color.white);
-		jpCalcPCSouth.setBackground(Color.white);
-		jpCalcItemNorth.setBackground(Color.white);
+		jpCalcPCSouth.setBackground(new Color(0x3C5A91));
 		jpCalcItem.setBackground(Color.white);
 		jpCalcItem2.setBackground(Color.white);
 		jpCalcItemNorth.setBackground(Color.white);
+		jpCalcItemSouth.setBackground(new Color(0x3C5A91));
 		jspCalcItem.setBackground(Color.white);
-		jpCalcItemSouth.setBackground(Color.white);
 		jtp.setBackground(Color.white);
 		setBackground(Color.white);
 		/////////////////////////////////

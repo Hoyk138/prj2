@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import admin.DAO.heeDAO;
+import admin.DAO.AdminDAO;
 import admin.VO.ProductDeleteVO;
 import admin.VO.ProductMDViewVO;
 import admin.VO.ProductModifyVO;
@@ -130,10 +130,12 @@ private void uploadImg() throws IOException{
 		ProductModifyVO pmVO=new ProductModifyVO(imgPath, name, explain, price,itemCode);
 		
 		
-		heeDAO hDAO=heeDAO.getInstance();
+//		heeDAO hDAO = heeDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 		int cnt=0;
 		try {
-		cnt=hDAO.modifyProduct(pmVO);
+//		cnt=hDAO.modifyProduct(pmVO);
+		cnt=aDAO.modifyProduct(pmVO);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -153,16 +155,19 @@ private void uploadImg() throws IOException{
 		
 		ProductDeleteVO pdVO=new ProductDeleteVO(itemCode);
 		
-		heeDAO hDAO=heeDAO.getInstance();
+//		heeDAO hDAO=heeDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 		try {
 			
 			if(mdv.getJlState().getText().equals("판매중인")) {
-				if(hDAO.DeleteProduct(pdVO)==1) {
+//				if(hDAO.DeleteProduct(pdVO)==1) {
+				if(aDAO.DeleteProduct(pdVO)==1) {
 					JOptionPane.showMessageDialog(mdv,"이 상품은 손님에게 보이지 않습니다.");
 					mdv.dispose();
 				}//end if
 			}else if(mdv.getJlState().getText().equals("재고없는")){
-				if(hDAO.revive(pdVO)==1) {
+//				if(hDAO.revive(pdVO)==1) {
+				if(aDAO.revive(pdVO)==1) {
 					JOptionPane.showMessageDialog(mdv,"이 상품은 손님에게 보여집니다.");
 					mdv.dispose();
 				}//end if
@@ -192,10 +197,12 @@ private void uploadImg() throws IOException{
 			originalFile.delete();
 			reSizeFile.delete();
 			
-			heeDAO hDAO=heeDAO.getInstance();
+//			heeDAO hDAO=heeDAO.getInstance();
+			AdminDAO aDAO = AdminDAO.getInstance();
 			
 			try {
-				if(hDAO.RealDelete(prdVO)==1) {
+//				if(hDAO.RealDelete(prdVO)==1) {
+				if(aDAO.RealDelete(prdVO)==1) {
 					JOptionPane.showMessageDialog(mdv, "상품이 삭제되었습니다.");
 					pe.setDrinkList();
 					pe.setSnackList();
@@ -231,14 +238,3 @@ private void uploadImg() throws IOException{
 	}//actionPerformed
 	
 }//class
-
-
-
-
-
-
-
-
-
-
-

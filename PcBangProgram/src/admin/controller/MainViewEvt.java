@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import admin.DAO.CalcPCDAO;
+import admin.DAO.AdminDAO;
 import admin.VO.CalcPCVO;
 import admin.helper.OrderThread;
 import admin.view.MainView;
@@ -43,10 +43,12 @@ public class MainViewEvt implements ActionListener{
 			mv.getCard().show(mv.getJpCenter(), "payment");
 			List<CalcPCVO> listPC;
 
-			CalcPCDAO cpcDAO = CalcPCDAO.getInstance();
+//			CalcPCDAO cpcDAO = CalcPCDAO.getInstance();
+			AdminDAO aDAO = AdminDAO.getInstance();
 
 			try {
-				listPC = cpcDAO.selectCalcPC();
+//				listPC = cpcDAO.selectCalcPC();
+				listPC = aDAO.selectCalcPC();
 
 				if (listPC.isEmpty()) {
 					JOptionPane.showMessageDialog(mv, "PC 결제 내역이 없습니다.");

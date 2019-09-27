@@ -25,7 +25,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
-import admin.DAO.CalcItemDAO;
+import admin.DAO.AdminDAO;
 import admin.VO.CalcItemReciptVO;
 import admin.VO.CalcItemVO;
 import admin.view.CalcView;
@@ -49,7 +49,8 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	} // CalcItemEvt
 
 	private void viewCalcItemRecipt() {
-		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+//		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 		
 		// <제품명, 개수>
 		Map<String, Integer> itemQMap = new HashMap<String, Integer>() ;
@@ -58,7 +59,8 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 		Map<String, Integer> itemPMap = new HashMap<String, Integer>() ;
 		
 		try {
-			List<CalcItemReciptVO> list = ciDAO.selectCalcItemRecipt();
+//			List<CalcItemReciptVO> list = ciDAO.selectCalcItemRecipt();
+			List<CalcItemReciptVO> list = aDAO.selectCalcItemRecipt();
 
 			JTextArea jta = new JTextArea(20, 50);
 			JScrollPane jsp = new JScrollPane(jta);
@@ -122,10 +124,12 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	public void setCalcItemList() {
 		Object[] rowData = null;
 
-		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+//		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 		
 		try {
-			List<CalcItemVO> list = ciDAO.selectCalcItem();
+//			List<CalcItemVO> list = ciDAO.selectCalcItem();
+			List<CalcItemVO> list = aDAO.selectCalcItem();
 
 			DefaultTableModel dtm = cv.getDtmCalcItem();
 			dtm.setRowCount(0);
@@ -183,10 +187,12 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	public void setCalcItemList7() {
 		Object[] rowData = null ;
 		
-		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+//		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 		
 		try {
-			List<CalcItemVO> list = ciDAO.selectCalcItem7() ;
+//			List<CalcItemVO> list = ciDAO.selectCalcItem7() ;
+			List<CalcItemVO> list = aDAO.selectCalcItem7() ;
 			
 			DefaultTableModel dtm = cv.getDtmCalcItem() ;
 			dtm.setRowCount(0);
@@ -255,10 +261,12 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	public void setCalcItemLstMonth() {
 		Object[] rowData = null ;
 		
-		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+//		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 		
 		try {
-			List<CalcItemVO> list = ciDAO.selectCalcItem7() ;
+//			List<CalcItemVO> list = ciDAO.selectCalcItem7() ;
+			List<CalcItemVO> list = aDAO.selectCalcItem7() ;
 			
 			DefaultTableModel dtm = cv.getDtmCalcItem() ;
 			dtm.setRowCount(0);
@@ -328,14 +336,16 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	
 	public void setCalcItemLstCustom() {
 		Object[] rowData = null ;
-		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		
+//		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 		
 		String startDate = cv.getJtfStartItem().getText().trim() ;
 		String endDate = cv.getJtfEndItem().getText().trim() ;
 		
-		
 		try {
-			List<CalcItemVO> list = ciDAO.selectCalcItemLstCustom(startDate, endDate) ;
+//			List<CalcItemVO> list = ciDAO.selectCalcItemLstCustom(startDate, endDate) ;
+			List<CalcItemVO> list = aDAO.selectCalcItemLstCustom(startDate, endDate) ;
 			
 			DefaultTableModel dtm = cv.getDtmCalcItem() ;
 			dtm.setRowCount(0);

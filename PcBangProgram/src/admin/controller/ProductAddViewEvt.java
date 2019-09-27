@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import admin.DAO.heeDAO;
+import admin.DAO.AdminDAO;
 import admin.VO.ProductAddVO;
 import admin.view.ProductAddView;
 import kr.co.sist.util.img.ImageResize;
@@ -115,10 +115,12 @@ private void uploadImg() throws IOException{
 		
 		ProductAddVO paVO=new ProductAddVO(imgPath, category, name, explain, price);
 		
-		heeDAO hDAO=heeDAO.getInstance();
+//		heeDAO hDAO=heeDAO.getInstance();
+		AdminDAO aDAO = AdminDAO.getInstance();
 		
 		try {
-			if(hDAO.InsertProduct(paVO)==1) {
+//			if(hDAO.InsertProduct(paVO)==1) {
+			if(aDAO.InsertProduct(paVO)==1) {
 			JOptionPane.showMessageDialog(pav,"상품이 추가되었습니다.");
 			pe.setDrinkList();
 			pe.setFoodList();

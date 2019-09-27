@@ -82,7 +82,8 @@ public class AdminLogin extends JFrame {
 		});
 		
 		setResizable(false);
-		setBounds(1500, 843, 421, 198);
+//		setBounds(1500, 843, 421, 198);
+		setBounds(750, 440, 421, 198);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
