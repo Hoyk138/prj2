@@ -199,9 +199,9 @@ public class RunPcUser {
 					e.printStackTrace();
 				} // end catch
 				break;
-			case JOptionPane.CANCEL_OPTION:
-				flag = true;
-				break;
+//			case JOptionPane.CANCEL_OPTION:
+//				flag = true;
+//				break;
 			case JOptionPane.CLOSED_OPTION:
 				flag = true;
 				break;
