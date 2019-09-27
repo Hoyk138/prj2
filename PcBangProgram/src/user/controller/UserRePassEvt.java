@@ -53,13 +53,13 @@ public class UserRePassEvt implements ActionListener {
 			
 			if(!rePass.equals(rePassConfirm)) {
 				urp.getJpfConfirm().setText("");
-				JOptionPane.showMessageDialog(urp, "비밀번호 확인이 일치하지 않습니다");
+				JOptionPane.showMessageDialog(urp, "비밀번호가 일치하지 않습니다");
 				urp.getJpfConfirm().requestFocus();
 			}else {
 				
 			
 				if(passUpdate) {
-					JOptionPane.showMessageDialog(urp, "비밀번호 변경되었습니다");
+					JOptionPane.showMessageDialog(urp, "비밀번호가 변경되었습니다");
 					urp.dispose();
 				}else {
 	//				urp.getJlblId2().setText("");

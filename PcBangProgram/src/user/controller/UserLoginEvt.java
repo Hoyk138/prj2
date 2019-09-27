@@ -69,8 +69,11 @@ public class UserLoginEvt implements ActionListener{
 		
 	}//checkLogin
 	
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+		
 		
 		if(ae.getSource()==ul.getJtfId()) { //아이디를 입력받으면
 			if(!ul.getJtfId().getText().equals("")) { // 아이디가 비어있는지 판단
@@ -88,18 +91,18 @@ public class UserLoginEvt implements ActionListener{
 			
 			/////////////////////////////////////
 			
-			if (ul.getJtfId().getText().equals("") && ul.getJpfPass().getPassword().equals("")) { 
+			if (ul.getJtfId().getText().equals("") && ul.getJpfPass().getPassword().length==0) { 
 				
-				JOptionPane.showMessageDialog(ul, "아이디와 비밀번호를 모두 입력해주세요");  
+				JOptionPane.showMessageDialog(ul, "아이디와 비밀번호를 입력해주세요");  
 				ul.getJtfId().requestFocus(); //커서를 아이디에 위치
 				
-			}else if(!ul.getJtfId().getText().equals("") && ul.getJpfPass().getPassword().equals("")) {
+			}else if(!ul.getJtfId().getText().equals("") && ul.getJpfPass().getPassword().length==0)  {
 				
 				ul.getJpfPass().setText(""); //비밀번호 초기화
 				JOptionPane.showMessageDialog(ul, "비밀번호를 입력해주세요");  
 				ul.getJpfPass().requestFocus(); //커서를 비밀번호 위치
 				
-			}else if(ul.getJtfId().getText().equals("") && !ul.getJpfPass().getPassword().equals("")) {
+			}else if(ul.getJtfId().getText().equals("") && ul.getJpfPass().getPassword().length>0)   {
 				ul.getJtfId().setText(""); //아이디 초기화
 				ul.getJpfPass().setText(""); //비밀번호 초기화
 				JOptionPane.showMessageDialog(ul, "아이디를 입력해주세요");  

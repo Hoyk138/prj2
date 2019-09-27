@@ -51,8 +51,8 @@ public class FindId extends JDialog {
 		
 		jlbName.setBounds(40, 60, 76, 34);
 		jlbPhone.setBounds(40, 100, 76, 30);
-		jtfName.setBounds(171, 93, 210, 30);
-		jcbNum.setBounds(171, 137, 85, 36);
+		jtfName.setBounds(174, 93, 210, 30);
+		jcbNum.setBounds(170, 137, 85, 36);
 		jtfPhone2.setBounds(297, 139, 70, 34);
 		jtfPhone3.setBounds(410, 139, 70, 34);
 		jbtnFindID.setBounds(201, 218, 145, 35);

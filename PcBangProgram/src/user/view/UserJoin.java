@@ -77,15 +77,15 @@ public class UserJoin extends JDialog {
 		jlblQuestion.setBounds(50, 260, 100, 30);
 		jlblAnswer.setBounds(50, 300, 76, 30);
 		
-		jtfId.setBounds(174, 84, 180, 30);
-		jpfPass.setBounds(174, 133, 180, 30);
-		jpfPassComfirm.setBounds(174, 180, 180, 30);
-		jtfName.setBounds(174, 228, 300, 30);
+		jtfId.setBounds(177, 84, 180, 30);
+		jpfPass.setBounds(177, 133, 180, 30);
+		jpfPassComfirm.setBounds(177, 180, 180, 30);
+		jtfName.setBounds(177, 228, 300, 30);
 		jcbNum.setBounds(174, 274, 80, 34);
 		jtfPhone2.setBounds(293, 277, 76, 30);
 		jtfPhone3.setBounds(410, 277, 80, 30);
 		jcbQuestion.setBounds(173, 322, 325, 36);
-		jtfAnswer.setBounds(174, 374, 300, 30);
+		jtfAnswer.setBounds(177, 374, 300, 30);
 		
 		jbtnOverlap.setBounds(375, 79, 125, 39);
 		jbtnJoin.setBounds(204, 453, 145, 35);

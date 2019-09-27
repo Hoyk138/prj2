@@ -53,8 +53,8 @@ public class UserRePass extends JDialog {
 		jlblConfirm.setBounds(40, 110, 100, 30);
 		jlblId2.setBounds(177, 95, 200, 25); 
 		
-		jpfPass.setBounds(174, 142, 270, 30);
-		jpfConfirm.setBounds(174, 190, 270, 30);
+		jpfPass.setBounds(177, 142, 270, 30);
+		jpfConfirm.setBounds(177, 190, 270, 30);
 		jbtnResetPass.setBounds(153, 266, 193, 35);
 		
 		
@@ -74,7 +74,7 @@ public class UserRePass extends JDialog {
 		add(rpBack);
 		add(jlblId);
 		add(jlblPass);
-		add(jlblConfirm);
+		add(jlblConfirm); 
 		
 		UserRePassEvt urpe=new UserRePassEvt(this);
 		
@@ -84,7 +84,7 @@ public class UserRePass extends JDialog {
 		jbtnResetPass.addActionListener(urpe);
 		
 		setResizable(false);
-		setBounds(700, 400, 517, 396);
+		setBounds(700, 400, 517, 376);
 		setVisible(true);
 //		fp.setVisible(false);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

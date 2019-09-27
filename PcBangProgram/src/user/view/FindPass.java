@@ -54,9 +54,9 @@ public class FindPass extends JDialog {
 		jlbQuestion.setBounds(50, 90, 100, 30);
 		jlbAnswer.setBounds(50, 150, 76, 30);
 		
-		jtfId.setBounds(175, 98, 325, 30);
+		jtfId.setBounds(178, 98, 320, 30);
 		jcbQuestion.setBounds(172, 147, 330, 35);
-		jtfAnswer.setBounds(175, 203, 325, 30);
+		jtfAnswer.setBounds(178, 203, 320, 30);
 		
 		jbtnFindPass.setBounds(190, 280, 168, 35);
 		
