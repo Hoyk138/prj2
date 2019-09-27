@@ -11,13 +11,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,10 +35,6 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	private String fileName ;
 	private StringBuilder msg ;
 	private StringBuilder report_file;
-	private long date ;
-	private Date today ; 
-	private DateFormat format ; 
-	private String formatted ; 
 	private SimpleDateFormat sdf ;
 	private Calendar cal ;
 	private String todate; 
@@ -372,6 +366,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			predate= cv.getJtfStartPC().getText() ;
 			
 			report_file.delete(0, report_file.length()) ;
+			
 			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
 			
 			for (int i = 0; i < list.size(); i++) {
@@ -384,9 +379,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			msg.append("-------------------------------------------------------------\n")
 			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
 			.append("조회 기간 : " + predate + " ~ " + todate);
-//			msg = msg.append(list) ;
 			report_file = report_file.append(msg) ;
-			msg.delete(0, msg.length());
 			
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
@@ -460,13 +453,16 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 
 		
 		public void reportFile() throws IOException {
-			
 			BufferedWriter bw = null;
-			date = System.currentTimeMillis() ;
-			today = new Date ( date ); 
-//			format = DateFormat.getInstance(); 
-//			formatted = format.format ( today ); 
-			sdf = new SimpleDateFormat("yyyy-MM-dd HH/mm/") ;
+
+			
+			long currTime = System.currentTimeMillis() ;
+			Date currDate = new Date(currTime) ;
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yy-MM-dd HH-mm-ss") ;
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
+			
+			String saveTime1 = sdf1.format(currDate);
+			String saveTime2 = sdf2.format(currDate);
 			
 			
 			try {
@@ -476,12 +472,11 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 					file.mkdir();
 				} // end if
 				
-				fileName = file.getAbsolutePath() + "/PC_" + date + ".dat";
+				fileName = file.getAbsolutePath() + "/PC_" + saveTime1 + ".dat";
 				bw = new BufferedWriter(new FileWriter(fileName));
 				
-				sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
 				bw.write( "======================================\n"
-						+ "[PC 정산 내역] (" + sdf.format(date) +"에 저장됨.)\n"
+						+ "[PC 정산 내역] (" + saveTime2 +"에 저장됨.)\n"
 						+ "======================================\n"
 						+ getReport_file()
 						+ "\n======================================");
