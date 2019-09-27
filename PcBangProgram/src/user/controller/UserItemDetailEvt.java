@@ -58,17 +58,22 @@ public class UserItemDetailEvt implements ActionListener {
 		String choiceQuan=String.valueOf(uid.getJcbQuantity().getSelectedIndex()+1);
 		dlmChoice.addElement(choiceName+"- 수량:"+choiceQuan+"개");
 
+		String same=null;
+		int cnt=0;
+		
 		for(int i=0; i<dlmChoice.size();i++) {
 			String choice=dlmChoice.get(i);
-			String same=choice.substring(0,choice.lastIndexOf("-")-1);
-			if(same.equals(choiceName)) {
-				String temp=same.substring(same.lastIndexOf(":")+1);
-				int cnt=Integer.parseInt(temp);
-				int sumCnt=0;
-				sumCnt+=cnt;
-				same=choiceName+"- 수량:"+String.valueOf(sumCnt);
-			}//end if
+//			same=choice.substring(0,choice.lastIndexOf("-"));
+//			if(same.equals(choiceName)) {
+//				String temp=same.substring(same.lastIndexOf(":")+1);
+//				cnt=Integer.parseInt(temp);
+//				int sumCnt=0;
+//				sumCnt+=cnt;
+//				same=choiceName+"- 수량:"+String.valueOf(sumCnt);
+//			}//end if
 		}//end for
+//		System.out.println(cnt);
+//		System.out.println(same+choiceName);
 
 		//선택가격
 		List<Integer> priceList=uie.getPriceList();

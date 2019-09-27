@@ -62,6 +62,7 @@ public class AdminChat extends JDialog{
 		jtaChat.setFont(new Font("serif",Font.PLAIN, 15));
 		jtfTalk.setFont(new Font("serif",Font.PLAIN, 15));
 		jbtSend.setBackground(new Color(0xF1C40F));
+		jpSouth.setBackground(new Color(0x434446));
 		getContentPane().setBackground(new Color(0x434446));
 		
 		setResizable(false);
