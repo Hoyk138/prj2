@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;

@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-import com.sun.webkit.ContextMenu.ShowContext;
 
 import admin.DAO.heeDAO;
 import admin.VO.ProductDeleteVO;

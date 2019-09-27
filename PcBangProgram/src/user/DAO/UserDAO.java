@@ -8,10 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import admin.VO.OrderStateVO;
-import admin.VO.OrderVO;
 import user.VO.FindIdVO;
 import user.VO.FindPassVO;
 import user.VO.PcHistoryVO;
@@ -54,6 +50,7 @@ public class UserDAO { //singleton pattern
 		}//end catch
 		
 		//2.
+//		String url="jdbc:oracle:thin:@localhost:1521:orcl";
 		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
 		String id="pcbang";
 		String pass="ezo";
@@ -528,6 +525,7 @@ public class UserDAO { //singleton pattern
 			
 			pstmt=con.prepareStatement(insertPcHistory.toString());
 		//4.
+			System.out.println(phVO.getPcNum()+"/"+phVO.getUserId());
 			pstmt.setInt(1, phVO.getPcNum());
 			pstmt.setString(2, phVO.getUserId());
 		//5.

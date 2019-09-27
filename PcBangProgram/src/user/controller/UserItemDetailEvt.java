@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.DefaultListModel;

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.channels.SocketChannel;
 
 import javax.swing.JOptionPane;
 

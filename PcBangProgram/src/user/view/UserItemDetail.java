@@ -2,7 +2,6 @@ package user.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.text.DecimalFormat;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -20,6 +19,7 @@ import user.controller.UserItemDetailEvt;
 import user.controller.UserItemEvt;
 import user.controller.UserMainEvt;
 
+@SuppressWarnings("serial")
 public class UserItemDetail extends JDialog{
 	
 	private JLabel jlImg,jlPrice,jlOne,jlQuantity,jlDescription;

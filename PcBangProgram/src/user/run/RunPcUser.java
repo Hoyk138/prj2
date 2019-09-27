@@ -5,12 +5,15 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
 import kr.co.sist.util.img.ImageResize;
+import user.DAO.UserDAO;
 import user.view.UserLogin;
 
 public class RunPcUser {
@@ -31,6 +34,30 @@ public class RunPcUser {
 //		}//end catch
 //		return ip;
 //	}//getIp
+	
+	/**
+	 * ip주소로 저장된 pc번호를 조회
+	 */
+	private static int pcNum() {
+		InetAddress local; 
+		int pcNum=0;
+		
+		UserDAO uDAO=UserDAO.getInstance();
+		
+		try { 
+			local = InetAddress.getLocalHost(); 
+			String ip = local.getHostAddress(); 
+			pcNum=uDAO.selectPcNum(ip);
+			
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace(); 
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}//end catch
+		
+//		um.getJlPcNum().setText(String.valueOf(pcNum));
+		return pcNum;
+	}//pcNum
 	
 	public void sendImage(String adminIP) throws UnknownHostException, IOException {
 		Socket client = null;
@@ -143,6 +170,11 @@ public class RunPcUser {
 	
 
 	public static void main(String[] args) {
+		if (RunPcUser.pcNum()==0) {
+			JOptionPane.showMessageDialog(null, "등록 되지 않은 PC입니다.\n카운터에 문의 해주세요");
+			return;
+		}//end if
+		
 		boolean flag = false;
 		String adminIP = "";
 //		String[] options = {"예","아니요"};

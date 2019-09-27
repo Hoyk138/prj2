@@ -53,6 +53,7 @@ private static heeDAO aDAO;
 			e.printStackTrace();
 		}//end catch
 		//2.Connection¾ò±â
+//		String url="jdbc:oracle:thin:@localhost:1521:orcl";
 		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
 		String id="pcbang";
 		String pass="ezo";

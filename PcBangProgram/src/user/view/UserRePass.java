@@ -7,9 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
-import user.controller.FindPassEvt;
 import user.controller.UserRePassEvt;
 
 @SuppressWarnings("serial")
