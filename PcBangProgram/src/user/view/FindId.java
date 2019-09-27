@@ -1,6 +1,9 @@
 package user.view;
 
+import java.awt.Color;
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -21,36 +24,59 @@ public class FindId extends JDialog {
 	public FindId(UserLogin ul) {  
 		super(ul,"ID 찾기",true);
 		
+		ImageIcon findIdBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/find_id_backimg.png");
+		ImageIcon findIdButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/find_id_button1.png");
+		ImageIcon findIdButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/find_id_button2.png");
+		
+		JLabel fiBack=new JLabel(findIdBackground);
+		
 		dcbmNum=new DefaultComboBoxModel<String>(new String[] {"010","011","016","017","018","019"});
 		jcbNum=new JComboBox<String>(dcbmNum);
 		
 		jlbName=new JLabel("이름");
 		jlbPhone=new JLabel("휴대폰번호");
 		
-		jtfName=new JTextField(4);
+		jtfName=new JTextField();
 		jtfPhone2=new JTextField();
 		jtfPhone3=new JTextField();
 		
-		jbtnFindID=new JButton("ID찾기");
+		
+		jbtnFindID=new JButton(findIdButton);
+		//마우스가 올라갔을 때 다른 이미지로 변경
+		jbtnFindID.setRolloverIcon(findIdButton2);
 		
 		setLayout(null);
 		
-		jlbName.setBounds(40, 60, 76, 30);
-		jlbPhone.setBounds(40, 100, 76, 30);
-		jtfName.setBounds(150, 60, 210, 25);
-		jcbNum.setBounds(150, 100, 50, 25);
-		jtfPhone2.setBounds(210, 100, 70, 25);
-		jtfPhone3.setBounds(290, 100, 70, 25);
-		jbtnFindID.setBounds(330, 140, 90, 50);
+		fiBack.setBounds(0, 0, 561, 308);
 		
-		add(jlbName);
-		add(jlbPhone);
+		jlbName.setBounds(40, 60, 76, 34);
+		jlbPhone.setBounds(40, 100, 76, 30);
+		jtfName.setBounds(171, 93, 210, 30);
+		jcbNum.setBounds(171, 137, 85, 36);
+		jtfPhone2.setBounds(297, 139, 70, 34);
+		jtfPhone3.setBounds(410, 139, 70, 34);
+		jbtnFindID.setBounds(201, 218, 145, 35);
+		
+		
+		jtfName.setCaretColor(new Color(0xC2C2C2)); //커서컬러바꾸기
+		jtfPhone2.setCaretColor(new Color(0xC2C2C2));
+		jtfPhone3.setCaretColor(new Color(0xC2C2C2));
+
+		
+		jtfName.setBorder(javax.swing.BorderFactory.createEmptyBorder()); //jtf 테두리 없애기
+		jtfPhone2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		jtfPhone3.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		
+		jbtnFindID.setBorder(javax.swing.BorderFactory.createEmptyBorder());//버튼테두리 없애기
+		
 		add(jtfName);
 		add(jcbNum);
 		add(jtfPhone2);
 		add(jtfPhone3);
 		add(jbtnFindID);
-		
+		add(fiBack);
+		add(jlbName);
+		add(jlbPhone);
 		
 		FindIdEvt fie=new FindIdEvt(this);
 		
@@ -61,7 +87,7 @@ public class FindId extends JDialog {
 		jbtnFindID.addActionListener(fie);
 		
 		setResizable(false);
-		setBounds(700, 400, 450, 250);
+		setBounds(700, 400, 561, 308);
 		setVisible(true);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -106,9 +132,8 @@ public class FindId extends JDialog {
 	
 	
 //	public static void main(String[] args) {
-//		new FindId();
-//		
-//	}
+//		new FindId(null);
+//	}//main
 
 
 }

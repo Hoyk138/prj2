@@ -26,11 +26,11 @@ public class UserJoin extends JDialog {
 	public UserJoin(UserLogin ul) {
 		super(ul,"회원가입",true);
 		
-		ImageIcon joinBackground=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/member_join_backimg2.png");
-		ImageIcon idConfirmButton=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/id_confirm1.png");
-		ImageIcon idConfirmButton2=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/id_confirm2.png");
-		ImageIcon joinButton=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/member_join_button1.png");
-		ImageIcon joinButton2=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/member_join_button2.png");
+		ImageIcon joinBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/member_join_backimg2.png");
+		ImageIcon idConfirmButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_confirm1.png");
+		ImageIcon idConfirmButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_confirm2.png");
+		ImageIcon joinButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/member_join_button1.png");
+		ImageIcon joinButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/member_join_button2.png");
 		
         JLabel jiBack=new JLabel(joinBackground);
 		
@@ -84,7 +84,7 @@ public class UserJoin extends JDialog {
 		jcbNum.setBounds(174, 274, 80, 34);
 		jtfPhone2.setBounds(293, 277, 76, 30);
 		jtfPhone3.setBounds(410, 277, 80, 30);
-		jcbQuestion.setBounds(174, 322, 324, 36);
+		jcbQuestion.setBounds(173, 322, 325, 36);
 		jtfAnswer.setBounds(174, 374, 300, 30);
 		
 		jbtnOverlap.setBounds(375, 79, 125, 39);
@@ -151,8 +151,8 @@ public class UserJoin extends JDialog {
 		jcbNum.addActionListener(uje);
 		jtfPhone2.addActionListener(uje);
 		jtfPhone3.addActionListener(uje);
-		jtfPhone2.addFocusListener(uje);
-		jtfPhone3.addFocusListener(uje);
+//		jtfPhone2.addFocusListener(uje);
+//		jtfPhone3.addFocusListener(uje);
 		jcbQuestion.addActionListener(uje);
 		jtfAnswer.addActionListener(uje);
 		jbtnOverlap.addActionListener(uje);
@@ -248,9 +248,9 @@ public class UserJoin extends JDialog {
 
 	
 	
-	public static void main(String[] args) {
-		new UserJoin(null);
-	}//main
+//	public static void main(String[] args) {
+//		new UserJoin(null);
+//	}//main
 
 
 

@@ -2,8 +2,6 @@ package user.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
@@ -16,7 +14,7 @@ import user.DAO.UserDAO;
 import user.VO.UserJoinVO;
 import user.view.UserJoin;
 
-public class UserJoinEvt implements ActionListener, FocusListener {
+public class UserJoinEvt implements ActionListener/* , FocusListener */ {
 	
 	private UserJoin uj;
 	
@@ -90,9 +88,9 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 				
 					if (!joinPw.equals(joinPwConfirm)) {
 						JOptionPane.showMessageDialog(uj, "비밀번호가 일치하지 않습니다");
-						uj.getJpfPass().setText("");
+//						uj.getJpfPass().setText("");
 						uj.getJpfPassComfirm().setText("");
-						uj.getJpfPass().requestFocus();
+						uj.getJpfPassComfirm().requestFocus();
 						return;
 					}
 						
@@ -232,77 +230,127 @@ public class UserJoinEvt implements ActionListener, FocusListener {
 		}//end if
 		
 		if(ae.getSource()==uj.getJbtnJoin()) {
-			if (!flag && !uj.getJtfId().getText().equals("")) {
-				JOptionPane.showMessageDialog(uj, "아이디 중복확인을 해주세요");
-				uj.getJbtnOverlap().requestFocus();
-			}else{
-				addMember();
-			}//end else
+			
+				   if(!uj.getJtfPhone2().getText().equals("")) {   
+					    
+					    if (uj.getJtfPhone2().getText().length() == 3 || uj.getJtfPhone2().getText().length() == 4) {
+					     
+					     try {
+					      Integer.parseInt(uj.getJtfPhone2().getText().trim());
+					      
+					     }catch(NumberFormatException nfe) {
+	//				      uj.getJtfPhone2().setText("");
+					      JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
+					      uj.getJtfPhone2().requestFocus();
+					      return;
+					     }//end catch
+					     
+					     uj.getJtfPhone3().requestFocus();
+					     
+					    } else {
+	//				     uj.getJtfPhone2().setText("");
+					     JOptionPane.showMessageDialog(uj, "가운데자리 번호는 3자 혹은 4자로 입력해주세요");
+					     uj.getJtfPhone2().requestFocus();
+					     return;
+					    } // end else
+					//   uj.getJtfPhone3().requestFocus();
+					  }//end if
+					   
+					   
+					   if(!uj.getJtfPhone3().getText().equals("")) {   
+					    
+					    if (uj.getJtfPhone3().getText().length() == 4) {
+					     
+					     try {
+					      Integer.parseInt(uj.getJtfPhone3().getText().trim());
+					      
+					     }catch(NumberFormatException nfe) {
+	//				      uj.getJtfPhone3().setText("");
+					      JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
+					      uj.getJtfPhone3().requestFocus();
+					      return;
+					     }//end catch
+	//				     uj.getJtfAnswer().requestFocus();
+					     uj.getJcbQuestion().requestFocus();
+					    } else {
+	//				     uj.getJtfPhone3().setText("");
+					     JOptionPane.showMessageDialog(uj, "끝자리 번호는 3자 혹은 4자로 입력해주세요");
+					     uj.getJtfPhone3().requestFocus();
+					     return;
+					    } // end else
+				
+				if (!flag && !uj.getJtfId().getText().equals("")) {
+					JOptionPane.showMessageDialog(uj, "아이디 중복확인을 해주세요");
+					uj.getJbtnOverlap().requestFocus();
+				}else{
+					addMember();
+				}//end else
+			}//end if
 		}//end if
 
 }//actionPerformed
 	
-	@Override
-	public void focusGained(FocusEvent fe) {
-		
-	}//focusGained
-
-	@Override
-	public void focusLost(FocusEvent fe) {
-		
-
-		if (fe.getSource() == uj.getJtfPhone2()) {
-			
-			if (!uj.getJtfPhone2().getText().equals("")) {
-				
-				if (uj.getJtfPhone2().getText().length() == 3 || uj.getJtfPhone2().getText().length() == 4) {
-					
-					try {
-						Integer.parseInt(uj.getJtfPhone2().getText().trim());
-						
-					}catch(NumberFormatException nfe) {
-//						uj.getJtfPhone2().setText("");
-						JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
-						uj.getJtfPhone2().requestFocus();
-						return;
-					}//end catch
-					
-					uj.getJtfPhone3().requestFocus();
-					
-				} else {
-//					uj.getJtfPhone2().setText("");
-					JOptionPane.showMessageDialog(uj, "3자리혹은 4자리 번호를 입력해주세요");
-					uj.getJtfPhone2().requestFocus();
-					return;
-				} // end else
-			} // end if
-		}//end if
-		
-		if (fe.getSource() == uj.getJtfPhone3()) {
-			if (!uj.getJtfPhone3().getText().equals("")) {
-				if (uj.getJtfPhone3().getText().length() == 4) {
-					
-					try {
-						Integer.parseInt(uj.getJtfPhone3().getText().trim());
-						
-					}catch(NumberFormatException nfe) {
-//						uj.getJtfPhone3().setText("");
-						JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
-						uj.getJtfPhone3().requestFocus();
-						return;
-					}//end catch
-//					uj.getJtfAnswer().requestFocus();
-					uj.getJcbQuestion().requestFocus();
-				} else {
-//					uj.getJtfPhone3().setText("");
-					JOptionPane.showMessageDialog(uj, "4자리 번호를 입력해주세요");
-					uj.getJtfPhone3().requestFocus();
-					return;
-				} // end else
-			} // end if
-		} // end if
-
-	}//focusLost
+//	@Override
+//	public void focusGained(FocusEvent fe) {
+//		
+//	}//focusGained
+//
+//	@Override
+//	public void focusLost(FocusEvent fe) {
+//		
+//
+//		if (fe.getSource() == uj.getJtfPhone2()) {
+//			
+//			if (!uj.getJtfPhone2().getText().equals("")) {
+//				
+//				if (uj.getJtfPhone2().getText().length() == 3 || uj.getJtfPhone2().getText().length() == 4) {
+//					
+//					try {
+//						Integer.parseInt(uj.getJtfPhone2().getText().trim());
+//						
+//					}catch(NumberFormatException nfe) {
+////						uj.getJtfPhone2().setText("");
+//						JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
+//						uj.getJtfPhone2().requestFocus();
+//						return;
+//					}//end catch
+//					
+//					uj.getJtfPhone3().requestFocus();
+//					
+//				} else {
+////					uj.getJtfPhone2().setText("");
+//					JOptionPane.showMessageDialog(uj, "3자리혹은 4자리 번호를 입력해주세요");
+//					uj.getJtfPhone2().requestFocus();
+//					return;
+//				} // end else
+//			} // end if
+//		}//end if
+//		
+//		if (fe.getSource() == uj.getJtfPhone3()) {
+//			if (!uj.getJtfPhone3().getText().equals("")) {
+//				if (uj.getJtfPhone3().getText().length() == 4) {
+//					
+//					try {
+//						Integer.parseInt(uj.getJtfPhone3().getText().trim());
+//						
+//					}catch(NumberFormatException nfe) {
+////						uj.getJtfPhone3().setText("");
+//						JOptionPane.showMessageDialog(uj, "전화번호는 숫자로만 입력해주세요");
+//						uj.getJtfPhone3().requestFocus();
+//						return;
+//					}//end catch
+////					uj.getJtfAnswer().requestFocus();
+//					uj.getJcbQuestion().requestFocus();
+//				} else {
+////					uj.getJtfPhone3().setText("");
+//					JOptionPane.showMessageDialog(uj, "4자리 번호를 입력해주세요");
+//					uj.getJtfPhone3().requestFocus();
+//					return;
+//				} // end else
+//			} // end if
+//		} // end if
+//
+//	}//focusLost
 	
 	
 	
