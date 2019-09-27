@@ -165,7 +165,7 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
         
 //        InetAddress ia = client.getInetAddress();//접속자의 여러정보를 얻을 수 있다.
 
-        jtaChat.setText("대화 상대가 들어 오셨습니다. 즐거운 대화 되세요.\n");
+        jtaChat.setText("관리자가 들어 왔습니다. 즐거운 대화 되세요.\n");
 //        jtaChat.append("대화 상대는 :" + /* inputNick+ */"님("+ia.getHostAddress()+") 입니다.");
 		
     	if (disChat != null) {
@@ -175,12 +175,12 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 					scrollPosition();
 				} // end while
 			} catch(IOException ioe) {
-				JOptionPane.showMessageDialog(this, "관리자가 채팅을 종료 하였습니다.");
+				JOptionPane.showMessageDialog(this, "채팅이 종료 종료 되었습니다.");
 				ioe.printStackTrace();
 			}//end catch
 		}//end if
 		} catch(IOException ioe) {
-			JOptionPane.showMessageDialog(this, "관리자가 채팅을 종료 하였습니다.");
+			JOptionPane.showMessageDialog(this, "채팅이 종료 종료 되었습니다.");
 			ioe.printStackTrace();
 		}
     }//run
@@ -192,7 +192,7 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
         if (dosChat != null) {
         	String msg = jtfTalk.getText().trim();
         	//내 대화창에 입력 내용 쓰기 
-        	jtaChat.append(pcNum+"번 : "+msg+"\n");
+        	jtaChat.append(um.getUserId()+"님("+pcNum+"번 PC) : "+msg+"\n");
         	scrollPosition();
         	//스트림에 출력
         	dosChat.writeUTF(msg);
@@ -201,7 +201,7 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 			//T.F의 내용을 초기화
 			jtfTalk.setText("");
 		} else {
-			JOptionPane.showMessageDialog(this, "대화상대가 없습니다.");
+			JOptionPane.showMessageDialog(this, "관리자가 아직 들어오지 않았습니다.");
 		}//end else
 	}//sendMsg
 	

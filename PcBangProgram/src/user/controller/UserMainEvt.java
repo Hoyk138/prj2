@@ -204,19 +204,14 @@ public class UserMainEvt implements ActionListener, Runnable{
 	}//run
 
 	private void openChat() throws IOException{
-		String[] options = {"예","아니요"};
-//		switch (JOptionPane.showConfirmDialog(um, "관리자와 채팅을 시작 하시겠습니까?")) {
-		switch (JOptionPane.showOptionDialog(um, "관리자와 채팅을 시작 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
-		case JOptionPane.OK_OPTION:
-			try {
-				dos.writeUTF("/채팅");	
-				dos.flush();
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}//catch
-//			new UserChat(um.getPcNum(),dos);	
-			new UserChat(um,pcNum,dos);	
-		}//switch case
+		try {
+			dos.writeUTF("/채팅");
+			dos.flush();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} // catch
+//		new UserChat(um.getPcNum(),dos);	
+		new UserChat(um, pcNum, dos);
 	}//openChat
     
 	@Override
@@ -227,7 +222,11 @@ public class UserMainEvt implements ActionListener, Runnable{
 		}//end if
 		
 		if(ae.getSource()==um.getJbtCounterChat()) { //카운터채팅버튼
-			switch(JOptionPane.showConfirmDialog(um, "카운터에 문의하시겠습니까?")) {
+//			switch(JOptionPane.showConfirmDialog(um, "카운터에 문의하시겠습니까?")) {
+//			case JOptionPane.OK_OPTION:
+			String[] options = {"예","아니요"};
+//			switch (JOptionPane.showConfirmDialog(um, "관리자와 채팅을 시작 하시겠습니까?")) {
+			switch (JOptionPane.showOptionDialog(um, "카운터에 문의하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
 			case JOptionPane.OK_OPTION:
 				JOptionPane.showMessageDialog(um, "※채팅이 원활하지 않을 경우, 카운터에 직접 문의해주세요.※");
 //				new UserChat(um);

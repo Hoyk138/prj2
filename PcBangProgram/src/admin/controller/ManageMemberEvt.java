@@ -81,6 +81,9 @@ public class ManageMemberEvt implements ActionListener{
 //			System.out.println("조회");
 			searchSpecificMember();
 		}//end if
+		if (ae.getSource()==mm.getJbtnRefresh()) {
+			System.out.println("새로고침");
+		}//end if
 	}//jcbSearch
 	
 }//class

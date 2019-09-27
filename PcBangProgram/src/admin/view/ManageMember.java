@@ -31,6 +31,8 @@ public class ManageMember extends JPanel{
 	private DefaultTableModel dtmMember;
 	private JTable jtMember;
 	
+	private JButton jbtnRefresh;
+	
 	public ManageMember(MainView mv) {
 		setBorder(new TitledBorder("회원"));
 		
@@ -118,15 +120,22 @@ public class ManageMember extends JPanel{
 
 		JScrollPane jspMember = new JScrollPane(jtMember);
 
+		//South에 넣을 버튼
+		JPanel jpSouth = new JPanel();
+		jbtnRefresh = new JButton("새로 고침");
+		jpSouth.add(jbtnRefresh);
+		
 		//배치
 		setLayout(new BorderLayout());
 		add("North",jpNorth);
 		add("Center",jspMember);
+		add("South",jpSouth);
 		
 		//이벤트 등록
 		ManageMemberEvt mme = new ManageMemberEvt(this);
 		jtfSearch.addActionListener(mme);
 		jbtnSearch.addActionListener(mme);
+		jbtnRefresh.addActionListener(mme);
 		
 		////////////////////////////
 		jbtnSearch.setBackground(new Color(0xFFAD7E));
@@ -150,6 +159,10 @@ public class ManageMember extends JPanel{
 
 	public JButton getJbtnSearch() {
 		return jbtnSearch;
+	}
+	
+	public JButton getJbtnRefresh() {
+		return jbtnRefresh;
 	}
  
 }//class

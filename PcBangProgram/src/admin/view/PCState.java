@@ -45,6 +45,7 @@ public class PCState extends JPanel implements Runnable {
 	private PCStateEvt pcse;
 	
 	private Socket socket;
+	private String userIP; 
 	private DataInputStream dis;
 	private DataOutputStream dos;
 	
@@ -123,6 +124,7 @@ public class PCState extends JPanel implements Runnable {
 	
 	public void setSocket(Socket socket) throws IOException {
 		 this.socket = socket;
+		 userIP = socket.getInetAddress().getHostAddress();
 
 		// 스트림을 연결하고
 		dis = new DataInputStream(socket.getInputStream());
@@ -253,7 +255,11 @@ public class PCState extends JPanel implements Runnable {
 	public int getPcNum() {
 		return pcNum;
 	}
-
+	
+	public String getUserIP() {
+		return userIP;
+	}
+	
 	public JLabel[] getJlblPCStateArr() {
 		return jlblPCStateArr;
 	}

@@ -20,6 +20,8 @@ import user.controller.UserMainEvt;
 @SuppressWarnings("serial")
 public class UserMain extends JFrame{
 	
+	public String userId;
+	
 	private JLabel pcNum, id, startTime, usePrice, useTime; // 속성 (타이틀)
 	private JLabel jlPcNum, jlID, jlStartTime, jlUsePrice, jlUseTime; //속성 값들(data)
 	private JButton jbtOrder, jbtCounterChat, jbtAdImage,jbtExit; //버튼
@@ -30,6 +32,7 @@ public class UserMain extends JFrame{
 	
 	public UserMain(String userId, String adminIP) {
 		super(" ※E_ZO PC방※  [" +  userId +"]님");
+		this.userId = userId;
 		
 		//**5분=100원 -> 60분=1200원
 		//시작시간
@@ -220,6 +223,10 @@ public class UserMain extends JFrame{
 
 	public JLabel getJlUseTime() {
 		return jlUseTime;
+	}
+
+	public String getUserId() {
+		return userId;
 	}
 
 	public String getLoginTime() {
