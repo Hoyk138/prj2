@@ -74,8 +74,11 @@ public class PCStateEvt extends MouseAdapter implements ActionListener {
 			if (ae.getSource() == pcs.getJmiClose()) {
 				System.out.println("PC"+pcs.getPcNum()+"번 결제 및 사용 종료");
 				try {
-					pcs.getDos().writeUTF("/종료");
-					System.out.println("결제 및 사용 종료 메세지 전송 완료");
+					String[] options = {"예","아니요"};
+					switch (JOptionPane.showOptionDialog(pcs, pcs.getPcNum()+" PC의 사용을 종료하고 결제 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
+					case JOptionPane.OK_OPTION:
+						pcs.getDos().writeUTF("/종료");
+				    }//switch case
 				} catch (IOException ioe) {
 					ioe.printStackTrace();
 				}//try catch
