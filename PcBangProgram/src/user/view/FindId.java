@@ -24,9 +24,9 @@ public class FindId extends JDialog {
 	public FindId(UserLogin ul) {  
 		super(ul,"ID Ã£±â",true);
 		
-		ImageIcon findIdBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/find_id_backimg.png");
-		ImageIcon findIdButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/find_id_button1.png");
-		ImageIcon findIdButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/find_id_button2.png");
+		ImageIcon findIdBackground=new ImageIcon("C:/dev/pcbang/user/img/design/find_id_backimg.png");
+		ImageIcon findIdButton=new ImageIcon("C:/dev/pcbang/user/img/design/find_id_button1.png");
+		ImageIcon findIdButton2=new ImageIcon("C:/dev/pcbang/user/img/design/find_id_button2.png");
 		
 		JLabel fiBack=new JLabel(findIdBackground);
 		

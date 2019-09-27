@@ -24,15 +24,15 @@ public class UserLogin extends JFrame {
 	public UserLogin(String adminIP) {
 		super("사용자 로그인");
 		
-		ImageIcon loginBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/login_img4.png");
-		ImageIcon loginButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/start_button.png");
-		ImageIcon loginButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/start_button2.png");
-		ImageIcon joinButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/join_button.png");
-		ImageIcon joinButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/join_button2.png");
-		ImageIcon idButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_button.png");
-		ImageIcon idButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_button2.png");
-		ImageIcon passButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/pw_button.png");
-		ImageIcon passButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/pw_button2.png");
+		ImageIcon loginBackground=new ImageIcon("C:/dev/pcbang/user/img/design/login_img4.png");
+		ImageIcon loginButton=new ImageIcon("C:/dev/pcbang/user/img/design/start_button.png");
+		ImageIcon loginButton2=new ImageIcon("C:/dev/pcbang/user/img/design/start_button2.png");
+		ImageIcon joinButton=new ImageIcon("C:/dev/pcbang/user/img/design/join_button.png");
+		ImageIcon joinButton2=new ImageIcon("C:/dev/pcbang/user/img/design/join_button2.png");
+		ImageIcon idButton=new ImageIcon("C:/dev/pcbang/user/img/design/id_button.png");
+		ImageIcon idButton2=new ImageIcon("C:/dev/pcbang/user/img/design/id_button2.png");
+		ImageIcon passButton=new ImageIcon("C:/dev/pcbang/user/img/design/pw_button.png");
+		ImageIcon passButton2=new ImageIcon("C:/dev/pcbang/user/img/design/pw_button2.png");
 		
 		
         JLabel jlBack=new JLabel(loginBackground);

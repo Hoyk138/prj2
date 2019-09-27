@@ -25,10 +25,9 @@ public class AdminLogin extends JFrame {
 	public AdminLogin() {
 		super("관리자 로그인");
 		
-		ImageIcon loginBackground=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/design/adminlogin_img.png");
-		ImageIcon loginButton=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/design/adminlogin_button.png");
-		ImageIcon loginButton2=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/design/adminlogin_button2.png");
-		
+		ImageIcon loginBackground=new ImageIcon("C:/dev/pcbang/admin/img/design/adminlogin_img.png");
+		ImageIcon loginButton=new ImageIcon("C:/dev/pcbang/admin/img/design/adminlogin_button.png");
+		ImageIcon loginButton2=new ImageIcon("C:/dev/pcbang/admin/img/design/adminlogin_button2.png");
 		
         JLabel jlBack=new JLabel(loginBackground);
 		jlblId=new JLabel("아이디");

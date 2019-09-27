@@ -24,9 +24,9 @@ public class FindPass extends JDialog {
 	public FindPass(UserLogin ul) {
 		super(ul,"PW Ã£±â",true);
 		
-		ImageIcon findPassBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/find_pw_backimg.png");
-		ImageIcon findPassButton1=new ImageIcon("C/dev/workspace/Team2_prj2/src/user/Design/find_id_button1.png");
-		ImageIcon findPassButton2=new ImageIcon("C/dev/workspace/Team2_prj2/src/user/Design/find_id_button2.png");
+		ImageIcon findPassBackground=new ImageIcon("C:/dev/pcbang/user/img/design/find_pw_backimg.png");
+		ImageIcon findPassButton1=new ImageIcon("C:/dev/pcbang/user/img/design/find_pw_button1.png");
+		ImageIcon findPassButton2=new ImageIcon("C:/dev/pcbang/user/img/design/find_pw_button2.png");
 		
 		JLabel fpBack=new JLabel(findPassBackground);
 		
@@ -54,9 +54,9 @@ public class FindPass extends JDialog {
 		jlbQuestion.setBounds(50, 90, 100, 30);
 		jlbAnswer.setBounds(50, 150, 76, 30);
 		
-		jtfId.setBounds(178, 98, 320, 30);
-		jcbQuestion.setBounds(172, 147, 330, 35);
-		jtfAnswer.setBounds(178, 203, 320, 30);
+		jtfId.setBounds(178, 98, 310, 30);
+		jcbQuestion.setBounds(172, 147, 325, 35);
+		jtfAnswer.setBounds(178, 203, 310, 30);
 		
 		jbtnFindPass.setBounds(190, 280, 168, 35);
 		

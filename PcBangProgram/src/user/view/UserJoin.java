@@ -26,11 +26,11 @@ public class UserJoin extends JDialog {
 	public UserJoin(UserLogin ul) {
 		super(ul,"회원가입",true);
 		
-		ImageIcon joinBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/member_join_backimg2.png");
-		ImageIcon idConfirmButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_confirm1.png");
-		ImageIcon idConfirmButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/id_confirm2.png");
-		ImageIcon joinButton=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/member_join_button1.png");
-		ImageIcon joinButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/member_join_button2.png");
+		ImageIcon joinBackground=new ImageIcon("C:/dev/pcbang/user/img/design/member_join_backimg2.png");
+		ImageIcon idConfirmButton=new ImageIcon("C:/dev/pcbang/user/img/design/id_confirm1.png");
+		ImageIcon idConfirmButton2=new ImageIcon("C:/dev/pcbang/user/img/design/id_confirm2.png");
+		ImageIcon joinButton=new ImageIcon("C:/dev/pcbang/user/img/design/member_join_button1.png");
+		ImageIcon joinButton2=new ImageIcon("C:/dev/pcbang/user/img/design/member_join_button2.png");
 		
         JLabel jiBack=new JLabel(joinBackground);
 		

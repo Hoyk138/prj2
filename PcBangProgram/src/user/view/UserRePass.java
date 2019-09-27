@@ -27,9 +27,9 @@ public class UserRePass extends JDialog {
 		this.fp=fp;
 //		super("ID Ã£±â");
 		
-		ImageIcon rePassBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/reset_pw_backimg.png");
-		ImageIcon rePassButton1=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/reset_pw_button1.png");
-		ImageIcon rePassButton2=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/reset_pw_button2.png");
+		ImageIcon rePassBackground=new ImageIcon("C:/dev/pcbang/user/img/design/reset_pw_backimg.png");
+		ImageIcon rePassButton1=new ImageIcon("C:/dev/pcbang/user/img/design/reset_pw_button1.png");
+		ImageIcon rePassButton2=new ImageIcon("C:/dev/pcbang/user/img/design/reset_pw_button2.png");
 		
 		JLabel rpBack=new JLabel(rePassBackground);
 		
