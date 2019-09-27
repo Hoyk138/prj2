@@ -70,6 +70,10 @@ private void uploadImg() throws IOException{
 		//복사할 디렉토리 생성
 		File mkDirectory=new File("C:/dev/pcbang/admin/img/item");
 		
+		if(!mkDirectory.exists()) {
+			mkDirectory.mkdir();
+		}//
+		
 		//1.읽기 스트림 생성
 		FileInputStream fis=null;
 		//2.쓰기 스트림 생성
