@@ -55,19 +55,21 @@ public class UserRePassEvt implements ActionListener {
 				urp.getJpfConfirm().setText("");
 				JOptionPane.showMessageDialog(urp, "비밀번호 확인이 일치하지 않습니다");
 				urp.getJpfConfirm().requestFocus();
-			}//end if
-			
-			if(passUpdate) {
-				JOptionPane.showMessageDialog(urp, "비밀번호 변경되었습니다");
-				urp.dispose();
 			}else {
-//				urp.getJlblId2().setText("");
-				urp.getJpfPass().setText("");
-				urp.getJpfConfirm().setText("");
-				JOptionPane.showMessageDialog(urp, "비밀번호 변경에 실패하였습니다.");
-				urp.getJpfConfirm().requestFocus();
-			}//end else
+				
 			
+				if(passUpdate) {
+					JOptionPane.showMessageDialog(urp, "비밀번호 변경되었습니다");
+					urp.dispose();
+				}else {
+	//				urp.getJlblId2().setText("");
+					urp.getJpfPass().setText("");
+					urp.getJpfConfirm().setText("");
+					JOptionPane.showMessageDialog(urp, "비밀번호 변경에 실패하였습니다.");
+					urp.getJpfConfirm().requestFocus();
+				}//end else
+			
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}//end catch

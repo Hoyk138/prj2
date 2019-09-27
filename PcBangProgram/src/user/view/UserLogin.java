@@ -21,7 +21,7 @@ public class UserLogin extends JFrame {
 	private JPasswordField jpfPass;
 	private JButton jbtnLogin, jbtnID, jbtnPass, jbtnJoin;
 	
-	public UserLogin(String adminIP) {
+	public UserLogin() {
 		super("사용자 로그인");
 		
 		ImageIcon loginBackground=new ImageIcon("C:/dev/workspace/Team2_prj2/src/user/Design/login_img4.png");
@@ -88,7 +88,7 @@ public class UserLogin extends JFrame {
 		add(jlbId);
 		add(jlbPass);
 		
-		UserLoginEvt ule=new UserLoginEvt(this, adminIP);
+		UserLoginEvt ule=new UserLoginEvt(this);
 		
 		jtfId.addActionListener(ule);
 		jpfPass.addActionListener(ule);
