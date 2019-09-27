@@ -40,9 +40,9 @@ public class UserMain extends JFrame{
 		
 		//디자인
 //		ImageIcon iiLogo=new ImageIcon("");
-		ImageIcon iiBack=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/bgcolor.jpg");
-		ImageIcon iiAd=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/AdImg.gif");
-		ImageIcon iiAd2=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/design/AdImg2.gif");
+		ImageIcon iiBack=new ImageIcon("c:/dev/pcbang/user/img/design/bgcolor.jpg");
+		ImageIcon iiAd=new ImageIcon("c:/dev/pcbang/user/img/design/AdImg.gif");
+		ImageIcon iiAd2=new ImageIcon("c:/dev/pcbang/user/img/design/AdImg2.gif");
 					
 		//생성
 		JLabel jlLogo=new JLabel("▒ E_ZO PC ▒");

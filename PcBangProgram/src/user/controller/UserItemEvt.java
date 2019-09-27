@@ -103,7 +103,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 				uiv=listItem.get(i);
 				rowData=new Object[3];
 				rowData[0] = "["+uiv.getCategoryName()+"]" +uiv.getItemName();
-				rowData[1]=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/rs_"+uiv.getItemImg());
+				rowData[1]=new ImageIcon("c:/dev/pcbang/user/img/item/rs_"+uiv.getItemImg());
 				rowData[2]=new Integer(uiv.getPrice())+"¿ø";
 				dtm.addRow(rowData);
 			}//end for
@@ -157,7 +157,7 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 				uiv=listItem.get(i);
 				rowData=new Object[3];
 				rowData[0] = "["+uiv.getCategoryName()+"]" +uiv.getItemName();
-				rowData[1]=new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/user/image/rs_"+uiv.getItemImg());
+				rowData[1]=new ImageIcon("c:/dev/pcbang/user/img/item/rs_"+uiv.getItemImg());
 				rowData[2]=new Integer(uiv.getPrice())+"¿ø";
 				dtm.addRow(rowData);
 			}//end for
