@@ -57,23 +57,33 @@ public class UserItemDetailEvt implements ActionListener {
 		String choiceName=uid.getJlDetailName().getText().trim();
 		String choiceQuan=String.valueOf(uid.getJcbQuantity().getSelectedIndex()+1);
 		dlmChoice.addElement(choiceName+"- 수량:"+choiceQuan+"개");
-
-		String same=null;
-		int cnt=0;
+		int choiceCnt=Integer.parseInt(choiceQuan);
 		
-		for(int i=0; i<dlmChoice.size();i++) {
-			String choice=dlmChoice.get(i);
-//			same=choice.substring(0,choice.lastIndexOf("-"));
-//			if(same.equals(choiceName)) {
-//				String temp=same.substring(same.lastIndexOf(":")+1);
-//				cnt=Integer.parseInt(temp);
-//				int sumCnt=0;
-//				sumCnt+=cnt;
-//				same=choiceName+"- 수량:"+String.valueOf(sumCnt);
-//			}//end if
-		}//end for
-//		System.out.println(cnt);
-//		System.out.println(same+choiceName);
+		String choice=null;
+		String name=null;
+		String temp=null;
+		int cnt=0;
+		int sumCnt=0;
+		
+//		for(int i=0; i<dlmChoice.size();i++) {
+//			System.out.println(choiceName+choiceCnt);
+//			choice=dlmChoice.get(i); //선택목록 data
+//			name=choice.substring(0,choice.lastIndexOf("-")); // 장바구니 상품이름만
+//			temp=choice.substring(choice.lastIndexOf(":")+1,choice.lastIndexOf("개")); //장바구니 수량만
+//			cnt=Integer.parseInt(temp); //int형으로 변환한 후의 장바구니 수량
+////			dlmChoice.addElement(choiceName+"- 수량:"+choiceQuan+"개");
+//
+//			System.out.println(name+cnt);
+////			if(name.equals(choiceName)) { //디테일에서 가져온 이름과 name이 동일하다면
+////				sumCnt+=choiceCnt; //수량 변화
+////				System.out.println(sumCnt);
+////				dlmChoice.addElement(choiceName+"- 수량:"+sumCnt+"개");
+////			}else {
+////				dlmChoice.addElement(choiceName+"- 수량:"+choiceCnt+"개");
+////			}//end else
+//			break;
+//		}//end for
+		
 
 		//선택가격
 		List<Integer> priceList=uie.getPriceList();
