@@ -2,11 +2,9 @@ package user.helper;
 
 import javax.swing.JLabel;
 
-import user.view.UserMain;
-
 public class TimeThread extends Thread{
 	
-	private UserMain um;
+//	private UserMain um;
 	private JLabel jlUseTime;
 	
 	public TimeThread(JLabel jlUseTime) {

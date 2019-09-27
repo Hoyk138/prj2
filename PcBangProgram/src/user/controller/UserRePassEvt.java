@@ -12,13 +12,12 @@ import javax.swing.JOptionPane;
 import kr.co.sist.util.cipher.DataEncrypt;
 import user.DAO.UserDAO;
 import user.VO.UserRePassVO;
-import user.view.FindPass;
 import user.view.UserRePass;
 
 public class UserRePassEvt implements ActionListener {
 
 	private UserRePass urp;
-	private FindPass fp;
+//	private FindPass fp;
 	
 	public UserRePassEvt(UserRePass urp) {
 		this.urp=urp;

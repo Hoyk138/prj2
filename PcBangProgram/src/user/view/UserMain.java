@@ -25,7 +25,7 @@ public class UserMain extends JFrame{
 	private JLabel jlPcNum, jlID, jlStartTime, jlUsePrice, jlUseTime; //속성 값들(data)
 	private JButton jbtOrder, jbtCounterChat, jbtAdImage,jbtExit; //버튼
 	
-	private UserLogin ul;
+//	private UserLogin ul;
 	
 	private String loginTime;
 	

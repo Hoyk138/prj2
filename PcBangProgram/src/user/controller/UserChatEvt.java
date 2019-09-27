@@ -14,12 +14,11 @@ import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
 import user.view.UserChat;
-import user.view.UserMain;
 
 public class UserChatEvt extends WindowAdapter implements ActionListener, Runnable {
 
 	private UserChat uc;
-	private UserMain um;
+//	private UserMain um;
 
 	private Socket socketUser;
 	private DataInputStream readStream;
