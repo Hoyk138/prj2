@@ -16,10 +16,10 @@ public class AdminDAO {
 	
 	private static AdminDAO aDAO;
 	
-	private static final int ID = 0;
-	private static final int NAME = 1;
-	private static final int PHONE = 2;
-	private static final int JOIN_DATE = 3;
+	private static final int ID = 1;
+	private static final int NAME = 2;
+	private static final int PHONE = 3;
+	private static final int JOIN_DATE = 4;
 	
 	private AdminDAO() {
 		

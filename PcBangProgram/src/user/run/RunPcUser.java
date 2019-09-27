@@ -145,9 +145,11 @@ public class RunPcUser {
 		do {
 			//adminIP = JOptionPane.showInputDialog("관리자 PC의 IP를 입력 해주세요\n예)127.0.01");
 			adminIP = JOptionPane.showInputDialog("관리자 PC의 IP를 입력 해주세요\n예)211.63.89.130");
-			
+			if (adminIP==null) {
+				adminIP="";
+			}//end if
 			//switch (JOptionPane.showOptionDialog(null, adminIP+"로 연결 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
-			switch (JOptionPane.showConfirmDialog(null, adminIP+"로 연결 하시겠습니까?")) {
+			switch (JOptionPane.showConfirmDialog(null, "입력하신 IP ["+adminIP+"]로 연결 하시겠습니까?")) {
 			case JOptionPane.OK_OPTION:
 				rpu = new RunPcUser(adminIP);
 				flag = true;

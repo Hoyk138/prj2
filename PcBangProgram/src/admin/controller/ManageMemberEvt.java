@@ -16,9 +16,12 @@ public class ManageMemberEvt implements ActionListener{
 
 	private ManageMember mm;
 	
+	private int searchCondition = 0;
+	private String searchWord = "";
+	
 	public ManageMemberEvt(ManageMember mm) {
 		this.mm = mm;
-		setMemberList(-1,"");
+		setMemberList(searchCondition,searchWord);
 	}//ManageMemberEvt
 	
 	/**
@@ -69,8 +72,8 @@ public class ManageMemberEvt implements ActionListener{
 	}// setMemberList
 
 	private void searchSpecificMember() {
-		int searchCondition = mm.getJcbSearch().getSelectedIndex();
-		String searchWord = mm.getJtfSearch().getText().trim();
+		searchCondition = mm.getJcbSearch().getSelectedIndex();
+		searchWord = mm.getJtfSearch().getText().trim();
 //		System.out.println(searchCondition+"/"+searchWord);
 		setMemberList(searchCondition, searchWord);
 	}//searchSpecificMember

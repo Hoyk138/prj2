@@ -40,6 +40,7 @@ public class ManageMember extends JPanel{
 		JPanel jpNorth = new JPanel();
 		
 		dcmSearch = new DefaultComboBoxModel<String>();
+		dcmSearch.addElement("선택");
 		dcmSearch.addElement("ID");
 		dcmSearch.addElement("이름");
 		dcmSearch.addElement("전화번호");
