@@ -2,6 +2,7 @@ package user.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.DataOutputStream;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -27,7 +28,7 @@ import javax.swing.table.TableColumnModel;
 import user.controller.UserItemDetailEvt;
 import user.controller.UserItemEvt;
 
-
+@SuppressWarnings("serial")
 /**
  * 먹거리주문 창 view
  * @author sist37
@@ -51,8 +52,11 @@ public class UserItem extends JFrame{
 	
 	private UserMain um;
 	
-	public UserItem() {
+	private DataOutputStream dos;
+	
+	public UserItem(DataOutputStream dos) {
 		super("먹거리 주문");
+		this.dos = dos;
 		
 		String[] columnNames= {"상품명","이미지","가격"};
 
@@ -394,6 +398,9 @@ public class UserItem extends JFrame{
 		return jtfSearch;
 	}
 
+	public DataOutputStream getDos() {
+		return dos;
+	}
 
 	/**
 	 * 단위 테스트용

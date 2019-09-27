@@ -218,7 +218,7 @@ public class UserMainEvt implements ActionListener, Runnable{
 	public void actionPerformed(ActionEvent ae) {
 			
 		if(ae.getSource()==um.getJbtOrder()) { //먹거리주문버튼
-				new UserItem();				
+				new UserItem(dos);				
 		}//end if
 		
 		if(ae.getSource()==um.getJbtCounterChat()) { //카운터채팅버튼
@@ -257,6 +257,13 @@ public class UserMainEvt implements ActionListener, Runnable{
 	public String getPcUseCode() {
 		return pcUseCode;
 	}
-	
 
+	public DataInputStream getDis() {
+		return dis;
+	}
+
+	public DataOutputStream getDos() {
+		return dos;
+	}
+	
 }//class

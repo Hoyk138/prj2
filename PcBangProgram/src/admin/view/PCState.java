@@ -18,8 +18,8 @@ import javax.swing.border.TitledBorder;
 
 import admin.DAO.AdminDAO;
 import admin.controller.PCStateEvt;
-import user.helper.PriceThread;
-import user.helper.TimeThread;
+import admin.helper.PriceThread;
+import admin.helper.TimeThread;
 
 
 @SuppressWarnings("serial")
@@ -178,6 +178,7 @@ public class PCState extends JPanel implements Runnable {
 
 	}// setSocket
 	
+	private AdminChat ac = null;
 	@Override
 	public void run() {
 		try {
@@ -188,6 +189,10 @@ public class PCState extends JPanel implements Runnable {
 					case "/채팅":
 						backgrounColor = Color.RED;
 						setBackground(backgrounColor);
+						if (ac == null) {
+							ac = new AdminChat(this);
+							System.out.println("ac: "+ac);
+						}//end if
 						break;
 					case "/채팅종료":
 						backgrounColor = Color.LIGHT_GRAY;
@@ -201,7 +206,7 @@ public class PCState extends JPanel implements Runnable {
 			}//end while
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
-			System.out.println("!");
+//			System.out.println("!");
 			//메세지를 읽거나 보낼 수 없는 상태(접속자가 접속을 종료한 경우)
 			//접속 종료한 접속자 이외의 모든 접속자에게 접속 종료 메세지를 출력
 			try {
@@ -234,6 +239,14 @@ public class PCState extends JPanel implements Runnable {
 				jlblPCStateArr[START_TIME].setText("시작 시간: ");
 				jlblPCStateArr[USE_TIME].setText("사용 시간: ");
 				jlblPCStateArr[USE_FEE].setText("사용 요금: ");
+				
+				jpm.remove(jmiChat);
+				jpm.remove(jmiOrder);
+				jpm.remove(jmiClose);
+				
+				tt = null;
+				pt = null;
+				thread = null;
 				
 				setBackgrounColor(new Color(0xEEEEEE));
 				
@@ -294,6 +307,14 @@ public class PCState extends JPanel implements Runnable {
 
 	public DataOutputStream getDos() {
 		return dos;
+	}
+	
+	public AdminChat getAc() {
+		return ac;
+	}
+
+	public void setAc(AdminChat ac) {
+		this.ac = ac;
 	}
 	
 }//end class

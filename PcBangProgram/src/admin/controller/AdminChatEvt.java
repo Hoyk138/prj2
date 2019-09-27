@@ -120,7 +120,7 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 					System.out.println(dis);
 					System.out.println(ac);
 					System.out.println(ac.getJtaChat());
-					ac.getJtaChat().append(disRead.readUTF() + "\n");
+					ac.getJtaChat().append(disRead.readUTF());
 					scrollPosition();
 				} // end while
 			} catch (IOException ie) {
@@ -149,6 +149,7 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 
 			// T.F 초기화
 			ac.getJtfTalk().setText("");
+			ac.getJtfTalk().requestFocus();
 			scrollPosition();
 		} else {
 			JOptionPane.showMessageDialog(ac, "스트림의 문제발생!\n카운터에 문의해주세요.");
@@ -185,7 +186,8 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 			System.out.println("종료");
 //			thConnect = null;
 			//PCStateEvt의 ac를 null로 세팅한다.
-			ac.getPcse().setAc(null);
+//			ac.getPcse().setAc(null);
+			ac.getPcs().setAc(null);
 			ac.dispose();
 			System.out.println("관리자채팅이벤트 ac: " + ac);
 //			ac.dispose();

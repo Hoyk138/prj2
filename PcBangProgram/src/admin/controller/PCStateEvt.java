@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -51,10 +49,11 @@ public class PCStateEvt extends MouseAdapter implements ActionListener {
 //			new AdminChat(this);
 			//배경색으로 채팅 유무를 판단.
 			if (pcs.getBackgrounColor()==Color.RED) {
-				if (ac == null) {
-					ac = new AdminChat(pcs,this);
-					System.out.println("ac: "+ac);
-				}//end if
+				pcs.getAc().setVisible(true);
+//				if (ac == null) {
+//					ac = new AdminChat(pcs,this);
+//					System.out.println("ac: "+ac);
+//				}//end if
 //				AdminChat.getInstance(pcs);
 //				pcs.setBackgrounColor(Color.LIGHT_GRAY);
 //				pcs.setBackground(pcs.getBackgrounColor());
@@ -63,7 +62,14 @@ public class PCStateEvt extends MouseAdapter implements ActionListener {
 			}//else if
 		}//end if
 			if (ae.getSource() == pcs.getJmiOrder()) {
-				System.out.println("PC"+pcs.getPcNum()+"번 주문 확인");
+				if (pcs.getBackgrounColor()==Color.GREEN) {
+					System.out.println("PC"+pcs.getPcNum()+"번 주문 확인");
+					//db에 접근하여 해당 pcnum의 최신 주문 내용을 조회
+					pcs.setBackgrounColor(Color.LIGHT_GRAY);
+					pcs.setBackground(pcs.getBackgrounColor());	
+				} else {
+					JOptionPane.showMessageDialog(pcs, "요청 받은 주문이 없습니다.");
+				}//else if
 			}
 			if (ae.getSource() == pcs.getJmiClose()) {
 				System.out.println("PC"+pcs.getPcNum()+"번 결제 및 사용 종료");

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -323,6 +324,11 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 				switch(JOptionPane.showConfirmDialog(ui, "선택하신 상품을 주문하시겠습니까?")) {
 				case JOptionPane.OK_OPTION:
 					setOrder();
+					try {
+						ui.getDos().writeUTF("/주문");
+					} catch (IOException ioe) {
+						ioe.printStackTrace();
+					}//try catch
 				}//end switch
 			}else {
 				JOptionPane.showMessageDialog(ui, "주문할 상품이 없습니다.");

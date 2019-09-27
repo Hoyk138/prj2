@@ -141,8 +141,11 @@ public class ManageMember extends JPanel{
 		////////////////////////////
 		jbtnSearch.setBackground(new Color(0xFFAD7E));
 		jpNorth.setBackground(Color.white);
+		jbtnRefresh.setBackground(new Color(0xFFAD7E));
+		jpSouth.setBackground((new Color(0x3C5A91)));
 		setBackground(Color.white);
 		////////////////////////////
+
 
 	}//ManageMember
 

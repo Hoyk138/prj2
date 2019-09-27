@@ -71,21 +71,29 @@ public class ManageMemberEvt implements ActionListener{
 
 	}// setMemberList
 
-	private void searchSpecificMember() {
+//	private void searchSpecificMember() {
+//		searchCondition = mm.getJcbSearch().getSelectedIndex();
+//		searchWord = mm.getJtfSearch().getText().trim();
+////		System.out.println(searchCondition+"/"+searchWord);
+//		setMemberList(searchCondition, searchWord);
+//	}//searchSpecificMember
+
+	private void setSearchCondition() {
 		searchCondition = mm.getJcbSearch().getSelectedIndex();
 		searchWord = mm.getJtfSearch().getText().trim();
-//		System.out.println(searchCondition+"/"+searchWord);
-		setMemberList(searchCondition, searchWord);
 	}//searchSpecificMember
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource()==mm.getJtfSearch() || ae.getSource()==mm.getJbtnSearch()) {
 //			System.out.println("조회");
-			searchSpecificMember();
+//			searchSpecificMember();
+			setSearchCondition();
+			setMemberList(searchCondition, searchWord);
 		}//end if
 		if (ae.getSource()==mm.getJbtnRefresh()) {
 			System.out.println("새로고침");
+			setMemberList(searchCondition, searchWord);
 		}//end if
 	}//jcbSearch
 	

@@ -22,8 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import user.controller.UserChatEvt;
-
 @SuppressWarnings("serial")
 public class UserChat extends JDialog implements ActionListener, Runnable{
 	
@@ -45,6 +43,7 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 	//public UserChat(UserMain um) {
 	public UserChat(UserMain um, int pcNum, DataOutputStream dos) {
 		super(um,"사용자 채팅",false);
+		this.um = um;
 		this.pcNum = pcNum;
 		
 		//선언
@@ -190,16 +189,20 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
      */
     private void sendMsg() throws IOException{
         if (dosChat != null) {
-        	String msg = jtfTalk.getText().trim();
+        	StringBuilder msg = new StringBuilder();
+        	msg
+        	.append(um.getUserId()).append("님("+pcNum+"번 PC) : ")
+        	.append(jtfTalk.getText().trim()).append("\n");
         	//내 대화창에 입력 내용 쓰기 
-        	jtaChat.append(um.getUserId()+"님("+pcNum+"번 PC) : "+msg+"\n");
+        	jtaChat.append(msg.toString());
         	scrollPosition();
         	//스트림에 출력
-        	dosChat.writeUTF(msg);
+        	dosChat.writeUTF(msg.toString());
 			//스트림의 내용을 목적지(소켓, client)에게 입력 내용 보내기(출력)
         	dosChat.flush();
 			//T.F의 내용을 초기화
 			jtfTalk.setText("");
+			jtfTalk.requestFocus();
 		} else {
 			JOptionPane.showMessageDialog(this, "관리자가 아직 들어오지 않았습니다.");
 		}//end else
