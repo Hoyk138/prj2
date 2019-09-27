@@ -53,7 +53,7 @@ public class ProductAddViewEvt implements ActionListener{
 				e.printStackTrace();
 			}
 			
-			pav.getJlImgAdd().setIcon(new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/"+"rs_"+file));
+			pav.getJlImgAdd().setIcon(new ImageIcon("C:/dev/pcbang/admin/img/item/"+"rs_"+file));
 		}//end if
 		
 	}//imgAdd
@@ -61,7 +61,7 @@ public class ProductAddViewEvt implements ActionListener{
 private void uploadImg() throws IOException{
 	
 	//복사할 디렉토리 생성
-	File mkDirectory=new File("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image");
+	File mkDirectory=new File("C:/dev/pcbang/admin/img/item");
 	
 	//1.읽기 스트림 생성
 	FileInputStream fis=null;

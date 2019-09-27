@@ -54,7 +54,7 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 				if (cateFlag.equals("F")) {
 					rowData[0] = pvVO.getProductCode();
 					rowData[1] = pvVO.getProductName();
-					rowData[2] = new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/"+"rs_"+pvVO.getProductImg());
+					rowData[2] = new ImageIcon("C:/dev/pcbang/admin/img/item/"+"rs_"+pvVO.getProductImg());
 					rowData[3] = pvVO.getProductExplain();
 					rowData[4] = pvVO.getProductPrice();
 					rowData[5] = pvVO.getProductInputDate();
@@ -90,7 +90,7 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 				if (cateFlag.equals("S")) {
 					rowData[0] = pvVO.getProductCode();
 					rowData[1] = pvVO.getProductName();
-					rowData[2] = new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/"+"rs_"+pvVO.getProductImg());
+					rowData[2] = new ImageIcon("C:/dev/pcbang/admin/img/item/"+"rs_"+pvVO.getProductImg());
 					rowData[3] = pvVO.getProductExplain();
 					rowData[4] = pvVO.getProductPrice();
 					rowData[5] = pvVO.getProductInputDate();
@@ -127,7 +127,7 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 				if (cateFlag.equals("D")) {
 					rowData[0] = pvVO.getProductCode();
 					rowData[1] = pvVO.getProductName();
-					rowData[2] = new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/"+"rs_"+pvVO.getProductImg());
+					rowData[2] = new ImageIcon("C:/dev/pcbang/admin/img/item/"+"rs_"+pvVO.getProductImg());
 					rowData[3] = pvVO.getProductExplain();
 					rowData[4] = pvVO.getProductPrice();
 					rowData[5] = pvVO.getProductInputDate();

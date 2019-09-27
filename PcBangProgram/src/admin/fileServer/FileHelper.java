@@ -33,7 +33,7 @@ public class FileHelper extends Thread {
 		temp = dis.readUTF();//파일 목록 받기 
 		// C:\dev\workspace\jdbc_prj\src\kr\co\sist\admin\img
 
-		temp1 = new File("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image");
+		temp1 = new File("C:/dev/pcbang/admin/img/item");
 		serverFile = temp1.listFiles();
 		listSendFile = new ArrayList<String>();
 		for (int i = 0; i < serverFile.length; i++) {

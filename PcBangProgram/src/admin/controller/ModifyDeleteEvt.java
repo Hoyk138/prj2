@@ -59,7 +59,7 @@ public class ModifyDeleteEvt implements ActionListener{
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			mdv.getJlImgModify().setIcon(new ImageIcon("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image/"+"rs_"+file));
+			mdv.getJlImgModify().setIcon(new ImageIcon("C:/dev/pcbang/admin/img/item/"+"rs_"+file));
 			
 		}//end if
 			
@@ -68,7 +68,7 @@ public class ModifyDeleteEvt implements ActionListener{
 private void uploadImg() throws IOException{
 		
 		//복사할 디렉토리 생성
-		File mkDirectory=new File("C:/Users/owner/git/prj2/PcBangProgram/src/admin/image");
+		File mkDirectory=new File("C:/dev/pcbang/admin/img/item");
 		
 		//1.읽기 스트림 생성
 		FileInputStream fis=null;
