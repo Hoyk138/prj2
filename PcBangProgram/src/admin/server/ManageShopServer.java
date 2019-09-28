@@ -5,8 +5,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
 
-import javax.swing.JOptionPane;
-
 import admin.DAO.AdminDAO;
 import admin.view.ManageShop;
 

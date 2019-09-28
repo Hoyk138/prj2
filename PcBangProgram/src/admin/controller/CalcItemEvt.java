@@ -4,7 +4,6 @@ import java.awt.Checkbox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -21,7 +20,6 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
@@ -490,13 +488,13 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 		String saveTime1 = sdf1.format(currDate);
 		String saveTime2 = sdf2.format(currDate);
 		try {
-			File file = new File("c:/dev/pcbang/calc/item");
+			File file = new File("c:/dev/pcbang/admin/calc/item");
 
 			if (!file.exists()) {
 				file.mkdir();
 			} // end if
 			
-			fileName = file.getAbsolutePath() + "/Item_" + saveTime1 + ".dat";
+			fileName = file.getAbsolutePath() + "\\Item_" + saveTime1 + ".dat";
 			bw = new BufferedWriter(new FileWriter(fileName));
 			
 			bw.write( "======================================\n"

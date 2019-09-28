@@ -3,7 +3,6 @@ package admin.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -47,8 +46,8 @@ public class ManageMemberEvt implements ActionListener{
 			} // end if
 			MemberVO mVO = null;// list의 방의 값을 저장하기 위한 변수
 			StringBuilder tempPhone = null; 
-			String useTime = "";
-			DecimalFormat df = new DecimalFormat("#,###");
+//			String useTime = "";
+//			DecimalFormat df = new DecimalFormat("#,###");
 			for (int i = 0; i < listMember.size(); i++) {
 				mVO = listMember.get(i);
 				// 조회 결과로 JTable 레코드에 들어갈 데이터를 생성하고

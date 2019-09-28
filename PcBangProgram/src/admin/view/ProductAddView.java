@@ -25,8 +25,8 @@ public class ProductAddView extends JDialog{
 	private DefaultComboBoxModel<String> dcbmCategoryAdd;
 	private JTextArea jtaExplainAdd;
 	
-	public ProductAddView(ProductEvt pe) {
-//		super("메뉴 추가");
+	public ProductAddView(ProductEvt pe, MainView mv) {
+		super(mv, "상품 추가");
 		
 		jtaExplainAdd=new JTextArea();
 		JLabel jlProductName=new JLabel("상품명");

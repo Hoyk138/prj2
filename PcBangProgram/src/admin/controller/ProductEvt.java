@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import admin.DAO.AdminDAO;
 import admin.VO.ProductMDViewVO;
 import admin.VO.ProductViewVO;
+import admin.view.MainView;
 import admin.view.ModifyDeleteView;
 import admin.view.ProductAddView;
 import admin.view.ProductView;
@@ -22,9 +23,12 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 
 	private ProductView pv;
 	private ProductViewVO pvVO;
+	
+	private MainView mv;
 
-	public ProductEvt(ProductView pv) {
+	public ProductEvt(ProductView pv, MainView mv) {
 		this.pv = pv;
+		this.mv = mv;
 		setFoodList();
 		setSnackList();
 		setDrinkList();
@@ -165,7 +169,7 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 		try {
 //			hDAO.selectDetailProduct(pmdvVO);
 			aDAO.selectDetailProduct(pmdvVO);
-			new ModifyDeleteView(pmdvVO, this);
+			new ModifyDeleteView(pmdvVO, this, mv);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -175,7 +179,7 @@ public class ProductEvt extends MouseAdapter implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == pv.getJbtProductAdd()) {
-			new ProductAddView(this);
+			new ProductAddView(this, mv);
 		} // end if
 
 	}// actionPerformed

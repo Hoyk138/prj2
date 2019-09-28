@@ -26,7 +26,7 @@ public class ProductView extends JPanel{
 	private DefaultTableModel dtmFood,dtmSnack,dtmDrink;
 	private JTabbedPane jtp;
 	private JTable jtFood,jtSnack,jtDrink;
-	public ProductView() {		
+	public ProductView(MainView mv) {		
 		
 		String[] columnNames= {"상품코드","상품명","이미지","설명","가격","입력일"};
 
@@ -168,7 +168,7 @@ public class ProductView extends JPanel{
 		jtp.add("스낵",jspSnack);
 		jtp.add("음료",jspDrink);
 		
-		ProductEvt pe=new ProductEvt(this);
+		ProductEvt pe=new ProductEvt(this, mv);
 		jtp.addMouseListener(pe);
 		jtDrink.addMouseListener(pe);
 		jtSnack.addMouseListener(pe);

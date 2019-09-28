@@ -25,8 +25,8 @@ public class ModifyDeleteView extends JDialog{
 	private String itemCode;
 	
 	
-	public ModifyDeleteView(ProductMDViewVO pmdvVO,ProductEvt pe) {
-//		super("메뉴 수정 삭제");
+	public ModifyDeleteView(ProductMDViewVO pmdvVO,ProductEvt pe, MainView mv) {
+		super(mv,"상품 수정 및 삭제");
 //		super(ProductView pv,"");
 		itemCode=pmdvVO.getItemCode();
 		jtaExplainModify=new JTextArea(pmdvVO.getExplain());

@@ -179,7 +179,6 @@ public class RunPcUser {
 		boolean flag = false;
 		String adminIP = "";
 //		String[] options = {"예","아니요"};
-		RunPcUser rpu = null;
 		do {
 			//adminIP = JOptionPane.showInputDialog("관리자 PC의 IP를 입력 해주세요\n예)127.0.01");
 			adminIP = JOptionPane.showInputDialog("관리자 PC의 IP를 입력 해주세요\n예)211.63.89.130");
@@ -201,7 +200,7 @@ public class RunPcUser {
 					flag = true;
 					break;
 				} // end catch
-				rpu = new RunPcUser(adminIP);
+				new RunPcUser(adminIP);
 				flag = true;
 				break;
 			case JOptionPane.CANCEL_OPTION:
