@@ -45,7 +45,7 @@ public class AdminChat extends JDialog{
 		jtaChat.setEditable(false);
 		jtaChat.setBackground(Color.white);
 		jspChat=new JScrollPane(jtaChat);
-		jspChat.setBorder(new TitledBorder("채팅"));
+//		jspChat.setBorder(new TitledBorder("채팅"));
 
 		jtfTalk=new JTextField(23);
 		jbtSend=new JButton("보내기");
@@ -57,13 +57,16 @@ public class AdminChat extends JDialog{
 		add("South",jpSouth);
 		
 		jtaChat.setBorder(new TitledBorder(new  LineBorder(Color.black,2)));
+		jspChat.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
 		jtfTalk.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
 		jbtSend.setBorder(new TitledBorder(new  LineBorder(Color.black,1)));
 		
+		jspChat.setFont(new Font("serif",Font.PLAIN, 15));
 		jtaChat.setFont(new Font("serif",Font.PLAIN, 15));
+		jspChat.setBackground(new Color(0x434446));
 		jtfTalk.setFont(new Font("serif",Font.PLAIN, 15));
 		jbtSend.setBackground(new Color(0xF1C40F));
-                jpSouth.setBackground(new Color(0x434446));
+        jpSouth.setBackground(new Color(0x434446));
 		getContentPane().setBackground(new Color(0x434446));
 		
 		setResizable(false);

@@ -9,6 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import user.controller.FindIdEvt;
 
@@ -85,6 +87,9 @@ public class FindId extends JDialog {
 		jtfPhone2.addActionListener(fie);
 		jtfPhone3.addActionListener(fie);
 		jbtnFindID.addActionListener(fie);
+		
+		jcbNum.setBorder(new TitledBorder(new  LineBorder(new Color(0xefefef))));
+		jcbNum.setBackground(Color.white);
 		
 		setResizable(false);
 		setBounds(700, 400, 561, 308);

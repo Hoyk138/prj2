@@ -9,6 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import user.controller.FindPassEvt;
 
@@ -84,6 +86,9 @@ public class FindPass extends JDialog {
 		jtfId.addActionListener(fpe);
 		jtfAnswer.addActionListener(fpe);
 		jbtnFindPass.addActionListener(fpe);
+		
+		jcbQuestion.setBorder(new TitledBorder(new  LineBorder(new Color(0xefefef))));
+		jcbQuestion.setBackground(Color.white);
 		
 		setResizable(false);
 		setBounds(700, 370, 567, 378);

@@ -50,8 +50,8 @@ public class OrderView extends JPanel{
 		
 		jtOrder.setComponentPopupMenu(jpm);
 		jtOrder.getColumnModel().getColumn(0).setPreferredWidth(80);
-		jtOrder.getColumnModel().getColumn(1).setPreferredWidth(50);
-		jtOrder.getColumnModel().getColumn(2).setPreferredWidth(220);
+		jtOrder.getColumnModel().getColumn(1).setPreferredWidth(70);
+		jtOrder.getColumnModel().getColumn(2).setPreferredWidth(200);
 		jtOrder.getColumnModel().getColumn(3).setPreferredWidth(100);
 		jtOrder.getColumnModel().getColumn(4).setPreferredWidth(50);
 		jtOrder.getColumnModel().getColumn(5).setPreferredWidth(130);

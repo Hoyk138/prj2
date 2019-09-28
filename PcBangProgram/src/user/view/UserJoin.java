@@ -10,6 +10,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import user.controller.UserJoinEvt;
 
@@ -158,7 +160,10 @@ public class UserJoin extends JDialog {
 		jbtnOverlap.addActionListener(uje);
 		jbtnJoin.addActionListener(uje);
 		
-		
+		jcbNum.setBorder(new TitledBorder(new  LineBorder(new Color(0xefefef))));
+		jcbQuestion.setBorder(new TitledBorder(new  LineBorder(new Color(0xefefef))));
+		jcbNum.setBackground(Color.white);
+		jcbQuestion.setBackground(Color.white);
 		setResizable(false);
 		setBounds(700, 260, 570, 580);
 		setVisible(true);
