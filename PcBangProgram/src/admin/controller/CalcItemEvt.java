@@ -45,7 +45,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 		this.cv = cv;
 		report_file = new StringBuilder();
 		msg = new StringBuilder() ;
-//		setCalcItemList();
+		setCalcItemList(false);	
 	} // CalcItemEvt
 
 	private void viewCalcItemRecipt() {
@@ -121,7 +121,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	} // CalcItmeEvt
 
 
-	public void setCalcItemList() {
+	public void setCalcItemList(boolean flag) {
 		Object[] rowData = null;
 
 //		CalcItemDAO ciDAO = CalcItemDAO.getInstance();
@@ -135,10 +135,11 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			dtm.setRowCount(0);
 			
 			if (list.isEmpty()) {
-				JOptionPane.showMessageDialog(cv, "매점 이용 내역이 없습니다.");
+				if (flag) {
+					JOptionPane.showMessageDialog(cv, "매점 이용 내역이 없습니다.");
+				}//end if
 				return;
 			} // end if
-
 
 			CalcItemVO ciVO = null;
 
@@ -155,7 +156,6 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 				rowData[5] = ciVO.getPrice();
 
 				dtm.addRow(rowData);
-				
 			} // end for
 			
 			int totalQuantity=0 ;
@@ -173,6 +173,8 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			msg.append("-------------------------------------------------------------\n")
 			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원\n")
 			.append("조회 기간 : " + todate) ;
+			
+			report_file.delete(0, report_file.length()) ;
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 
@@ -247,6 +249,8 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			msg.append("-------------------------------------------------------------\n")
 			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원\n")
 			.append("조회 기간 : " + predate + " ~ " + todate);
+			
+			report_file.delete(0, report_file.length()) ;
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 			
@@ -322,6 +326,8 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			msg.append("-------------------------------------------------------------\n")
 			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원\n")
 			.append("조회 기간 : " + predate + " ~ " + todate);
+			
+			report_file.delete(0, report_file.length()) ;
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 			
@@ -399,7 +405,10 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			msg.append("-------------------------------------------------------------\n")
 			.append("\t총 판매 수량 : [" + totalQuantity + " ] 개,\t 총 매출 : [" +  totalPrice +"] 원\n")
 			.append("조회 기간 : " + predate + " ~ " + todate);
+			
+			report_file.delete(0, report_file.length()) ;
 			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
 			
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
@@ -410,18 +419,18 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 	
 	
 	
-	public void mouseClicked(MouseEvent me) {
-
-		if (me.getSource() == cv.getJtp()) { // 주문 탭을 눌렀을 때 이벤트 처리 => 주문현황 조회 시작
-			JTabbedPane jtptemp = (JTabbedPane) me.getSource();
-			if (jtptemp.getSelectedIndex() == 1) {
-//					if (cv == null) { // 조회 Thread가 생성되어 있지 않음(주문조회X)
-//						ot = new OrderThread(cv.getJtOrderList(), cv.getDtmOrderList()); // 선택된 행을 비교, 값을 넣는 일
-				setCalcItemList();
-			} // end if
-		} // end if
-
-	} // end mouseClicked
+//	public void mouseClicked(MouseEvent me) {
+//
+//		if (me.getSource() == cv.getJtp()) { // 주문 탭을 눌렀을 때 이벤트 처리 => 주문현황 조회 시작
+//			JTabbedPane jtptemp = (JTabbedPane) me.getSource();
+//			if (jtptemp.getSelectedIndex() == 1) {
+////					if (cv == null) { // 조회 Thread가 생성되어 있지 않음(주문조회X)
+////						ot = new OrderThread(cv.getJtOrderList(), cv.getDtmOrderList()); // 선택된 행을 비교, 값을 넣는 일
+//				setCalcItemList(true);
+//			} // end if
+//		} // end if
+//
+//	} // end mouseClicked
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -441,7 +450,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 			
 			switch (selectChb.getLabel()) {
 			case "오늘":
-				setCalcItemList();
+				setCalcItemList(true);
 				break;
 			case "일주일":
 				setCalcItemList7();
@@ -461,8 +470,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 		if (ae.getSource()==cv.getJbtnItemSaveFile()) {
 			try {
 				reportFile() ;
-			JOptionPane.showMessageDialog(null, "(C:\\dev\\PCBang_calc_ITEM) 경로에 저장되었습니다.");
-				
+			JOptionPane.showMessageDialog(cv, fileName+"으로 저장 되었습니다.");
 			} catch (IOException e) {
 				e.printStackTrace();
 			} // end catch
@@ -482,7 +490,7 @@ public class CalcItemEvt extends MouseAdapter implements ActionListener {
 		String saveTime1 = sdf1.format(currDate);
 		String saveTime2 = sdf2.format(currDate);
 		try {
-			File file = new File("c:/dev/PCBang_calc_ITEM");
+			File file = new File("c:/dev/pcbang/calc/item");
 
 			if (!file.exists()) {
 				file.mkdir();

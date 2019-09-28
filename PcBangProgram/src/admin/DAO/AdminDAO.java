@@ -756,8 +756,8 @@ public class AdminDAO {
 		.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time   ")
 		.append("	from pc_use	pu, pc_payment pp   ")
 		.append("	where pp.pc_use_code = pu.pc_use_code   ")
-		.append("	and to_char(pu.login_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')   ") ;
-		
+		.append("	and to_char(pu.login_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')   ")
+		.append("   order by pu.pc_use_code asc   ") ;
 		pstmt = conn.prepareStatement(selectCalcPC.toString()) ;
 		
 		// 4. bind 변수에 값 설정
@@ -767,7 +767,7 @@ public class AdminDAO {
 		rs = pstmt.executeQuery() ;
 		CalcPCVO cv = null ;
 		while( rs.next() ) {
-			cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), (rs.getInt("use_time"))*20) ;
+			cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), ((int)Math.ceil( (rs.getInt("use_time")/5D) )*100));
 			list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 		} // end while
 		
@@ -848,7 +848,8 @@ public class AdminDAO {
 			.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time	")
 			.append("	from pc_use	pu, pc_payment pp	")
 			.append("	where pp.pc_use_code = pu.pc_use_code	")
-			.append("	and payment_time >= sysdate-7	") ;
+			.append("	and payment_time >= sysdate-7	")
+			.append("   order by pu.pc_use_code asc   ") ;
 			
 			pstmt = conn.prepareStatement(selectCalcPC7.toString()) ;
 			
@@ -859,7 +860,7 @@ public class AdminDAO {
 			rs = pstmt.executeQuery() ;
 			CalcPCVO cv = null ;
 			while( rs.next() ) {
-				cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), (rs.getInt("use_time"))*20) ;
+				cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), ((int)Math.ceil( (rs.getInt("use_time")/5D) )*100));
 				list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 			} // end while
 			
@@ -893,7 +894,8 @@ public class AdminDAO {
 			.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time	")
 			.append("	from pc_use	pu, pc_payment pp	")
 			.append("	where pp.pc_use_code = pu.pc_use_code	")
-			.append("	and payment_time >= add_months(sysdate, -1)	") ;
+			.append("	and payment_time >= add_months(sysdate, -1)	")
+			.append("   order by pu.pc_use_code asc   ") ;
 			
 			pstmt = conn.prepareStatement(selectCalcPCLstMonth.toString()) ;
 			
@@ -904,7 +906,7 @@ public class AdminDAO {
 			rs = pstmt.executeQuery() ;
 			CalcPCVO cv = null ;
 			while( rs.next() ) {
-				cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), (rs.getInt("use_time"))*20) ;
+				cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), ((int)Math.ceil( (rs.getInt("use_time")/5D) )*100)) ;
 				list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 			} // end while
 			
@@ -940,7 +942,8 @@ public class AdminDAO {
 			.append("	select pu.pc_use_code, pc_num, id, ceil((payment_time - login_time)*24*60) use_time	")
 			.append("	from pc_use	pu, pc_payment pp	")
 			.append("	where pp.pc_use_code = pu.pc_use_code	")
-			.append("		and to_date(?,'yyyy-mm-dd')<=payment_time and payment_time<= to_date(?,'yyyy-mm-dd')	") ;
+			.append("		and to_date(?,'yyyy-mm-dd')<=payment_time and payment_time<= to_date(?,'yyyy-mm-dd')	")
+			.append("   order by pu.pc_use_code asc   ");
 			
 			pstmt = conn.prepareStatement(selectCalcPCLstCustom.toString()) ;
 			
@@ -952,7 +955,7 @@ public class AdminDAO {
 			rs = pstmt.executeQuery() ;
 			CalcPCVO cv = null ;
 			while( rs.next() ) {
-				cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), (rs.getInt("use_time"))*20) ;
+				cv = new CalcPCVO(rs.getString("pc_use_code"),rs.getString("id"), rs.getInt("use_time"), rs.getInt("pc_num"), ((int)Math.ceil( (rs.getInt("use_time")/5D) )*100)) ;
 				list.add(cv) ;	// 조회된 레코드를 저장한 VO를 list에 추가
 			} // end while
 			
@@ -990,7 +993,8 @@ public class AdminDAO {
 		.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
 		.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
 		.append("	      and to_char(ip.payment_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd') 	")
-		.append("	      and payment_time is not null 	") ;
+		.append("	      and payment_time is not null 	")
+		.append("   order by io.order_code asc   ") ;
 		
 		
 		pstmt = conn.prepareStatement(selectCalcItem.toString()) ;
@@ -1081,8 +1085,8 @@ public class AdminDAO {
 		.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
 		.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
 		.append("	      and ip.payment_time >= sysdate-7 	")
-		.append("	      and payment_time is not null 	") ;
-		
+		.append("	      and payment_time is not null 	")
+		.append("   order by io.order_code asc   ") ;
 		
 		pstmt = conn.prepareStatement(selectCalcItem.toString()) ;
 		
@@ -1128,8 +1132,8 @@ public class AdminDAO {
 		.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
 		.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
 		.append("			and ip.payment_time >= add_months(sysdate, -1) 	") 
-		.append("			and payment_time is not null 	") ;
-		
+		.append("			and payment_time is not null 	")
+		.append("   order by io.order_code asc   ") ;
 		
 		pstmt = conn.prepareStatement(selectCalcItem.toString()) ;
 		
@@ -1174,8 +1178,8 @@ public class AdminDAO {
 			.append("	from pc_use pu, item item, item_order io, item_payment ip   ")
 			.append("	where (io.pc_use_code=pu.pc_use_code) and (io.item_code=item.item_code) and (ip.order_code = io.order_code) 	")
 			.append("			and to_date(?,'yyyy-mm-dd')<=payment_time and payment_time<= to_date(?,'yyyy-mm-dd') 	") 
-			.append("			and payment_time is not null 	") ;
-			
+			.append("			and payment_time is not null 	")
+			.append("   order by io.order_code asc   ") ;
 			pstmt = conn.prepareStatement(selectCalcItemLstCustom.toString()) ;
 			
 			// 4. bind 변수에 값 설정

@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import admin.DAO.AdminDAO;
 import admin.view.ManageShop;
 
@@ -37,6 +39,7 @@ public class ManageShopServer extends Thread {
 //			ClientReceiver clientReceiver = null;
 			while (true) {
 				socket = serverSocket.accept();
+				System.out.println(socket.getInetAddress().getAddress());
 				ip = socket.getInetAddress().getHostAddress();
 				System.out.println(ip);
 				//ip에 해당하는 PC번호를 DB에서 조회한 다음

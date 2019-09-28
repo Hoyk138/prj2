@@ -40,20 +40,21 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 	private String todate; 
 	private String predate ;
 	
-	
+	private Checkbox selectChb;
 	
 	public CalcPCEvt(CalcView cv) {
 		this.cv = cv ;
 		report_file = new StringBuilder();
 		msg = new StringBuilder() ;
-//		setCalcPCList();
+		setCalcPCList(false);
 	} // CalcPCEvt
 	
 	private void viewCalcPCRecipt() {
 //		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
 		AdminDAO aDAO = AdminDAO.getInstance() ;
 		
-		Map<Integer, Integer> pcMap = new HashMap<Integer, Integer>() ;
+		Map<Integer, Integer> pcMapUseTime = new HashMap<Integer, Integer>() ;
+		Map<Integer, Integer> pcMapPrice = new HashMap<Integer, Integer>() ;
 		
 		
 		try {
@@ -63,7 +64,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			JTextArea jta = new JTextArea(20, 50) ;
 			JScrollPane jsp = new JScrollPane(jta) ;
 			if (list.isEmpty()) {
-				JOptionPane.showMessageDialog(null,"당일 거래된 목록이 없습니다.");
+					JOptionPane.showMessageDialog(null,"당일 거래된 목록이 없습니다.");
 				return ;
 			} // end if				
 			
@@ -77,10 +78,15 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			for (int i = 0; i < list.size(); i++) {
 				cpcVO = list.get(i) ;
 				
-				if (pcMap.containsKey(cpcVO.getPcNum())) {
-					pcMap.put(cpcVO.getPcNum(), pcMap.get(cpcVO.getPcNum()) + cpcVO.getUseTime()) ;
+				if (pcMapUseTime.containsKey(cpcVO.getPcNum())) {
+					pcMapUseTime.put(cpcVO.getPcNum(), pcMapUseTime.get(cpcVO.getPcNum()) + cpcVO.getUseTime()) ;
 				} else {
-					pcMap.put(cpcVO.getPcNum(), cpcVO.getUseTime()) ;
+					pcMapUseTime.put(cpcVO.getPcNum(), cpcVO.getUseTime()) ;
+				} // end if
+				if (pcMapPrice.containsKey(cpcVO.getPcNum())) {
+					pcMapPrice.put(cpcVO.getPcNum(), pcMapPrice.get(cpcVO.getPcNum()) + cpcVO.getUseFee()) ;
+				} else {
+					pcMapPrice.put(cpcVO.getPcNum(), cpcVO.getUseFee()) ;
 				} // end if
 				
 				//useTime, int num, int totalCnt, int price, int totalPrice
@@ -89,13 +95,13 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				totalPrice += cpcVO.getUseFee() ;
 			} // end for
 			
-			Set<Integer> keys = pcMap.keySet ( ) ;
+			Set<Integer> keysUseTime = pcMapUseTime.keySet ( ) ;
 			
-			Iterator<Integer> ita = keys . iterator ( ) ;
+			Iterator<Integer> itaUseTime = keysUseTime . iterator ( ) ;
 			int pcNum = 0 ;
-			while ( ita . hasNext() ) {
-				pcNum = ita.next() ;
-				jta.append("\t" + pcNum + "\t" + pcMap.get(pcNum) + "\t" + pcMap.get(pcNum)*20 + "\n") ; // 각 PC 사용시간 & ita.next():PC번호
+			while ( itaUseTime . hasNext() ) {
+				pcNum = itaUseTime.next() ;
+				jta.append("\t" + pcNum + "\t" + pcMapUseTime.get(pcNum) + "\t" + pcMapPrice.get(pcNum) + "\n") ; // 각 PC 사용시간 & ita.next():PC번호
 			} // end while
 			
 			jta.append("------------------------------------------------------------------------------------------------------------\n") ;
@@ -112,12 +118,10 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			Se.printStackTrace();
 		} // end catch
 		
-	} // CalcPCEvt
+	} // viewCalcPCRecipt
 
 		
-	public void setCalcPCList() {
-		
-		
+	public void setCalcPCList(boolean flag) {
 		Object[] rowData = null ;
 		
 //		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
@@ -131,7 +135,9 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			dtm.setRowCount(0);
 			
 			if (list.isEmpty()) {
-				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
+				if (flag) {
+					JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
+				}//end if
 				return;
 			} // end if
 			
@@ -174,6 +180,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			.append("조회 기간 : " + todate) ;
 			
 //			msg = msg.append(list) ;
+			report_file.delete(0, report_file.length()) ;
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 			
@@ -231,7 +238,6 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			cal.add(Calendar.DATE, -7);
 			predate = sdf.format(cal.getTime()) ;
 			
-			report_file.delete(0, report_file.length()) ;
 			
 			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
 			
@@ -246,6 +252,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
 			.append("조회 기간 : " + predate + " ~ " + todate);
 
+			report_file.delete(0, report_file.length()) ;
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 		
@@ -304,7 +311,6 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			cal.add(Calendar.MONTH, -1);
 			predate = sdf.format(cal.getTime()) ;
 			
-			report_file.delete(0, report_file.length()) ;
 			
 			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
 			
@@ -318,6 +324,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			msg.append("-------------------------------------------------------------\n")
 			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
 			.append("조회 기간 : " + predate + " ~ " + todate);
+			report_file.delete(0, report_file.length()) ;
 			report_file = report_file.append(msg) ;
 			msg.delete(0, msg.length());
 			
@@ -376,7 +383,6 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			todate  = cv.getJtfEndPC().getText() ;
 			predate= cv.getJtfStartPC().getText() ;
 			
-			report_file.delete(0, report_file.length()) ;
 			
 			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
 			
@@ -390,8 +396,11 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			msg.append("-------------------------------------------------------------\n")
 			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
 			.append("조회 기간 : " + predate + " ~ " + todate);
-			report_file = report_file.append(msg) ;
 			
+			report_file.delete(0, report_file.length()) ;
+			report_file = report_file.append(msg) ;
+			msg.delete(0, msg.length());
+		
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
 			Se.printStackTrace();
@@ -399,31 +408,31 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 		
 	} // setCalcPCLstMonth
 	
-		public void mouseClicked(MouseEvent me) {
-
-			if (me.getSource() == cv.getJtp()) { // 주문 탭을 눌렀을 때 이벤트 처리 => 주문현황 조회 시작
-				JTabbedPane jtptemp = (JTabbedPane) me.getSource();
-				if (jtptemp.getSelectedIndex() == 0) {
-//					if (ot == null) { // 조회 Thread가 생성되어 있지 않음(주문조회X)
-//						ot = new OrderThread(lm.getJtOrderList(), lm.getDtmOrderList()); // 선택된 행을 비교, 값을 넣는 일
-//						ot.start();
-					setCalcPCList();
-					} // end if
-				} // end if
-
-			} // end if
+//		public void mouseClicked(MouseEvent me) {
+//
+//			if (me.getSource() == cv.getJtp()) { // 주문 탭을 눌렀을 때 이벤트 처리 => 주문현황 조회 시작
+//				JTabbedPane jtptemp = (JTabbedPane) me.getSource();
+//				if (jtptemp.getSelectedIndex() == 0) {
+////					if (ot == null) { // 조회 Thread가 생성되어 있지 않음(주문조회X)
+////						ot = new OrderThread(lm.getJtOrderList(), lm.getDtmOrderList()); // 선택된 행을 비교, 값을 넣는 일
+////						ot.start();
+//					setCalcPCList(true);
+//					} // end if
+//				} // end if
+//
+//			} // end if
 		
 		
 		@Override
 		public void actionPerformed(ActionEvent ae) {
 			
-			Checkbox selectChb=cv.getCgPC().getSelectedCheckbox() ;
+			selectChb=cv.getCgPC().getSelectedCheckbox() ;
 			// 조회버튼
 			if (ae.getSource()==cv.getJbtnSearchPC()) {
 				
 				switch (selectChb.getLabel()) {
 				case "오늘":
-					setCalcPCList();
+					setCalcPCList(true);
 					break;
 				case "일주일":
 					setCalcPCList7();
@@ -431,7 +440,6 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 				case "한 달":
 					setCalcPCLstMonth();
 					break;
-					
 				case "사용자 지정":
 					setCalcPCLstCustom();
 					break;
@@ -450,10 +458,16 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			} // end if
 			
 			if (ae.getSource()==cv.getJbtnPCSaveFile()) {
+				String flag = "";
+				switch (selectChb.getLabel()) {
+				case "오늘": flag = "today"; break;
+				case "일주일": flag = "week"; break;
+				case "한 달": flag = "month"; break;
+				case "사용자 지정": flag = "custom"; break;
+				}
 				try {
-					reportFile() ;
-				JOptionPane.showMessageDialog(null, "(C:\\dev\\PCBang_calc_PC) 경로에 저장되었습니다.");
-					
+					reportFile(flag) ;
+				JOptionPane.showMessageDialog(cv, fileName+"으로 저장 되었습니다.");
 				} catch (IOException e) {
 					e.printStackTrace();
 				} // end catch
@@ -463,7 +477,7 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 		
 
 		
-		public void reportFile() throws IOException {
+		public void reportFile(String flag) throws IOException {
 			BufferedWriter bw = null;
 
 			
@@ -477,10 +491,10 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 			
 			
 			try {
-				File file = new File("c:/dev/PCBang_calc_PC");
+				File file = new File("c:/dev/pcbang/calc/pc");
 
 				if (!file.exists()) {
-					file.mkdir();
+				    System.out.println(file.mkdir());
 				} // end if
 				
 				fileName = file.getAbsolutePath() + "/PC_" + saveTime1 + ".dat";

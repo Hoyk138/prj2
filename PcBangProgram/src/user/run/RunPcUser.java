@@ -60,7 +60,7 @@ public class RunPcUser {
 		return pcNum;
 	}//pcNum
 	
-	public void sendImage(String adminIP) throws UnknownHostException, IOException {
+	private static void receiveItemImage(String adminIP) throws UnknownHostException, IOException {
 		Socket client = null;
 		DataOutputStream dos = null;
 		DataInputStream dis = null;
@@ -68,7 +68,7 @@ public class RunPcUser {
 		 
 		try {
 			//2. 소켓생성 (소켓을 열어서 서버에 연결) 
-//			client = new Socket("localhost", 5000);
+//			client = new Socket("ilocalhost", 5000);
 //			client = new Socket("211.63.89.130", 5000);
 //			client = new Socket("211.63.89.132", 5000);
 //			client = new Socket("211.63.89.133", 5000);
@@ -189,19 +189,24 @@ public class RunPcUser {
 			//switch (JOptionPane.showOptionDialog(null, adminIP+"로 연결 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
 			switch (JOptionPane.showConfirmDialog(null, "입력하신 IP ["+adminIP+"]로 연결 하시겠습니까?")) {
 			case JOptionPane.OK_OPTION:
-				rpu = new RunPcUser(adminIP);
-				flag = true;
 				try {
-					rpu.sendImage(adminIP);
+					RunPcUser.receiveItemImage(adminIP);
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
+					flag = true;
+					break;
 				} catch (IOException e) {
+					JOptionPane.showMessageDialog(null, "관리자 프로그램이 열려있지 않습니다.");
 					e.printStackTrace();
+					flag = true;
+					break;
 				} // end catch
+				rpu = new RunPcUser(adminIP);
+				flag = true;
 				break;
-//			case JOptionPane.CANCEL_OPTION:
-//				flag = true;
-//				break;
+			case JOptionPane.CANCEL_OPTION:
+				flag = true;
+				break;
 			case JOptionPane.CLOSED_OPTION:
 				flag = true;
 				break;

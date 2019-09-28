@@ -268,8 +268,8 @@ public class CalcView extends JPanel {
 		jbtCalcPC.addActionListener(cpe);
 		CalcItemEvt cie = new CalcItemEvt(this) ;
 		jbtCalcItem.addActionListener(cie);
-		jtp.addMouseListener(cpe);
-		jtp.addMouseListener(cie);
+//		jtp.addMouseListener(cpe);
+//		jtp.addMouseListener(cie);
 		jbtnSearchPC.addActionListener(cpe);
 		jbtnSearchItem.addActionListener(cie);
 		jbtnPCSaveFile.addActionListener(cpe);
