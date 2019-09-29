@@ -3,6 +3,8 @@ package user.controller;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -24,7 +26,7 @@ import user.view.UserChat;
 import user.view.UserItem;
 import user.view.UserMain;
 
-public class UserMainEvt implements ActionListener, Runnable{
+public class UserMainEvt extends WindowAdapter implements ActionListener, Runnable{
 	
 	private UserMain um;
 //	private RunPcUser rpu;
@@ -200,6 +202,7 @@ public class UserMainEvt implements ActionListener, Runnable{
 			}//end while
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+			JOptionPane.showMessageDialog(um, "관리자 프로그램이 종료 되었습니다.\n카운터에 문의 해주세요");
 		}//try catch
 	}//run
 
@@ -214,6 +217,21 @@ public class UserMainEvt implements ActionListener, Runnable{
 		new UserChat(um, pcNum, dos);
 	}//openChat
     
+	@Override
+	public void windowClosing(WindowEvent we) {
+		String[] options = {"예","아니요"};
+		switch (JOptionPane.showOptionDialog(um, "PC 이용을 종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
+	        case JOptionPane.OK_OPTION:
+	        	useClose();
+				JOptionPane.showMessageDialog(um, "PC 이용이 종료되었습니다.");
+	    }//switch case
+//		switch(JOptionPane.showConfirmDialog(um, "PC 이용을 종료하시겠습니까?")) {
+//		case JOptionPane.OK_OPTION:
+//			useClose();
+//			JOptionPane.showMessageDialog(um, "PC 이용이 종료되었습니다.");
+//		}//end switch
+	}//windowClosing
+
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 			

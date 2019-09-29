@@ -153,6 +153,8 @@ public class UserMain extends JFrame{
 		jbtExit.addActionListener(ume);
 		jbtAdImage.addActionListener(ume);
 		
+		addWindowListener(ume);//프레임 우측 상단의 종료 버튼에 이벤트 등록
+		
 		jbtOrder.setBackground(new Color(0x434446));
 		jbtCounterChat.setBackground(new Color(0x434446));
 		jbtExit.setBackground(new Color(0x434446));
@@ -186,7 +188,8 @@ public class UserMain extends JFrame{
 		setResizable(false);
 		setBounds(1320, 0, 600, 380);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		
 	}//UserMain

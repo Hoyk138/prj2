@@ -125,9 +125,9 @@ public class RunPcUser {
 			byte[] readData= new byte[120];
 			int readSize = 0;
 			for (int i = 0; i < fileCnt; i++) {
-				System.out.println("----------"); 
+//				System.out.println("----------"); 
 				readCnt = 0;
-				System.out.println("클라이언트(파일의 횟수 초기화): " + readCnt);
+//				System.out.println("클라이언트(파일의 횟수 초기화): " + readCnt);
 				//클러스터 bomb
 				//플래그를 주고 받음으로서 서버와 클라이언트가 헛돌지 않게 해줍니다. 
 				dos.writeUTF("Y");//블로킹 메서드
@@ -136,10 +136,10 @@ public class RunPcUser {
 				//code block: 서버에서 응답이 오기 전까지 대기
 				//10. 읽어들일 파일의 횟수 받기
 				readCnt = dis.readLong();
-				System.out.println("클라이언트(파일의 횟수): " + readCnt);
+//				System.out.println("클라이언트(파일의 횟수): " + readCnt);
 				//12. 받아서 생성할 파일명을 받기 
 				recieveFileName = dis.readUTF();
-				System.out.println("클라이언트(파일명): " + recieveFileName);
+//				System.out.println("클라이언트(파일명): " + recieveFileName);
 				//14. 파일생성(같은 이름이 있다면 덮어 씌우겠다.)
 				fos = new FileOutputStream("c:/dev/pcbang/user/img/item/"+recieveFileName);
 				while(readCnt > 0) {
@@ -150,14 +150,14 @@ public class RunPcUser {
 				fos.flush();
 				fos.close();
 				//14.thumbnail 파일 생성
-				System.out.println("thumbnail 파일 생성:"+recieveFileName); 
+//				System.out.println("thumbnail 파일 생성:"+recieveFileName); 
 				try {
 					ImageResize.resizeImage("c:/dev/pcbang/user/img/item/"+recieveFileName, 160, 130);
 				} catch (NullPointerException npe) {
 					npe.printStackTrace();
-					System.out.println(recieveFileName);
+//					System.out.println(recieveFileName);
 				}
-				System.out.println("----------"); 
+//				System.out.println("----------"); 
 				
 			}//end for
 			
@@ -181,7 +181,7 @@ public class RunPcUser {
 //		String[] options = {"예","아니요"};
 		do {
 			//adminIP = JOptionPane.showInputDialog("관리자 PC의 IP를 입력 해주세요\n예)127.0.01");
-			adminIP = JOptionPane.showInputDialog("관리자 PC의 IP를 입력 해주세요\n예)211.63.89.130");
+			adminIP = JOptionPane.showInputDialog("관리자 PC의 IP를 입력 해주세요\n예)211.63.89.130").trim();
 			if (adminIP==null) {
 				adminIP="";
 			}//end if

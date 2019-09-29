@@ -68,10 +68,13 @@ public class MainView extends JFrame{
 		jbtnmanageOrder.addActionListener(mve);
 		jbtnmanagePayment.addActionListener(mve);
 		
+		addWindowListener(mve);//종료 이벤트 등록
+		
 		setBounds(100, 100, 900, 800);
 		setVisible(true);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		////////////////////////////////////////////
 		jbtnmanageShop.setBackground(new Color(0xF5D08A));

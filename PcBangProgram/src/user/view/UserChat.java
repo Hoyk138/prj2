@@ -174,12 +174,12 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 					scrollPosition();
 				} // end while
 			} catch(IOException ioe) {
-				JOptionPane.showMessageDialog(this, "채팅이 종료 종료 되었습니다.");
+				JOptionPane.showMessageDialog(this, "채팅이 종료 되었습니다.");
 				ioe.printStackTrace();
 			}//end catch
 		}//end if
 		} catch(IOException ioe) {
-			JOptionPane.showMessageDialog(this, "채팅이 종료 종료 되었습니다.");
+			JOptionPane.showMessageDialog(this, "채팅이 종료 되었습니다.");
 			ioe.printStackTrace();
 		}
     }//run
