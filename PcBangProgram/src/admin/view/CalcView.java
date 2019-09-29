@@ -179,6 +179,7 @@ public class CalcView extends JPanel {
 	tcmCalcItem.getColumn(2).setCellRenderer(dtcrCenter);
 	tcmCalcItem.getColumn(3).setCellRenderer(dtcrCenter);
 	tcmCalcItem.getColumn(4).setCellRenderer(dtcrCenter);
+	tcmCalcItem.getColumn(5).setCellRenderer(dtcrCenter);
 	///////////////////////////////////////////////////////////////////////////////////////////
 		
 		JScrollPane jspCalcItem = new JScrollPane(jtCalcItem) ;

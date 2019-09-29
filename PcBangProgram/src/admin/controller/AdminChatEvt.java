@@ -23,8 +23,8 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 //	private Socket socketUser;
 //	private DataInputStream readStream;
 //	private DataOutputStream writeStream;
-	private DataInputStream dis;
-	private DataOutputStream dos;
+//	private DataInputStream dis;
+//	private DataOutputStream dos;
 	private Thread thConnect;
 
 	private Socket socket;
@@ -33,10 +33,10 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 	
 	public AdminChatEvt(AdminChat ac) {
 		this.ac = ac;
-		// 읽기스트림 연결
-		dis = ac.getDis();
-		// 쓰기스트림 연결
-		dos = ac.getDos();
+//		// 읽기스트림 연결
+//		dis = ac.getDis();
+//		// 쓰기스트림 연결
+//		dos = ac.getDos();
 //		System.out.println("관리자 채팅 이벤트: "+dis);
 //		System.out.println("관리자 채팅 이벤트: "+dos);
 		

@@ -13,10 +13,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -28,384 +26,430 @@ import admin.VO.CalcPCVO;
 import admin.view.CalcView;
 
 public class CalcPCEvt extends MouseAdapter implements ActionListener {
-	
-	private CalcView cv ;
-	private String fileName ;
-	private StringBuilder msg ;
+
+	private CalcView cv;
+	private String fileName;
+	private StringBuilder msg;
 	private StringBuilder report_file;
-	private SimpleDateFormat sdf ;
-	private Calendar cal ;
-	private String todate; 
-	private String predate ;
-	
+	private SimpleDateFormat sdf;
+	private Calendar cal;
+	private String todate;
+	private String predate;
+
 	private Checkbox selectChb;
-	
+
 	public CalcPCEvt(CalcView cv) {
-		this.cv = cv ;
+		this.cv = cv;
 		report_file = new StringBuilder();
-		msg = new StringBuilder() ;
+		msg = new StringBuilder();
 		setCalcPCList(false);
 	} // CalcPCEvt
-	
-	private void viewCalcPCRecipt() {
-//		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
-		AdminDAO aDAO = AdminDAO.getInstance() ;
-		
-		Map<Integer, Integer> pcMapUseTime = new HashMap<Integer, Integer>() ;
-		Map<Integer, Integer> pcMapPrice = new HashMap<Integer, Integer>() ;
-		
-		
-		try {
-//			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
-			List<CalcPCVO> list = aDAO.selectCalcPC() ;
-			
-			JTextArea jta = new JTextArea(20, 50) ;
-			JScrollPane jsp = new JScrollPane(jta) ;
-			if (list.isEmpty()) {
-					JOptionPane.showMessageDialog(null,"당일 거래된 목록이 없습니다.");
-				return ;
-			} // end if				
-			
-			jta.append("------------------------------------------------------------------------------------------------------------\n");
-			jta.append("\tPC번호\t이용 시간(분)\t이용 금액(원)\n");
-			jta.append("==============================================================\n");
-			
-			CalcPCVO cpcVO = null ;
-			int totalUseTime = 0 ;
-			int totalPrice = 0 ;
-			for (int i = 0; i < list.size(); i++) {
-				cpcVO = list.get(i) ;
-				
-				if (pcMapUseTime.containsKey(cpcVO.getPcNum())) {
-					pcMapUseTime.put(cpcVO.getPcNum(), pcMapUseTime.get(cpcVO.getPcNum()) + cpcVO.getUseTime()) ;
-				} else {
-					pcMapUseTime.put(cpcVO.getPcNum(), cpcVO.getUseTime()) ;
-				} // end if
-				if (pcMapPrice.containsKey(cpcVO.getPcNum())) {
-					pcMapPrice.put(cpcVO.getPcNum(), pcMapPrice.get(cpcVO.getPcNum()) + cpcVO.getUseFee()) ;
-				} else {
-					pcMapPrice.put(cpcVO.getPcNum(), cpcVO.getUseFee()) ;
-				} // end if
-				
-				//useTime, int num, int totalCnt, int price, int totalPrice
-//				jta.append((i+1) + "\t" + cv.getPcNum() + "\t" + pcMap.get(cv.getPcNum()) + "\t" + cv.getUseFee()+ "\n");
-				totalUseTime += cpcVO.getUseTime() ;
-				totalPrice += cpcVO.getUseFee() ;
-			} // end for
-			
-			Set<Integer> keysUseTime = pcMapUseTime.keySet ( ) ;
-			
-			Iterator<Integer> itaUseTime = keysUseTime . iterator ( ) ;
-			int pcNum = 0 ;
-			while ( itaUseTime . hasNext() ) {
-				pcNum = itaUseTime.next() ;
-				jta.append("\t" + pcNum + "\t" + pcMapUseTime.get(pcNum) + "\t" + pcMapPrice.get(pcNum) + "\n") ; // 각 PC 사용시간 & ita.next():PC번호
-			} // end while
-			
-			jta.append("------------------------------------------------------------------------------------------------------------\n") ;
-			jta.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n") ;
-			
 
-			JOptionPane.showMessageDialog(cv, jsp);
-//			JOptionPane.showMessageDialog(null, jsp);
-			
-			System.out.println(jta.getText());
-			
-		} catch (SQLException Se) {
-			JOptionPane.showMessageDialog(cv, "DBMS에 문제가 발생했습니다.");
-			Se.printStackTrace();
-		} // end catch
-		
+	private void viewCalcPCRecipt() {
+		DefaultTableModel dtm = cv.getDtmCalcPC();
+		if (dtm.getRowCount() == 0) {
+			JOptionPane.showMessageDialog(cv, "조회 된 목록이 없습니다.");
+			return;
+		} // end if
+
+		Map<Integer, Integer> pcMapUseTime = new HashMap<Integer, Integer>(30);
+		Map<Integer, Integer> pcMapPrice = new HashMap<Integer, Integer>(30);
+
+		// { "코드", "PC번호", "사용자(ID)", "이용시간(분)", "이용금액(원)" };
+		Integer pcNum = null;
+		Integer useTime = null;
+		Integer useFee = null;
+		int totalUseTime = 0;
+		int totalPrice = 0;
+		for (int i = 0; i < dtm.getRowCount(); i++) {
+			pcNum = (Integer) dtm.getValueAt(i, 1);// PC번호
+			useTime = (Integer) dtm.getValueAt(i, 3);// 이용시간(분)
+			useFee = (Integer) dtm.getValueAt(i, 4);// 이용금액(원)
+
+			if (pcMapUseTime.containsKey(pcNum)) {
+				pcMapUseTime.put(pcNum, pcMapUseTime.get(pcNum) + useTime);
+			} else {
+				pcMapUseTime.put(pcNum, useTime);
+			} // end if
+			if (pcMapPrice.containsKey(pcNum)) {
+				pcMapPrice.put(pcNum, pcMapPrice.get(pcNum) + useFee);
+			} else {
+				pcMapPrice.put(pcNum, useFee);
+			} // end if
+
+			totalUseTime += useTime;
+			totalPrice += useFee;
+		} // end for
+
+		JTextArea jta = new JTextArea(20, 50);
+		JScrollPane jsp = new JScrollPane(jta);
+		jta.append(
+				"------------------------------------------------------------------------------------------------------------\n");
+		jta.append("\tPC번호\t이용 시간(분)\t이용 금액(원)\n");
+		jta.append("==============================================================\n");
+
+		for (int i = 1; i <= 25; i++) {
+			if (pcMapUseTime.containsKey(i)) {
+				jta.append("\t" + i + "\t" + pcMapUseTime.get(i) + "\t" + pcMapPrice.get(i) + "\n");
+			} else {
+				jta.append("\t" + i + "\t0\t0\n");
+			} // if else
+		} // end for
+
+		jta.append(
+				"------------------------------------------------------------------------------------------------------------\n");
+		jta.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" + totalPrice + "] 원\n");
+
+		JOptionPane.showMessageDialog(cv, jsp);
+
+////		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
+//		AdminDAO aDAO = AdminDAO.getInstance() ;
+//		
+//		try {
+////			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
+//			List<CalcPCVO> list = aDAO.selectCalcPC();
+//
+//			JTextArea jta = new JTextArea(20, 50);
+//			JScrollPane jsp = new JScrollPane(jta);
+//			if (list.isEmpty()) {
+//				JOptionPane.showMessageDialog(null, "당일 거래된 목록이 없습니다.");
+//				return;
+//			} // end if
+//
+//			jta.append(
+//					"------------------------------------------------------------------------------------------------------------\n");
+//			jta.append("\tPC번호\t이용 시간(분)\t이용 금액(원)\n");
+//			jta.append("==============================================================\n");
+//
+//			CalcPCVO cpcVO = null;
+//			int totalUseTime = 0;
+//			int totalPrice = 0;
+//			for (int i = 0; i < list.size(); i++) {
+//				cpcVO = list.get(i);
+//
+//				if (pcMapUseTime.containsKey(cpcVO.getPcNum())) {
+//					pcMapUseTime.put(cpcVO.getPcNum(), pcMapUseTime.get(cpcVO.getPcNum()) + cpcVO.getUseTime());
+//				} else {
+//					pcMapUseTime.put(cpcVO.getPcNum(), cpcVO.getUseTime());
+//				} // end if
+//				if (pcMapPrice.containsKey(cpcVO.getPcNum())) {
+//					pcMapPrice.put(cpcVO.getPcNum(), pcMapPrice.get(cpcVO.getPcNum()) + cpcVO.getUseFee());
+//				} else {
+//					pcMapPrice.put(cpcVO.getPcNum(), cpcVO.getUseFee());
+//				} // end if
+//
+//				// useTime, int num, int totalCnt, int price, int totalPrice
+////				jta.append((i+1) + "\t" + cv.getPcNum() + "\t" + pcMap.get(cv.getPcNum()) + "\t" + cv.getUseFee()+ "\n");
+//				totalUseTime += cpcVO.getUseTime();
+//				totalPrice += cpcVO.getUseFee();
+//			} // end for
+//
+//			Set<Integer> keysUseTime = pcMapUseTime.keySet();
+//
+//			Iterator<Integer> itaUseTime = keysUseTime.iterator();
+//			int pcNum = 0;
+//			while (itaUseTime.hasNext()) {
+//				pcNum = itaUseTime.next();
+//				// 각 PC 사용시간 & ita.next():PC번호
+//				jta.append("\t" + pcNum + "\t" + pcMapUseTime.get(pcNum) + "\t" + pcMapPrice.get(pcNum) + "\n"); 
+//			} // end while
+//
+//			jta.append(
+//					"------------------------------------------------------------------------------------------------------------\n");
+//			jta.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" + totalPrice + "] 원\n");
+//
+//			JOptionPane.showMessageDialog(cv, jsp);
+////			JOptionPane.showMessageDialog(null, jsp);
+//
+//			System.out.println(jta.getText());
+//
+//		} catch (SQLException Se) {
+//			JOptionPane.showMessageDialog(cv, "DBMS에 문제가 발생했습니다.");
+//			Se.printStackTrace();
+//		} // end catch
+
 	} // viewCalcPCRecipt
 
-		
 	public void setCalcPCList(boolean flag) {
-		Object[] rowData = null ;
-		
+		Object[] rowData = null;
+
 //		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
-		AdminDAO aDAO = AdminDAO.getInstance() ;
-		
+		AdminDAO aDAO = AdminDAO.getInstance();
+
 		try {
 //			List<CalcPCVO> list = cpcDAO.selectCalcPC() ;
-			List<CalcPCVO> list = aDAO.selectCalcPC() ;
-			
-			DefaultTableModel dtm = cv.getDtmCalcPC() ;
+			List<CalcPCVO> list = aDAO.selectCalcPC();
+
+			DefaultTableModel dtm = cv.getDtmCalcPC();
 			dtm.setRowCount(0);
-			
+
 			if (list.isEmpty()) {
 				if (flag) {
 					JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
-				}//end if
+				} // end if
 				return;
 			} // end if
-			
-			CalcPCVO cpcVO = null ;
-			
+
+			CalcPCVO cpcVO = null;
+
 			for (int i = 0; i < list.size(); i++) {
-				cpcVO = list.get(i) ;
-				
-				rowData = new Object[5] ;
-				
-				rowData[0] = cpcVO.getPcCode() ;
-				rowData[1] = cpcVO.getPcNum() ;
-				rowData[2] = cpcVO.getId() ;
-				rowData[3] = cpcVO.getUseTime() ;
-				rowData[4] = cpcVO.getUseFee() ;
-				
+				cpcVO = list.get(i);
+
+				rowData = new Object[5];
+
+				rowData[0] = cpcVO.getPcCode();
+				rowData[1] = cpcVO.getPcNum();
+				rowData[2] = cpcVO.getId();
+				rowData[3] = cpcVO.getUseTime();
+				rowData[4] = cpcVO.getUseFee();
+
 				dtm.addRow(rowData);
 			} // end for
-			
-			int totalUseTime=0 ;
-			int totalPrice=0 ;
-			
-			todate= null; 
-			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
-			cal = Calendar.getInstance() ;
-			
-			todate = sdf.format(cal.getTime()) ;
-			
-			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
-			
+
+			int totalUseTime = 0;
+			int totalPrice = 0;
+
+			todate = null;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+			cal = Calendar.getInstance();
+
+			todate = sdf.format(cal.getTime());
+
+			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n");
+
 			for (int i = 0; i < list.size(); i++) {
-				msg.append(list.get(i)).toString() ;
-				
-				totalUseTime += list.get(i).getUseTime() ;
-				totalPrice += list.get(i).getUseFee() ;
+				msg.append(list.get(i)).toString();
+
+				totalUseTime += list.get(i).getUseTime();
+				totalPrice += list.get(i).getUseFee();
 			} // end for
-			
+
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
-			.append("조회 기간 : " + todate) ;
-			
+					.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" + totalPrice + "] 원\n")
+					.append("조회 기간 : " + todate);
+
 //			msg = msg.append(list) ;
-			report_file.delete(0, report_file.length()) ;
-			report_file = report_file.append(msg) ;
+			report_file.delete(0, report_file.length());
+			report_file = report_file.append(msg);
 			msg.delete(0, msg.length());
-			
+
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
 			Se.printStackTrace();
 		} // end catch
-		
+
 	} // setCalcPCList
-	
-	
+
 	public void setCalcPCList7() {
-		Object[] rowData = null ;
-		
+		Object[] rowData = null;
+
 //		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
-		AdminDAO aDAO = AdminDAO.getInstance() ;
-		
+		AdminDAO aDAO = AdminDAO.getInstance();
+
 		try {
 //			List<CalcPCVO> list = cpcDAO.selectCalcPC7() ;
-			List<CalcPCVO> list = aDAO.selectCalcPC7() ;
-			
-			DefaultTableModel dtm = cv.getDtmCalcPC() ;
+			List<CalcPCVO> list = aDAO.selectCalcPC7();
+
+			DefaultTableModel dtm = cv.getDtmCalcPC();
 			dtm.setRowCount(0);
-			
+
 			if (list.isEmpty()) {
 				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
 				return;
 			} // end if
-			
-			CalcPCVO cpcVO = null ;
-			
+
+			CalcPCVO cpcVO = null;
+
 			for (int i = 0; i < list.size(); i++) {
-				cpcVO = list.get(i) ;
-				
-				rowData = new Object[5] ;
-				
-				rowData[0] = cpcVO.getPcCode() ;
-				rowData[1] = cpcVO.getPcNum() ;
-				rowData[2] = cpcVO.getId() ;
-				rowData[3] = cpcVO.getUseTime() ;
-				rowData[4] = cpcVO.getUseFee() ;
-				
+				cpcVO = list.get(i);
+
+				rowData = new Object[5];
+
+				rowData[0] = cpcVO.getPcCode();
+				rowData[1] = cpcVO.getPcNum();
+				rowData[2] = cpcVO.getId();
+				rowData[3] = cpcVO.getUseTime();
+				rowData[4] = cpcVO.getUseFee();
+
 				dtm.addRow(rowData);
 			} // end for
-			
-	
-			int totalUseTime=0 ;
-			int totalPrice=0 ;
-			todate= null; 
-			predate= null ;
-			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
-			cal = Calendar.getInstance() ;
-			
-			todate = sdf.format(cal.getTime()) ;
-			cal.add(Calendar.DATE, -7);
-			predate = sdf.format(cal.getTime()) ;
-			
-			
-			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
-			
-			for (int i = 0; i < list.size(); i++) {
-				msg.append(list.get(i)).toString() ;
-				
-				totalUseTime += list.get(i).getUseTime() ;
-				totalPrice += list.get(i).getUseFee() ;
-			} // end for
-			
-			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
-			.append("조회 기간 : " + predate + " ~ " + todate);
 
-			report_file.delete(0, report_file.length()) ;
-			report_file = report_file.append(msg) ;
+			int totalUseTime = 0;
+			int totalPrice = 0;
+			todate = null;
+			predate = null;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+			cal = Calendar.getInstance();
+
+			todate = sdf.format(cal.getTime());
+			cal.add(Calendar.DATE, -7);
+			predate = sdf.format(cal.getTime());
+
+			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n");
+
+			for (int i = 0; i < list.size(); i++) {
+				msg.append(list.get(i)).toString();
+
+				totalUseTime += list.get(i).getUseTime();
+				totalPrice += list.get(i).getUseFee();
+			} // end for
+
+			msg.append("-------------------------------------------------------------\n")
+					.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" + totalPrice + "] 원\n")
+					.append("조회 기간 : " + predate + " ~ " + todate);
+
+			report_file.delete(0, report_file.length());
+			report_file = report_file.append(msg);
 			msg.delete(0, msg.length());
-		
-						
+
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
 			Se.printStackTrace();
 		} // end catch
-		
+
 	} // setCalcPCList
-	
-	
+
 	public void setCalcPCLstMonth() {
-		Object[] rowData = null ;
-		
+		Object[] rowData = null;
+
 //		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
-		AdminDAO aDAO = AdminDAO.getInstance() ;
-		
+		AdminDAO aDAO = AdminDAO.getInstance();
+
 		try {
 //			List<CalcPCVO> list = cpcDAO.selectCalcPCLstMonth() ;
-			List<CalcPCVO> list = aDAO.selectCalcPCLstMonth() ;
-			
-			DefaultTableModel dtm = cv.getDtmCalcPC() ;
+			List<CalcPCVO> list = aDAO.selectCalcPCLstMonth();
+
+			DefaultTableModel dtm = cv.getDtmCalcPC();
 			dtm.setRowCount(0);
-			
+
 			if (list.isEmpty()) {
 				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
 				return;
 			} // end if
-			
-			CalcPCVO cpcVO = null ;
-			
+
+			CalcPCVO cpcVO = null;
+
 			for (int i = 0; i < list.size(); i++) {
-				cpcVO = list.get(i) ;
-				
-				rowData = new Object[5] ;
-				
-				rowData[0] = cpcVO.getPcCode() ;
-				rowData[1] = cpcVO.getPcNum() ;
-				rowData[2] = cpcVO.getId() ;
-				rowData[3] = cpcVO.getUseTime() ;
-				rowData[4] = cpcVO.getUseFee() ;
-				
+				cpcVO = list.get(i);
+
+				rowData = new Object[5];
+
+				rowData[0] = cpcVO.getPcCode();
+				rowData[1] = cpcVO.getPcNum();
+				rowData[2] = cpcVO.getId();
+				rowData[3] = cpcVO.getUseTime();
+				rowData[4] = cpcVO.getUseFee();
+
 				dtm.addRow(rowData);
 			} // end for
-			
-			int totalUseTime=0 ;
-			int totalPrice=0 ;
-			
-			todate= null; 
-			predate= null ;
-			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
-			cal = Calendar.getInstance() ;
-			
-			todate = sdf.format(cal.getTime()) ;
+
+			int totalUseTime = 0;
+			int totalPrice = 0;
+
+			todate = null;
+			predate = null;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+			cal = Calendar.getInstance();
+
+			todate = sdf.format(cal.getTime());
 			cal.add(Calendar.MONTH, -1);
-			predate = sdf.format(cal.getTime()) ;
-			
-			
-			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
-			
+			predate = sdf.format(cal.getTime());
+
+			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n");
+
 			for (int i = 0; i < list.size(); i++) {
-				msg.append(list.get(i)).toString() ;
-				
-				totalUseTime += list.get(i).getUseTime() ;
-				totalPrice += list.get(i).getUseFee() ;
+				msg.append(list.get(i)).toString();
+
+				totalUseTime += list.get(i).getUseTime();
+				totalPrice += list.get(i).getUseFee();
 			} // end for
-			
+
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
-			.append("조회 기간 : " + predate + " ~ " + todate);
-			report_file.delete(0, report_file.length()) ;
-			report_file = report_file.append(msg) ;
+					.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" + totalPrice + "] 원\n")
+					.append("조회 기간 : " + predate + " ~ " + todate);
+			report_file.delete(0, report_file.length());
+			report_file = report_file.append(msg);
 			msg.delete(0, msg.length());
-			
+
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
 			Se.printStackTrace();
 		} // end catch
-		
+
 	} // setCalcPCLstMonth
-	
+
 	public void setCalcPCLstCustom() {
-		Object[] rowData = null ;
-		
+		Object[] rowData = null;
+
 //		CalcPCDAO cpcDAO = CalcPCDAO.getInstance() ;
-		AdminDAO aDAO = AdminDAO.getInstance() ;
-		
-		String startDate = cv.getJtfStartPC().getText().trim() ;
-		String endDate = cv.getJtfEndPC().getText().trim() ;
-		
+		AdminDAO aDAO = AdminDAO.getInstance();
+
+		String startDate = cv.getJtfStartPC().getText().trim();
+		String endDate = cv.getJtfEndPC().getText().trim();
+
 		try {
 //			List<CalcPCVO> list = cpcDAO.selectCalcPCLstCustom(startDate, endDate) ;
-			List<CalcPCVO> list = aDAO.selectCalcPCLstCustom(startDate, endDate) ;
-			
-			DefaultTableModel dtm = cv.getDtmCalcPC() ;
+			List<CalcPCVO> list = aDAO.selectCalcPCLstCustom(startDate, endDate);
+
+			DefaultTableModel dtm = cv.getDtmCalcPC();
 			dtm.setRowCount(0);
-			
+
 			if (list.isEmpty()) {
 				JOptionPane.showMessageDialog(cv, "PC 결제 내역이 없습니다.");
 				return;
 			} // end if
-			
-			CalcPCVO cpcVO = null ;
-			
+
+			CalcPCVO cpcVO = null;
+
 			for (int i = 0; i < list.size(); i++) {
-				cpcVO = list.get(i) ;
-				
-				rowData = new Object[5] ;
-				
-				rowData[0] = cpcVO.getPcCode() ;
-				rowData[1] = cpcVO.getPcNum() ;
-				rowData[2] = cpcVO.getId() ;
-				rowData[3] = cpcVO.getUseTime() ;
-				rowData[4] = cpcVO.getUseFee() ;
-				
+				cpcVO = list.get(i);
+
+				rowData = new Object[5];
+
+				rowData[0] = cpcVO.getPcCode();
+				rowData[1] = cpcVO.getPcNum();
+				rowData[2] = cpcVO.getId();
+				rowData[3] = cpcVO.getUseTime();
+				rowData[4] = cpcVO.getUseFee();
+
 				dtm.addRow(rowData);
 			} // end for
-			
-			int totalUseTime=0 ;
-			int totalPrice=0 ;
-			
-			todate= null; 
-			predate= null ;
-			sdf = new SimpleDateFormat("yyyy년 MM월 dd일") ;
-			cal = Calendar.getInstance() ;
-			
-			todate  = cv.getJtfEndPC().getText() ;
-			predate= cv.getJtfStartPC().getText() ;
-			
-			
-			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n") ;
-			
+
+			int totalUseTime = 0;
+			int totalPrice = 0;
+
+			todate = null;
+			predate = null;
+			sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+			cal = Calendar.getInstance();
+
+			todate = cv.getJtfEndPC().getText();
+			predate = cv.getJtfStartPC().getText();
+
+			msg.append("PC코드\tid\tPC번호\t이용금액\t이용시간\n");
+
 			for (int i = 0; i < list.size(); i++) {
-				msg.append(list.get(i)).toString() ;
-				
-				totalUseTime += list.get(i).getUseTime() ;
-				totalPrice += list.get(i).getUseFee() ;
+				msg.append(list.get(i)).toString();
+
+				totalUseTime += list.get(i).getUseTime();
+				totalPrice += list.get(i).getUseFee();
 			} // end for
-			
+
 			msg.append("-------------------------------------------------------------\n")
-			.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" +  totalPrice +"] 원\n")
-			.append("조회 기간 : " + predate + " ~ " + todate);
-			
-			report_file.delete(0, report_file.length()) ;
-			report_file = report_file.append(msg) ;
+					.append("\t총 이용시간 : [" + totalUseTime + " ] 분,\t 총 매출 : [" + totalPrice + "] 원\n")
+					.append("조회 기간 : " + predate + " ~ " + todate);
+
+			report_file.delete(0, report_file.length());
+			report_file = report_file.append(msg);
 			msg.delete(0, msg.length());
-		
+
 		} catch (SQLException Se) {
 			JOptionPane.showMessageDialog(cv, "서비스가 원활하지 않습니다.");
 			Se.printStackTrace();
 		} // end catch
-		
+
 	} // setCalcPCLstMonth
-	
+
 //		public void mouseClicked(MouseEvent me) {
 //
 //			if (me.getSource() == cv.getJtp()) { // 주문 탭을 눌렀을 때 이벤트 처리 => 주문현황 조회 시작
@@ -419,105 +463,108 @@ public class CalcPCEvt extends MouseAdapter implements ActionListener {
 //				} // end if
 //
 //			} // end if
-		
-		
-		@Override
-		public void actionPerformed(ActionEvent ae) {
-			
-			selectChb=cv.getCgPC().getSelectedCheckbox() ;
-			// 조회버튼
-			if (ae.getSource()==cv.getJbtnSearchPC()) {
-				
-				switch (selectChb.getLabel()) {
-				case "오늘":
-					setCalcPCList(true);
-					break;
-				case "일주일":
-					setCalcPCList7();
-					break;
-				case "한 달":
-					setCalcPCLstMonth();
-					break;
-				case "사용자 지정":
-					setCalcPCLstCustom();
-					break;
-				}
-			} // end if
-			
-			
-			// 영수증	
-			if (ae.getSource() == cv.getJbtCalcPC()) {
-				if (selectChb.getLabel()=="오늘") {
-					viewCalcPCRecipt();
-				} else {
-					JOptionPane.showMessageDialog(null, "정산은 당일 내역만 가능합니다.");
-					return;
-				} // end if
-			} // end if
-			
-			if (ae.getSource()==cv.getJbtnPCSaveFile()) {
-				String flag = "";
-				switch (selectChb.getLabel()) {
-				case "오늘": flag = "today"; break;
-				case "일주일": flag = "week"; break;
-				case "한 달": flag = "month"; break;
-				case "사용자 지정": flag = "custom"; break;
-				}
-				try {
-					reportFile(flag) ;
-				JOptionPane.showMessageDialog(cv, fileName+"으로 저장 되었습니다.");
-				} catch (IOException e) {
-					e.printStackTrace();
-				} // end catch
-			} // end if
-			
-		} // actionPerformed
-		
 
-		
-		public void reportFile(String flag) throws IOException {
-			BufferedWriter bw = null;
+	@Override
+	public void actionPerformed(ActionEvent ae) {
 
-			
-			long currTime = System.currentTimeMillis() ;
-			Date currDate = new Date(currTime) ;
-			SimpleDateFormat sdf1 = new SimpleDateFormat("yy-MM-dd HH-mm-ss") ;
-			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE") ;
-			
-			String saveTime1 = sdf1.format(currDate);
-			String saveTime2 = sdf2.format(currDate);
-			
-			
+		selectChb = cv.getCgPC().getSelectedCheckbox();
+		// 조회버튼
+		if (ae.getSource() == cv.getJbtnSearchPC()) {
+
+			switch (selectChb.getLabel()) {
+			case "오늘":
+				setCalcPCList(true);
+				break;
+			case "일주일":
+				setCalcPCList7();
+				break;
+			case "한 달":
+				setCalcPCLstMonth();
+				break;
+			case "사용자 지정":
+				setCalcPCLstCustom();
+				break;
+			}
+
+		} // end if
+
+		// 영수증
+		if (ae.getSource() == cv.getJbtCalcPC()) {
+			viewCalcPCRecipt();
+//				if (selectChb.getLabel()=="오늘") {
+//					viewCalcPCRecipt();
+//				} else {
+//					JOptionPane.showMessageDialog(null, "정산은 당일 내역만 가능합니다.");
+//					return;
+//				} // end if
+		} // end if
+
+		if (ae.getSource() == cv.getJbtnPCSaveFile()) {
+			String flag = "";
+			switch (selectChb.getLabel()) {
+			case "오늘":
+				flag = "today";
+				break;
+			case "일주일":
+				flag = "week";
+				break;
+			case "한 달":
+				flag = "month";
+				break;
+			case "사용자 지정":
+				flag = "custom";
+				break;
+			}
 			try {
-				File file = new File("c:/dev/pcbang/admin/calc/pc");
+				reportFile(flag);
+				JOptionPane.showMessageDialog(cv, fileName + "으로 저장 되었습니다.");
+			} catch (IOException e) {
+				e.printStackTrace();
+			} // end catch
+		} // end if
 
-				if (!file.exists()) {
-				    System.out.println(file.mkdir());
-				} // end if
-				
-				fileName = file.getAbsolutePath() + "\\PC_" + saveTime1 + ".dat";
-				bw = new BufferedWriter(new FileWriter(fileName));
-				
-				bw.write( "======================================\n"
-						+ "[PC 정산 내역] (" + saveTime2 +"에 저장됨.)\n"
-						+ "======================================\n"
-						+ getReport_file()
-						+ "\n======================================");
-				
-				
-				// 스트림의 내용을 목적지로 분출
-				bw.flush();
+	} // actionPerformed
 
-			} finally {
-				if (bw != null) { bw.close(); } // end if
-			} // end finally
-			
-		}//reportFile
+	public void reportFile(String flag) throws IOException {
+		BufferedWriter bw = null;
 
-		public String getReport_file() {
-			return report_file.toString();
-		}
-		
+		long currTime = System.currentTimeMillis();
+		Date currDate = new Date(currTime);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEEE");
+
+		String saveTime1 = sdf1.format(currDate);
+		String saveTime2 = sdf2.format(currDate);
+
+		try {
+			File file = new File("c:/dev/pcbang/admin/calc/pc");
+
+			if (!file.exists()) {
+				System.out.println(file.mkdir());
+			} // end if
+
+			fileName = file.getAbsolutePath() + "\\PC_" + saveTime1 + ".dat";
+			bw = new BufferedWriter(new FileWriter(fileName));
+
+			bw.write("======================================\n" + "[PC 정산 내역] (" + saveTime2 + "에 저장됨.)\n"
+					+ "======================================\n" + getReport_file()
+					+ "\n======================================");
+
+			// 스트림의 내용을 목적지로 분출
+			bw.flush();
+
+		} finally {
+			if (bw != null) {
+				bw.close();
+			} // end if
+		} // end finally
+
+	}// reportFile
+
+	public String getReport_file() {
+		return report_file.toString();
+	}
+
 	// 단위테스트용
 //	public static void main(String[] args) {
 //		new CalcPCEvt();

@@ -905,8 +905,7 @@ public class AdminDAO {
 			.append("	select pc_code, sum(use_time) use_time, sum(use_fee) use_fee	")
 			.append("	from pc_use	")
 			.append("	group by pc_code	") 
-			.append("	where to_char(login_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')	") 
-			;
+			.append("	where to_char(login_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')	");
 			
 			pstmt = conn.prepareStatement(selectCalcPCRecipt.toString()) ;
 			
@@ -1076,6 +1075,50 @@ public class AdminDAO {
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////	
 	
+	public List<String> selectItem(String category) throws SQLException {
+		List<String> list = new ArrayList<String>() ;
+		
+		Connection conn = null ;
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		
+		// 2. Connection 얻기
+		conn = getConnection() ;
+		
+		try {
+		// 3. 쿼리문 생성 객체 얻기 : pcbang테이블에서 
+		StringBuilder selectItem = new StringBuilder() ;
+//		select category, name
+//		from item
+//		order by category, input_date
+		selectItem
+		.append("	select name   ")
+		.append("	from item   ")
+		.append("	where category = ?   ")
+		.append("   order by input_date   ") ;
+		
+		pstmt = conn.prepareStatement(selectItem.toString()) ;
+		
+		// 4. bind 변수에 값 설정
+		pstmt.setString(1, category);
+		
+		// 5. 쿼리 수행 후 결과 얻기
+		rs = pstmt.executeQuery();
+		while( rs.next() ) {
+			list.add(rs.getString("name")) ;	// 조회된 레코드를 저장한 VO를 list에 추가
+		} // end while
+		
+		} finally {
+		// 6. 연결 끊기
+			if ( rs != null) { rs.close(); } // end if
+			if ( pstmt != null) { pstmt.close(); } // end if
+			if ( conn != null) { conn.close(); } // end if
+			
+		} // end finally
+				
+		return list ;
+	} // selectItem
+	
 	public List<CalcItemVO> selectCalcItem() throws SQLException {
 		List<CalcItemVO> list = new ArrayList<CalcItemVO>() ;
 		
@@ -1098,7 +1141,6 @@ public class AdminDAO {
 		.append("	      and to_char(ip.payment_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd') 	")
 		.append("	      and payment_time is not null 	")
 		.append("   order by io.order_code asc   ") ;
-		
 		
 		pstmt = conn.prepareStatement(selectCalcItem.toString()) ;
 		
@@ -1144,6 +1186,7 @@ public class AdminDAO {
 			.append("	where (ip.order_code=io.order_code)and(io.item_code=i.item_code)	")			
 			.append("	      and to_char(ip.payment_time, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')	")		
 			.append("	      and payment_time is not null   ");		
+
 			pstmt = conn.prepareStatement(selectCalcItemRecipt.toString()) ;
 			
 			// 4. bind 변수에 값 설정
