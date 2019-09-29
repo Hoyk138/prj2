@@ -60,9 +60,9 @@ public class UserItem extends JFrame{
 		
 		String[] columnNames= {"상품명","이미지","가격"};
 
-		dtmFood=new DefaultTableModel(columnNames,4);
-		dtmSnack=new DefaultTableModel(columnNames,4);
-		dtmDrink=new DefaultTableModel(columnNames,4);
+		dtmFood=new DefaultTableModel(columnNames,0);
+		dtmSnack=new DefaultTableModel(columnNames,0);
+		dtmDrink=new DefaultTableModel(columnNames,0);
 	
 		//탭
 		jtpOrder=new JTabbedPane();

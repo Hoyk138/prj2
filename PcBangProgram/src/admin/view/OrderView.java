@@ -22,21 +22,37 @@ import admin.controller.OrderEvt;
 public class OrderView extends JPanel{
 	
 	private DefaultTableModel dtmOrder;
+	private JTable jtOrder;
 	private JPopupMenu jpm;
 	private JMenuItem jmState;
-	private JTable jtOrder;
 	//private static OrderView s;
 	
 	public OrderView() {
 		
-		String[] columnNames= {"주문번호","PC번호","주문일자","구매자(ID)","개수","상품이름","총 금액","결제한시간"};
+		String[] columnNames= {"주문코드","PC번호","주문일자","구매자(ID)","개수","상품이름","총 금액","결제한시간"};
 
-		dtmOrder=new DefaultTableModel(columnNames,3){
+		dtmOrder=new DefaultTableModel(columnNames,0){
 
+			//자동 정렬 할 때 예외 발생하지 않도록 오버라이드
+			@Override
+			public Class<?> getColumnClass(int column) {
+				switch (column) {
+				case 0: return String.class;
+				case 1:	return Integer.class;
+				case 2:	return String.class;
+				case 3:	return String.class;
+				case 4:	return Integer.class;
+				case 5:	return String.class;
+				case 6:	return Integer.class;
+				case 7:	return String.class;
+				default: return String.class;
+				}//switch case
+			}//getColumnClass
+			
 			@Override
 			public boolean isCellEditable(int row, int column) {   //클릭은 되고 편집은 안됨
 				return false;
-			}	
+			}//isCellEditable	
 			
 		};
 		
@@ -45,7 +61,7 @@ public class OrderView extends JPanel{
 		jpm.add(jmState);
 		
 	
-		//식사류 테이블
+		//주문 테이블
 		jtOrder=new JTable(dtmOrder);
 		
 		jtOrder.setComponentPopupMenu(jpm);
@@ -72,6 +88,7 @@ public class OrderView extends JPanel{
 		tcmOrder.getColumn(5).setCellRenderer(dtcrCenter);
 		tcmOrder.getColumn(6).setCellRenderer(dtcrCenter);
 		
+		//자동 정렬
 		jtOrder.setAutoCreateRowSorter(true); 
 		TableRowSorter<TableModel> trsOrder = new TableRowSorter<TableModel>(jtOrder.getModel()); 
 		jtOrder.setRowSorter(trsOrder); 

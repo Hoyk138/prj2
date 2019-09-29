@@ -191,6 +191,7 @@ public class ProductView extends JPanel{
 		jtDrink.getTableHeader().setReorderingAllowed(false); 
 		jtDrink.getTableHeader().setResizingAllowed(false); 
 		
+		//자동 정렬
 		jtFood.setAutoCreateRowSorter(true); 
 		TableRowSorter<TableModel> trsFood = new TableRowSorter<TableModel>(jtFood.getModel()); 
 		jtFood.setRowSorter(trsFood); 

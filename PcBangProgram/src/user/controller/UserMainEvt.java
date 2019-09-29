@@ -202,7 +202,7 @@ public class UserMainEvt extends WindowAdapter implements ActionListener, Runnab
 			}//end while
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
-			JOptionPane.showMessageDialog(um, "관리자 프로그램이 종료 되었습니다.\n카운터에 문의 해주세요");
+//			JOptionPane.showMessageDialog(um, "관리자 프로그램이 종료 되었습니다.\n카운터에 문의 해주세요");
 		}//try catch
 	}//run
 

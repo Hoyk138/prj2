@@ -65,10 +65,11 @@ public class PCStateEvt extends MouseAdapter implements ActionListener {
 			System.out.println("PC" + pcs.getPcNum() + "번 주문 확인");
 			// DB에 접근하여 해당 pcnum의 최신 주문 내용을 조회
 			//jlblPCStateArr[USER_ID].setText("사용자 ID: ");
-			String userID = pcs.getJlblPCStateArr()[0].getText();
+			String lblTxtUserID = pcs.getJlblPCStateArr()[0].getText();
+			String userID = lblTxtUserID.substring(lblTxtUserID.indexOf(":")+2);
 			System.out.println(userID);
 			
-			pcs.getPcNum();
+			System.out.println(pcs.getPcNum());
 			
 			AdminDAO aDAO = AdminDAO.getInstance();
 			

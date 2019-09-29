@@ -62,32 +62,25 @@ public class ManageMember extends JPanel{
 		dtmMember = new DefaultTableModel(columnNames, 6) {
 			//컬럼에 입력된 데이터형을 그대로 보여주기
 			//테이블 컬럼의 데이터형이 입력된 객체 그대로 조회 되도록 부모클래스의 특정 method를 Override
+//			@Override
+//			public Class<?> getColumnClass(int column) {
+//				//입력된 행 하나의 모든 컬럼의 값을 원래의 클래스로 반환하는 일 
+//				//0행은 현재 입력된 행 하나만 대상으로 처리
+//				return getValueAt(0, column).getClass();
+//			}//getColumnClass
+
 			@Override
 			public Class<?> getColumnClass(int column) {
-				//입력된 행 하나의 모든 컬럼의 값을 원래의 클래스로 반환하는 일 
-				//0행은 현재 입력된 행 하나만 대상으로 처리
-				return getValueAt(0, column).getClass();
+				switch (column) {
+				case 0: return String.class;
+				case 1: return String.class;
+				case 2:	return String.class;
+				case 3:	return String.class;
+				case 4:	return Integer.class;
+				case 5:	return Integer.class;
+				default: return String.class;
+				}//switch case
 			}//getColumnClass
-
-			//			@Override
-//			public Class<?> getColumnClass(int column) {
-//				switch (column) {
-//				case 0:
-//					return String.class;
-//				case 1:
-//					return String.class;
-//				case 2:
-//					return String.class;
-//				case 3:
-//					return String.class;
-//				case 4:
-//					return Integer.class;
-//				case 5:
-//					return Integer.class;
-//				default:
-//					return String.class;
-//				}
-//			}//getColumnClass
 		};
 
 		jtMember = new JTable(dtmMember) {

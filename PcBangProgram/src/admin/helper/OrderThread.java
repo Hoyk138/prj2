@@ -11,7 +11,7 @@ public class OrderThread extends Thread{
 
 	private OrderView ov;
 
-	public OrderThread	(OrderView ov) {
+	public OrderThread(OrderView ov) {
 		this.ov = ov;
 	}// 기본생성자
 
