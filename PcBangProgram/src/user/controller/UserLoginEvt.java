@@ -23,12 +23,13 @@ public class UserLoginEvt implements ActionListener{
 	private UserLogin ul;
 	
 	private String adminIP;
+	private int pcNum;
 	
-	public UserLoginEvt(UserLogin ul, String adminIP) {
-	
-	this.ul=ul;	
-	this.adminIP = adminIP;
-	
+	public UserLoginEvt(UserLogin ul, String adminIP, int pcNum) {
+		this.ul = ul;
+		this.adminIP = adminIP;
+		this.pcNum = pcNum;
+
 	}//UserLoginEvt
 	
 	public void userJoin() {
@@ -137,7 +138,7 @@ public class UserLoginEvt implements ActionListener{
 							
 							//if else 
 							
-							new UserMain(ul.getJtfId().getText().trim(), adminIP);
+							new UserMain(ul.getJtfId().getText().trim(), adminIP, pcNum);
 							ul.dispose();
 						}else {
 //							ul.getJtfId().setText(""); //아이디 초기화

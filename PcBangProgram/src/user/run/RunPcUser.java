@@ -18,8 +18,10 @@ import user.view.UserLogin;
 
 public class RunPcUser {
 	
-	public RunPcUser(String adminIP) {
-		new UserLogin(adminIP);
+	private static int pcNum;
+	
+	public RunPcUser(String adminIP, int pcNum) {
+		new UserLogin(adminIP, pcNum);
 	}//RunPcUser
 	
 //	public String getIp() {
@@ -40,7 +42,7 @@ public class RunPcUser {
 	 */
 	private static int pcNum() {
 		InetAddress local; 
-		int pcNum=0;
+		pcNum=0;
 		
 		UserDAO uDAO=UserDAO.getInstance();
 		
@@ -171,7 +173,8 @@ public class RunPcUser {
 	
 
 	public static void main(String[] args) {
-		if (RunPcUser.pcNum() == 0) {
+		int pcNum = RunPcUser.pcNum();
+		if (pcNum == 0) {
 			JOptionPane.showMessageDialog(null, "등록 되지 않은 PC입니다.\n카운터에 문의 해주세요");
 			return;
 		}//end if
@@ -200,7 +203,7 @@ public class RunPcUser {
 					flag = true;
 					break;
 				} // end catch
-				new RunPcUser(adminIP);
+				new RunPcUser(adminIP, pcNum);
 				flag = true;
 				break;
 			case JOptionPane.CANCEL_OPTION:

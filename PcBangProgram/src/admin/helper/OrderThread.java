@@ -3,6 +3,8 @@ package admin.helper;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+
 import admin.DAO.AdminDAO;
 import admin.VO.OrderViewVO;
 import admin.view.OrderView;
@@ -16,9 +18,10 @@ public class OrderThread extends Thread{
 	}// 기본생성자
 
 	public void run() {
+		DefaultTableModel dtm = ov.getDtmOrder(); 
 
 		while (true) {
-			ov.getDtmOrder().setRowCount(0);
+			dtm.setRowCount(0);
 
 			Object[] rowData = null;
 

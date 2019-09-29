@@ -35,6 +35,7 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 	
 	private ServerSocket server;
 	private Socket client;
+	private DataOutputStream dos;
 	private DataInputStream disChat;
 	private DataOutputStream dosChat;
 	
@@ -45,6 +46,7 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 		super(um,"사용자 채팅",false);
 		this.um = um;
 		this.pcNum = pcNum;
+		this.dos = dos;
 		
 		//선언
 		JLabel jlLogo=new JLabel("▒ E_ZO PC ▒ 카운터에 문의하기");
@@ -106,32 +108,56 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 //				} catch (IOException ioe) {
 //					ioe.printStackTrace();
 //				}//end catch
-				try {
-					dos.writeUTF("/채팅종료");
-					dos.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				dispose();
+//				try {
+//					dos.writeUTF("/채팅종료");
+//					dos.flush();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				dispose();
+				sendSignAndDispose();
 			}//windowClosing
 			
 			@Override
-			public void windowClosed(WindowEvent e) {
-				thread=null;
-				try {
-				if(disChat!=null) {disChat.close();}//if
-				if(dosChat!=null) {dosChat.close();}//if
-				if(client!=null) {client.close();}//if
-				if(server!=null) {server.close();}//if
-				}catch(IOException ie) {
-					ie.printStackTrace();
-				}
+			public void windowClosed(WindowEvent we) {
+//				thread=null;
+//				try {
+//				if(disChat!=null) {disChat.close();}//if
+//				if(dosChat!=null) {dosChat.close();}//if
+//				if(client!=null) {client.close();}//if
+//				if(server!=null) {server.close();}//if
+//				}catch(IOException ie) {
+//					ie.printStackTrace();
+//				}
+				stopThreadAndCloseStreamSocket();
 			}//windowClosed
 			
 		});
     	
 	}//UserChat
 
+	private void sendSignAndDispose() {
+		try {
+			dos.writeUTF("/채팅종료");
+			dos.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		dispose();
+	}//sendSignAndDispose
+	
+	private void stopThreadAndCloseStreamSocket() {
+		thread=null;
+		try {
+		if(disChat!=null) {disChat.close();}//if
+		if(dosChat!=null) {dosChat.close();}//if
+		if(client!=null) {client.close();}//if
+		if(server!=null) {server.close();}//if
+		}catch(IOException ie) {
+			ie.printStackTrace();
+		}
+	}//stopThreadAndCloseStreamSocket
+	
 	 /**
      * 대화의 내용을 무한 루프로 읽어들여 T.A에 출력
      */
@@ -175,11 +201,15 @@ public class UserChat extends JDialog implements ActionListener, Runnable{
 				} // end while
 			} catch(IOException ioe) {
 				JOptionPane.showMessageDialog(this, "채팅이 종료 되었습니다.");
+				sendSignAndDispose();
+				stopThreadAndCloseStreamSocket();
 				ioe.printStackTrace();
 			}//end catch
 		}//end if
 		} catch(IOException ioe) {
 			JOptionPane.showMessageDialog(this, "채팅이 종료 되었습니다.");
+			sendSignAndDispose();
+			stopThreadAndCloseStreamSocket();
 			ioe.printStackTrace();
 		}
     }//run

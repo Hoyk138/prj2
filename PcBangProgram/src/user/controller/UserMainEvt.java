@@ -44,10 +44,11 @@ public class UserMainEvt extends WindowAdapter implements ActionListener, Runnab
 	
 	private String adminIP;
 	
-	public UserMainEvt(UserMain um, String adminIP) {
+	public UserMainEvt(UserMain um, String adminIP, int pcNum) {
 		this.um=um;
 		this.adminIP = adminIP;
-		pcNum();
+		this.pcNum = pcNum;
+//		pcNum();
 		setPcHistory();
 		
 		//사용시간, 사용금액 thread
@@ -70,28 +71,28 @@ public class UserMainEvt extends WindowAdapter implements ActionListener, Runnab
 		
 	}//UserMainEvt
 	
-	/**
-	 * ip주소로 저장된 pc번호를 조회
-	 */
-	public void pcNum() {
-		InetAddress local; 
-		pcNum=0;
-		
-		UserDAO uDAO=UserDAO.getInstance();
-		
-		try { 
-			local = InetAddress.getLocalHost(); 
-			String ip = local.getHostAddress(); 
-			pcNum=uDAO.selectPcNum(ip);
-			
-		} catch (UnknownHostException e1) {
-			e1.printStackTrace(); 
-		}catch (SQLException e) {
-			e.printStackTrace();
-		}//end catch
-		
-		um.getJlPcNum().setText(String.valueOf(pcNum));
-	}//pcNum
+//	/**
+//	 * ip주소로 저장된 pc번호를 조회
+//	 */
+//	public void pcNum() {
+//		InetAddress local; 
+//		pcNum=0;
+//		
+//		UserDAO uDAO=UserDAO.getInstance();
+//		
+//		try { 
+//			local = InetAddress.getLocalHost(); 
+//			String ip = local.getHostAddress(); 
+//			pcNum=uDAO.selectPcNum(ip);
+//			
+//		} catch (UnknownHostException e1) {
+//			e1.printStackTrace(); 
+//		}catch (SQLException e) {
+//			e.printStackTrace();
+//		}//end catch
+//		
+//		um.getJlPcNum().setText(String.valueOf(pcNum));
+//	}//pcNum
 	
 	/**
 	 * main창이 띄어질 때 시작 pc사용기록의 데이터가 추가되는 일
@@ -132,7 +133,8 @@ public class UserMainEvt extends WindowAdapter implements ActionListener, Runnab
 				ie.printStackTrace();
 			}//try catch
 			um.dispose();
-			new RunPcUser(adminIP);
+			JOptionPane.showMessageDialog(um, "PC 이용이 종료되었습니다.");
+			new RunPcUser(adminIP, pcNum);
 		} else {
 			JOptionPane.showMessageDialog(um, "PC 사용 종료에 실패 하였습니다.");
 		}//if else
@@ -223,7 +225,7 @@ public class UserMainEvt extends WindowAdapter implements ActionListener, Runnab
 		switch (JOptionPane.showOptionDialog(um, "PC 이용을 종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "예")) {
 	        case JOptionPane.OK_OPTION:
 	        	useClose();
-				JOptionPane.showMessageDialog(um, "PC 이용이 종료되었습니다.");
+//				JOptionPane.showMessageDialog(um, "PC 이용이 종료되었습니다.");
 	    }//switch case
 //		switch(JOptionPane.showConfirmDialog(um, "PC 이용을 종료하시겠습니까?")) {
 //		case JOptionPane.OK_OPTION:
@@ -260,7 +262,7 @@ public class UserMainEvt extends WindowAdapter implements ActionListener, Runnab
 			switch(JOptionPane.showConfirmDialog(um, "PC 이용을 종료하시겠습니까?")) {
 			case JOptionPane.OK_OPTION:
 				useClose();
-				JOptionPane.showMessageDialog(um, "PC 이용이 종료되었습니다.");
+//				JOptionPane.showMessageDialog(um, "PC 이용이 종료되었습니다.");
 			}//end switch			
 		}//end if
 		

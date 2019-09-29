@@ -29,7 +29,7 @@ public class UserMain extends JFrame{
 	
 	private String loginTime;
 	
-	public UserMain(String userId, String adminIP) {
+	public UserMain(String userId, String adminIP, int pcNumber) {
 		super(" ※E_ZO PC방※  [" +  userId +"]님");
 		this.userId = userId;
 		
@@ -51,7 +51,7 @@ public class UserMain extends JFrame{
 		useTime=new JLabel("사용시간 : ");
 		usePrice=new JLabel("[후불제] 사용금액 : ");
 		
-		jlPcNum=new JLabel();
+		jlPcNum=new JLabel(String.valueOf(pcNumber));
 		jlID=new JLabel(userId);
 		jlStartTime=new JLabel(loginTime = sdf.format(new Date()));
 		jlUseTime=new JLabel();
@@ -147,7 +147,7 @@ public class UserMain extends JFrame{
 		add(jbtAdImage);
 		
 		//이벤트 처리
-		UserMainEvt ume=new UserMainEvt(this, adminIP);
+		UserMainEvt ume=new UserMainEvt(this, adminIP, pcNumber);
 		jbtOrder.addActionListener(ume);
 		jbtCounterChat.addActionListener(ume);
 		jbtExit.addActionListener(ume);

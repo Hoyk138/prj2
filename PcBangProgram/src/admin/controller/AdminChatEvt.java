@@ -37,8 +37,8 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 		dis = ac.getDis();
 		// 쓰기스트림 연결
 		dos = ac.getDos();
-		System.out.println("관리자 채팅 이벤트: "+dis);
-		System.out.println("관리자 채팅 이벤트: "+dos);
+//		System.out.println("관리자 채팅 이벤트: "+dis);
+//		System.out.println("관리자 채팅 이벤트: "+dos);
 		
 		try {
 			connectToServer();
@@ -51,7 +51,7 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 		//사용자가 보내는 메세지를 읽어들이는 run 실행
 		thConnect = new Thread(this);
 		thConnect.start();
-		System.out.println("스레드 스타트");
+//		System.out.println("스레드 스타트");
 		
 	}// UserChatEvt
 
@@ -69,7 +69,7 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 			// localhost, 127.0.0.1, 자신의 ip를 넣으면 내 컴퓨터에 존재하는 서버에 접속한다.
 //			socket = new Socket("localhost", 9001);//단위 테스트 할 때는 자신의 IP로, 실제 상황에는 사용자 프로그램이 켜져있는 IP로
 //			socket = new Socket("211.63.89.133", 9001);
-			System.out.println(ac.getPcs().getUserIP());
+//			System.out.println(ac.getPcs().getUserIP());
 			socket = new Socket(ac.getPcs().getUserIP(), 9001);
 			
 
@@ -114,12 +114,12 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 		// 보내는 메세지를 무한루프로 읽어들이기
 		if (disRead != null) {
 			try {
-				System.out.println("스레드 런");
+//				System.out.println("스레드 런");
 				while (true) {
-					System.out.println("스레드 런 while");
-					System.out.println(dis);
-					System.out.println(ac);
-					System.out.println(ac.getJtaChat());
+//					System.out.println("스레드 런 while");
+//					System.out.println(dis);
+//					System.out.println(ac);
+//					System.out.println(ac.getJtaChat());
 					ac.getJtaChat().append(disRead.readUTF());
 					scrollPosition();
 				} // end while
@@ -183,15 +183,15 @@ public class AdminChatEvt extends WindowAdapter implements ActionListener, Runna
 	@Override
 	public void windowClosing(WindowEvent we) {
 //		try {
-			System.out.println("종료");
+//			System.out.println("종료");
 //			thConnect = null;
 			//PCStateEvt의 ac를 null로 세팅한다.
 //			ac.getPcse().setAc(null);
 			ac.getPcs().setAc(null);
 			ac.dispose();
-			System.out.println("관리자채팅이벤트 ac: " + ac);
+//			System.out.println("관리자채팅이벤트 ac: " + ac);
 //			ac.dispose();
-			System.out.println("관리자채팅이벤트 ac: " + ac);
+//			System.out.println("관리자채팅이벤트 ac: " + ac);
 //			ac = null;
 //			System.out.println("관리자채팅이벤트 ac: " + ac);
 //			close();

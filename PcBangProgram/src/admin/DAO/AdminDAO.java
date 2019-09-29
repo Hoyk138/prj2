@@ -19,6 +19,7 @@ import admin.VO.MemberVO;
 import admin.VO.OrderStateVO;
 import admin.VO.OrderVO;
 import admin.VO.OrderViewVO;
+import admin.VO.OrderedItemAndQuantityVO;
 import admin.VO.PCVO;
 import admin.VO.ProductAddVO;
 import admin.VO.ProductDeleteVO;
@@ -26,6 +27,7 @@ import admin.VO.ProductMDViewVO;
 import admin.VO.ProductModifyVO;
 import admin.VO.ProductRealDeleteVO;
 import admin.VO.ProductViewVO;
+import admin.VO.UsePCVO;
 
 public class AdminDAO {
 	
@@ -384,6 +386,106 @@ public class AdminDAO {
 		}//end finally
 		return list;
 	}//selectAllMember
+	
+	/**
+	 * PC방 사용자가 방금 주문한 목록 조회
+	 * @return 회원 목록
+	 * @throws SQLException
+	 */
+	public List<OrderedItemAndQuantityVO> selectJustOrder(UsePCVO upcVO) throws SQLException{
+		List<OrderedItemAndQuantityVO> list = new ArrayList<OrderedItemAndQuantityVO>();
+		
+		Connection con = null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		
+		try {
+			
+		//2. Connection 얻기
+		con = getConnection();
+		//3. 쿼리문 생성객체 얻기 
+		StringBuilder selectPCUseCode = new StringBuilder();
+//		select pc_use_code
+//      from (select pu.pc_use_code, pc_num, id, login_time, payment_time
+//            from pc_use pu, pc_payment pp
+//            where (pp.pc_use_code(+) = pu.pc_use_code)
+//                   and pc_num = 24 and id = 'kgg'
+//                   and payment_time is null
+//            order by login_time desc)
+//      where rownum = 1
+		selectPCUseCode
+		.append("   select pc_use_code   ")
+		.append("   from (select pu.pc_use_code, pc_num, id, login_time, payment_time   ")
+		.append("         from pc_use pu, pc_payment pp   ")
+		.append("         where (pp.pc_use_code(+) = pu.pc_use_code)   ")
+		.append("                and pc_num = ? and id = ?   ")
+		.append("                and payment_time is null   ")
+		.append("         order by login_time desc)   ")
+		.append("   where rownum = 1   ");
+		
+		pstmt = con.prepareStatement(selectPCUseCode.toString());
+		//4. 바인드 변수 값 넣기
+		pstmt.setInt(1, upcVO.getPcNum());
+		pstmt.setString(2, upcVO.getUserID());
+		
+		//5. 쿼리문 실행 후 값 얻기
+		rs = pstmt.executeQuery();
+		String pcUseCode = null;
+		if(rs.next()) {
+			pcUseCode = rs.getString("pc_use_code");
+		}//end if
+		
+		rs.close();
+		pstmt.close();
+		
+		//3. 쿼리문 생성객체 얻기: 
+		StringBuilder selectJustItemAndQuantity = new StringBuilder();
+//		select name, quantity
+//		from item_order io, item i
+//		where (io.item_code = i.item_code)
+//		      and order_date =(select order_date
+//		                       from (select order_date
+//		                             from item_order
+//		                             where pc_use_code = ?
+//		                             order by order_date desc)
+//		                       where rownum = 1)
+//		      and pc_use_code = ?
+		selectJustItemAndQuantity
+		.append("   select category, name, quantity   ")
+		.append("   from item_order io, item i   ")
+		.append("   where (io.item_code = i.item_code)   ")
+		.append("         and order_date =(select order_date   ")
+		.append("                          from (select order_date   ")
+		.append("                                from item_order   ")
+		.append("                                where pc_use_code = ?   ")
+		.append("                                order by order_date desc)   ")
+		.append("                          where rownum = 1)   ")
+		.append("        and pc_use_code = ?   ");
+		
+		pstmt = con.prepareStatement(selectJustItemAndQuantity.toString());
+		//4. 바인드 변수 값 넣기
+		pstmt.setString(1, pcUseCode);
+		pstmt.setString(2, pcUseCode);
+		
+		//5. 쿼리문 실행 후 값 얻기
+		rs = pstmt.executeQuery();
+		OrderedItemAndQuantityVO oiaqVO  = null;
+		while (rs.next()) {
+			oiaqVO = new OrderedItemAndQuantityVO(
+					rs.getString("category"), 
+					rs.getString("name"), 
+					rs.getInt("quantity")
+					);
+			list.add(oiaqVO);//조회된 레코드를 저장한 VO를 list에 추가
+		}//end while
+		} finally {
+		//6. 연결 끊기
+			if(rs != null) { rs.close(); }//end if
+			if(pstmt != null) { pstmt.close(); }//end if
+			if(con != null) { con.close(); }//end if
+		}//end finally
+		return list;
+	}//selectJustOrder
 	
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////

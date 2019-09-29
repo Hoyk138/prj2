@@ -191,7 +191,7 @@ public class PCState extends JPanel implements Runnable {
 						setBackground(backgrounColor);
 						if (ac == null) {
 							ac = new AdminChat(this);
-							System.out.println("ac: "+ac);
+//							System.out.println("ac: "+ac);
 						}//end if
 						break;
 					case "/채팅종료":

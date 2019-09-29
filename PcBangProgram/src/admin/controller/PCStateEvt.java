@@ -6,10 +6,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import admin.DAO.AdminDAO;
+import admin.VO.OrderedItemAndQuantityVO;
+import admin.VO.UsePCVO;
 import admin.view.AdminChat;
 import admin.view.PCState;
 
@@ -62,16 +66,47 @@ public class PCStateEvt extends MouseAdapter implements ActionListener {
 	
 	private void checkOrder() {
 		if (pcs.getBackgrounColor() == Color.GREEN) {
-			System.out.println("PC" + pcs.getPcNum() + "번 주문 확인");
+//			System.out.println("PC" + pcs.getPcNum() + "번 주문 확인");
 			// DB에 접근하여 해당 pcnum의 최신 주문 내용을 조회
 			//jlblPCStateArr[USER_ID].setText("사용자 ID: ");
 			String lblTxtUserID = pcs.getJlblPCStateArr()[0].getText();
 			String userID = lblTxtUserID.substring(lblTxtUserID.indexOf(":")+2);
-			System.out.println(userID);
+//			System.out.println(userID);
 			
-			System.out.println(pcs.getPcNum());
+			UsePCVO upcVO = new UsePCVO(userID, pcs.getPcNum());
 			
 			AdminDAO aDAO = AdminDAO.getInstance();
+			
+			List<OrderedItemAndQuantityVO> list = null;
+			try {
+				list = aDAO.selectJustOrder(upcVO);
+				OrderedItemAndQuantityVO oiaqVO = null;
+				StringBuilder orderItem = null;
+				String category = null;
+				StringBuilder orderList = new StringBuilder("주문 받은 상품은\n\n입니다.");
+				for (int i = 0; i < list.size(); i++) {
+					oiaqVO = list.get(i);
+					
+					orderItem = new StringBuilder("[]   개\n\n");
+					switch (oiaqVO.getCategory()) {
+					case "F": category = "식사"; break;
+					case "S": category = "스낵"; break;
+					case "D": category = "음료"; break;
+					}
+					orderItem.insert(orderItem.indexOf("[")+1, category);
+					orderItem.insert(orderItem.indexOf("]")+2, oiaqVO.getName());
+					orderItem.insert(orderItem.lastIndexOf("개")-1, oiaqVO.getQuantity());
+					
+					orderList.insert(orderList.indexOf("입"), orderItem.toString());
+				}//end for
+				
+				JOptionPane.showMessageDialog(pcs, orderList.toString());
+				
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+				JOptionPane.showMessageDialog(pcs, "주문 조회에 실패하였습니다.\n[주문 관리] 패널을 확인 해주세요");
+			}//try catch
+			
 			
 			//조회한 주문 내역을 화면에 출력 
 			pcs.setBackgrounColor(Color.LIGHT_GRAY);
