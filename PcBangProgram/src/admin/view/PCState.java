@@ -123,8 +123,8 @@ public class PCState extends JPanel implements Runnable {
    }//registerFlag
 	
 	public void setSocket(Socket socket) throws IOException {
-		 this.socket = socket;
-		 userIP = socket.getInetAddress().getHostAddress();
+        this.socket = socket;
+		userIP = socket.getInetAddress().getHostAddress();
 
 		// 스트림을 연결하고
 		dis = new DataInputStream(socket.getInputStream());
@@ -135,7 +135,7 @@ public class PCState extends JPanel implements Runnable {
 		String startTime = dis.readUTF();
 
 		// 라벨에 반영한다.
-		System.out.println(userID + "/" + startTime);
+//		System.out.println(userID + "/" + startTime);
 		jlblPCStateArr[USER_ID].setText("사용자 ID: "+userID);
 		jlblPCStateArr[START_TIME].setText("시작 시간: "+startTime);
 		
