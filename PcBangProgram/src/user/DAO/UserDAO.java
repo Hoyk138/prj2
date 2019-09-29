@@ -50,7 +50,7 @@ public class UserDAO { //singleton pattern
 		}//end catch
 		
 		//2.
-		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
 //		String url="jdbc:oracle:thin:@192.168.1.16:1521:orcl";
 //		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
 		String id="pcbang";

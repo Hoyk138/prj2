@@ -63,7 +63,7 @@ public class AdminDAO {
 			e.printStackTrace();
 		}//end catch
 		//2. Connection ¾ò±â
-		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
 //		String url="jdbc:oracle:thin:@192.168.1.16:1521:orcl";
 //		String url="jdbc:oracle:thin:@211.63.89.132:1521:orcl";
 //		String url="jdbc:oracle:thin:@211.63.89.133:1521:orcl";

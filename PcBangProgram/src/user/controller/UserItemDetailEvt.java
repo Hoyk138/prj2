@@ -56,13 +56,13 @@ public class UserItemDetailEvt implements ActionListener {
 		String choiceName=uid.getJlDetailName().getText().trim();
 		String choiceQuan=String.valueOf(uid.getJcbQuantity().getSelectedIndex()+1);
 		dlmChoice.addElement(choiceName+"- ¼ö·®:"+choiceQuan+"°³");
-		int choiceCnt=Integer.parseInt(choiceQuan);
-		
-		String choice=null;
-		String name=null;
-		String temp=null;
-		int cnt=0;
-		int sumCnt=0;
+//		int choiceCnt=Integer.parseInt(choiceQuan);
+//		
+//		String choice=null;
+//		String name=null;
+//		String temp=null;
+//		int cnt=0;
+//		int sumCnt=0;
 		
 //		for(int i=0; i<dlmChoice.size();i++) {
 //			System.out.println(choiceName+choiceCnt);
