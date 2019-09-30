@@ -62,7 +62,19 @@ private void uploadImg() throws IOException{
 	
 	//복사할 디렉토리 생성
 	File mkDirectory=new File("C:/dev/pcbang/admin/img/item");
+	File mkDirectory1=new File("C:/dev/pcbang/admin/img");
+	File mkDirectory2=new File("C:/dev/pcbang/admin");
+	File mkDirectory3=new File("C:/dev/pcbang");
 	
+	if(!mkDirectory3.exists()) {
+		mkDirectory.mkdir();
+	}//
+	if(!mkDirectory2.exists()) {
+		mkDirectory.mkdir();
+	}//
+	if(!mkDirectory1.exists()) {
+		mkDirectory.mkdir();
+	}//
 	if(!mkDirectory.exists()) {
 		mkDirectory.mkdir();
 	}//
