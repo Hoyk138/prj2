@@ -267,9 +267,10 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			try {
 				uDAO.insertOrder(itemOrderList);
 				JOptionPane.showMessageDialog(ui, "주문이 완료되었습니다.");
-				ui.getDlmOrderChoiceList().removeAllElements();
-				ui.getDlmOrderChoiceList().removeAllElements();
-				priceList.removeAll(priceList);
+				ui.getDlmOrderChoiceList().removeAllElements(); //장바구니 데이터 제거
+				ui.getJltOrderChoiceList().removeAll(); //view 장바구니리스트제거
+				itemOrderList.removeAll(itemOrderList);  //주문VO리스트 제거
+				priceList.removeAll(priceList); //가격리스트 제거
 				ui.getJtfTotalPrice().setText("0");
 				
 			} catch (SQLException e) {
