@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -94,12 +96,19 @@ public class UserItemEvt extends MouseAdapter implements ActionListener{
 			}//end switch
 			
 			UserItemVO uiv=null;
-			
+			File file = null;
 			for(int i=0;i<listItem.size();i++) {
 				uiv=listItem.get(i);
 				rowData=new Object[3];
 				rowData[0] = "["+uiv.getCategoryName()+"]" +uiv.getItemName();
-				rowData[1]=new ImageIcon("c:/dev/pcbang/user/img/item/rs_"+uiv.getItemImg());
+				
+				file = new File("c:/dev/pcbang/user/img/item/rs_"+uiv.getItemImg());
+				if(file.exists()) {
+					rowData[1]=new ImageIcon("c:/dev/pcbang/user/img/item/rs_"+uiv.getItemImg());
+				}else {
+					rowData[1]=new ImageIcon("c:/dev/pcbang/user/img/item/no_image.jpg");
+				}//if else
+				
 				rowData[2]=new Integer(uiv.getPrice())+"¿ø";
 				dtm.addRow(rowData);
 			}//end for

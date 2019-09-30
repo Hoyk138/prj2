@@ -85,21 +85,21 @@ public class RunPcUser {
 
 			// c:/dev/pcbang/user/img/item
 			// 모든 파일의 목록을 CSV로 만들기
+			File file1 = new File("c:/dev/pcbang");
+			File file2 = new File("c:/dev/pcbang/user");
+			File file3 = new File("c:/dev/pcbang/user/img");
 			File file = new File("c:/dev/pcbang/user/img/item");
-			File file1 = new File("c:/dev/pcbang/user");
-			File file3 = new File("c:/dev/pcbang");
-			File file2 = new File("c:/dev/pcbang/user/img");
 			
 			
 			
-			if(!file.exists()) {
-				file3.mkdir();
-			}//end if
-			if(!file.exists()) {
+			if(!file1.exists()) {
 				file1.mkdir();
 			}//end if
-			if(!file.exists()) {
+			if(!file2.exists()) {
 				file2.mkdir();
+			}//end if
+			if(!file3.exists()) {
+				file3.mkdir();
 			}//end if
 			if(!file.exists()) {
 				file.mkdir();

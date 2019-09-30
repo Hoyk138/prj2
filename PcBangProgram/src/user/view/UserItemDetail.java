@@ -2,6 +2,7 @@ package user.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -49,7 +50,12 @@ public class UserItemDetail extends JDialog{
 		jlDescription=new JLabel("¡Ý ¸Ô°Å¸® POINT ¡Ý");
 		jlQuantity=new JLabel("¼ö·®");
 		//VO
-		jlImg=new JLabel(new ImageIcon("c:/dev/pcbang/user/img/item/rs_"+uidVO.getItemImg()));
+		File file = new File("c:/dev/pcbang/user/img/item/rs_"+uidVO.getItemImg());
+		if(file.exists()) {
+			jlImg=new JLabel(new ImageIcon("c:/dev/pcbang/user/img/item/rs_"+uidVO.getItemImg()));
+		}else {
+			jlImg=new JLabel(new ImageIcon("c:/dev/pcbang/user/img/item/no_image.jpg"));
+		}//if else
 		
 		//JTextField,TextArea  //VO
 		jlDetailName=new JLabel("["+uidVO.getCategoryName()+"]"+uidVO.getItemName()); 
